@@ -6,7 +6,7 @@ return [
     'copyright_start_date'=> '2004',
     'copyright_name'=> 'Freestyle4u',
     'copyright_url'=> 'http://freestyle4u.com/',
-    'textWithLogo'=> 'Cottton Shop',
+    'textWithLogo'=> 'Vonza Crm',
 
 
     'dark-mode'=> false,
@@ -22,7 +22,7 @@ return [
 
 
 
-    'title' => 'Cottton Shop | Powered By Freestyle4u.com ',
+    'title' => 'Vonza Crm | Powered By Freestyle4u.com ',
 
     #'def_home_url'=> route('Dashboard1','Dashboard1'),
 
