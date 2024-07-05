@@ -1,0 +1,47 @@
+body{font-family: 'Tajawal', sans-serif!important; font-display: swap!important;}
+
+.text_left_lang{
+    text-align: left;
+}
+
+.iti--allow-dropdown .iti__flag-container, .iti--show-selected-dial-code .iti__flag-container {
+    left: auto;
+    right: 0;
+}
+input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type="text"], .iti--allow-dropdown input.iti__tel-input[type="tel"], .iti--show-selected-dial-code input.iti__tel-input, .iti--show-selected-dial-code input.iti__tel-input[type="text"], .iti--show-selected-dial-code input.iti__tel-input[type="tel"] {
+    padding-right: 60px!important;
+    padding-left: 6px!important;
+    margin-left: 0;
+    font-size: 18px!important;
+    text-align: right;
+    font-family: 'Poppins', sans-serif!important;
+
+}
+
+
+.iti__arrow {
+    margin-left: 0px!important;
+    margin-right: 6px!important;
+    width: 0;
+    height: 0;
+}
+
+.nt_sortby h3, .nt_sortby .h3 {
+
+    padding-right: 15px!important;
+    padding-left: 0!important;
+}
+
+.section_nt_filter h3, .section_nt_filter .h3 {
+
+    padding-right: 15px!important;
+    padding-left: 0!important;
+}
+
+.mfp-content .section_sidebar_shop > .h3{
+    padding-right: 15px!important;
+    padding-left: 0!important;
+}
+
+
+

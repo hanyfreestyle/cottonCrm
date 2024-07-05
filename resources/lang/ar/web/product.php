@@ -1,0 +1,33 @@
+<?php
+
+return
+[
+	'but_add_to_cart' => 'اضف للسلة',
+	'but_add_to_wishlist' => 'اضف للمفضلة',
+	'but_quick_shop' => 'اضف للسلة',
+	'but_quick_view' => 'نظرة سريعة',
+	'but_view_full_details' => 'عرض تفاصيل المنتج',
+	'but_zoom' => 'اضغط للتكبير',
+	'err_nodate' => 'عذرا لا يتوجد منتجات للعرض',
+	'label_currency' => 'ج.م',
+	'label_currency_more_than' => 'اكبر من',
+	'label_currency_s' => '&pound;',
+	'label_out_of_stock' => 'غير متوفر حاليا',
+	'search_loading' => 'جارى البحث',
+	'search_no_data' => 'لا توجد نتائج متطابقة مع كلمات البحث',
+	'search_placeholder' => 'البحث عن المنتجات',
+	'search_start' => 'ابداء البحث',
+	'slider_recently' => 'اضيف مؤخرا',
+	'slider_related_product' => 'المنتجات ذات الصلة',
+	'tab_additional_information' => 'معلومات اضافية',
+	'tab_description' => 'وصف المنتج',
+	'tab_reviews' => 'التقيمات',
+	'tab_shipping' => 'تفاصيل الشحن',
+	'tab_warranty' => 'سياسية الاسترداد',
+	'title_brand' => 'العلامة التجارية :',
+	'title_categories' => 'القسم :',
+	'title_sku' => 'كود المنتج :',
+	'title_tags' => 'الكلمات البحثية :',
+	'wishlistn_nodata_h1' => 'عذرا لا يوجد محتوى للعرض',
+	'wishlistn_nodata_p' => 'يمكنك تصفح الموقع واضافة المنتجات التى ترى انها مفضله لك',
+];

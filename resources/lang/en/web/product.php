@@ -1,0 +1,33 @@
+<?php
+
+return
+[
+	'but_add_to_cart' => 'Add to cart',
+	'but_add_to_wishlist' => 'Add to Wishlist',
+	'but_quick_shop' => 'Quick Shop',
+	'but_quick_view' => 'Quick view',
+	'but_view_full_details' => 'View full details',
+	'but_zoom' => 'Click to enlarge',
+	'err_nodate' => 'عذرا لا يتوجد منتجات للعرض',
+	'label_currency' => 'EGP',
+	'label_currency_more_than' => 'اكبر من',
+	'label_currency_s' => '&pound;',
+	'label_out_of_stock' => 'Out of stock',
+	'search_loading' => 'Loading',
+	'search_no_data' => 'لا توجد نتائج منتطابقة مع كلمات البحث',
+	'search_placeholder' => 'Search for products',
+	'search_start' => 'Start Search',
+	'slider_recently' => 'Recently Add',
+	'slider_related_product' => 'Related Product',
+	'tab_additional_information' => 'Additional Information',
+	'tab_description' => 'Description',
+	'tab_reviews' => 'Reviews',
+	'tab_shipping' => 'Shipping',
+	'tab_warranty' => 'Warranty',
+	'title_brand' => 'Brand :',
+	'title_categories' => 'Categories:',
+	'title_sku' => 'SKU:',
+	'title_tags' => 'Tags:',
+	'wishlistn_nodata_h1' => '',
+	'wishlistn_nodata_p' => '',
+];

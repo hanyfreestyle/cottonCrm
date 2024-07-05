@@ -1,0 +1,21 @@
+body{font-family: 'Poppins', sans-serif!important; font-display: swap!important;}
+.breadcrumb i{font-size:13px;line-height:14px!important;}
+.breadcrumb-item + .breadcrumb-item::before{font-size: 15px!important;  float:left;content:"\f101";padding-right:0!important;margin-left:0!important;padding-left:3px;margin-right:3px!important}
+.breadcrumb{font-size:15px!important;list-style:none;line-height:20px;margin-top:10px!important;}
+.text_left_lang{
+    text-align: right;
+}
+
+
+.ProfileMenuList li{text-align:left;font-size:14px;}
+.ProfileMenuList i{float:left;margin-left:0!important;margin-right: 5px}
+.profile_page .myForm .form_note{font-size:14px}
+
+@media (max-width: 600px) {
+    .profile_page .myForm .form_note{font-size:13px}
+}
+.profile_card .card-header h3{font-size:17px;line-height: 30px}
+.profile_card .card-header h3 i{font-size:30px;float:left;margin-left:0!important;margin-right: 5px}
+.card_address .card-header h3{font-size:18px;line-height:30px}
+.card_address .card-header h3 span {float:right;font-size:12px;font-weight:500;}
+.card_address .card-header h3 .btn_not {right:8px;left: auto;top:10px;}
