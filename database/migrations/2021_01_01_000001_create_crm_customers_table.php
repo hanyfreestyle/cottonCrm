@@ -11,6 +11,7 @@ return new class extends Migration {
         Schema::create('crm_customers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('evaluation_id')->nullable();
+            $table->integer('gender_id')->nullable();
 
             $table->string('name')->nullable();
             $table->string('mobile')->unique();

@@ -11,6 +11,7 @@ use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
+use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -21,6 +22,7 @@ use Yajra\DataTables\Facades\DataTables;
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
     use CrmCustomersConfigTraits;
+    use DefCategoryTraits ;
 
     function __construct() {
         parent::__construct();
@@ -31,17 +33,14 @@ class CrmCustomersController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
 
-        $this->defCountry = "eg";
-        View::share('defCountry', $this->defCountry);
-
-        $this->phoneAreaCode = false;
-        View::share('phoneAreaCode', $this->phoneAreaCode);
-
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 
         $this->Config = self::defConfig();
         View::share('Config', $this->Config);
+
+        $this->DefCat = self::LoadCategory();
+        View::share('DefCat', $this->DefCat);
 
 
 
@@ -218,7 +217,8 @@ class CrmCustomersController extends AdminMainController {
                 $saveData = self::saveDefField($saveData, $request);
                 $saveData->save();
 
-                if ($this->Config['addAddress']) {
+
+                if ($this->Config['addCountry']) {
                     $addressId = intval($request->input('address_id'));
                     if ($addressId == 0) {
                         $saveAddress = new CrmCustomersAddress();
@@ -247,6 +247,7 @@ class CrmCustomersController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| #
     public function saveDefField($saveData, $request) {
         $saveData->evaluation_id = $request->input('evaluation_id');
+        $saveData->gender_id = $request->input('gender_id');
 
         $saveData->name = $request->input('name');
         $saveData->mobile = $request->input('mobile');

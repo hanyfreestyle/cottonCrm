@@ -27,8 +27,9 @@ return
 	'form_notes' => 'ملاحظات',
 	'form_phone' => 'رقم الهاتف',
 	'form_whatsapp' => 'رقم الواتس اب',
-	'report_evaluation' => 'تقييم العميل',
-	'report_country' => 'الدول',
-	'report_city' => 'المدن',
 	'report_area' => 'المناطق',
+	'report_city' => 'المدن',
+	'report_country' => 'الدول',
+	'report_evaluation' => 'تقييم العميل',
+	'form_gender' => 'النوع',
 ];

@@ -34,6 +34,11 @@
                 @endif
             @endif
 
+            @if(isset($chartData['Gender']) and  count($chartData['Gender']) > 0)
+                <x-admin.card.normal col="col-lg-3" :title="__($defLang.'form_gender')">
+                    <x-admin.report.chart-def id="Gender" :data-row="$chartData['Gender']"/>
+                </x-admin.card.normal>
+            @endif
 
         </div>
     </x-admin.hmtl.section>

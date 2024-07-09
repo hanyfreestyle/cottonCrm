@@ -65,9 +65,11 @@ class CrmCustomersReportController extends AdminMainController {
         $CountryId = $rowData->get()->groupBy('country_id')->toarray();
         $CityId = $rowData->get()->groupBy('city_id')->toarray();
         $AreaId = $rowData->get()->groupBy('area_id')->toarray();
+        $GenderId = $rowData->get()->groupBy('gender_id')->toarray();
 
         $AllData = $rowData->count();
         $chartData['Evaluation'] = self::ChartDataFromDataConfig($AllData, 'EvaluationCust', $evaluationId);
+        $chartData['Gender'] = self::ChartDataFromDefCategory($AllData, 'gender', $GenderId);
 
         if ($this->Config['addCountry']) {
             $chartData['Country'] = self::ChartDataFromModel($AllData, Country::class, $CountryId);
@@ -95,6 +97,7 @@ class CrmCustomersReportController extends AdminMainController {
             ->where($table_address . '.is_default', true)
             ->select("$table.id as id",
                 "$table.evaluation_id  as evaluation_id",
+                "$table.gender_id  as gender_id",
                 "$table_address.country_id as country_id",
                 "$table_address.city_id as city_id",
                 "$table_address.area_id as area_id",

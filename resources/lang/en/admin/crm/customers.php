@@ -27,8 +27,9 @@ return
 	'form_notes' => 'Notes',
 	'form_phone' => 'Phone Number',
 	'form_whatsapp' => 'Whatsapp',
-	'report_evaluation' => 'Evaluation',
-	'report_country' => 'Country',
-	'report_city' => 'City',
 	'report_area' => 'Area',
+	'report_city' => 'City',
+	'report_country' => 'Country',
+	'report_evaluation' => 'Evaluation',
+	'form_gender' => 'Gender',
 ];

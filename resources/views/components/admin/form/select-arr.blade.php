@@ -3,7 +3,7 @@
         @if($labelview)
             <label class="def_form_label col-form-label font-weight-light">
                 {{$label}}
-                @if($requiredSpan)
+                @if($req)
                     <span class="required_Span">*</span>
                 @endif
             </label>
@@ -14,11 +14,14 @@
             <option value="">{{$label}}</option>
 
             @if($selectType == 'normal')
+
                 @foreach ($sendArr as  $key => $value)
-                    <option value="{{ $value[$sendid] }}" @if ($value[$sendid] == $sendvalue) selected @endif> @if($addFilde) {{$value[$addFilde]}} @endif {{ $value[$printValName] }}</option>
+                    <option value="{{ $value[$sendid] }}"
+                            @if ($value[$sendid] == $sendvalue) selected @endif> @if($addFilde) {{$value[$addFilde]}} @endif {{ $value[$printValName] }}</option>
                 @endforeach
 
             @elseif($selectType == 'ajax')
+
                 @foreach ($sendArr as  $key => $value)
                     <option value="{{ $value[$sendid] }}" @if ($value[$sendid] == $sendvalue) selected @endif>{{ $value[$printValName] }}</option>
                 @endforeach

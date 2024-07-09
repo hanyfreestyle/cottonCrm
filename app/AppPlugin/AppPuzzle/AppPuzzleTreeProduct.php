@@ -104,12 +104,15 @@ class AppPuzzleTreeProduct {
             'routeFile' => 'orders.php',
             'migrations' => [
                 '2023_04_01_000001_create_shopping_order_table.php',
+                '2023_05_01_000001_create_shopping_shipping_table.php',
             ],
             'seeder' => [
                 'shopping_order_addresses.sql',
                 'shopping_order_logs.sql',
                 'shopping_order_products.sql',
                 'shopping_orders.sql',
+                'shopping_shipping_cat.sql',
+                'shopping_shipping_rate.sql',
             ],
 
             'adminLangFolder' => "admin/",

@@ -12,6 +12,7 @@ return [
         'form'=> ['id'=> 'form' , 'group'=>'admin' , 'file_name'=> 'form','name_en'=>'Forms','name_ar'=>'الفورم' ],
         'def' => ['id'=> 'def' , 'group'=>'admin' , 'file_name'=> 'def','name_en'=>'Default Variables','name_ar'=>'المتغيرات الاساسية' ],
         'filter'=> ['id'=> 'filter', 'group'=>'admin', 'file_name'=> 'formFilter','name_en'=>'Filter Form','name_ar'=>'فلتر' ],
+        'defCat'=> ['id'=> 'defCat', 'group'=>'admin', 'file_name'=> 'defCat','name_en'=>'defCat', 'name_ar'=>'defCat' ],
     ],
 
     'webFile' => [

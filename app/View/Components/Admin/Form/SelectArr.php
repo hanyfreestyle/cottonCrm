@@ -8,10 +8,10 @@ use Illuminate\View\Component;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class SelectArr extends Component {
+    public $row;
     public $name;
     public $label;
     public $sendvalue;
-    public $requiredSpan;
     public $col;
     public $colrow;
     public $sendArr;
@@ -22,12 +22,13 @@ class SelectArr extends Component {
     public $changelang;
     public $sendid;
     public $addFilde;
+    public $req ;
 
     public function __construct(
+        $row = array(),
         $name = "",
         $label = "",
         $sendvalue = "",
-        $requiredSpan = true,
         $col = "4",
         $colrow = null,
 
@@ -39,13 +40,16 @@ class SelectArr extends Component {
         $changelang = null,
         $sendid = 'id',
         $addFilde = null,
+        $req = true,
 
     ) {
         $this->name = $name;
         $this->label = $label;
         $this->printValName = $printValName;
         $this->sendvalue = $sendvalue;
-        $this->requiredSpan = $requiredSpan;
+
+
+        $this->req = $req;
         $this->colrow = $colrow;
         $this->col = "col-lg-" . $col;
 
@@ -64,6 +68,12 @@ class SelectArr extends Component {
 
         $this->addFilde = $addFilde;
 
+        if ($sendvalue != null) {
+            $this->sendvalue = $sendvalue;
+        } else {
+            $rowName = $this->name;
+            $this->sendvalue = old($rowName, issetArr($row,$rowName,null));
+        }
 
     }
 

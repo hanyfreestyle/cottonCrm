@@ -239,6 +239,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
                 ["resources/lang/$lang/admin/config/" => 'webConfig.php'],
                 ["resources/lang/$lang/admin/" => 'formFilter.php'],
                 ["resources/lang/$lang/admin/" => 'def.php'],
+                ["resources/lang/$lang/admin/" => 'defCat.php'],
             ];
             $fileNames = array_merge($fileNames, $fileNames_new);
         }

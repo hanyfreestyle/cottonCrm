@@ -7,6 +7,8 @@ use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 
 trait ReportFunTraits {
 
+    use DefCategoryTraits;
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function ChartDataFromModel($AllData, $Model, $selectDataId, $limit = 15) {
@@ -38,6 +40,16 @@ trait ReportFunTraits {
         return $sendArr;
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| # ChartDataFromDefCategory
+    public function ChartDataFromDefCategory($AllData, $CatId, $selectDataId, $limit = 15) {
+        $selectDataIdKey = array_keys($selectDataId);
+        $getLoadCategory = self::LoadCategory();
+        $getSoursData = issetArr($getLoadCategory, $CatId, array());
+        $getSoursData = collect($getSoursData);
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
+        return $sendArr;
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
@@ -64,15 +76,15 @@ trait ReportFunTraits {
             array_push($sendArr, $arr);
         }
 
-        $sendArr =  array_sort($sendArr,'count',SORT_DESC);
+        $sendArr = array_sort($sendArr, 'count', SORT_DESC);
 
-        if(count($sendArr) > $limit){
-            foreach ($sendArr as  $key => $value ){
-                if($start >= $limit ){
+        if (count($sendArr) > $limit) {
+            foreach ($sendArr as $key => $value) {
+                if ($start >= $limit) {
                     unset($sendArr[$key]);
-                    $other_count = $other_count + $value['count'] ;
+                    $other_count = $other_count + $value['count'];
                 }
-                $start = $start + 1 ;
+                $start = $start + 1;
             }
         }
 
@@ -97,9 +109,6 @@ trait ReportFunTraits {
             ];
             array_push($sendArr, $arr);
         }
-
-
-
 
 
         return $sendArr;
