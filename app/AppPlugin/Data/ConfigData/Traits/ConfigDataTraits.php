@@ -434,6 +434,17 @@ trait ConfigDataTraits {
             $subMenu->save();
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/data/data_BookRelease.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = ConfigDataTraits::selRouteList("DeviceType");
+            $subMenu->url = "admin.data.BookRelease.index";
+            $subMenu->name = "نوع الاصدار";
+            $subMenu->roleView = "EvaluationCust_view";
+            $subMenu->icon = "fas fa-tv";
+            $subMenu->save();
+        }
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

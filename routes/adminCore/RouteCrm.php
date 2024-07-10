@@ -12,4 +12,9 @@ if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/crm/ImportData.php'));
 }
 
+if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/crm/Periodicals.php'));
+}
+
+
 

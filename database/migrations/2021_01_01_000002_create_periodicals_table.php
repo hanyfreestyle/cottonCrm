@@ -11,7 +11,10 @@ return new class extends Migration {
         Schema::create('book_periodicals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-
+            $table->integer('country_id')->nullable();
+            $table->integer('release_id')->nullable();
+            $table->integer('lang_id')->nullable();
+            $table->text('des')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -19,7 +22,8 @@ return new class extends Migration {
         Schema::create('book_periodicals_release', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('periodicals_id');
-
+            $table->integer('year')->nullable();
+            $table->integer('number')->nullable();
             $table->foreign('periodicals_id')->references('id')->on('book_periodicals')->onDelete('cascade');
 
         });

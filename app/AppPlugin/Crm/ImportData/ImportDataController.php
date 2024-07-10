@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Crm\ImportData;
 
 
+use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -158,13 +159,10 @@ class ImportDataController extends AdminMainController {
         }
 
         echobr(ImportDataModel::where('num_count', null)->count());
-        echobr(ImportDataModel::where('num_count','>', 1)->count());
+        echobr(ImportDataModel::where('num_count', '>', 1)->count());
         echobr(ImportDataModel::where('num_count', 1)->count());
 
     }
-
-
-
 
 
     public function checkCountryOM_xx() {
@@ -178,14 +176,12 @@ class ImportDataController extends AdminMainController {
 //        }
 
 
-
-
         $removeLetter = ImportDataModel::where('check_country', 0)->take(100)->get();
-       $removeLetter = ImportDataModel::where('check_country', 0)->where('id',802)->take(100)->get();
+        $removeLetter = ImportDataModel::where('check_country', 0)->where('id', 802)->take(100)->get();
 
         foreach ($removeLetter as $phone) {
 
-            if (strlen($phone->get_phone) == 12 and mb_substr($phone->get_phone, 0, 4) == '+965' ) {
+            if (strlen($phone->get_phone) == 12 and mb_substr($phone->get_phone, 0, 4) == '+965') {
 
                 $phoneNumber = new PhoneNumber($phone->get_phone, 'KW');
                 if ($phoneNumber->isOfCountry('KW')) {
@@ -202,7 +198,7 @@ class ImportDataController extends AdminMainController {
                 $phone->save();
             } else {
                 $phone->check_country = 0;
-                 $phone->save();
+                $phone->save();
             }
         }
 
@@ -211,9 +207,6 @@ class ImportDataController extends AdminMainController {
         echobr(ImportDataModel::where('check_country', 1)->count());
 
     }
-
-
-
 
 
     public function checkCountryU() {
@@ -229,14 +222,13 @@ class ImportDataController extends AdminMainController {
 //        }
 //        dd($removeLetter);
 
-        $removeLetter = ImportDataModel::where('check_country', 0)->where('id',9202)->take(100)->get();
+        $removeLetter = ImportDataModel::where('check_country', 0)->where('id', 9202)->take(100)->get();
         foreach ($removeLetter as $phone) {
-            if($phone->get_phone){
+            if ($phone->get_phone) {
 
             }
 
         }
-
 
 
         /*
@@ -332,8 +324,28 @@ class ImportDataController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-
     public function uploadExcel() {
+        ini_set('memory_limit', '3000M');
+        ini_set('max_execution_time', '0');
+
+        dd('stop');
+        ImportDataModel::truncate();
+
+        $array = Excel::toArray(new ImportDataToExcel, storage_path('Book1.xlsx'));
+
+        foreach ($array[0] as $data) {
+            $saveData = new Periodicals();
+            $saveData->name = $data[4];
+            $saveData->save();
+
+        }
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+
+    public function uploadExcel_xxx() {
         ini_set('memory_limit', '3000M');
         ini_set('max_execution_time', '0');
 

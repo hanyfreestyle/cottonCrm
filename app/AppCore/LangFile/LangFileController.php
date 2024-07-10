@@ -63,6 +63,13 @@ class LangFileController extends AdminMainController {
     public function getLangMenu() {
         $LangMenu = config('adminLangFile.adminFile');
 
+        if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
+            $addLang = ['Periodicals' => ['id' => 'Periodicals', 'group' => 'admin', 'file_name' => 'Periodicals', 'name' => 'book', 'name_ar'
+            => 'الكتب والدوريات'],];
+            $LangMenu = array_merge($LangMenu, $addLang);
+        }
+
+
         if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
             $addLang = ['faq' => ['id' => 'faq', 'group' => 'admin', 'file_name' => 'faq', 'name' => 'Faq', 'name_ar' => 'الاسئلة المتكررة'],];
             $LangMenu = array_merge($LangMenu, $addLang);

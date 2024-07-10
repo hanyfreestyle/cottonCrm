@@ -7,6 +7,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use function Laravel\Prompts\select;
 
@@ -25,5 +26,14 @@ class Country extends Model implements TranslatableContract {
   public function tablename(): HasMany {
     return $this->hasMany(CountryTranslation::class)->select('id', 'country_id', 'name');
   }
+
+  public function hany(): HasOne {
+      return $this->hasOne(CountryTranslation::class)->where('locale', 'ar');
+  }
+
+    public function tablenamenew(): HasMany {
+        return $this->hasMany(CountryTranslation::class)->select('id', 'country_id', 'name','locale')
+            ->where('locale', 'ar');
+    }
 
 }

@@ -20,6 +20,7 @@ use App\AppPlugin\Config\Branche\SeederBranch;
 
 use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
+use App\AppPlugin\Crm\Periodicals\Seeder\PeriodicalsSeeder;
 use App\AppPlugin\Data\ConfigData\Seeder\ConfigDataSeeder;
 use App\AppPlugin\Data\Country\SeederCountry;
 use App\AppPlugin\Data\City\Seeder\CitySeeder;
@@ -63,6 +64,9 @@ class DatabaseSeeder extends Seeder {
             $this->call(CrmCustomersSeeder::class);
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
+            $this->call(PeriodicalsSeeder::class);
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
             $this->call(SeederMetaTag::class);
