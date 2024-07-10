@@ -19,6 +19,7 @@ class AppPuzzleTreeData {
             'DeviceType' => self::treeDeviceType(),
             'Evaluation' => self::treeEvaluation(),
             'DataBookRelease' => self::DataBookRelease(),
+            'DataBookLang' => self::DataBookLang(),
         ];
 
         return $modelTree;
@@ -179,6 +180,20 @@ class AppPuzzleTreeData {
             'appFolder' => 'Data/DataBookRelease',
             'routeFolder' => "data/",
             'routeFile' => 'data_BookRelease.php',
+//            'adminLangFolder' => "admin/data/",
+//            'adminLangFiles' => ['EvaluationCust.php'],
+        ];
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    static function DataBookLang() {
+        return [
+            'view' => true,
+            'id' => "DataBookLang",
+            'CopyFolder' => "DataBookLang",
+            'appFolder' => 'Data/DataBookLang',
+            'routeFolder' => "data/",
+            'routeFile' => 'data_BookLang.php',
 //            'adminLangFolder' => "admin/data/",
 //            'adminLangFiles' => ['EvaluationCust.php'],
         ];

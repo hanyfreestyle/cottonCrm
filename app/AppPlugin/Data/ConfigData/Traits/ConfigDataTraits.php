@@ -437,9 +437,20 @@ trait ConfigDataTraits {
         if (File::isFile(base_path('routes/AppPlugin/data/data_BookRelease.php'))) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
-            $subMenu->sel_routs = ConfigDataTraits::selRouteList("DeviceType");
+            $subMenu->sel_routs = ConfigDataTraits::selRouteList("BookRelease");
             $subMenu->url = "admin.data.BookRelease.index";
             $subMenu->name = "نوع الاصدار";
+            $subMenu->roleView = "EvaluationCust_view";
+            $subMenu->icon = "fas fa-tv";
+            $subMenu->save();
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/data/data_BookLang.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = ConfigDataTraits::selRouteList("BookLang");
+            $subMenu->url = "admin.data.BookLang.index";
+            $subMenu->name = "اللغة";
             $subMenu->roleView = "EvaluationCust_view";
             $subMenu->icon = "fas fa-tv";
             $subMenu->save();

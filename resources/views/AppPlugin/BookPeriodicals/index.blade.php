@@ -7,16 +7,19 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
-{{--        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>--}}
+        <x-app-plugin.crm.book.form-filter form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
             <table {!!Table_Style(true,true) !!} >
                 <thead>
                 <tr>
                     <th class="TD_20">#</th>
-                    <th class="TD_200">{{__('admin/Periodicals.form_name')}}</th>
-                    <th class="TD_200">{{__('admin/Periodicals.form_name')}}</th>
-                    <th class="TD_200">{{__('admin/Periodicals.form_name')}}</th>
-                    <th class="TD_200">{{__('admin/Periodicals.form_name')}}</th>
+                    <th class="TD_150">{{__('admin/Periodicals.form_name')}}</th>
+                    <th class="TD_250">{{__('admin/Periodicals.form_des')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_country')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_lang')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_name')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_count')}}</th>
+                    <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
@@ -44,15 +47,22 @@
                     {data: 'id', name: 'id', orderable: false, searchable: false},
 
                     {data: 'name', name: 'name', orderable: true, searchable: true},
-                    {data: 'countryName', name: 'data_country_translations.name', orderable: true, searchable: true},
-                    {data: 'releaseName', name: 'config_data_translations.name', orderable: true, searchable: true},
-                    {data: 'countRell', name: 'countRell', orderable: false, searchable: false},
+                    {data: 'des', name: 'des', orderable: true, searchable: true},
+                    {data: 'countryName', name: 'data_country_translations.name', orderable: true, searchable: true , className: "text-center" },
+                    {data: 'langName', name: 'lang.name', orderable: true, searchable: true , className: "text-center" },
+                    {data: 'releaseName', name: 'releasetype.name', orderable: true, searchable: true , className: "text-center" },
+                    {data: 'countRell', name: 'countRell', orderable: false, searchable: false, className: "text-center" },
 
 
 
                         @can($PrefixRole.'_edit')
                     {
                         data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+
+                    },
+                    {
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+
                     },
                         @endcan
 

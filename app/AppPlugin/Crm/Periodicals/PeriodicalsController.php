@@ -5,18 +5,16 @@ namespace App\AppPlugin\Crm\Periodicals;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
-use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
-use App\AppPlugin\Data\Country\Country;
+use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsRequest;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -73,6 +71,21 @@ class PeriodicalsController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
 
+//        $data = Periodicals::query()
+//            ->where('update',null)
+//            ->where('des', 'like', '%القاهرة%')
+//            ->get();
+//
+//        foreach ($data as $update){
+//            $update->country_id = 66 ;
+//            $update->lang_id = 126 ;
+//            $update->release_id = 120 ;
+//            $update->save() ;
+//        }
+
+
+//       dd($data);
+
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
 
@@ -90,19 +103,24 @@ class PeriodicalsController extends AdminMainController {
         $data = Periodicals::select(
             [
                 'book_periodicals.*',
-//                'book_periodicals.name',
-//                'book_periodicals.country_id',
                 'data_country_translations.name as countryName',
-                'config_data_translations.name as releaseName',
+                'releasetype.name as releaseName',
+                'lang.name as langName',
             ])
             ->with('release')
+            ->where('update', null)
+//            ->where('country_id',null)
             ->leftJoin('data_country_translations', function ($join) {
                 $join->on('book_periodicals.country_id', '=', 'data_country_translations.country_id')
                     ->where('data_country_translations.locale', '=', 'ar');
             })
-            ->leftJoin('config_data_translations', function ($join) {
-                $join->on('book_periodicals.release', '=', 'config_data_translations.data_id')
-                    ->where('config_data_translations.locale', '=', 'ar');
+            ->leftJoin('config_data_translations as releasetype', function ($join) {
+                $join->on('book_periodicals.release_id', '=', 'releasetype.data_id')
+                    ->where('releasetype.locale', '=', 'ar');
+            })
+            ->leftJoin('config_data_translations as lang', function ($join) {
+                $join->on('book_periodicals.lang_id', '=', 'lang.data_id')
+                    ->where('lang.locale', '=', 'ar');
             });
         return $data;
     }
@@ -122,7 +140,6 @@ class PeriodicalsController extends AdminMainController {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::eloquent($data)
             ->addIndexColumn()
-
             ->editColumn('countryName', function ($row) {
                 return $row->country->name ?? '';
             })
@@ -143,23 +160,16 @@ class PeriodicalsController extends AdminMainController {
     static function CustomerDataFilterQ($query, $session, $order = null) {
         $formName = issetArr($session, "formName", null);
 
-        if (isset($session['is_active']) and $session['is_active'] != null) {
-            $query->where('is_active', $session['is_active']);
-        }
-        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
-            $query->where('evaluation_id', $session['evaluation_id']);
-        }
-
         if (isset($session['country_id']) and $session['country_id'] != null) {
-            $query->where('country_id', $session['country_id']);
+            $query->where('book_periodicals.country_id', $session['country_id']);
         }
 
-        if (isset($session['city_id']) and $session['city_id'] != null) {
-            $query->where('city_id', $session['city_id']);
+        if (isset($session['release_id']) and $session['release_id'] != null) {
+            $query->where('release_id', $session['release_id']);
         }
 
-        if (isset($session['area_id']) and $session['area_id'] != null) {
-            $query->where('area_id', $session['area_id']);
+        if (isset($session['lang_id']) and $session['lang_id'] != null) {
+            $query->where('lang_id', $session['lang_id']);
         }
 
         return $query;
@@ -171,7 +181,7 @@ class PeriodicalsController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-
+        dd('dddd');
         $rowData = CrmCustomers::findOrNew(0);
         $rowDataAdress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
 
@@ -201,32 +211,18 @@ class PeriodicalsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     storeUpdate
-    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
-        $saveData = CrmCustomers::findOrNew($id);
+    public function storeUpdate(PeriodicalsRequest $request, $id = 0) {
+
+        $saveData = Periodicals::findOrNew($id);
         try {
             DB::transaction(function () use ($request, $saveData) {
-
-                $saveData = self::saveDefField($saveData, $request);
+                $saveData->name = $request->input('name');
+                $saveData->des = $request->input('des');
+                $saveData->country_id = $request->input('country_id');
+                $saveData->release_id = $request->input('release_id');
+                $saveData->lang_id = $request->input('lang_id');
+//                $saveData->update = 1;
                 $saveData->save();
-
-
-                if ($this->Config['addCountry']) {
-                    $addressId = intval($request->input('address_id'));
-                    if ($addressId == 0) {
-                        $saveAddress = new CrmCustomersAddress();
-                        $saveAddress->is_default = true;
-                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-                        if ($saveAddress->country_id == null) {
-                            $saveAddress->country_id = Country::where('iso2', $request->input('countryCode_mobile'))->first()->id;
-                        }
-                        $saveAddress->save();
-                    } else {
-                        $saveAddress = CrmCustomersAddress::query()->where('id', $addressId)->firstOrFail();
-                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-                        $saveAddress->save();
-                    }
-                }
-
             });
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
@@ -235,62 +231,13 @@ class PeriodicalsController extends AdminMainController {
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function saveDefField($saveData, $request) {
-        $saveData->evaluation_id = $request->input('evaluation_id');
-        $saveData->gender_id = $request->input('gender_id');
 
-        $saveData->name = $request->input('name');
-        $saveData->mobile = $request->input('mobile');
-        $saveData->mobile_code = $request->input('countryCode_mobile');
-
-        $saveData->mobile_2 = $request->input('mobile_2');
-        if ($request->input('mobile_2')) {
-            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-        }
-
-        $saveData->phone = $request->input('phone');
-        if ($request->input('phone')) {
-            $saveData->phone_code = $request->input('countryCode_phone');
-        }
-
-        $saveData->whatsapp = $request->input('whatsapp');
-        if ($request->input('whatsapp')) {
-            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-        }
-
-        $saveData->email = $request->input('email');
-        $saveData->notes = $request->input('notes');
-
-        return $saveData;
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function saveAddressField($saveAddress, $saveData, $request) {
-        $saveAddress->uuid = Str::uuid()->toString();
-        $saveAddress->customer_id = $saveData->id;
-
-        $saveAddress->country_id = $request->input('country_id');
-        $saveAddress->city_id = $request->input('city_id');
-        $saveAddress->area_id = $request->input('area_id');
-
-        $saveAddress->address = $request->input('address');
-        $saveAddress->floor = $request->input('floor');
-        $saveAddress->post_code = $request->input('post_code');
-        $saveAddress->unit_num = $request->input('unit_num');
-        $saveAddress->latitude = $request->input('latitude');
-        $saveAddress->longitude = $request->input('longitude');
-
-        return $saveAddress;
-    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
     public function ForceDeleteException($id) {
 
-        $deleteRow = CrmCustomers::query()->where('id', $id)
+        $deleteRow = Periodicals::query()->where('id', $id)
             ->firstOrFail();
         $deleteRow->delete();
 

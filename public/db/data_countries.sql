@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2024 at 05:41 PM
+-- Generation Time: Jul 10, 2024 at 02:57 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_realestate`
+-- Database: `cottton_crm`
 --
 
 --
@@ -126,7 +126,7 @@ INSERT INTO `data_countries` (`id`, `iso2`, `iso3`, `fips`, `iso_numeric`, `phot
 (98, 'VA', 'VAT', 'VT', '336', '256/va.webp', '120/va.webp', NULL, 39, '€', 'EUR', 'EU', 'la,it,fr', 'va', 'Europe/Vatican', '0', 0, NULL),
 (99, 'HN', 'HND', 'HO', '340', '256/hn.webp', '120/hn.webp', NULL, 504, 'L', 'HNL', 'NA', 'es-HN', 'hn', 'America/Tegucigalpa', '112090', 0, NULL),
 (100, 'HK', 'HKG', 'HK', '344', '256/hk.webp', '120/hk.webp', NULL, 852, '$', 'HKD', 'AS', 'zh-HK,yue,zh,en', 'hk', 'Asia/Hong_Kong', '1092', 1, NULL),
-(101, 'HU', 'HUN', 'HU', '348', '256/hu.webp', '120/hu.webp', NULL, 36, 'Ft', 'HUF', 'EU', 'hu-HU', 'hu', 'Europe/Budapest', '93030', 0, NULL),
+(101, 'HU', 'HUN', 'HU', '348', '256/hu.webp', '120/hu.webp', NULL, 36, 'Ft', 'HUF', 'EU', 'hu-HU', 'hu', 'Europe/Budapest', '93030', 1, NULL),
 (102, 'IS', 'ISL', 'IC', '352', '256/is.webp', '120/is.webp', NULL, 354, 'kr', 'ISK', 'EU', 'is,en,de,da,sv,no', 'is', 'Atlantic/Reykjavik', '103000', 0, NULL),
 (103, 'IN', 'IND', 'IN', '356', '256/in.webp', '120/in.webp', NULL, 91, '₹', 'INR', 'AS', 'en-IN,hi,bn,te,mr,ta,ur,gu,kn,ml,or,pa,as,bh,sat,ks,ne,sd,kok,doi,mni,sit,sa,fr,lus,inc', 'in', 'Asia/Kolkata', '3287590', 1, NULL),
 (104, 'ID', 'IDN', 'ID', '360', '256/id.webp', '120/id.webp', NULL, 62, 'Rp', 'IDR', 'AS', 'id,en,nl,jv', 'id', 'Asia/Jakarta', '1919440', 1, NULL),

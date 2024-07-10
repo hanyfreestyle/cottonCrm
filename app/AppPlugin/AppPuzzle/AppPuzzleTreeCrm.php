@@ -34,7 +34,8 @@ class AppPuzzleTreeCrm {
             'seeder' => ['book_periodicals.sql', 'book_periodicals_release.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['Periodicals.php'],
-
+            'ComponentFolderClass' => ['AppPlugin/Crm/Book'],
+            'ComponentFolderView' => ['app-plugin/crm/book'],
         ];
     }
 

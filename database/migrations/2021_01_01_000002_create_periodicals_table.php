@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->integer('release_id')->nullable();
             $table->integer('lang_id')->nullable();
             $table->text('des')->nullable();
+            $table->integer('update')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -327,15 +327,18 @@ class ImportDataController extends AdminMainController {
     public function uploadExcel() {
         ini_set('memory_limit', '3000M');
         ini_set('max_execution_time', '0');
+        dd("stop");
 
-        dd('stop');
-        ImportDataModel::truncate();
+//        Periodicals::truncate();
 
         $array = Excel::toArray(new ImportDataToExcel, storage_path('Book1.xlsx'));
+
+
 
         foreach ($array[0] as $data) {
             $saveData = new Periodicals();
             $saveData->name = $data[4];
+            $saveData->des = $data[5];
             $saveData->save();
 
         }
