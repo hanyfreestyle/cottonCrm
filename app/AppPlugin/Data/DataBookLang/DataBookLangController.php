@@ -20,7 +20,7 @@ class DataBookLangController extends AdminMainController {
         $this->PrefixRole = 'data';
         $this->selMenu = "admin.data.";
         $this->PrefixCatRoute = "";
-        $this->PageTitle = __('admin/data/EvaluationCust.app_menu');
+        $this->PageTitle = __('admin/data/BookLang.app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
         $this->model = $model;
         $this->modelTranslation = $modelTranslation;

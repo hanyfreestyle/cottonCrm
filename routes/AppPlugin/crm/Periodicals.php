@@ -2,6 +2,7 @@
 
 
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
+use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,6 +16,6 @@ Route::get('/book/Periodicals/destroy/{id}',[PeriodicalsController::class,'Force
 Route::get('/book/Periodicals/config', [PeriodicalsController::class,'config'])->name('Periodicals.config');
 
 
-//Route::get('/crm/customers/report/',[CrmCustomersReportController::class,'report'])->name('CrmCustomer.Report.index');
-//Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.filter');
+Route::get('/book/Periodicals/report/',[PeriodicalsReportController::class,'report'])->name('Periodicals.Report.index');
+Route::post('/book/Periodicals/report/', [PeriodicalsReportController::class, 'report'])->name('Periodicals.Report.filter');
 

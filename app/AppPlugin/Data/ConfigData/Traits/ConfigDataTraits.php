@@ -276,6 +276,17 @@ trait ConfigDataTraits {
                 $LangMenu = array_merge($LangMenu, $addLang);
             }
 
+            if (File::isFile(base_path('routes/AppPlugin/data/data_BookRelease.php'))) {
+                $addLang = ['BookRelease' => ['id' => 'BookRelease', 'group' => 'admin', 'sub_dir' => 'data', 'file_name' => 'BookRelease', 'name_en' => 'BookRelease', 'name_ar' => 'نوع الاصدار']];
+                $LangMenu = array_merge($LangMenu, $addLang);
+            }
+
+            if (File::isFile(base_path('routes/AppPlugin/data/data_BookLang.php'))) {
+                $addLang = ['BookLang' => ['id' => 'BookLang', 'group' => 'admin', 'sub_dir' => 'data', 'file_name'
+                => 'BookLang', 'name_en' => 'BookLang', 'name_ar' => 'اللغات']];
+                $LangMenu = array_merge($LangMenu, $addLang);
+            }
+
         }
 
         return $LangMenu;
@@ -439,9 +450,9 @@ trait ConfigDataTraits {
             $subMenu->parent_id = $mainMenu->id;
             $subMenu->sel_routs = ConfigDataTraits::selRouteList("BookRelease");
             $subMenu->url = "admin.data.BookRelease.index";
-            $subMenu->name = "نوع الاصدار";
-            $subMenu->roleView = "EvaluationCust_view";
-            $subMenu->icon = "fas fa-tv";
+            $subMenu->name = "admin/data/BookRelease.app_menu";
+            $subMenu->roleView = "data_view";
+            $subMenu->icon = "fas fa-book";
             $subMenu->save();
         }
 
@@ -450,9 +461,9 @@ trait ConfigDataTraits {
             $subMenu->parent_id = $mainMenu->id;
             $subMenu->sel_routs = ConfigDataTraits::selRouteList("BookLang");
             $subMenu->url = "admin.data.BookLang.index";
-            $subMenu->name = "اللغة";
-            $subMenu->roleView = "EvaluationCust_view";
-            $subMenu->icon = "fas fa-tv";
+            $subMenu->name = "admin/data/BookLang.app_menu";
+            $subMenu->roleView = "data_view";
+            $subMenu->icon = "fas fa-globe";
             $subMenu->save();
         }
 

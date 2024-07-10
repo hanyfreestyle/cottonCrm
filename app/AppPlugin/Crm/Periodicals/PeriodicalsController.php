@@ -71,21 +71,6 @@ class PeriodicalsController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
 
-//        $data = Periodicals::query()
-//            ->where('update',null)
-//            ->where('des', 'like', '%القاهرة%')
-//            ->get();
-//
-//        foreach ($data as $update){
-//            $update->country_id = 66 ;
-//            $update->lang_id = 126 ;
-//            $update->release_id = 120 ;
-//            $update->save() ;
-//        }
-
-
-//       dd($data);
-
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
 
@@ -287,6 +272,14 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->icon = "fas fa-list";
         $subMenu->save();
 
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Periodicals.Report.index|Periodicals.Report.filter";
+        $subMenu->url = "admin.Periodicals.Report.index";
+        $subMenu->name = "admin/Periodicals.app_menu_report";
+        $subMenu->roleView = "Periodicals_view";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
 
     }
 
