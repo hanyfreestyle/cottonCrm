@@ -137,7 +137,6 @@ class PeriodicalsController extends AdminMainController {
             ->editColumn('ListRelease', function ($row) {
                 return view('datatable.but')->with(['btype' => 'ListRelease', 'row' => $row])->render();
             })
-
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
@@ -220,31 +219,8 @@ class PeriodicalsController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
     public function ForceDeleteException($id) {
-
-        $deleteRow = Periodicals::query()->where('id', $id)
-            ->firstOrFail();
+        $deleteRow = Periodicals::query()->where('id', $id)->firstOrFail();
         $deleteRow->delete();
-
-
-//        if ($deleteRow->orders_count == 0) {
-//            try {
-//                DB::transaction(function () use ($deleteRow, $id) {
-//                    if (count($deleteRow->more_photos) > 0) {
-//                        foreach ($deleteRow->more_photos as $del_photo) {
-//                            AdminHelper::DeleteAllPhotos($del_photo);
-//                        }
-//                    }
-//                    $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
-//                    AdminHelper::DeleteDir($this->UploadDirIs, $id);
-//                    $deleteRow->forceDelete();
-//                });
-//            } catch (\Exception $exception) {
-//                return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
-//            }
-//        } else {
-//            return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
-//        }
-
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
@@ -276,6 +252,15 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->sel_routs = "Periodicals.Report.index|Periodicals.Report.filter";
         $subMenu->url = "admin.Periodicals.Report.index";
         $subMenu->name = "admin/Periodicals.app_menu_report";
+        $subMenu->roleView = "Periodicals_view";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Periodicals.ReleaseReport.index|Periodicals.ReleaseReport.filter";
+        $subMenu->url = "admin.Periodicals.ReleaseReport.index";
+        $subMenu->name = "admin/Periodicals.app_menu_report_release";
         $subMenu->roleView = "Periodicals_view";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();

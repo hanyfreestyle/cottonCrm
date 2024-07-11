@@ -3,6 +3,7 @@
 
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseController;
+use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseReportController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,8 @@ Route::get('/book/Periodicals/config', [PeriodicalsController::class, 'config'])
 
 Route::get('/book/Periodicals/report/', [PeriodicalsReportController::class, 'report'])->name('Periodicals.Report.index');
 Route::post('/book/Periodicals/report/', [PeriodicalsReportController::class, 'report'])->name('Periodicals.Report.filter');
+Route::get('/book/Periodicals/ReleaseReport/', [PeriodicalsReleaseReportController::class, 'report'])->name('Periodicals.ReleaseReport.index');
+Route::post('/book/Periodicals/ReleaseReport/', [PeriodicalsReleaseReportController::class, 'report'])->name('Periodicals.ReleaseReport.filter');
 
 Route::get('/book/AddRelease/{id}', [PeriodicalsReleaseController::class, 'AddRelease'])->name('Periodicals.AddRelease');
 

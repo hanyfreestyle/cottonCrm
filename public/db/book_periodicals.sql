@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 06:11 PM
+-- Generation Time: Jul 11, 2024 at 02:21 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 INSERT INTO `book_periodicals` (`id`, `name`, `country_id`, `release_id`, `lang_id`, `des`, `update`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'مجلة المجلة', 66, 121, 126, 'ثقافية فكرية شهرية (1975- 1971م) (المؤسس فتحي رضوان ورأس تحريرها يحيى حقي ومحمد عوض) (79ع)', NULL, NULL, NULL, NULL),
 (2, 'الاجتهاد', 125, NULL, 126, 'رئيس التحرير: الفضل شلق – رضوان السيد مدير التحرير بيروت.', NULL, NULL, NULL, NULL),
-(3, 'الطليعة', 66, NULL, 126, '19650-1977م (لطفي الخولي)', NULL, NULL, NULL, NULL),
+(3, 'الطليعة', 66, 121, 126, '1965-1977م (لطفي الخولي)', NULL, NULL, NULL, NULL),
 (4, 'الثقافة', 66, 121, 126, 'مجلة شهرية رأس تحريرها يوسف السباعي صدرت عام 1973م', NULL, NULL, NULL, NULL),
 (5, 'الكاتب', 66, 121, 126, 'مجلة شهرية مصرية رأس مجلس إدارتها صلاح سالم', NULL, NULL, NULL, NULL),
 (6, 'الوعي العربي', 66, 121, 126, 'مجلة شهرية ثقافية القاهر، (محمد الخطيب)', NULL, NULL, NULL, NULL),

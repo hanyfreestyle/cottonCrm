@@ -10,6 +10,7 @@ return
 	'app_menu_list' => '',
 	'app_menu_list_release' => '',
 	'app_menu_report' => 'تقارير الدوريات',
+	'app_menu_report_release' => '',
 	'but_add_year_list' => '',
 	'but_delete_release' => '',
 	'form_country' => '',
@@ -24,4 +25,8 @@ return
 	'form_release_repeat' => '',
 	'form_release_year' => '',
 	'mass_confirm_delete' => '',
+	'report_release_month' => '',
+	'report_release_years' => '',
+	'report_years_name' => '',
+	'filter_periodicals' => '',
 ];

@@ -30,7 +30,7 @@ class InfoDiv extends Component {
         $this->arrData = $arrData;
 
         if($this->arrData){
-            $this->des = $this->arrData->where('id',$des)->first()->name;
+            $this->des = $this->arrData->where('id',$des)->first()->name ?? '';
         }else{
             $this->des = $des;
         }

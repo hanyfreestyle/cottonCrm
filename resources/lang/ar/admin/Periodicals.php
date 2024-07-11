@@ -10,6 +10,7 @@ return
 	'app_menu_list' => 'عرض الدوريات',
 	'app_menu_list_release' => 'عرض الاصدارات للدورية',
 	'app_menu_report' => 'تقارير الدوريات',
+	'app_menu_report_release' => 'تقارير الاصدارات',
 	'but_add_year_list' => 'اضافة اصدارات سنوية',
 	'but_delete_release' => 'حذف كل الاصدارات',
 	'form_country' => 'الدولة',
@@ -24,4 +25,8 @@ return
 	'form_release_repeat' => 'عدد التكرار',
 	'form_release_year' => 'العام',
 	'mass_confirm_delete' => 'هل انت متاكد من حذف كل الاصدارات التابعة لهذه الدورية',
+	'report_release_month' => 'احصائيات الشهور',
+	'report_release_years' => 'احصائيات السنوات',
+	'report_years_name' => 'عام',
+	'filter_periodicals' => 'قائمة الدوريات',
 ];
