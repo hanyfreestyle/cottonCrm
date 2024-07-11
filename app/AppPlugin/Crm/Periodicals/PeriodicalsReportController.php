@@ -54,7 +54,7 @@ class PeriodicalsReportController extends AdminMainController {
         $chartData = array();
 
         $session = self::getSessionData($request);
-        $rowData = PeriodicalsController::CustomerDataFilterQ(self::indexQuery(), $session);
+        $rowData = PeriodicalsController::PeriodicalsFilter(self::indexQuery(), $session);
 
         $CountryId = $rowData->get()->groupBy('country_id')->toarray();
         $ReleaseId = $rowData->get()->groupBy('release_id')->toarray();
@@ -65,7 +65,7 @@ class PeriodicalsReportController extends AdminMainController {
         $chartData['Release'] = self::ChartDataFromDataConfig($AllData, 'BookRelease', $ReleaseId);
         $chartData['BookLang'] = self::ChartDataFromDataConfig($AllData, 'BookLang', $LangId);
 
-        return view('AppPlugin.BookPeriodicals.report')->with([
+        return view('AppPlugin.BookPeriodicals.report.periodicals')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
             'chartData' => $chartData,

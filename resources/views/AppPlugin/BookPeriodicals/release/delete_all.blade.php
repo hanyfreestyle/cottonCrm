@@ -21,7 +21,7 @@
             <div class="alert alert-warning alert-dismissible">
                 {{__('admin/Periodicals.mass_confirm_delete')}}
             </div>
-            <x-admin.form.submit  bg="d" :text="__('admin/Periodicals.but_delete_release')"/>
+            <x-admin.form.submit bg="d" :text="__('admin/Periodicals.but_delete_release')"/>
         </form>
     </x-admin.hmtl.section>
 @endsection

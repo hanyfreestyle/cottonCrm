@@ -61,41 +61,139 @@ class PeriodicalsReleaseController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddRelease
+#|||||||||||||||||||||||||||||||||||||| #     index
+    public function ListRelease(Request $request, $periodicalsId) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $book = Periodicals::where('id', $periodicalsId)->withcount('release')->firstOrFail();
+
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list_release') . ' (' . $book->name . ')';
+        $pageData['SubView'] = false;
+        $session = self::getSessionData($request);
+        $rowData = self::ReleaseFilterQ(self::indexQuery($periodicalsId), $session);
+
+        return view('AppPlugin.BookPeriodicals.release.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'periodicalsId' => $periodicalsId,
+            'book' => $book,
+        ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
     public function AddRelease($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
-        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release','repeat')->firstOrFail();
+        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release', 'repeat')->firstOrFail();
         $PeriodicalsRelease = new PeriodicalsRelease();
         $pageData['BoxH1'] = __('admin/Periodicals.app_menu_add_release');
 
-        return view('AppPlugin.BookPeriodicals.form_AddRelease')->with([
+        return view('AppPlugin.BookPeriodicals.release.form')->with([
             'pageData' => $pageData,
             'Periodicals' => $Periodicals,
             'PeriodicalsRelease' => $PeriodicalsRelease,
         ]);
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function EditRelease($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $pageData['BoxH1'] = __('admin/Periodicals.app_menu_edit_release');
+        $PeriodicalsRelease = PeriodicalsRelease::where('id', $id)->firstOrFail();
+        $Periodicals = Periodicals::query()
+            ->where('id', $PeriodicalsRelease->periodicals_id)
+            ->withCount('release')->firstOrFail();
+
+        return view('AppPlugin.BookPeriodicals.release.form')->with([
+            'pageData' => $pageData,
+            'Periodicals' => $Periodicals,
+            'PeriodicalsRelease' => $PeriodicalsRelease,
+        ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function AddEditOneRelease(PeriodicalsAddReleaseRequest $request, $id) {
+        $saveData = PeriodicalsRelease::findOrNew($id);
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+                $saveData->periodicals_id = $request->input('periodicals_id');
+                $saveData->year = $request->input('year');
+                $saveData->month = $request->input('month');
+                $saveData->number = $request->input('number');
+                $saveData->notes = $request->input('notes');
+                $saveData->repeat = $request->input('repeat');
+                $saveData->save();
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        if ($id == 0) {
+            return back()->with('Add.Done', "");
+        } else {
+            return back()->with('Edit.Done', "");
+        }
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddRelease
+#|||||||||||||||||||||||||||||||||||||| #
     public function AddReleaseYears($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
-        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release','repeat')->firstOrFail();
+        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release', 'repeat')->firstOrFail();
         $PeriodicalsRelease = new PeriodicalsRelease();
         $pageData['BoxH1'] = __('admin/Periodicals.but_add_year_list');
 
-//        dd($Periodicals->release->groupBy('year') );
+        //        dd($Periodicals->release->groupBy('year') );
         return view('AppPlugin.BookPeriodicals.form_AddReleaseYears')->with([
             'pageData' => $pageData,
             'Periodicals' => $Periodicals,
             'PeriodicalsRelease' => $PeriodicalsRelease,
         ]);
     }
+
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddEditOneRelease
+#|||||||||||||||||||||||||||||||||||||| #
+    public function DeleteRelease($id) {
+        $deleteRow = PeriodicalsRelease::query()->where('id', $id)->firstOrFail();
+        $deleteRow->delete();
+        return back()->with('confirmDelete', "");
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function ReleaseDeleteAll($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Add";
+
+        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->firstOrFail();
+        $PeriodicalsRelease = new PeriodicalsRelease();
+        $pageData['BoxH1'] = __('admin/Periodicals.app_menu_add_release');
+
+        return view('AppPlugin.BookPeriodicals.release.delete_all')->with([
+            'pageData' => $pageData,
+            'Periodicals' => $Periodicals,
+            'PeriodicalsRelease' => $PeriodicalsRelease,
+        ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function ReleaseDeleteAllConfirm($id) {
+        $Periodicals = Periodicals::query()->where('id', $id)->firstOrFail();
+        $deleteRow = PeriodicalsRelease::query()->where('periodicals_id', $Periodicals->id)->delete();
+        //        $deleteRow->delete();
+        return redirect()->route('admin.Periodicals.ListRelease', $Periodicals->id);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
     public function AddYearReleaseForm(PeriodicalsAddReleaseYearsRequest $request, $id) {
         $periodicals_id = $request->input('periodicals_id');
         $Periodicals = Periodicals::query()->where('id', $periodicals_id)->firstOrFail();
@@ -122,82 +220,6 @@ class PeriodicalsReleaseController extends AdminMainController {
     }
 
 
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     EditRelease
-    public function EditRelease($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-        $pageData['BoxH1'] = __('admin/Periodicals.app_menu_edit_release');
-        $PeriodicalsRelease = PeriodicalsRelease::where('id', $id)->firstOrFail();
-        $Periodicals = Periodicals::query()
-            ->where('id', $PeriodicalsRelease->periodicals_id)
-            ->withCount('release')->firstOrFail();
-
-        return view('AppPlugin.BookPeriodicals.form_AddRelease')->with([
-            'pageData' => $pageData,
-            'Periodicals' => $Periodicals,
-            'PeriodicalsRelease' => $PeriodicalsRelease,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddEditOneRelease
-    public function AddEditOneRelease(PeriodicalsAddReleaseRequest $request, $id) {
-        $saveData = PeriodicalsRelease::findOrNew($id);
-        try {
-            DB::transaction(function () use ($request, $saveData) {
-                $saveData->periodicals_id = $request->input('periodicals_id');
-                $saveData->year = $request->input('year');
-                $saveData->month = $request->input('month');
-                $saveData->number = $request->input('number');
-                $saveData->notes = $request->input('notes');
-                $saveData->repeat = $request->input('repeat');
-                $saveData->save();
-            });
-        } catch (\Exception $exception) {
-            return back()->with('data_not_save', "");
-        }
-        if ($id == 0) {
-            return back()->with('Add.Done', "");
-        } else {
-            return back()->with('Edit.Done', "");
-        }
-
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
-    public function ListRelease(Request $request, $periodicalsId) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $book = Periodicals::where('id', $periodicalsId)->firstOrFail();
-
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list_release') . ' (' . $book->name . ')';
-        $pageData['SubView'] = false;
-
-        $session = self::getSessionData($request);
-        $rowData = self::ReleaseFilterQ(self::indexQuery($periodicalsId), $session);
-
-        return view('AppPlugin.BookPeriodicals.index_release')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'periodicalsId' => $periodicalsId,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
-    static function indexQuery($id) {
-        $data = PeriodicalsRelease::query()->where('periodicals_id', $id)
-            ->orderBy('year', 'ASC')
-            ->orderBy('month', 'ASC');
-        return $data;
-    }
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   DataTable
     public function ReleaseDataTable(Request $request, $periodicalsId) {
@@ -216,11 +238,19 @@ class PeriodicalsReleaseController extends AdminMainController {
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
-
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
             ->rawColumns(['Edit', "Delete", 'ListRelease', 'AddRelease']);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+    static function indexQuery($id) {
+        $data = PeriodicalsRelease::query()->where('periodicals_id', $id)
+            ->orderBy('year', 'ASC')
+            ->orderBy('month', 'ASC');
+        return $data;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -241,41 +271,6 @@ class PeriodicalsReleaseController extends AdminMainController {
         }
 
         return $query;
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
-    public function ForceDeleteException($id) {
-        $deleteRow = PeriodicalsRelease::query()->where('id', $id)->firstOrFail();
-        $deleteRow->delete();
-        return back()->with('confirmDelete', "");
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddRelease
-    public function deleteAllRelease($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Add";
-
-        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->firstOrFail();
-        $PeriodicalsRelease = new PeriodicalsRelease();
-        $pageData['BoxH1'] = __('admin/Periodicals.app_menu_add_release');
-
-        return view('AppPlugin.BookPeriodicals.form_DeleteRelease')->with([
-            'pageData' => $pageData,
-            'Periodicals' => $Periodicals,
-            'PeriodicalsRelease' => $PeriodicalsRelease,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
-    public function deleteAllReleaseConfirm($id) {
-        $Periodicals = Periodicals::query()->where('id', $id)->firstOrFail();
-        $deleteRow = PeriodicalsRelease::query()->where('periodicals_id', $Periodicals->id)->delete();
-//        $deleteRow->delete();
-        return redirect()->route('admin.Periodicals.ListRelease',$Periodicals->id);
     }
 
 }

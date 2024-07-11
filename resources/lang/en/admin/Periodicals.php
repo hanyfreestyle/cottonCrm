@@ -9,6 +9,7 @@ return
 	'app_menu_edit_release' => '',
 	'app_menu_list' => '',
 	'app_menu_list_release' => '',
+	'app_menu_notes' => '',
 	'app_menu_report' => 'تقارير الدوريات',
 	'app_menu_report_release' => '',
 	'but_add_year_list' => '',
@@ -29,5 +30,4 @@ return
 	'report_release_month' => '',
 	'report_release_years' => '',
 	'report_years_name' => '',
-	'form_release_repeat' => '',
 ];

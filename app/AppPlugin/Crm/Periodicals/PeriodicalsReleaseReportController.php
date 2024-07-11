@@ -4,7 +4,6 @@ namespace App\AppPlugin\Crm\Periodicals;
 
 
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
-use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
@@ -64,7 +63,7 @@ class PeriodicalsReleaseReportController extends AdminMainController {
         $chartData['Years'] = self::ChartDataFromGroup($AllData, $Years,'عام');
         $chartData['Month'] = self::ChartDataFromDefCategory($AllData,'month',$Month,12 );
 
-        return view('AppPlugin.BookPeriodicals.report_release')->with([
+        return view('AppPlugin.BookPeriodicals.report.release')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
             'chartData' => $chartData,

@@ -13,14 +13,18 @@
             </div>
             <div class="col-6 dir_button">
                 <x-admin.form.action-button url="{{route('admin.Periodicals.AddRelease',$periodicalsId)}}" type="AddRelease" :tip="false"/>
-                <x-admin.form.action-button url="{{route('admin.Periodicals.deleteAllRelease',$periodicalsId)}}" bg="d" icon="fas fa-trash" :print-lable="__('admin/Periodicals.but_delete_release')" :tip="false"/>
+                @if($book->release_count >0 )
+                    <x-admin.form.action-button url="{{route('admin.Periodicals.deleteAllRelease',$periodicalsId)}}" bg="d" icon="fas fa-trash"
+                                                :print-lable="__('admin/Periodicals.but_delete_release')" :tip="false"/>
+                @endif
+
             </div>
         </div>
     </x-admin.hmtl.section>
 
 
     <x-admin.hmtl.section>
-{{--        <x-app-plugin.crm.book.form-filter form-name="{{$formName}}" :row="$rowData"/>--}}
+        {{--        <x-app-plugin.crm.book.form-filter form-name="{{$formName}}" :row="$rowData"/>--}}
         <x-admin.card.normal :title="$pageData['BoxH1']">
             <table {!!Table_Style(true,true) !!} >
                 <thead>
@@ -57,11 +61,11 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
 
-                    {data: 'year', name: 'year', orderable: true, searchable: true, className: "text-center" },
-                    {data: 'month', name: 'month', orderable: false, searchable: false, className: "text-center" },
-                    {data: 'number', name: 'number', orderable: true, searchable: true, className: "text-center" },
-                    {data: 'notes', name: 'notes', orderable: true, searchable: true, },
-                    {data: 'repeat', name: 'repeat', orderable: false, searchable: false, className: "text-center" },
+                    {data: 'year', name: 'year', orderable: true, searchable: true, className: "text-center"},
+                    {data: 'month', name: 'month', orderable: false, searchable: false, className: "text-center"},
+                    {data: 'number', name: 'number', orderable: true, searchable: true, className: "text-center"},
+                    {data: 'notes', name: 'notes', orderable: true, searchable: true,},
+                    {data: 'repeat', name: 'repeat', orderable: false, searchable: false, className: "text-center"},
                         @can($PrefixRole.'_edit')
                     {
                         data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"

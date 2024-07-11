@@ -47,7 +47,7 @@ class PeriodicalsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
+            'AddConfig' => false,
             'configArr' => ["filterid" => 0],
             'yajraTable' => true,
             'AddLang' => false,
@@ -58,8 +58,6 @@ class PeriodicalsController extends AdminMainController {
         self::loadConstructData($sendArr);
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     index
     public function index(Request $request) {
@@ -69,19 +67,63 @@ class PeriodicalsController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-        $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-//dd($rowData->take(1)->get());
-        return view('AppPlugin.BookPeriodicals.index')->with([
+        $rowData = self::PeriodicalsFilter(self::indexQuery(), $session);
+        return view('AppPlugin.BookPeriodicals.periodicals.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     create
+    public function create() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Add";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
+
+        $rowData = Periodicals::findOrNew(0);
+
+        return view('AppPlugin.BookPeriodicals.periodicals.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
         ]);
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     edit
+    public function edit($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $rowData = Periodicals::where('id', $id)->firstOrFail();
+
+        return view('AppPlugin.BookPeriodicals.periodicals.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+    public function storeUpdate(PeriodicalsRequest $request, $id = 0) {
+        $saveData = Periodicals::findOrNew($id);
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+                $saveData->name = $request->input('name');
+                $saveData->des = $request->input('des');
+                $saveData->country_id = $request->input('country_id');
+                $saveData->release_id = $request->input('release_id');
+                $saveData->lang_id = $request->input('lang_id');
+                $saveData->save();
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     indexQuery
     static function indexQuery() {
-
         $data = Periodicals::select(
             [
                 'book_periodicals.*',
@@ -91,7 +133,6 @@ class PeriodicalsController extends AdminMainController {
             ])
             ->with('release')
             ->where('update', null)
-//            ->where('country_id',null)
             ->leftJoin('data_country_translations', function ($join) {
                 $join->on('book_periodicals.country_id', '=', 'data_country_translations.country_id')
                     ->where('data_country_translations.locale', '=', 'ar');
@@ -103,8 +144,7 @@ class PeriodicalsController extends AdminMainController {
             ->leftJoin('config_data_translations as lang', function ($join) {
                 $join->on('book_periodicals.lang_id', '=', 'lang.data_id')
                     ->where('lang.locale', '=', 'ar');
-            })->withsum('release','repeat')
-        ;
+            })->withsum('release', 'repeat');
 
         return $data;
     }
@@ -114,7 +154,7 @@ class PeriodicalsController extends AdminMainController {
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
-            $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
+            $rowData = self::PeriodicalsFilter(self::indexQuery(), $session);
             return self::DataTableColumns($rowData)->make(true);
         }
     }
@@ -147,7 +187,7 @@ class PeriodicalsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    static function CustomerDataFilterQ($query, $session, $order = null) {
+    static function PeriodicalsFilter($query, $session, $order = null) {
         $formName = issetArr($session, "formName", null);
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
@@ -166,59 +206,6 @@ class PeriodicalsController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
-    public function create() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Add";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-
-        $rowData = Periodicals::findOrNew(0);
-
-        return view('AppPlugin.BookPeriodicals.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
-    public function edit($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-        $rowData = Periodicals::where('id', $id)->firstOrFail();
-
-        return view('AppPlugin.BookPeriodicals.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
-    public function storeUpdate(PeriodicalsRequest $request, $id = 0) {
-
-        $saveData = Periodicals::findOrNew($id);
-        try {
-            DB::transaction(function () use ($request, $saveData) {
-                $saveData->name = $request->input('name');
-                $saveData->des = $request->input('des');
-                $saveData->country_id = $request->input('country_id');
-                $saveData->release_id = $request->input('release_id');
-                $saveData->lang_id = $request->input('lang_id');
-//                $saveData->update = 1;
-                $saveData->save();
-            });
-        } catch (\Exception $exception) {
-            return back()->with('data_not_save', "");
-        }
-
-        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-    }
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
     public function ForceDeleteException($id) {
         $deleteRow = Periodicals::query()->where('id', $id)->firstOrFail();
@@ -226,7 +213,6 @@ class PeriodicalsController extends AdminMainController {
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   AdminMenu
@@ -239,6 +225,16 @@ class PeriodicalsController extends AdminMainController {
         $mainMenu->icon = "fas fa-user-tie";
         $mainMenu->roleView = "Periodicals_view";
         $mainMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("Periodicals.Notes");;
+        $subMenu->url = "admin.Periodicals.Notes.index";
+        $subMenu->name = "admin/Periodicals.app_menu_notes";
+        $subMenu->roleView = "Periodicals_view";
+        $subMenu->icon = "far fa-lightbulb";
+        $subMenu->save();
+
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
