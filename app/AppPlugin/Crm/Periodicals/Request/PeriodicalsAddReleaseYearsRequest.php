@@ -16,7 +16,7 @@ class PeriodicalsAddReleaseYearsRequest extends FormRequest {
 
         $rules = [
             'year' => "required|numeric|between:1900,2024",
-            'yearslist' => "required|array|min:2",
+            'yearslist' => "required|array|min:1",
         ];
 
 

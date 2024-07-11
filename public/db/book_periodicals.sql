@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2024 at 02:21 PM
+-- Generation Time: Jul 11, 2024 at 07:52 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -43,13 +43,13 @@ INSERT INTO `book_periodicals` (`id`, `name`, `country_id`, `release_id`, `lang_
 (15, 'آفاق عربية', 106, 121, 126, 'شهرية وزارة الثقافة العراقية 1975 - 2003', NULL, NULL, NULL, NULL),
 (16, 'الضاد', 220, 121, 126, 'شهرية (حجلاق) حلب', NULL, NULL, NULL, NULL),
 (17, 'السياسة الدولية', 66, NULL, 126, 'سياسية دورية مؤسسة الأهرام', NULL, NULL, NULL, NULL),
-(18, 'القاهرة', 66, NULL, 126, 'الهيئة المصرية للكتاب، غالي شكري', NULL, NULL, NULL, NULL),
+(18, 'القاهرة', 66, 121, 126, 'الهيئة المصرية للكتاب، غالي شكري', NULL, NULL, NULL, NULL),
 (19, 'الفكر', 230, 121, 126, 'شهرية تونسية (محمد مزالي) 55-1986م', NULL, NULL, NULL, NULL),
-(20, 'الفكر', 106, NULL, 126, 'عراقية صدرت 1959م', NULL, NULL, NULL, NULL),
-(21, 'الكتاب العربي', NULL, 124, 126, '(عدد خاص عن مؤتمر الأدباء العرب الرابع)', NULL, NULL, NULL, NULL),
-(22, 'الفكر العربي', NULL, 121, NULL, 'شهرية صدرت 1964', NULL, NULL, NULL, NULL),
-(23, 'الثقافة العربية', 197, NULL, 126, 'يصدرها معهد الانماء العربي', NULL, NULL, NULL, NULL),
-(24, 'لا شيء', 128, NULL, 126, 'ليبية، راس تحريرها محمد الفيتوري.', NULL, NULL, NULL, NULL),
+(20, 'الفكر', 106, 121, 126, 'عراقية صدرت 1959م (عدد خاص عن مؤتمر الأدباء العرب الرابع)', NULL, NULL, NULL, NULL),
+(21, 'الكتاب العربي', NULL, 121, 126, 'شهرية صدرت 1964', NULL, NULL, NULL, NULL),
+(22, 'الفكر العربي', NULL, 121, NULL, 'يصدرها معهد الانماء العربي', NULL, NULL, NULL, NULL),
+(23, 'الثقافة العربية', 128, 121, 126, 'ليبية، راس تحريرها محمد الفيتوري.', NULL, NULL, NULL, NULL),
+(24, 'لا شيء', NULL, NULL, 126, NULL, NULL, NULL, NULL, NULL),
 (25, 'الأصالة', 4, 121, 126, 'شهرية جزائرية', NULL, NULL, NULL, NULL),
 (26, 'الوحدة', 152, 121, 126, 'شهرية مغربية', NULL, NULL, NULL, NULL),
 (27, 'التمدن الاسلامي', 220, NULL, 126, '1935-1982م، دمشق،', NULL, NULL, NULL, NULL),

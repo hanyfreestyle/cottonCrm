@@ -15,10 +15,11 @@
                     <th class="TD_20">#</th>
                     <th class="TD_150">{{__('admin/Periodicals.form_name')}}</th>
                     <th class="TD_250">{{__('admin/Periodicals.form_des')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_country')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_lang')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_release_name')}}</th>
+                    <th class="TD_80">{{__('admin/Periodicals.form_country')}}</th>
+                    <th class="TD_80">{{__('admin/Periodicals.form_lang')}}</th>
+                    <th class="TD_80">{{__('admin/Periodicals.form_release_name')}}</th>
                     <th class="TD_100">{{__('admin/Periodicals.form_release_count')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_repeat')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
@@ -53,6 +54,7 @@
                     {data: 'langName', name: 'lang.name', orderable: true, searchable: true , className: "text-center" },
                     {data: 'releaseName', name: 'releasetype.name', orderable: true, searchable: true , className: "text-center" },
                     {data: 'countRell', name: 'countRell', orderable: false, searchable: false, className: "text-center" },
+                    {data: 'release_sum_repeat', name: 'release_sum_repeat', orderable: false, searchable: false, className: "text-center" },
 
 
 

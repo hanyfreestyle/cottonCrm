@@ -13,6 +13,7 @@ return
 	'app_menu_report_release' => 'تقارير الاصدارات',
 	'but_add_year_list' => 'اضافة اصدارات سنوية',
 	'but_delete_release' => 'حذف كل الاصدارات',
+	'filter_periodicals' => 'قائمة الدوريات',
 	'form_country' => 'الدولة',
 	'form_des' => 'نبذة',
 	'form_lang' => 'اللغة',
@@ -28,5 +29,5 @@ return
 	'report_release_month' => 'احصائيات الشهور',
 	'report_release_years' => 'احصائيات السنوات',
 	'report_years_name' => 'عام',
-	'filter_periodicals' => 'قائمة الدوريات',
+	'form_release_repeat' => 'نسخ مكررة',
 ];

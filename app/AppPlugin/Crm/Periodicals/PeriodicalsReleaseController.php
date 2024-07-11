@@ -66,7 +66,7 @@ class PeriodicalsReleaseController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
-        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->firstOrFail();
+        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release','repeat')->firstOrFail();
         $PeriodicalsRelease = new PeriodicalsRelease();
         $pageData['BoxH1'] = __('admin/Periodicals.app_menu_add_release');
 
@@ -83,10 +83,11 @@ class PeriodicalsReleaseController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
-        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->firstOrFail();
+        $Periodicals = Periodicals::query()->where('id', $id)->withCount('release')->withsum('release','repeat')->firstOrFail();
         $PeriodicalsRelease = new PeriodicalsRelease();
         $pageData['BoxH1'] = __('admin/Periodicals.but_add_year_list');
 
+//        dd($Periodicals->release->groupBy('year') );
         return view('AppPlugin.BookPeriodicals.form_AddReleaseYears')->with([
             'pageData' => $pageData,
             'Periodicals' => $Periodicals,
@@ -98,7 +99,7 @@ class PeriodicalsReleaseController extends AdminMainController {
     public function AddYearReleaseForm(PeriodicalsAddReleaseYearsRequest $request, $id) {
         $periodicals_id = $request->input('periodicals_id');
         $Periodicals = Periodicals::query()->where('id', $periodicals_id)->firstOrFail();
-        if (count($request->yearslist) >= 2) {
+        if (count($request->yearslist) >= 1) {
             try {
                 DB::transaction(function () use ($request) {
                     foreach ($request->yearslist as $key => $value) {

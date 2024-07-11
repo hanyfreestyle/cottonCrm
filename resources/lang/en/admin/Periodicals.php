@@ -13,6 +13,7 @@ return
 	'app_menu_report_release' => '',
 	'but_add_year_list' => '',
 	'but_delete_release' => '',
+	'filter_periodicals' => '',
 	'form_country' => '',
 	'form_des' => '',
 	'form_lang' => '',
@@ -28,5 +29,5 @@ return
 	'report_release_month' => '',
 	'report_release_years' => '',
 	'report_years_name' => '',
-	'filter_periodicals' => '',
+	'form_release_repeat' => '',
 ];

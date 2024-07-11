@@ -70,7 +70,7 @@ class PeriodicalsController extends AdminMainController {
 
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-
+//dd($rowData->take(1)->get());
         return view('AppPlugin.BookPeriodicals.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -103,7 +103,9 @@ class PeriodicalsController extends AdminMainController {
             ->leftJoin('config_data_translations as lang', function ($join) {
                 $join->on('book_periodicals.lang_id', '=', 'lang.data_id')
                     ->where('lang.locale', '=', 'ar');
-            });
+            })->withsum('release','repeat')
+        ;
+
         return $data;
     }
 

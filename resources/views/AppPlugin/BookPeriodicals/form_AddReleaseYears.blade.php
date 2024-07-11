@@ -31,19 +31,40 @@
             </div>
 
             <div class="row">
-                @for ($i = 1; $i <= 12 ; $i++)
-                    <div class="col-lg-6">
+                <div class="col-lg-6">
+                    @for ($i = 1; $i <= 6 ; $i++)
+
                         <div class="row">
                             <input name="yearslist[]" id="{{$i}}" class="icheck-primaryX d-inline  amenity_checkbox" value="{{$i}}" type="checkbox">
                             <x-admin.form.input name="number[]" :disabled="true" :value="$i" :label="__($defLang.'form_release_num')" col="2" tdir="ar"/>
-                            <x-admin.form.input name="notes__{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_notes')" col="5" tdir="ar" :req="false"/>
-                            <x-admin.form.input name="repeat_{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_repeat')" col="3" tdir="ar" :req="false"/>
+                            <x-admin.form.input name="notes__{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_notes')" col="5" tdir="ar"
+                                                :req="false"/>
+                            <x-admin.form.input name="repeat_{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_repeat')" col="3" tdir="ar"
+                                                :req="false"/>
                         </div>
-                    </div>
-                @endfor
+
+                    @endfor
+                </div>
+                <div class="col-lg-6">
+                    @for ($i = 7; $i <= 12 ; $i++)
+
+                        <div class="row">
+                            <input name="yearslist[]" id="{{$i}}" class="icheck-primaryX d-inline  amenity_checkbox" value="{{$i}}" type="checkbox">
+                            <x-admin.form.input name="number[]" :disabled="true" :value="$i" :label="__($defLang.'form_release_num')" col="2" tdir="ar"/>
+                            <x-admin.form.input name="notes__{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_notes')" col="5" tdir="ar"
+                                                :req="false"/>
+                            <x-admin.form.input name="repeat_{{$i}}" :row="$PeriodicalsRelease" :label="__($defLang.'form_release_repeat')" col="3" tdir="ar"
+                                                :req="false"/>
+                        </div>
+
+                    @endfor
+                </div>
             </div>
         </div>
-        <x-admin.form.submit :text="$pageData['ViewType']"/>
+        <div class="col-12 mb-5">
+            <x-admin.form.submit :text="$pageData['ViewType']"/>
+        </div>
+
     </x-admin.form.form-def>
 
 @endsection

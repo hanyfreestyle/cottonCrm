@@ -439,3 +439,17 @@ tbody > tr > td:last-of-type {
 .infoDiv .des{
     font-size: 14px;
 }
+
+.year {
+    position: relative;
+    display: inline-block;
+    font-weight: normal;
+
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 0 !important;
+    border: 1px solid #007bff;
+
+    background-color: #007bff;
+    color: #fff;
+}
