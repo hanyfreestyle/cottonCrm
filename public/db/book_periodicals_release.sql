@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 08:33 PM
+-- Generation Time: Jul 11, 2024 at 11:59 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,104 @@ SET time_zone = "+00:00";
 --
 -- Database: `cottton_crm`
 --
+
+--
+-- Dumping data for table `book_periodicals_release`
+--
+
+INSERT INTO `book_periodicals_release` (`id`, `periodicals_id`, `year`, `month`, `number`, `notes`, `repeat`) VALUES
+(1, 1, 1957, 1, 1, NULL, 2),
+(2, 1, 1957, 2, 2, NULL, NULL),
+(3, 1, 1957, 3, 3, NULL, NULL),
+(4, 1, 1957, 4, 4, NULL, NULL),
+(5, 1, 1957, 5, 5, NULL, NULL),
+(6, 1, 1957, 6, 6, NULL, NULL),
+(7, 1, 1957, 7, 7, NULL, NULL),
+(8, 1, 1957, 8, 8, NULL, NULL),
+(9, 1, 1957, 9, 9, NULL, NULL),
+(10, 1, 1957, 10, 10, NULL, 2),
+(11, 1, 1957, 11, 11, NULL, NULL),
+(12, 1, 1957, 12, 12, NULL, NULL),
+(13, 1, 1958, 1, 1, NULL, NULL),
+(14, 1, 1958, 2, 2, NULL, NULL),
+(15, 1, 1958, 3, 3, NULL, NULL),
+(16, 1, 1958, 4, 4, NULL, NULL),
+(17, 1, 1958, 5, 5, NULL, NULL),
+(18, 1, 1958, 6, 6, NULL, NULL),
+(19, 1, 1958, 9, 9, NULL, NULL),
+(20, 1, 1958, 10, 10, NULL, NULL),
+(21, 1, 1958, 11, 11, NULL, NULL),
+(22, 1, 1959, 1, 1, NULL, NULL),
+(23, 1, 1959, 2, 2, NULL, NULL),
+(24, 1, 1959, 3, 3, NULL, NULL),
+(25, 1, 1959, 4, 4, NULL, NULL),
+(26, 1, 1959, 6, 6, NULL, NULL),
+(27, 1, 1959, 8, 8, NULL, NULL),
+(28, 1, 1959, 10, 10, NULL, 1),
+(29, 1, 1959, 11, 11, NULL, 1),
+(30, 1, 1960, 3, 3, NULL, NULL),
+(31, 1, 1960, 4, 4, NULL, NULL),
+(32, 1, 1960, 5, 5, NULL, NULL),
+(33, 1, 1960, 7, 7, NULL, NULL),
+(34, 1, 1960, 10, 10, NULL, NULL),
+(35, 1, 1960, 11, 11, NULL, NULL),
+(36, 1, 1960, 12, 12, NULL, NULL),
+(37, 1, 1961, 1, 1, NULL, 1),
+(38, 1, 1961, 2, 2, NULL, 1),
+(39, 1, 1961, 3, 3, NULL, 1),
+(40, 1, 1961, 4, 4, NULL, NULL),
+(41, 1, 1961, 5, 5, NULL, 1),
+(42, 1, 1961, 9, 9, NULL, NULL),
+(43, 1, 1961, 10, 10, NULL, NULL),
+(44, 1, 1961, 11, 11, NULL, NULL),
+(45, 1, 1961, 12, 12, NULL, NULL),
+(46, 1, 1962, 3, 3, NULL, NULL),
+(47, 1, 1962, 6, 6, NULL, NULL),
+(48, 1, 1962, 8, 8, NULL, NULL),
+(49, 1, 1962, 10, 10, NULL, NULL),
+(50, 1, 1962, 11, 11, NULL, 1),
+(51, 1, 1962, 12, 12, NULL, 1),
+(52, 1, 1963, 1, 1, NULL, NULL),
+(53, 1, 1963, 2, 2, NULL, NULL),
+(54, 1, 1963, 3, 3, NULL, NULL),
+(55, 1, 1963, 6, 6, NULL, NULL),
+(56, 1, 1963, 7, 7, NULL, NULL),
+(57, 1, 1963, 11, 11, NULL, NULL),
+(58, 1, 1963, 12, 12, NULL, NULL),
+(59, 1, 1964, 1, 1, NULL, NULL),
+(60, 1, 1964, 2, 2, NULL, NULL),
+(61, 1, 1964, 3, 3, NULL, NULL),
+(62, 1, 1964, 4, 4, NULL, NULL),
+(63, 1, 1964, 5, 5, NULL, NULL),
+(64, 1, 1964, 6, 6, NULL, NULL),
+(65, 1, 1964, 7, 7, NULL, NULL),
+(66, 1, 1964, 12, 12, NULL, NULL),
+(67, 1, 1965, 1, 1, NULL, NULL),
+(68, 1, 1965, 2, 2, NULL, NULL),
+(69, 1, 1965, 3, 3, NULL, NULL),
+(70, 1, 1965, 4, 4, NULL, NULL),
+(71, 1, 1965, 5, 5, NULL, NULL),
+(72, 1, 1965, 6, 6, NULL, NULL),
+(73, 1, 1965, 7, 7, NULL, NULL),
+(74, 1, 1965, 8, 8, NULL, NULL),
+(75, 1, 1965, 9, 9, NULL, NULL),
+(76, 1, 1965, 10, 10, NULL, NULL),
+(77, 1, 1965, 12, 12, NULL, NULL),
+(78, 1, 1966, 1, 1, NULL, NULL),
+(79, 1, 1966, 3, 3, NULL, NULL),
+(80, 1, 1966, 4, 4, NULL, 1),
+(81, 1, 1966, 5, 5, NULL, NULL),
+(82, 1, 1966, 8, 8, NULL, NULL),
+(83, 1, 1966, 9, 9, NULL, NULL),
+(84, 1, 1967, 1, 1, NULL, NULL),
+(85, 1, 1967, 3, 3, NULL, NULL),
+(86, 1, 1967, 4, 4, NULL, NULL),
+(87, 1, 1967, 5, 5, NULL, NULL),
+(88, 1, 1969, 4, 4, NULL, NULL),
+(89, 1, 1971, 4, 4, NULL, NULL),
+(90, 1, 1970, 8, 8, NULL, NULL),
+(91, 1, 1970, 9, 9, NULL, NULL),
+(92, 1, 1970, 12, 12, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

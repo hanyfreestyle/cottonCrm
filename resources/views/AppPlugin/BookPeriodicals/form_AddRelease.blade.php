@@ -4,29 +4,16 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         <div class="row mb-2">
-            <div class="col-6">
-            </div>
-            <div class="col-6 dir_button">
+            <div class="col-lg-12 dir_button">
+                <x-admin.form.action-button url="{{route('admin.Periodicals.AddReleaseYears',$Periodicals->id)}}"
+                                            :print-lable="__('admin/Periodicals.but_add_year_list')" icon="fas fa-layer-group"  :tip="false"/>
                 <x-admin.form.action-button url="{{route('admin.Periodicals.ListRelease',$Periodicals->id)}}" type="ListRelease" :tip="false"/>
+
             </div>
         </div>
     </x-admin.hmtl.section>
 
-    <x-admin.hmtl.section>
-        <x-admin.card.normal>
-            <div class="row">
-                <x-admin.hmtl.info-div :t="__($defLang.'form_name')" :des="$Periodicals->name" col="4"/>
-                <x-admin.hmtl.info-div :t="__($defLang.'form_des')" :des="$Periodicals->des" col="8"/>
-            </div>
-            <div class="row">
-                <x-admin.hmtl.info-div :arr-data="$CashCountryList" :t="__($defLang.'form_country')" :des="$Periodicals->country_id" col="3"/>
-                <x-admin.hmtl.info-div :arr-data="$configData" :t="__($defLang.'form_release_name')" :des="$Periodicals->release_id" col="3"/>
-                <x-admin.hmtl.info-div :arr-data="$configData" :t="__($defLang.'form_lang')" :des="$Periodicals->lang_id" col="3"/>
-                <x-admin.hmtl.info-div :t="__($defLang.'form_release_count')" :des="$Periodicals->release_count" col="3"/>
-            </div>
-        </x-admin.card.normal>
-    </x-admin.hmtl.section>
-
+    <x-app-plugin.crm.book.periodicals-info :row="$Periodicals" />
 
     <x-admin.form.form-def :form-route="route($PrefixRoute.'.AddEditOneRelease',intval($PeriodicalsRelease->id))" :row-data="$PeriodicalsRelease" :page-data="$pageData">
         <div class="box_form mt-4">

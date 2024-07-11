@@ -6,28 +6,38 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
+    <x-admin.hmtl.section>
+        <div class="row mb-2">
+            <div class="col-6">
+            </div>
+            <div class="col-6 dir_button">
+                <x-admin.form.action-button url="{{route('admin.Periodicals.AddRelease',$periodicalsId)}}" type="AddRelease" :tip="false"/>
+                <x-admin.form.action-button url="{{route('admin.Periodicals.deleteAllRelease',$periodicalsId)}}" bg="d" icon="fas fa-trash" :print-lable="__('admin/Periodicals.but_delete_release')" :tip="false"/>
+            </div>
+        </div>
+    </x-admin.hmtl.section>
+
+
     <x-admin.hmtl.section>
 {{--        <x-app-plugin.crm.book.form-filter form-name="{{$formName}}" :row="$rowData"/>--}}
-        <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
+        <x-admin.card.normal :title="$pageData['BoxH1']">
             <table {!!Table_Style(true,true) !!} >
                 <thead>
                 <tr>
                     <th class="TD_20">#</th>
-{{--                    <th class="TD_150">{{__('admin/Periodicals.form_name')}}</th>--}}
-{{--                    <th class="TD_250">{{__('admin/Periodicals.form_des')}}</th>--}}
-{{--                    <th class="TD_100">{{__('admin/Periodicals.form_country')}}</th>--}}
-{{--                    <th class="TD_100">{{__('admin/Periodicals.form_lang')}}</th>--}}
-{{--                    <th class="TD_100">{{__('admin/Periodicals.form_release_name')}}</th>--}}
-{{--                    <th class="TD_100">{{__('admin/Periodicals.form_release_count')}}</th>--}}
-{{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
-{{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
-{{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
-{{--                    <x-admin.table.action-but po="top" type="delete"/>--}}
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_year')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_month')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_num')}}</th>
+                    <th class="TD_250">{{__('admin/Periodicals.form_release_notes')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_release_repeat')}}</th>
+                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-        </x-admin.card.def>
+        </x-admin.card.normal>
 
 
     </x-admin.hmtl.section>
@@ -43,41 +53,29 @@
                 serverSide: true,
                 pageLength: 25,
                 @include('datatable.lang')
-                ajax: "{{ route( $PrefixRoute.".ReleaseDataTable") }}",
+                ajax: "{{ route( $PrefixRoute.".ReleaseDataTable",$periodicalsId) }}",
                 columns: [
-                    {data: 'id', name: 'id', orderable: false, searchable: false},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
 
-                    {{--{data: 'name', name: 'name', orderable: true, searchable: true},--}}
-                    {{--{data: 'des', name: 'des', orderable: true, searchable: true},--}}
-                    {{--{data: 'countryName', name: 'data_country_translations.name', orderable: true, searchable: true , className: "text-center" },--}}
-                    {{--{data: 'langName', name: 'lang.name', orderable: true, searchable: true , className: "text-center" },--}}
-                    {{--{data: 'releaseName', name: 'releasetype.name', orderable: true, searchable: true , className: "text-center" },--}}
-                    {{--{data: 'countRell', name: 'countRell', orderable: false, searchable: false, className: "text-center" },--}}
+                    {data: 'year', name: 'year', orderable: true, searchable: true, className: "text-center" },
+                    {data: 'month', name: 'month', orderable: false, searchable: false, className: "text-center" },
+                    {data: 'number', name: 'number', orderable: true, searchable: true, className: "text-center" },
+                    {data: 'notes', name: 'notes', orderable: true, searchable: true, },
+                    {data: 'repeat', name: 'repeat', orderable: false, searchable: false, className: "text-center" },
+                        @can($PrefixRole.'_edit')
+                    {
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
 
+                    },
+                        @endcan
 
+                        @can($PrefixRole.'_delete')
 
-                    {{--    @can($PrefixRole.'_edit')--}}
-                    {{--{--}}
-                    {{--    data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"--}}
+                    {
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"
+                    },
 
-                    {{--},--}}
-                    {{--{--}}
-                    {{--    data: 'AddRelease', name: 'AddRelease', orderable: false, searchable: false, className: "text-center"--}}
-
-                    {{--},--}}
-                    {{--{--}}
-                    {{--    data: 'ListRelease', name: 'ListRelease', orderable: false, searchable: false, className: "text-center"--}}
-
-                    {{--},--}}
-                    {{--    @endcan--}}
-
-                    {{--    @can($PrefixRole.'_delete')--}}
-
-                    {{--{--}}
-                    {{--    data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"--}}
-                    {{--},--}}
-
-                    {{--@endcan--}}
+                    @endcan
                 ],
 
             });
