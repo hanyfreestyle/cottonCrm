@@ -21,6 +21,7 @@
                     <th class="TD_100">{{__('admin/Periodicals.form_release_count')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
                 </thead>
@@ -61,7 +62,11 @@
 
                     },
                     {
-                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+                        data: 'AddRelease', name: 'AddRelease', orderable: false, searchable: false, className: "text-center"
+
+                    },
+                    {
+                        data: 'ListRelease', name: 'ListRelease', orderable: false, searchable: false, className: "text-center"
 
                     },
                         @endcan

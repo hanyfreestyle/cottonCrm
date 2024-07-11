@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2024 at 10:19 PM
+-- Generation Time: Jul 10, 2024 at 08:33 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,14 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cottton_crm`
 --
-
---
--- Dumping data for table `book_periodicals_release`
---
-
-INSERT INTO `book_periodicals_release` (`id`, `periodicals_id`, `year`, `number`) VALUES
-(1, 1, 2000, 1),
-(2, 1, 2001, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

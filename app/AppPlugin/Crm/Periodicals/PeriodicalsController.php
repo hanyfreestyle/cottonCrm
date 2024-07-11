@@ -3,9 +3,6 @@
 namespace App\AppPlugin\Crm\Periodicals;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
-use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
-
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsRequest;
@@ -81,8 +78,8 @@ class PeriodicalsController extends AdminMainController {
     }
 
 
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    #|||||||||||||||||||||||||||||||||||||| #     indexQuery
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #     indexQuery
     static function indexQuery() {
 
         $data = Periodicals::select(
@@ -134,10 +131,17 @@ class PeriodicalsController extends AdminMainController {
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
+            ->editColumn('AddRelease', function ($row) {
+                return view('datatable.but')->with(['btype' => 'AddRelease', 'row' => $row])->render();
+            })
+            ->editColumn('ListRelease', function ($row) {
+                return view('datatable.but')->with(['btype' => 'ListRelease', 'row' => $row])->render();
+            })
+
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-            ->rawColumns(['Edit', "Delete", 'is_active', 'Flag']);
+            ->rawColumns(['Edit', "Delete", 'ListRelease', 'AddRelease']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -166,16 +170,13 @@ class PeriodicalsController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-        dd('dddd');
-        $rowData = CrmCustomers::findOrNew(0);
-        $rowDataAdress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
 
-        return view('AppPlugin.CrmCustomer.form')->with([
+        $rowData = Periodicals::findOrNew(0);
+
+        return view('AppPlugin.BookPeriodicals.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
-            'rowDataAdress' => $rowDataAdress,
         ]);
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -189,8 +190,6 @@ class PeriodicalsController extends AdminMainController {
         return view('AppPlugin.BookPeriodicals.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
-
-
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
+use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,13 @@ Route::post('/book/Periodicals/update/{id}',[PeriodicalsController::class,'store
 Route::get('/book/Periodicals/destroy/{id}',[PeriodicalsController::class,'ForceDeleteException'])->name('Periodicals.destroy');
 Route::get('/book/Periodicals/config', [PeriodicalsController::class,'config'])->name('Periodicals.config');
 
-
 Route::get('/book/Periodicals/report/',[PeriodicalsReportController::class,'report'])->name('Periodicals.Report.index');
 Route::post('/book/Periodicals/report/', [PeriodicalsReportController::class, 'report'])->name('Periodicals.Report.filter');
 
+Route::get('/book/AddRelease/{id}', [PeriodicalsReleaseController::class,'AddRelease'])->name('Periodicals.AddRelease');
+Route::get('/book/ListRelease/{id}', [PeriodicalsReleaseController::class,'ListRelease'])->name('Periodicals.ListRelease');
+Route::post('/book/AddOneRelease/{cat_id}',[PeriodicalsReleaseController::class,'AddEditOneRelease'])->name('PeriodicalsRelease.AddEditOneRelease');
+
+Route::get('/book/ReleaseDataTable/{id}',[PeriodicalsReleaseController::class,'ReleaseDataTable'])->name('PeriodicalsRelease.ReleaseDataTable');
+Route::get('/book/PeriodicalsRelease/edit/{id}',[PeriodicalsReleaseController::class,'EditRelease'])->name('PeriodicalsRelease.edit');
+Route::get('/book/PeriodicalsRelease/destroy/{id}',[PeriodicalsReleaseController::class,'ForceDeleteException'])->name('PeriodicalsRelease.destroy');

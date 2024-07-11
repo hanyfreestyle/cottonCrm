@@ -65,6 +65,17 @@ class ActionButton extends Component {
                     $this->printLable = __('admin/form.button_edit');
                     break;
 
+                case 'AddRelease':
+                    $this->icon = 'fas fa-plus-circle';
+                    $this->bg = getBgColor('p');
+                    $this->printLable = "اضافة اصدار";
+                    break;
+
+                case 'ListRelease':
+                    $this->icon = 'fas fa-search';
+                    $this->bg = getBgColor('dark');
+                    $this->printLable = "عرض الاصدارات";
+                    break;
                 case 'delete':
                     $this->icon = 'fas fa-trash';
                     $this->bg = getBgColor('d');

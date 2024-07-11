@@ -423,3 +423,19 @@ tbody > tr > td:last-of-type {
 
 .dir_left{direction: ltr!important;}
 .cust_country{max-height: 25px;}
+
+.infoDiv{
+    margin-bottom: 10px;
+}
+.infoDiv .title{
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    color: red;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.infoDiv .des{
+    font-size: 14px;
+}

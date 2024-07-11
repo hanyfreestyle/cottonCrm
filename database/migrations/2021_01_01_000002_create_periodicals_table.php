@@ -24,7 +24,11 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('periodicals_id');
             $table->integer('year')->nullable();
+            $table->integer('month')->nullable();
             $table->integer('number')->nullable();
+            $table->text('notes')->nullable();
+            $table->integer('repeat')->nullable();
+            $table->unique(['periodicals_id', 'year','month','number']);
             $table->foreign('periodicals_id')->references('id')->on('book_periodicals')->onDelete('cascade');
 
         });
