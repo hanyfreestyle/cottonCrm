@@ -30,4 +30,5 @@ return
 	'report_release_month' => 'احصائيات الشهور',
 	'report_release_years' => 'احصائيات السنوات',
 	'report_years_name' => 'عام',
+	'app_menu_tags' => 'الكلمات البحثية',
 ];

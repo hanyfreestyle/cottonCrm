@@ -263,6 +263,15 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "BookTags.index|BookTags.edit|BookTags.create|BookTags.config";
+        $subMenu->url = "admin.Periodicals.BookTags.index";
+        $subMenu->name = "admin/Periodicals.app_menu_tags";
+        $subMenu->roleView = "Periodicals_view";
+        $subMenu->icon = "fas fa-hashtag";
+        $subMenu->save();
+
     }
 
 }

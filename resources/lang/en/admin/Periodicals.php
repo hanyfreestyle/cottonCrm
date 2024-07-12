@@ -30,4 +30,5 @@ return
 	'report_release_month' => '',
 	'report_release_years' => '',
 	'report_years_name' => '',
+	'app_menu_tags' => '',
 ];

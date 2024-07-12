@@ -30,12 +30,27 @@ return new class extends Migration {
             $table->integer('repeat')->nullable();
             $table->unique(['periodicals_id', 'year','month','number']);
             $table->foreign('periodicals_id')->references('id')->on('book_periodicals')->onDelete('cascade');
-
         });
+
+        Schema::create('book_periodicals_notes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('periodicals_id');
+            $table->string('name')->nullable();
+            $table->text('des')->nullable();
+            $table->json('tags')->nullable();
+        });
+
+        Schema::create('book_tags', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+        });
+
 
     }
 
     public function down(): void {
+        Schema::dropIfExists('book_tags');
+        Schema::dropIfExists('book_periodicals_notes');
         Schema::dropIfExists('book_periodicals_release');
         Schema::dropIfExists('book_periodicals');
     }

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\AppPlugin\Crm\Periodicals\BookTagsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsNotesController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseController;
@@ -42,4 +43,14 @@ Route::get('/book/notes/create', [PeriodicalsNotesController::class, 'create'])-
 Route::get('/book/notes/edit/{id}', [PeriodicalsNotesController::class, 'edit'])->name('Periodicals.Notes.edit');
 Route::post('/book/notes/update/{id}', [PeriodicalsNotesController::class, 'storeUpdate'])->name('Periodicals.Notes.update');
 
+
+Route::get('/book/tags', [BookTagsController::class, 'TagsIndex'])->name('Periodicals.BookTags.index');
+Route::get('/book/tags/DataTable', [BookTagsController::class, 'TagsDataTable'])->name('Periodicals.BookTags.DataTable');
+Route::get('/book/tags/create', [BookTagsController::class, 'TagsCreate'])->name('Periodicals.BookTags.create');
+Route::get('/book/tags/edit/{id}', [BookTagsController::class, 'TagsEdit'])->name('Periodicals.BookTags.edit');
+Route::post('/book/tags/update/{id}', [BookTagsController::class, 'TagsStoreUpdate'])->name('Periodicals.BookTags.update');
+Route::get('/book/tags/destroy/{id}', [BookTagsController::class, 'TagsDelete'])->name('Periodicals.BookTags.destroy');
+
+Route::get('/book/tags/TagsSearch', [BookTagsController::class, 'TagsSearch'])->name('BlogPost.TagsSearch');
+Route::get('/book/tags/TagsOnFly', [BookTagsController::class, 'TagsOnFly'])->name('BlogPost.TagsOnFly');
 
