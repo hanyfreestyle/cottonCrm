@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2024 at 09:56 PM
+-- Generation Time: Jul 12, 2024 at 01:31 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,16 @@ SET time_zone = "+00:00";
 --
 -- Database: `cottton_crm`
 --
+
+--
+-- Dumping data for table `book_tags`
+--
+
+INSERT INTO `book_tags` (`id`, `name`) VALUES
+(1, 'رجل يقتل زوجته'),
+(2, 'ظاهرة انقطاع الكهرباء'),
+(3, 'القضية الفلسطينية'),
+(4, 'ظاهرة تعدد الزوجات');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

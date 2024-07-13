@@ -122,7 +122,7 @@ class BookTagsController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsDelete
+#|||||||||||||||||||||||||||||||||||||| #
     public function TagsDelete($id) {
         $deleteRow = $this->tags::where('id', $id)->firstOrFail();
         try {

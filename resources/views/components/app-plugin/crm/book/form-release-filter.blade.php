@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-lg-9">
         <x-admin.card.normal>
-            <form action="{{route('admin.Periodicals.ReleaseReport.filter')}}" method="post">
+{{--            <form action="{{route('admin.Periodicals.ReleaseReport.filter')}}" method="post">--}}
+            <form action="{{route($PrefixRoute.'.filter')}}" method="post">
                 @csrf
 
                 <input type="hidden" name="formName" value="{{$formName}}">

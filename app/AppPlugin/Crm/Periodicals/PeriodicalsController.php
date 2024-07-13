@@ -235,6 +235,14 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->icon = "far fa-lightbulb";
         $subMenu->save();
 
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("Periodicals.ReleaseFilter.index|Periodicals.ReleaseFilter.filter");;
+        $subMenu->url = "admin.Periodicals.ReleaseFilter.index";
+        $subMenu->name = "admin/Periodicals.app_menu_notes_add";
+        $subMenu->roleView = "Periodicals_view";
+        $subMenu->icon = "fas fa-plus";
+        $subMenu->save();
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;

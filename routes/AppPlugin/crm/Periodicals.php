@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\Periodicals\PeriodicalsNotesController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReleaseReportController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
+use App\AppPlugin\Crm\Periodicals\ReleaseFilterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,12 +37,17 @@ Route::post('/book/periodicals/report/', [PeriodicalsReportController::class, 'r
 Route::get('/book/Periodicals/ReleaseReport/', [PeriodicalsReleaseReportController::class, 'report'])->name('Periodicals.ReleaseReport.index');
 Route::post('/book/Periodicals/ReleaseReport/', [PeriodicalsReleaseReportController::class, 'report'])->name('Periodicals.ReleaseReport.filter');
 
+Route::get('/book/release-filter/', [ReleaseFilterController::class, 'SelRelease'])->name('Periodicals.ReleaseFilter.index');
+Route::post('/book/release-filter/', [ReleaseFilterController::class, 'SelRelease'])->name('Periodicals.ReleaseFilter.filter');
+
 Route::get('/book/notes/', [PeriodicalsNotesController::class, 'index'])->name('Periodicals.Notes.index');
 Route::post('/book/notes/', [PeriodicalsNotesController::class, 'index'])->name('Periodicals.Notes.filter');
+Route::get('/book/notes/DataTable', [PeriodicalsNotesController::class, 'DataTable'])->name('Periodicals.Notes.DataTable');
 Route::get('/book/notes/config', [PeriodicalsNotesController::class, 'config'])->name('Periodicals.Notes.config');
-Route::get('/book/notes/create', [PeriodicalsNotesController::class, 'create'])->name('Periodicals.Notes.create');
-Route::get('/book/notes/edit/{id}', [PeriodicalsNotesController::class, 'edit'])->name('Periodicals.Notes.edit');
-Route::post('/book/notes/update/{id}', [PeriodicalsNotesController::class, 'storeUpdate'])->name('Periodicals.Notes.update');
+Route::get('/book/notes/create/{id}', [PeriodicalsNotesController::class, 'NotesCreate'])->name('Periodicals.Notes.create');
+Route::get('/book/notes/edit/{id}', [PeriodicalsNotesController::class, 'NotesEdit'])->name('Periodicals.Notes.edit');
+Route::post('/book/notes/update/{id}', [PeriodicalsNotesController::class, 'NotesStoreUpdate'])->name('Periodicals.Notes.update');
+Route::get('/book/notes/destroy/{id}', [PeriodicalsNotesController::class, 'DeleteNotes'])->name('Periodicals.Notes.destroy');
 
 
 Route::get('/book/tags', [BookTagsController::class, 'TagsIndex'])->name('Periodicals.BookTags.index');
