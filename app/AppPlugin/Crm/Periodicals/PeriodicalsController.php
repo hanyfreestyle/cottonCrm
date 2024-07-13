@@ -3,7 +3,6 @@
 namespace App\AppPlugin\Crm\Periodicals;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsRequest;
 use App\Http\Controllers\AdminMainController;
@@ -18,7 +17,6 @@ use Yajra\DataTables\Facades\DataTables;
 class PeriodicalsController extends AdminMainController {
 
     use CrudTraits;
-    use CrmCustomersConfigTraits;
     use DefCategoryTraits;
 
     function __construct() {
