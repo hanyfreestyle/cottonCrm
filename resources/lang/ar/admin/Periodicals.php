@@ -18,7 +18,10 @@ return
 	'but_delete_release' => 'حذف كل الاصدارات',
 	'but_filter_sel' => 'اضافة تلميحة للاصدار',
 	'dash_book' => 'الدوريات',
+	'dash_chart_month' => 'اجمالى التلميحات لاخر 12 شهر',
+	'dash_chart_week' => 'اجمالى التلميحات لاخر 7 ايام',
 	'dash_err_not_found' => 'عذرا لا يوجد اصدار متوافق مع نتائج البحث',
+	'dash_most_tags' => 'الكلمات البحثية الاكثر استخدام',
 	'dash_release' => 'الاصدارات',
 	'filter_periodicals' => 'قائمة الدوريات',
 	'form_country' => 'الدولة',
@@ -41,5 +44,5 @@ return
 	'report_release_month' => 'احصائيات الشهور',
 	'report_release_years' => 'احصائيات السنوات',
 	'report_years_name' => 'عام',
-	'dash_most_tags' => 'الكلمات البحثية الاكثر استخدام',
+	'dash_most_release' => 'الاصدارات الاكثر استخدام',
 ];

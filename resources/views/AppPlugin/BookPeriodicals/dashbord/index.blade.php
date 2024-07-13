@@ -22,7 +22,20 @@
         </div>
     </section>
 
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <x-app-plugin.crm.book.chart-week/>
+                </div>
 
+                <div class="col-lg-6">
+                    <x-app-plugin.crm.book.chart-month/>
+                </div>
+
+            </div>
+        </div>
+    </section>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -30,13 +43,11 @@
                     @include('AppPlugin.BookPeriodicals.dashbord.inc_most_tags')
                 </div>
                 <div class="col-lg-6">
-                    @include('AppPlugin.BookPeriodicals.dashbord.inc_add_release')
+                    @include('AppPlugin.BookPeriodicals.dashbord.inc_most_release')
                 </div>
             </div>
         </div>
     </section>
-
-
 
     <x-admin.hmtl.section>
         <div class="row">
@@ -48,8 +59,8 @@
 
         </div>
     </x-admin.hmtl.section>
+
 @endsection
-
-
 @push('JsCode')
+    <script src="{{defAdminAssets('plugins/chart.js/Chart.min.js')}}"></script>
 @endpush

@@ -62,6 +62,21 @@ class PeriodicalsController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| #
     public function addData() {
 
+//        for ($i = 1; $i <= 12; $i++) {
+//            if($i == 2){
+//                $days = 27;
+//            }
+//            self::LoopData("2023", $i,$days);
+//        }
+
+//        for ($i = 5; $i <= 7; $i++) {
+//            if($i == 2){
+//                $days = 27;
+//            }
+//            self::LoopData("2024", $i,$days);
+//        }
+
+
 //        self::LoopData(6, 30);
 //        self::LoopData(7, 13);
 
@@ -69,7 +84,7 @@ class PeriodicalsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function LoopData($month, $count) {
+    public function LoopData($year,$month, $count) {
         $faker = Factory::create('ar_EG');
         $periodicals = PeriodicalsRelease::query()->pluck('id')->toArray();
         $tagsArr = BooksTags::query()->pluck('id')->toArray();
@@ -80,9 +95,9 @@ class PeriodicalsController extends AdminMainController {
 
         for ($i = 1; $i <= $count; $i++) {
 
-            $created_at = Carbon::parse('2024-' . $month . '-' . $i);
+            $created_at = Carbon::parse($year.'-' . $month . '-' . $i);
 
-            $loopForDay = rand('2', '5');
+            $loopForDay = rand('3', '6');
             for ($x = 1; $x <= $loopForDay; $x++) {
                 $saveData = new PeriodicalsNotes();
                 $name = $faker->realText('15');

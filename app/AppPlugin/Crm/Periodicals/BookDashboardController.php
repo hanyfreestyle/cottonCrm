@@ -7,52 +7,12 @@ use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
 use App\AppPlugin\Crm\Periodicals\Request\DashboardRequest;
-use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
-use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use function Laravel\Prompts\select;
 
 
 class BookDashboardController extends AdminMainController {
-//    use ReportFunTraits;
 
-
-//    function __construct() {
-//        parent::__construct();
-//        $this->controllerName = "Periodicals";
-//        $this->PrefixRole = 'Periodicals';
-//        $this->selMenu = "admin.";
-//        $this->PrefixCatRoute = "";
-//        $this->defLang = "admin/Periodicals.";
-//        View::share('defLang', $this->defLang);
-//
-//        $CashCountryList = self::CashCountryList();
-//        View::share('CashCountryList', $CashCountryList);
-//
-//        $this->PageTitle = __($this->defLang . 'app_menu');
-//        $this->PrefixRoute = $this->selMenu . $this->controllerName . ".Report";
-//
-//        $sendArr = [
-//            'TitlePage' => $this->PageTitle,
-//            'PrefixRoute' => $this->PrefixRoute,
-//            'PrefixRole' => $this->PrefixRole,
-//            'AddConfig' => false,
-//            'AddAction' => false,
-//            'configArr' => ["filterid" => 0],
-//            'yajraTable' => true,
-//            'AddLang' => false,
-//            'restore' => 0,
-//            'formName' => "CrmCustomersReportFilter",
-//        ];
-//
-//        self::loadConstructData($sendArr);
-//
-//        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => ['report']]);
-
-//    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
@@ -66,7 +26,7 @@ class BookDashboardController extends AdminMainController {
 
         $Periodicals = Periodicals::query()->get();
 
-        $mostTags = BooksTags::query()->withCount('notes')->orderBy('notes_count','desc')->take(5)->get();
+        $mostTags = BooksTags::query()->withCount('notes')->orderBy('notes_count', 'desc')->take(5)->get();
 
 
         $book = $Periodicals->count();
@@ -80,13 +40,25 @@ class BookDashboardController extends AdminMainController {
         $card['notesCount'] = $notes;
 
 
+        $PeriodicalsNotes = PeriodicalsNotes::query()->get()->groupBy('periodicals_id')->sortDesc()->take(5);
+        $PeriodicalsNotesRelease = [];
+        foreach ($PeriodicalsNotes as $key => $value) {
+            array_push($PeriodicalsNotesRelease, (object)array(
+                'id' => $key,
+                'name' => PeriodicalsRelease::query()->where('id', $key)->first()->printReleaseName(),
+                'count' => count($value)
+            ));
+        }
+        $PeriodicalsNotesRelease = collect($PeriodicalsNotesRelease);
+
+
         return view('AppPlugin.BookPeriodicals.dashbord.index')->with([
             'card' => $card,
             'Periodicals' => $Periodicals,
             'id' => $id,
             'releaseFilter' => $releaseFilter,
             'mostTags' => $mostTags,
-
+            'PeriodicalsNotesRelease' => $PeriodicalsNotesRelease,
         ]);
     }
 
@@ -94,12 +66,12 @@ class BookDashboardController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| #
     public function DashboardFilter(DashboardRequest $request) {
         $releaseFilter = self::ReleaseFilterQ(PeriodicalsRelease::query(), $request);
-        if($releaseFilter->count() == 1){
+        if ($releaseFilter->count() == 1) {
             $sel = $releaseFilter->first();
-            $par = $sel->id."?p=".$sel->periodicals_id."&y=".$sel->year."&m=".$sel->month."&n=".$sel->number ;
+            $par = $sel->id . "?p=" . $sel->periodicals_id . "&y=" . $sel->year . "&m=" . $sel->month . "&n=" . $sel->number;
             return redirect()->route('admin.Dashboard.selRelease', $par);
-        }else{
-            $par = "no?p=".$request->periodicals_id."&y=".$request->year."&m=".$request->month."&n=".$request->number ;
+        } else {
+            $par = "no?p=" . $request->periodicals_id . "&y=" . $request->year . "&m=" . $request->month . "&n=" . $request->number;
             return redirect()->route('admin.Dashboard.selRelease', $par);
         }
     }
