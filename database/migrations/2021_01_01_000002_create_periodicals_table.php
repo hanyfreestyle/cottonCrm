@@ -37,6 +37,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('periodicals_id');
             $table->string('name')->nullable();
             $table->text('des')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('book_tags', function (Blueprint $table) {
@@ -48,6 +49,7 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBiginteger('tag_id');
             $table->unsignedBiginteger('notes_id');
+
 
             $table->foreign('tag_id')->references('id')->on('book_tags')->onDelete('cascade');
             $table->foreign('notes_id')->references('id')->on('book_tags_notes')->onDelete('cascade');

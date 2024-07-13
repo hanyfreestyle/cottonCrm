@@ -15,6 +15,7 @@
                 <tr>
                     <th class="TD_20">#</th>
                     <th class="TD_200">{{__('admin/form.text_name')}}</th>
+                    <th class="TD_100">{{__('admin/Periodicals.form_notes_count')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
@@ -44,6 +45,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                     {data: 'name', name: 'name', orderable: true, searchable: true},
+                    {data: 'notes_count', name: 'notes_count', orderable: true, searchable: false},
 
                         @can($PrefixRole.'_edit')
                     {

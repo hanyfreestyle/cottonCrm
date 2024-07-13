@@ -57,6 +57,6 @@ Route::get('/book/tags/edit/{id}', [BookTagsController::class, 'TagsEdit'])->nam
 Route::post('/book/tags/update/{id}', [BookTagsController::class, 'TagsStoreUpdate'])->name('Periodicals.BookTags.update');
 Route::get('/book/tags/destroy/{id}', [BookTagsController::class, 'TagsDelete'])->name('Periodicals.BookTags.destroy');
 
-Route::get('/book/tags/TagsSearch', [BookTagsController::class, 'TagsSearch'])->name('BlogPost.TagsSearch');
-Route::get('/book/tags/TagsOnFly', [BookTagsController::class, 'TagsOnFly'])->name('BlogPost.TagsOnFly');
+Route::get('/book/tags/TagsSearch', [BookTagsController::class, 'TagsSearch'])->name('Periodicals.TagsSearch');
+Route::get('/book/tags/TagsOnFly', [BookTagsController::class, 'TagsOnFly'])->name('Periodicals.TagsOnFly');
 

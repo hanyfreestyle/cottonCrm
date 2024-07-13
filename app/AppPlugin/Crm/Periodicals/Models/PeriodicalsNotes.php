@@ -13,7 +13,7 @@ class PeriodicalsNotes extends Model {
     protected $table = "book_periodicals_notes";
     protected $primaryKey = 'id';
     protected $fillable = [];
-    public $timestamps = false;
+//    public $timestamps = false;
 
 
     public function release(): BelongsTo {

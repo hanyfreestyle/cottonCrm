@@ -99,18 +99,14 @@ class BookTagsController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function TagsindexQuery() {
-        $table = "book_tags";
-        $data = DB::table($table)
-            ->select("$table.id as id",
-                "$table.name as name",
-            );
+        $data = BooksTags::query()->withCount('notes');
         return $data;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function TagsDataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
+        return DataTables::eloquent($data)
             ->addIndexColumn()
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
@@ -123,64 +119,36 @@ class BookTagsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function TagsDelete($id) {
-        $deleteRow = $this->tags::where('id', $id)->firstOrFail();
-        try {
-            DB::transaction(function () use ($deleteRow, $id) {
-                $deleteRow->forceDelete();
-            });
-        } catch (\Exception $exception) {
-            return back()->with(['confirmException' => '', 'fromModel' => 'Attribute', 'deleteRow' => $deleteRow]);
-        }
-        return back()->with('confirmDelete', "");
-    }
-
-    /*
-
-
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    #|||||||||||||||||||||||||||||||||||||| #   TagsSearch
-        public function TagsSearch(Request $request) {
-            if (!empty($_GET['type']) && $_GET['type'] == 'TagsSearch') {
-                $search = $request->search;
-                $tags = $this->tagsTranslation::orderby('name', 'asc')
-                    ->select('id', 'name', 'tag_id')
-                    ->where('locale', thisCurrentLocale())
-                    ->where('name', 'like', '%' . $search . '%')
-                    ->limit(50)->get();
-                $response = array();
-                foreach ($tags as $tag) {
-                    $response[] = array("id" => $tag->tag_id, "text" => $tag->name);
-                }
-                return response()->json($response);
-            }
-        }
-
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    #|||||||||||||||||||||||||||||||||||||| # TagsOnFly
-        public function TagsOnFly(Request $request) {
-            $response = array('addDone' => false);
-            if ($request->newTagData['newTag'] == true) {
-                $slug = AdminHelper::Url_Slug($request->newTagData['text']);
-                $slugCount = $this->tagsTranslation::where('slug', $slug)->count();
-                if ($slugCount == 0) {
-                    $addNewTag = $this->tags;
-                    $addNewTag->save();
-                    foreach (config('app.web_lang') as $key => $lang) {
-                        $newTranslation = $this->tagsTranslation::where('id', 0)->firstOrNew();
-                        $newTranslation->tag_id = $addNewTag->id;
-                        $newTranslation->locale = $key;
-                        $newTranslation->slug = $slug;
-                        $newTranslation->name = $request->newTagData['text'];
-                        $newTranslation->save();
-                    }
-                    $response = array('addDone' => true, 'id' => $addNewTag->id);
-                }
+    public function TagsSearch(Request $request) {
+        if (!empty($_GET['type']) && $_GET['type'] == 'TagsSearch') {
+            $search = $request->search;
+            $tags = BooksTags::orderby('name', 'asc')
+                ->select('id', 'name')
+                ->where('name', 'like', '%' . $search . '%')
+                ->limit(50)->get();
+            $response = array();
+            foreach ($tags as $tag) {
+                $response[] = array("id" => $tag->id, "text" => $tag->name);
             }
             return response()->json($response);
         }
+    }
 
-   */
-
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function TagsOnFly(Request $request) {
+        $response = array('addDone' => false);
+        if ($request->newTagData['newTag'] == true) {
+            $name = $request->newTagData['text'];
+            $slugCount = BooksTags::where('name', $name)->count();
+            if ($slugCount == 0) {
+                $addNewTag = new BooksTags();
+                $addNewTag->name = $name;
+                $addNewTag->save();
+                $response = array('addDone' => true, 'id' => $addNewTag->id);
+            }
+        }
+        return response()->json($response);
+    }
 
 }

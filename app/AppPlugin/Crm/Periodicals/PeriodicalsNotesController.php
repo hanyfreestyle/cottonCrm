@@ -11,6 +11,7 @@ use App\AppPlugin\Crm\Periodicals\Request\BookNotesRequest;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -35,6 +36,9 @@ class PeriodicalsNotesController extends AdminMainController {
         $PeriodicalsList = Periodicals::query()->get();
         View::share('PeriodicalsList', $PeriodicalsList);
 
+        $this->PrefixTags = "admin.Periodicals";
+        View::share('PrefixTags', $this->PrefixTags);
+
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
@@ -45,7 +49,7 @@ class PeriodicalsNotesController extends AdminMainController {
             'yajraTable' => true,
             'AddLang' => false,
             'restore' => 0,
-            'formName' => "PeriodicalsListFilter",
+            'formName' => "PeriodicalsNotesFilter",
         ];
 
         self::loadConstructData($sendArr);
@@ -61,10 +65,12 @@ class PeriodicalsNotesController extends AdminMainController {
 
         $session = self::getSessionData($request);
         $rowData = self::PeriodicalsNotesFilter(self::indexQuery(), $session);
-
+        $tags = BooksTags::where('id', '!=', 0)->take(100)->get();
         return view('AppPlugin.BookPeriodicals.notes.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
+            'tags' => $tags,
+            'getSession' => Session::get($this->formName),
         ]);
     }
 
@@ -216,6 +222,12 @@ class PeriodicalsNotesController extends AdminMainController {
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
+            ->editColumn('created_at', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->created_at)),
+                    'timestamp' => strtotime($row->published_at)
+                ];
+            })
             ->rawColumns(['Edit', "Delete", 'ListRelease', 'TagsName']);
     }
 
@@ -224,18 +236,12 @@ class PeriodicalsNotesController extends AdminMainController {
     static function PeriodicalsNotesFilter($query, $session, $order = null) {
         $formName = issetArr($session, "formName", null);
 
-        if (isset($session['country_id']) and $session['country_id'] != null) {
-            $query->where('book_periodicals.country_id', $session['country_id']);
+        if (isset($session['tag_id']) and $session['tag_id'] != null) {
+            $tagId = $session['tag_id'];
+            $query->whereHas('tags', function ($q) use ($tagId) {
+                $q->where('tag_id', $tagId);
+            });
         }
-
-        if (isset($session['release_id']) and $session['release_id'] != null) {
-            $query->where('release_id', $session['release_id']);
-        }
-
-        if (isset($session['lang_id']) and $session['lang_id'] != null) {
-            $query->where('lang_id', $session['lang_id']);
-        }
-
         return $query;
     }
 
