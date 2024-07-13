@@ -21,10 +21,11 @@ return
 	'page_edit' => 'Edit Content',
 	'page_list' => 'List Data',
 	'photo' => 'Photo',
+	'report_other' => 'Other',
+	'report_undefined' => 'Undefined',
 	'status' => 'Status',
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'report_undefined' => 'Undefined',
-	'report_other' => 'Other',
+	'details' => 'Details',
 ];

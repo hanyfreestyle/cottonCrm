@@ -2,12 +2,12 @@
 
 namespace App\AppPlugin\Crm\Periodicals;
 
-use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
+
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
 use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsAddReleaseRequest;
 use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsAddReleaseYearsRequest;
-use App\AppPlugin\Data\ConfigData\Models\ConfigData;
+
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use App\Http\Traits\DefCategoryTraits;
@@ -19,7 +19,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PeriodicalsReleaseController extends AdminMainController {
     use CrudTraits;
-    use CrmCustomersConfigTraits;
     use DefCategoryTraits;
 
     function __construct() {
@@ -34,9 +33,6 @@ class PeriodicalsReleaseController extends AdminMainController {
 
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
-
-        $this->Config = self::defConfig();
-        View::share('Config', $this->Config);
 
         $this->DefCat = self::LoadCategory();
         View::share('DefCat', $this->DefCat);

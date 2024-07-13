@@ -21,10 +21,11 @@ return
 	'page_edit' => 'تعديل المحتوى',
 	'page_list' => 'عرض المحتوى',
 	'photo' => 'صورة',
+	'report_other' => 'اخرى',
+	'report_undefined' => 'غير محدد',
 	'status' => 'الحالة',
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'report_undefined' => 'غير محدد',
-	'report_other' => 'اخرى',
+	'details' => 'التفاصيل',
 ];
