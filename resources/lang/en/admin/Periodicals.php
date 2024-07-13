@@ -18,6 +18,8 @@ return
 	'but_delete_release' => '',
 	'but_filter_sel' => '',
 	'dash_book' => '',
+	'dash_err_not_found' => '',
+	'dash_release' => '',
 	'filter_periodicals' => '',
 	'form_country' => '',
 	'form_des' => '',
@@ -39,4 +41,5 @@ return
 	'report_release_month' => '',
 	'report_release_years' => '',
 	'report_years_name' => '',
+	'dash_most_tags' => '',
 ];

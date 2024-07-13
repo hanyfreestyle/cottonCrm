@@ -18,6 +18,8 @@ return
 	'but_delete_release' => 'حذف كل الاصدارات',
 	'but_filter_sel' => 'اضافة تلميحة للاصدار',
 	'dash_book' => 'الدوريات',
+	'dash_err_not_found' => 'عذرا لا يوجد اصدار متوافق مع نتائج البحث',
+	'dash_release' => 'الاصدارات',
 	'filter_periodicals' => 'قائمة الدوريات',
 	'form_country' => 'الدولة',
 	'form_des' => 'نبذة',
@@ -30,7 +32,7 @@ return
 	'form_release_notes' => 'ملاحظات',
 	'form_release_num' => 'رقم العدد',
 	'form_release_repeat' => 'نسخ مكررة',
-	'form_release_year' => 'العام',
+	'form_release_year' => 'السنة',
 	'mass_confirm_delete' => 'هل انت متاكد من حذف كل الاصدارات التابعة لهذه الدورية',
 	'notes_date' => 'تاريخ الاضافة',
 	'notes_list' => 'عرض التلميحات والافكار',
@@ -39,4 +41,5 @@ return
 	'report_release_month' => 'احصائيات الشهور',
 	'report_release_years' => 'احصائيات السنوات',
 	'report_years_name' => 'عام',
+	'dash_most_tags' => 'الكلمات البحثية الاكثر استخدام',
 ];

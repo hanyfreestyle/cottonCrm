@@ -6,12 +6,14 @@ use App\AppPlugin\Crm\Periodicals\Models\BooksTags;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
+use App\AppPlugin\Crm\Periodicals\Request\DashboardRequest;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use function Laravel\Prompts\select;
 
 
 class BookDashboardController extends AdminMainController {
@@ -54,24 +56,64 @@ class BookDashboardController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function Dashboard(Request $request) {
-        $card = [];
+    public function Dashboard(Request $request, $id = null) {
+        $releaseFilter = null;
+        if ($id) {
+            $releaseFilter = PeriodicalsRelease::query()
+                ->where('id', intval($id))
+                ->first();
+        }
+
+        $Periodicals = Periodicals::query()->get();
+
+        $mostTags = BooksTags::query()->withCount('notes')->orderBy('notes_count','desc')->take(5)->get();
 
 
-        $book = Periodicals::query()->count();
+        $book = $Periodicals->count();
         $release = PeriodicalsRelease::query()->count();
         $tags = BooksTags::query()->count();
         $notes = PeriodicalsNotes::query()->count();
+        $card = [];
         $card['bookCount'] = $book;
         $card['releaseCount'] = $release;
         $card['tagsCount'] = $tags;
         $card['notesCount'] = $notes;
 
 
-        return view('AppPlugin.BookPeriodicals.dashbord')->with([
-            'card'=>$card,
+        return view('AppPlugin.BookPeriodicals.dashbord.index')->with([
+            'card' => $card,
+            'Periodicals' => $Periodicals,
+            'id' => $id,
+            'releaseFilter' => $releaseFilter,
+            'mostTags' => $mostTags,
 
         ]);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function DashboardFilter(DashboardRequest $request) {
+        $releaseFilter = self::ReleaseFilterQ(PeriodicalsRelease::query(), $request);
+        if($releaseFilter->count() == 1){
+            $sel = $releaseFilter->first();
+            $par = $sel->id."?p=".$sel->periodicals_id."&y=".$sel->year."&m=".$sel->month."&n=".$sel->number ;
+            return redirect()->route('admin.Dashboard.selRelease', $par);
+        }else{
+            $par = "no?p=".$request->periodicals_id."&y=".$request->year."&m=".$request->month."&n=".$request->number ;
+            return redirect()->route('admin.Dashboard.selRelease', $par);
+        }
+    }
+
+
+    static function ReleaseFilterQ($query, $request) {
+        $query->where('periodicals_id', intval($request->input('periodicals_id')));
+        $query->where('year', intval($request->input('year')));
+        $query->where('month', intval($request->input('month')));
+        if ($request->input('number')) {
+            $query->where('number', intval($request->input('number')));
+        }
+        return $query;
+    }
+
 
 }
