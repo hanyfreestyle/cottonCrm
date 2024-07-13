@@ -1,81 +1,96 @@
 <?php
+
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #    TablePhoto
+if (!function_exists('sidebarCollapse')) {
+    function sidebarCollapse() {
+        if (config('app.SideBarCollapse')) {
+            $state = " sidebar-collapse sidebar-mini ";
+        } else {
+            $state = "";
+        }
+        return $state;
+    }
+}
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    TablePhoto
 if (!function_exists('TablePhoto')) {
-    function TablePhoto($row,$fildeName='photo_thum_1'){
-        if($row->$fildeName){
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defImagesDir($row->$fildeName).'">';
-        }else{
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defAdminAssets('img/default-150x150.png').'">';
+    function TablePhoto($row, $fildeName = 'photo_thum_1') {
+        if ($row->$fildeName) {
+            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defImagesDir($row->$fildeName) . '">';
+        } else {
+            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }
-        return $sendImg ;
+        return $sendImg;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    TablePhotoFlag
 if (!function_exists('TablePhotoFlag')) {
-    function TablePhotoFlag($row,$fildeName='photo_thum_1'){
-        if($row->$fildeName){
-            $sendImg = '<img  class="tableImg cust_country img-rounded" src="'.flagAssets($row->$fildeName).'">';
-        }else{
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defAdminAssets('img/default-150x150.png').'">';
+    function TablePhotoFlag($row, $fildeName = 'photo_thum_1') {
+        if ($row->$fildeName) {
+            $sendImg = '<img  class="tableImg cust_country img-rounded" src="' . flagAssets($row->$fildeName) . '">';
+        } else {
+            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }
-        return $sendImg ;
+        return $sendImg;
     }
 }
 
 if (!function_exists('TablePhotoFlag_Code')) {
-    function TablePhotoFlag_Code($row,$fildeName='photo_thum_1'){
-        if($row->$fildeName){
-            $sendImg = '<img  class="tableImg cust_country img-rounded" src="'.flagAssets("120/".$row->$fildeName).'.webp">';
-        }else{
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="'.defAdminAssets('img/default-150x150.png').'">';
+    function TablePhotoFlag_Code($row, $fildeName = 'photo_thum_1') {
+        if ($row->$fildeName) {
+            $sendImg = '<img  class="tableImg cust_country img-rounded" src="' . flagAssets("120/" . $row->$fildeName) . '.webp">';
+        } else {
+            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }
-        return $sendImg ;
+        return $sendImg;
     }
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    UserProfilePhoto
 if (!function_exists('UserProfilePhoto')) {
-    function UserProfilePhoto($fildeName='photo_thum_1'){
-        if(Auth::user()->$fildeName){
-            $sendImg = defImagesDir(Auth::user()->$fildeName) ;
-        }else{
+    function UserProfilePhoto($fildeName = 'photo_thum_1') {
+        if (Auth::user()->$fildeName) {
+            $sendImg = defImagesDir(Auth::user()->$fildeName);
+        } else {
             $sendImg = defAdminAssets('img/user_avatar.jpg');
         }
-        return $sendImg ;
+        return $sendImg;
     }
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # mainBodyStyle
 if (!function_exists('mainBodyStyle')) {
-    function mainBodyStyle(){
+    function mainBodyStyle() {
         $sendStyle = "sidebar-mini ";
-        if( config('adminConfig.sidebar_collapse_hide') == true){
-            $sendStyle = ' ' ;
+        if (config('adminConfig.sidebar_collapse_hide') == true) {
+            $sendStyle = ' ';
         }
-        if( config('adminConfig.sidebar_collapse') == true){
-            $sendStyle .= ' sidebar-collapse ' ;
+        if (config('adminConfig.sidebar_collapse') == true) {
+            $sendStyle .= ' sidebar-collapse ';
         }
-        if( config('adminConfig.sidebar_fixed') == true){
-            $sendStyle .= ' layout-fixed ' ;
+        if (config('adminConfig.sidebar_fixed') == true) {
+            $sendStyle .= ' layout-fixed ';
         }
-        if( config('adminConfig.top_navbar_fixed') == true){
-            $sendStyle .= ' layout-navbar-fixed ' ;
+        if (config('adminConfig.top_navbar_fixed') == true) {
+            $sendStyle .= ' layout-navbar-fixed ';
         }
-        if( config('adminConfig.footer_fixed') == true){
-            $sendStyle .= ' layout-footer-fixed ' ;
+        if (config('adminConfig.footer_fixed') == true) {
+            $sendStyle .= ' layout-footer-fixed ';
         }
-        if( config('adminConfig.dark-mode') == true){
-            $sendStyle .= ' dark-mode ' ;
+        if (config('adminConfig.dark-mode') == true) {
+            $sendStyle .= ' dark-mode ';
         }
-        if( config('adminConfig.pace_progress') == true){
-            $sendStyle .= ' '.config('adminConfig.pace_progress_style').' ' ;
+        if (config('adminConfig.pace_progress') == true) {
+            $sendStyle .= ' ' . config('adminConfig.pace_progress_style') . ' ';
         }
 
         return $sendStyle;
@@ -84,18 +99,18 @@ if (!function_exists('mainBodyStyle')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # htmlArDir
 if (!function_exists('htmlArDir')) {
-    function htmlArDir(){
-        $sendStyle = ' dir="'.LaravelLocalization::getCurrentLocaleDirection().'" ' ;
+    function htmlArDir() {
+        $sendStyle = ' dir="' . LaravelLocalization::getCurrentLocaleDirection() . '" ';
         return $sendStyle;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # sideBarNavUlStyle
 if (!function_exists('navBarStyle')) {
-    function navBarStyle(){
+    function navBarStyle() {
         $sendStyle = " navbar-white ";
-        if( config('adminConfig.top_navbar_dark') == true or config('adminConfig.dark-mode') == true ){
-            $sendStyle = ' navbar-dark ' ;
+        if (config('adminConfig.top_navbar_dark') == true or config('adminConfig.dark-mode') == true) {
+            $sendStyle = ' navbar-dark ';
         }
         return $sendStyle;
     }
@@ -103,10 +118,10 @@ if (!function_exists('navBarStyle')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # sideBarNavUlStyle
 if (!function_exists('sideBarNavUlStyle')) {
-    function sideBarNavUlStyle(){
+    function sideBarNavUlStyle() {
         $sendStyle = " ";
-        if( config('adminConfig.sidebar_flat_style') == true){
-            $sendStyle = ' nav-flat ' ;
+        if (config('adminConfig.sidebar_flat_style') == true) {
+            $sendStyle = ' nav-flat ';
         }
         return $sendStyle;
     }
@@ -116,8 +131,7 @@ if (!function_exists('sideBarNavUlStyle')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # getButSize
 if (!function_exists('getButSize')) {
-    function getButSize($val)
-    {
+    function getButSize($val) {
         switch ($val) {
             case 's':
                 $sendStyle = "btn-sm";
@@ -138,8 +152,7 @@ if (!function_exists('getButSize')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # getBgColor
 if (!function_exists('getBgColor')) {
-    function getBgColor($val)
-    {
+    function getBgColor($val) {
         switch ($val) {
             case 'def':
                 $sendColor = "default";
@@ -177,13 +190,13 @@ if (!function_exists('getBgColor')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # getAlign
 if (!function_exists('getAlign')) {
-    function getAlign($val){
+    function getAlign($val) {
         $sendStyle = "";
-        if($val == 'c'){
+        if ($val == 'c') {
             $sendStyle = "center";
-        }elseif ($val == 'r'){
+        } elseif ($val == 'r') {
             $sendStyle = "right";
-        }elseif ($val == 'l'){
+        } elseif ($val == 'l') {
             $sendStyle = "left";
         }
         return $sendStyle;
@@ -192,63 +205,63 @@ if (!function_exists('getAlign')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     getColDir
 if (!function_exists('getColDir')) {
-    function getColDir($key,$sendArr=array()){
+    function getColDir($key, $sendArr = array()) {
         $currentDir = "";
-        if($key == 'ar' and thisCurrentLocale() == 'en'){
+        if ($key == 'ar' and thisCurrentLocale() == 'en') {
             $currentDir = ' order-last ';
         }
-        return $currentDir ;
+        return $currentDir;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     is_active
 if (!function_exists('is_active')) {
-    function is_active($is_active){
-        if($is_active ==  1 ){
-            $icon = '<img width="25" src="'.defAdminAssets('img/active.webp').'">';
-        }else{
-            $icon = '<img width="25" src="'.defAdminAssets('img/active_un.webp').'">';
+    function is_active($is_active) {
+        if ($is_active == 1) {
+            $icon = '<img width="25" src="' . defAdminAssets('img/active.webp') . '">';
+        } else {
+            $icon = '<img width="25" src="' . defAdminAssets('img/active_un.webp') . '">';
         }
-        return $icon ;
+        return $icon;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   print_h1
 if (!function_exists('print_h1')) {
-    function print_h1($row,$name='name'){
+    function print_h1($row, $name = 'name') {
         $app_lang = LaravelLocalization::getCurrentLocale();
-        if($app_lang == 'ar'){
+        if ($app_lang == 'ar') {
             $changeLang = "en";
-        }else{
+        } else {
             $changeLang = "ar";
         }
-        return  $row->translate($app_lang)->$name ?? $row->translate($changeLang)->$name ?? '' ;
+        return $row->translate($app_lang)->$name ?? $row->translate($changeLang)->$name ?? '';
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     echobr
 if (!function_exists('echobr')) {
-    function echobr($text=""){
-        if($text ==  "hr"){
+    function echobr($text = "") {
+        if ($text == "hr") {
             $text = '<hr/>';
         }
-        echo  $text."<br/>";
+        echo $text . "<br/>";
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  Table_Header_Style
 if (!function_exists('Table_Style')) {
-    function Table_Style($viewDataTable,$yajraTable=false){
-        if($viewDataTable){
-            if($yajraTable){
+    function Table_Style($viewDataTable, $yajraTable = false) {
+        if ($viewDataTable) {
+            if ($yajraTable) {
                 $tableHeader = ' id="" class="table table-bordered table-hover DataTableView" ';
-            }else{
+            } else {
                 $tableHeader = ' id="MainDataTable" class="table table-bordered table-hover" ';
             }
-        }else{
+        } else {
             $tableHeader = ' class="table table-hover" ';
         }
-        return $tableHeader ;
+        return $tableHeader;
     }
 }
 

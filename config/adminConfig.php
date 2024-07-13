@@ -6,14 +6,13 @@ return [
     'copyright_start_date'=> '2004',
     'copyright_name'=> 'Freestyle4u',
     'copyright_url'=> 'http://freestyle4u.com/',
-    'textWithLogo'=> 'Vonza Crm',
+    'textWithLogo'=> 'Book Caffe',
 
 
     'dark-mode'=> false,
     'html_ar_dir' => true ,
     'login_logo_img_view'=> true,
     'login_logo_img' => '../assets/admin/img/login_logo.png' ,
-   // 'login_logo_img' => defAdminAssets('/img/login_logo.png') ,
     'pace_progress'=> true,
     'pace_progress_style'=> 'pace-primary',
     'preloader'=> false,
@@ -22,7 +21,7 @@ return [
 
 
 
-    'title' => 'Vonza Crm | Powered By Freestyle4u.com ',
+    'title' => 'Book Caffe | Powered By Freestyle4u.com ',
 
     #'def_home_url'=> route('Dashboard1','Dashboard1'),
 

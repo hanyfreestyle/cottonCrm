@@ -237,6 +237,7 @@ return [
     'development' => env('APP_DEVELOPMENT', true),
     'puzzle_active' => env('PUZZLE_ACTIVE', false),
     'upload_photo_notes' => true,
+    'SideBarCollapse' => true,
     'model_settings_name' => 'model_settings.json',
 
     'developers_list_cash_time' => 60*60*24,

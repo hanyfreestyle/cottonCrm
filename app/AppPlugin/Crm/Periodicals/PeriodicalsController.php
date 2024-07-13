@@ -31,9 +31,6 @@ class PeriodicalsController extends AdminMainController {
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 
-        $this->Config = self::defConfig();
-        View::share('Config', $this->Config);
-
         $this->DefCat = self::LoadCategory();
         View::share('DefCat', $this->DefCat);
 
@@ -238,7 +235,7 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->sel_routs = setActiveRoute("Periodicals.ReleaseFilter.index|Periodicals.ReleaseFilter.filter");;
         $subMenu->url = "admin.Periodicals.ReleaseFilter.index";
         $subMenu->name = "admin/Periodicals.app_menu_notes_add";
-        $subMenu->roleView = "Periodicals_view";
+        $subMenu->roleView = "Periodicals_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
 
@@ -251,23 +248,6 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->icon = "fas fa-list";
         $subMenu->save();
 
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Periodicals.Report.index|Periodicals.Report.filter";
-        $subMenu->url = "admin.Periodicals.Report.index";
-        $subMenu->name = "admin/Periodicals.app_menu_report";
-        $subMenu->roleView = "Periodicals_view";
-        $subMenu->icon = "fas fa-chart-pie";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Periodicals.ReleaseReport.index|Periodicals.ReleaseReport.filter";
-        $subMenu->url = "admin.Periodicals.ReleaseReport.index";
-        $subMenu->name = "admin/Periodicals.app_menu_report_release";
-        $subMenu->roleView = "Periodicals_view";
-        $subMenu->icon = "fas fa-chart-pie";
-        $subMenu->save();
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
@@ -277,6 +257,26 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->roleView = "Periodicals_view";
         $subMenu->icon = "fas fa-hashtag";
         $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Periodicals.Report.index|Periodicals.Report.filter";
+        $subMenu->url = "admin.Periodicals.Report.index";
+        $subMenu->name = "admin/Periodicals.app_menu_report";
+        $subMenu->roleView = "Periodicals_report";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Periodicals.ReleaseReport.index|Periodicals.ReleaseReport.filter";
+        $subMenu->url = "admin.Periodicals.ReleaseReport.index";
+        $subMenu->name = "admin/Periodicals.app_menu_report_release";
+        $subMenu->roleView = "Periodicals_report";
+        $subMenu->icon = "fas fa-chart-bar";
+        $subMenu->save();
+
+
 
     }
 

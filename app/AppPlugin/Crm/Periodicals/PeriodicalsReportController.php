@@ -44,6 +44,9 @@ class PeriodicalsReportController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => ['report']]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

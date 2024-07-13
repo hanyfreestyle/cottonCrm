@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="hold-transition {{ mainBodyStyle() }} sidebar-collapseX sidebar-miniX">
+<body class="hold-transition {{ mainBodyStyle() }} {{sidebarCollapse()}} ">
 <div class="wrapper">
 
 

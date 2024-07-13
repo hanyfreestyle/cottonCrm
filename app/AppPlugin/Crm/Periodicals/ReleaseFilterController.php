@@ -29,8 +29,6 @@ class ReleaseFilterController extends AdminMainController {
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName . ".ReleaseFilter";
 
-//        dd($this->PrefixRoute);
-
         $PeriodicalsList = Periodicals::query()->get();
         View::share('PeriodicalsList', $PeriodicalsList);
 
@@ -49,6 +47,8 @@ class ReleaseFilterController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => ['SelRelease']]);
     }
 
 
