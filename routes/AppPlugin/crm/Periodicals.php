@@ -10,7 +10,7 @@ use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
 use App\AppPlugin\Crm\Periodicals\ReleaseFilterController;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/book/addData/', [PeriodicalsController::class, 'addData'])->name('Periodicals.addData');
 Route::get('/book/periodicals/', [PeriodicalsController::class, 'index'])->name('Periodicals.index');
 Route::post('/book/periodicals/', [PeriodicalsController::class, 'index'])->name('Periodicals.filter');
 Route::get('/book/periodicals/DataTable', [PeriodicalsController::class, 'DataTable'])->name('Periodicals.DataTable');

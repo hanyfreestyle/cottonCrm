@@ -3,12 +3,17 @@
 namespace App\AppPlugin\Crm\Periodicals;
 
 use App\AppCore\Menu\AdminMenu;
+use App\AppPlugin\Crm\Periodicals\Models\BooksTags;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
+use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
+use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
 use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsRequest;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use App\Http\Traits\DefCategoryTraits;
+use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -52,6 +57,47 @@ class PeriodicalsController extends AdminMainController {
 
         self::loadConstructData($sendArr);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function addData() {
+
+//        self::LoopData(6, 30);
+//        self::LoopData(7, 13);
+
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function LoopData($month, $count) {
+        $faker = Factory::create('ar_EG');
+        $periodicals = PeriodicalsRelease::query()->pluck('id')->toArray();
+        $tagsArr = BooksTags::query()->pluck('id')->toArray();
+        unset($tagsArr[0]);
+        unset($periodicals[0]);
+
+
+
+        for ($i = 1; $i <= $count; $i++) {
+
+            $created_at = Carbon::parse('2024-' . $month . '-' . $i);
+
+            $loopForDay = rand('2', '5');
+            for ($x = 1; $x <= $loopForDay; $x++) {
+                $saveData = new PeriodicalsNotes();
+                $name = $faker->realText('15');
+                $tags =  array_rand($tagsArr, rand(1,3));
+                $saveData->periodicals_id = array_rand($periodicals, 1);
+                $saveData->name = $name;
+                $saveData->des = null;
+                $saveData->created_at = $created_at;
+                $saveData->save();
+                $saveData->tags()->sync($tags);
+            }
+
+        }
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     index
@@ -275,7 +321,6 @@ class PeriodicalsController extends AdminMainController {
         $subMenu->roleView = "Periodicals_report";
         $subMenu->icon = "fas fa-chart-bar";
         $subMenu->save();
-
 
 
     }
