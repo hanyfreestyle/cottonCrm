@@ -6,7 +6,6 @@
         bg="p"
         :url="route('admin.Periodicals.index')"
     />
-
     <x-admin.dashboard.color-card
         :count="$card['releaseCount']"
         :title="__('admin/Periodicals.dash_release')"

@@ -4,6 +4,7 @@ namespace App\AppPlugin\Crm\Periodicals;
 
 
 use App\AppPlugin\Crm\Periodicals\Models\BooksTags;
+use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Request\BookTagsRequest;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
@@ -86,6 +87,19 @@ class BookTagsController extends AdminMainController {
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function TagsDelete($id) {
+        $deleteRow = BooksTags::where('id', $id)->firstOrFail();
+        try {
+            DB::transaction(function () use ($deleteRow, $id) {
+                $deleteRow->forceDelete();
+            });
+        } catch (\Exception $exception) {
+            return back()->with(['confirmException' => '', 'fromModel' => 'Attribute', 'deleteRow' => $deleteRow]);
+        }
+        return back()->with('confirmDelete', "");
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #

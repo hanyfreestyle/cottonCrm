@@ -18,9 +18,9 @@
                 <thead>
                 <tr>
                     <th class="TD_20">#</th>
-                    <th class="TD_80">{{__('admin/Periodicals.notes_date')}}</th>
+                    <th class="TD_70">{{__('admin/Periodicals.notes_date')}}</th>
                     <th class="TD_100">{{__('admin/Periodicals.notes_name')}}</th>
-                    <th class="TD_200">{{__('admin/Periodicals.notes_release')}}</th>
+                    <th class="TD_250">{{__('admin/Periodicals.notes_release')}}</th>
                     <th class="TD_150">{{__('admin/Periodicals.form_des')}}</th>
                     <th class="TD_200">{{__('admin/Periodicals.app_menu_tags')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>

@@ -18,7 +18,7 @@ class DashboardRequest extends FormRequest {
             'periodicals_id' => "required",
             'year' => "required|numeric|between:1900,2024",
             'month' => "required|numeric|between:1,12",
-            'number' => "nullable|numeric",
+            'number' => "required|numeric",
         ];
         return $rules;
     }

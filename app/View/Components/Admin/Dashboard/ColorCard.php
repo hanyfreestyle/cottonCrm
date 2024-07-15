@@ -14,6 +14,7 @@ class ColorCard extends Component {
     public $count;
     public $icon;
     public $url;
+    public $col;
 
 
     public function __construct(
@@ -23,6 +24,7 @@ class ColorCard extends Component {
         $count = 0,
         $icon = null,
         $url = null,
+        $col = "col-lg-3 col-6",
 
 
     ) {
@@ -32,6 +34,7 @@ class ColorCard extends Component {
         $this->count = intval($count);
         $this->icon = $icon;
         $this->url = $url;
+        $this->col = $col;
 
     }
 

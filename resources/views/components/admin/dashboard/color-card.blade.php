@@ -1,4 +1,4 @@
-<div class="col-lg-6 col-6">
+<div class="{{$col}}">
     <div class="small-box bg-{{$bg}}">
         <div class="inner">
             <h3>{{number_format($count)}}</h3>

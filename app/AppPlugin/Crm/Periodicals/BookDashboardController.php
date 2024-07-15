@@ -7,8 +7,10 @@ use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
 use App\AppPlugin\Crm\Periodicals\Request\DashboardRequest;
+use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsAddReleaseRequest;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class BookDashboardController extends AdminMainController {
@@ -60,6 +62,37 @@ class BookDashboardController extends AdminMainController {
             'mostTags' => $mostTags,
             'PeriodicalsNotesRelease' => $PeriodicalsNotesRelease,
         ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function DashboardAddNew(Request $request) {
+
+        $periodicals_id = intval($request->input('periodicals_id'));
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $number = $request->input('number');
+
+        $Periodicals = Periodicals::query()->where('id', $periodicals_id)->firstOrFail();
+
+        $countRelease =  PeriodicalsRelease::query()
+            ->where('periodicals_id',$periodicals_id)
+            ->where('year',$year)
+            ->where('month',$month)
+            ->where('number',$number)
+            ->get();
+
+        if(count($countRelease) == 0){
+            $saveData = new PeriodicalsRelease();
+            $saveData->periodicals_id = $request->input('periodicals_id');
+            $saveData->year = $request->input('year');
+            $saveData->month = $request->input('month');
+            $saveData->number = $request->input('number');
+            $saveData->save();
+            return redirect()->route('admin.Periodicals.Notes.create',$saveData->id);
+        }else{
+            return redirect()->back();
+        }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

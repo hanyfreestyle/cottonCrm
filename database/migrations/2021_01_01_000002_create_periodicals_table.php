@@ -36,6 +36,8 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('periodicals_id');
             $table->string('name')->nullable();
+            $table->string('page_num')->nullable();
+            $table->string('author')->nullable();
             $table->text('des')->nullable();
             $table->timestamps();
         });

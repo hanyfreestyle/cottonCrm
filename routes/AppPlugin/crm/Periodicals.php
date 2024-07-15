@@ -1,6 +1,7 @@
 <?php
 
 
+use App\AppPlugin\Crm\Periodicals\BookDashboardController;
 use App\AppPlugin\Crm\Periodicals\BookTagsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsNotesController;
@@ -10,7 +11,7 @@ use App\AppPlugin\Crm\Periodicals\PeriodicalsReportController;
 use App\AppPlugin\Crm\Periodicals\ReleaseFilterController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/book/addData/', [PeriodicalsController::class, 'addData'])->name('Periodicals.addData');
+//Route::get('/book/addData/', [PeriodicalsController::class, 'addData'])->name('Periodicals.addData');
 Route::get('/book/periodicals/', [PeriodicalsController::class, 'index'])->name('Periodicals.index');
 Route::post('/book/periodicals/', [PeriodicalsController::class, 'index'])->name('Periodicals.filter');
 Route::get('/book/periodicals/DataTable', [PeriodicalsController::class, 'DataTable'])->name('Periodicals.DataTable');
@@ -29,7 +30,6 @@ Route::get('/book/release/addYears/{id}', [PeriodicalsReleaseController::class, 
 Route::post('/book/release/addYears/Form/{cat_id}', [PeriodicalsReleaseController::class, 'AddYearReleaseForm'])->name('Periodicals.AddYearReleaseForm');
 Route::get('/book/release/deleteAll/{id}', [PeriodicalsReleaseController::class, 'ReleaseDeleteAll'])->name('Periodicals.deleteAllRelease');
 Route::post('/book/release/deleteAllConfirm/{id}', [PeriodicalsReleaseController::class, 'ReleaseDeleteAllConfirm'])->name('Periodicals.deleteAllReleaseConfirm');
-
 
 
 Route::get('/book/periodicals/report/', [PeriodicalsReportController::class, 'report'])->name('Periodicals.Report.index');
@@ -60,3 +60,4 @@ Route::get('/book/tags/destroy/{id}', [BookTagsController::class, 'TagsDelete'])
 Route::get('/book/tags/TagsSearch', [BookTagsController::class, 'TagsSearch'])->name('Periodicals.TagsSearch');
 Route::get('/book/tags/TagsOnFly', [BookTagsController::class, 'TagsOnFly'])->name('Periodicals.TagsOnFly');
 
+Route::post('/book/DashboardAddNew',[BookDashboardController::class,'DashboardAddNew'])->name('Dashboard.DashboardAddNew');

@@ -20,25 +20,26 @@ class PeriodicalsSeeder extends Seeder {
 
     public function run(): void {
 
-        BooksTags::unguard();
-        $tablePath = public_path('db/book_tags.sql');
-        DB::unprepared(file_get_contents($tablePath));
-
-        PeriodicalsNotes::unguard();
+        Periodicals::unguard();
         $tablePath = public_path('db/book_periodicals.sql');
         DB::unprepared(file_get_contents($tablePath));
+
 
         PeriodicalsRelease::unguard();
         $tablePath = public_path('db/book_periodicals_release.sql');
         DB::unprepared(file_get_contents($tablePath));
 
-        PeriodicalsRelease::unguard();
-        $tablePath = public_path('db/book_periodicals_notes.sql');
-        DB::unprepared(file_get_contents($tablePath));
+//        BooksTags::unguard();
+//        $tablePath = public_path('db/book_tags.sql');
+//        DB::unprepared(file_get_contents($tablePath));
 
-        BooksTagsNotes::unguard();
-        $tablePath = public_path('db/book_tags_notes.sql');
-        DB::unprepared(file_get_contents($tablePath));
+//        PeriodicalsNotes::unguard();
+//        $tablePath = public_path('db/book_periodicals_notes.sql');
+//        DB::unprepared(file_get_contents($tablePath));
+//
+//        BooksTagsNotes::unguard();
+//        $tablePath = public_path('db/book_tags_notes.sql');
+//        DB::unprepared(file_get_contents($tablePath));
 
 
         $users = [
@@ -54,7 +55,7 @@ class PeriodicalsSeeder extends Seeder {
         foreach ($users as $key => $value) {
             $user = User::create($value);
             $role = Role::findByName('editor');
-            $permissions = Permission::where('cat_id', 'Periodicals')->pluck('id');
+            $permissions = Permission::where('cat_id', 'Periodicals')->where('name', '!=', 'Periodicals_report')->pluck('id');
             $role->syncPermissions($permissions);
             $user->assignRole([$role->id]);
         }

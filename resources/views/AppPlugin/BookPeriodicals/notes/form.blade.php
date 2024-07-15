@@ -9,7 +9,11 @@
 
                 <input type="hidden" value="{{$Release->id}}" name="periodicals_id">
                 @csrf
-                <x-admin.form.input name="name" :row="$rowData" :label="__('admin/Periodicals.notes_name')" col="12" tdir="ar"/>
+                <div class="row">
+                    <x-admin.form.input name="name" :row="$rowData" :label="__('admin/Periodicals.notes_name')" col="6" tdir="ar"/>
+                    <x-admin.form.input name="author" :row="$rowData" :label="__('admin/Periodicals.notes_author')" col="4" tdir="ar" :req="false"/>
+                    <x-admin.form.input name="page_num" :row="$rowData" :label="__('admin/Periodicals.notes_page_num')" col="2" tdir="en" :req="false"/>
+                </div>
                 <x-admin.form.select-multiple :has-trans="false" name="tag_id" :categories="$tags" col="12"
                                               :sel-cat="old('tag_id',$selTags)" :label="__('admin/Periodicals.app_menu_tags')"/>
                 <x-admin.form.textarea name="des" :row="$rowData" value="{{old('des',$rowData->des)}}"
@@ -25,5 +29,5 @@
 
 
 @push('JsCode')
-{{--    <x-admin.ajax.tag-serach/>--}}
+    <x-admin.ajax.tag-serach/>
 @endpush

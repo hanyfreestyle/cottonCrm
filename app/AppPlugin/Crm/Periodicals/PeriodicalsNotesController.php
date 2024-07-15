@@ -141,12 +141,13 @@ class PeriodicalsNotesController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| #
     public function NotesStoreUpdate(BookNotesRequest $request, $id = 0) {
         $saveData = PeriodicalsNotes::findOrNew($id);
-
         try {
             DB::transaction(function () use ($request, $saveData) {
                 $tags = $request->input('tag_id');
                 $saveData->periodicals_id = $request->input('periodicals_id');
                 $saveData->name = $request->input('name');
+                $saveData->page_num = $request->input('page_num');
+                $saveData->author = $request->input('author');
                 $saveData->des = $request->input('des');
                 $saveData->save();
                 $saveData->tags()->sync($tags);
@@ -210,7 +211,16 @@ class PeriodicalsNotesController extends AdminMainController {
                     $release .= " العدد " . $release_number;
                 }
 
-                return $periodicals . " " . $release;
+                $printName = $periodicals . " " . $release;
+                if($row->author){
+                    $printName .= '</br>'.__('admin/Periodicals.notes_author')." : ".$row->author;
+                }
+
+                if(intval($row->page_num)>0){
+                    $printName .= '</br>'.__('admin/Periodicals.notes_page_num')." : ".$row->page_num;
+                }
+
+                return $printName;
 
             })
             ->addColumn('TagsName', function ($row) {
@@ -228,7 +238,7 @@ class PeriodicalsNotesController extends AdminMainController {
                     'timestamp' => strtotime($row->published_at)
                 ];
             })
-            ->rawColumns(['Edit', "Delete", 'ListRelease', 'TagsName']);
+            ->rawColumns(['Edit', "Delete", 'ListRelease', 'TagsName', 'releaseName']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
