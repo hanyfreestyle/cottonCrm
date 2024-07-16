@@ -44,19 +44,6 @@ trait CrmFunTraits {
             $data = array_merge($data, $newPer);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
-            $newPer = [
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
-                ['cat_id' => 'Periodicals', 'name' => 'Periodicals_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
-
         return $data;
-
     }
 }

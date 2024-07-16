@@ -16,8 +16,8 @@ if (!function_exists('sidebarCollapse')) {
             } else {
                 $state = null;
             }
-        } else {
-            $state = $session;
+        }else{
+            $state =  $session ;
         }
         return $state;
     }
@@ -30,8 +30,8 @@ if (!function_exists('sidebarCollapseIcon')) {
         $session = Session::get('sidebarCollapse');
         if ($session == null) {
             $icon = '<i class="fas fa-compress-arrows-alt"></i>';
-        } else {
-            $icon = '<i class="fas fa-compress"></i>';
+        }else{
+            $icon =  '<i class="fas fa-compress"></i>';
         }
         return $icon;
     }

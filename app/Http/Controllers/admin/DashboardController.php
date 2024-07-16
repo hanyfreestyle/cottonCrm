@@ -11,14 +11,12 @@ class DashboardController extends AdminMainController {
 
 public function ChangeCollapse(){
     $session = Session::get('sidebarCollapse');
-
     if($session == null){
         Session::put("sidebarCollapse", 'sidebar-collapse sidebar-mini');
         Session::save();
     }else{
         Session::forget('sidebarCollapse');
     }
-
     return redirect()->back();
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

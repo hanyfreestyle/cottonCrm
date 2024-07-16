@@ -99,7 +99,7 @@ class DefaultMainController extends Controller {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     getMeatByCatId
+#|||||||||||||||||||||||||||||||||||||| #
     static function getMeatByCatId($cat_id) {
         if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
             $WebMeta = Cache::remember('WebMeta_Cash', cashDay(7), function () {
@@ -113,7 +113,6 @@ class DefaultMainController extends Controller {
         } else {
             return [];
         }
-
     }
 
 
