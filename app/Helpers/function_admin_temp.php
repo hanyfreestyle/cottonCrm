@@ -1,21 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #    TablePhoto
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('sidebarCollapse')) {
     function sidebarCollapse() {
-        if (config('app.SideBarCollapse')) {
-            $state = " sidebar-collapse sidebar-mini ";
+        $session = Session::get('sidebarCollapse');
+        if ($session == null) {
+            if (config('app.SideBarCollapse')) {
+                $state = " sidebar-collapse sidebar-mini ";
+            } else {
+                $state = null;
+            }
         } else {
-            $state = "";
+            $state = $session;
         }
         return $state;
     }
 }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('sidebarCollapseIcon')) {
+    function sidebarCollapseIcon() {
+        $session = Session::get('sidebarCollapse');
+        if ($session == null) {
+            $icon = '<i class="fas fa-compress-arrows-alt"></i>';
+        } else {
+            $icon = '<i class="fas fa-compress"></i>';
+        }
+        return $icon;
+    }
+}
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    TablePhoto

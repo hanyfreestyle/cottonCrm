@@ -3,6 +3,11 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.ChangeCollapse')}}" role="button">{!! sidebarCollapseIcon() !!}</a>
+        </li>
+
         @if(config('app.puzzle_active') and File::isFile(base_path('routes/AppPlugin/appCore.php')))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.AppPuzzle.Config.IndexModel')}}" role="button">
