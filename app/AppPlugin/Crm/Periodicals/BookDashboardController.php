@@ -7,10 +7,8 @@ use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
 use App\AppPlugin\Crm\Periodicals\Request\DashboardRequest;
-use App\AppPlugin\Crm\Periodicals\Request\PeriodicalsAddReleaseRequest;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 
 class BookDashboardController extends AdminMainController {
