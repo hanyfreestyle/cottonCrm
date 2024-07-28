@@ -65,6 +65,7 @@ class AppPuzzleTreeCrm {
             'adminLangFiles' => ['customers.php'],
             'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
             'ComponentFolderView' => ['app-plugin/crm/customers'],
+            'ClientFolder' => config('adminConfig.app_folder'),
 
         ];
     }

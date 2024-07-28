@@ -13,13 +13,20 @@ class CrmCustomersSeeder extends Seeder {
 
     public function run(): void {
 
-        CrmCustomers::unguard();
-        $tablePath = public_path('db/crm_customers.sql');
-        DB::unprepared(file_get_contents($tablePath));
+        $folder = config('adminConfig.app_folder');
 
-        CrmCustomersAddress::unguard();
-        $tablePath = public_path('db/crm_customers_address.sql');
-        DB::unprepared(file_get_contents($tablePath));
+        if ($folder) {
+
+            CrmCustomers::unguard();
+            $tablePath = public_path('db/' . $folder . '/crm_customers.sql');
+            DB::unprepared(file_get_contents($tablePath));
+
+            CrmCustomersAddress::unguard();
+            $tablePath = public_path('db/' . $folder . '/crm_customers_address.sql');
+            DB::unprepared(file_get_contents($tablePath));
+
+        }
+
 
     }
 

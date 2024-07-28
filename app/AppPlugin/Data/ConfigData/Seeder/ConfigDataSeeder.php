@@ -25,7 +25,7 @@ class ConfigDataSeeder extends Seeder {
             DB::unprepared(file_get_contents($tablePath));
         }
 
-//        ConfigData::query()->whereNotIn('cat_id',['BookRelease','BookLang'])->delete();
+//        ConfigData::query()->whereNotIn('cat_id',['EvaluationCust'])->delete();
 
 
 //        $oldData = ConfigData::query()->orderBy('cat_id')->get();
