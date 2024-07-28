@@ -14,6 +14,12 @@ if (!function_exists('defAdminAssets')) {
     }
 }
 
+if (!function_exists('defAdminClient')) {
+    function defAdminClient($path, $secure = null): string {
+        return app('url')->asset('assets/admin/client/' . $path, $secure);
+    }
+}
+
 if (!function_exists('defAdminPluginsAssets')) {
     function defAdminPluginsAssets($path, $secure = null): string {
         return app('url')->asset('assets/admin-plugins/' . $path, $secure);

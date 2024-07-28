@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 class AppPuzzleController extends AppPuzzleFun {
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   IndexModel
     public function IndexPuzzle() {

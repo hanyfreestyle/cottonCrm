@@ -5,7 +5,7 @@
     <div class="card card-outline card-primary">
       <div class="card-header text-center">
         @if ( config('adminConfig.login_logo_img_view') == true)
-          <img class="img-fluid login_logo" src=" {{ config('adminConfig.login_logo_img') }}">
+          <img class="img-fluid login_logo" src=" {{ defAdminClient(config('adminConfig.app_logo_login'))  }}">
         @endif
       </div>
       <div class="card-body">

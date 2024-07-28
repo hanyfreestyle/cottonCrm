@@ -148,8 +148,8 @@ class AppPuzzleTreeConfig {
             'migrations' => [
                 '2019_12_14_000016_create_site_maps_table.php',
             ],
-//            'adminLangFolder' => "admin/",
-//            'adminLangFiles' => ['configMenu.php'],
+            'adminLangFolder' => "admin/",
+            'adminLangFiles' => ['siteMap.php'],
         ];
     }
 

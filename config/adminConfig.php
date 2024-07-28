@@ -2,30 +2,26 @@
 
 return [
 
-    'app_version'=> '1.0.0',
-    'copyright_start_date'=> '2004',
-    'copyright_name'=> 'Freestyle4u',
-    'copyright_url'=> 'http://freestyle4u.com/',
-    'textWithLogo'=> 'Cottton Shop',
+    'app_version' => '1.0.0',
+    'copyright_start_date' => '2004',
+    'copyright_name' => 'Freestyle4u',
+    'copyright_url' => 'http://freestyle4u.com/',
+
+    'app_logo_login' => env('APP_LOGO_LOGIN'),
+    'app_logo_back' => env('APP_LOGO_BACK'),
+    'app_logo_menu' => env('APP_LOGO_MENU'),
+    'app_logo_text' => env('APP_LOGO_TEXT'),
 
 
-    'dark-mode'=> false,
-    'html_ar_dir' => true ,
-    'login_logo_img_view'=> true,
-    'login_logo_img' => '../assets/admin/img/login_logo.png' ,
-   // 'login_logo_img' => defAdminAssets('/img/login_logo.png') ,
-    'pace_progress'=> true,
-    'pace_progress_style'=> 'pace-primary',
-    'preloader'=> false,
+    'dark-mode' => false,
+    'html_ar_dir' => true,
+    'login_logo_img_view' => true,
+    'pace_progress' => true,
+    'pace_progress_style' => 'pace-primary',
+    'preloader' => false,
     'preloader_img' => 'public/AdminLTEimg/LogoIcon.png',
 
-
-
-
-    'title' => 'Cottton Shop | Powered By Freestyle4u.com ',
-
-    #'def_home_url'=> route('Dashboard1','Dashboard1'),
-
+    'title' => env('APP_LOGO_TEXT') . ' | Powered By Freestyle4u.com ',
 
     /*
     |--------------------------------------------------------------------------
@@ -54,22 +50,21 @@ return [
    | Top Nav Bar
    |--------------------------------------------------------------------------
    */
-   'top_navbar_fixed' => true,
-   'top_navbar_dark' => false,
-   'top_navbar_search' => false,
-   'top_navbar_messages' => false,
-   'top_navbar_user_profile' => false,
-   'top_navbar_notifications' => false,
-   'top_navbar_fullscreen' => true,
-   'top_navbar_control' => false,
+    'top_navbar_fixed' => true,
+    'top_navbar_dark' => false,
+    'top_navbar_search' => false,
+    'top_navbar_messages' => false,
+    'top_navbar_user_profile' => false,
+    'top_navbar_notifications' => false,
+    'top_navbar_fullscreen' => true,
+    'top_navbar_control' => false,
 
     /*
    |--------------------------------------------------------------------------
    | Footer
    |--------------------------------------------------------------------------
    */
-   'footer_fixed' => true,
-
+    'footer_fixed' => true,
 
 
     /*
@@ -173,7 +168,6 @@ return [
     'classes_topnav_container' => 'container',
 
 
-
     /*
     |--------------------------------------------------------------------------
     | Control Sidebar (Right Sidebar)
@@ -247,12 +241,12 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
+            'type' => 'navbar-search',
+            'text' => 'search',
             'topnav_right' => true,
         ],
         [
-            'type'         => 'fullscreen-widget',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
@@ -263,54 +257,54 @@ return [
         ],
         [
             'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'url' => 'admin/blog',
+            'can' => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'text' => 'pages',
+            'url' => 'admin/pages',
+            'icon' => 'far fa-fw fa-file',
+            'label' => 4,
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text' => 'multilevel',
+            'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [
                     'text' => 'level_one',
-                    'url'  => '#',
+                    'url' => '#',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
+                    'text' => 'level_one',
+                    'url' => '#',
                     'submenu' => [
                         [
                             'text' => 'level_two',
-                            'url'  => '#',
+                            'url' => '#',
                         ],
                         [
-                            'text'    => 'level_two',
-                            'url'     => '#',
+                            'text' => 'level_two',
+                            'url' => '#',
                             'submenu' => [
                                 [
                                     'text' => 'level_three',
-                                    'url'  => '#',
+                                    'url' => '#',
                                 ],
                                 [
                                     'text' => 'level_three',
-                                    'url'  => '#',
+                                    'url' => '#',
                                 ],
                             ],
                         ],
@@ -318,25 +312,25 @@ return [
                 ],
                 [
                     'text' => 'level_one',
-                    'url'  => '#',
+                    'url' => '#',
                 ],
             ],
         ],
         ['header' => 'labels'],
         [
-            'text'       => 'important',
+            'text' => 'important',
             'icon_color' => 'red',
-            'url'        => '#',
+            'url' => '#',
         ],
         [
-            'text'       => 'warning',
+            'text' => 'warning',
             'icon_color' => 'yellow',
-            'url'        => '#',
+            'url' => '#',
         ],
         [
-            'text'       => 'information',
+            'text' => 'information',
             'icon_color' => 'cyan',
-            'url'        => '#',
+            'url' => '#',
         ],
     ],
 
