@@ -66,6 +66,7 @@ class PeriodicalsNotesController extends AdminMainController {
         $session = self::getSessionData($request);
         $rowData = self::PeriodicalsNotesFilter(self::indexQuery(), $session);
         $tags = BooksTags::where('id', '!=', 0)->take(100)->get();
+
         return view('AppPlugin.BookPeriodicals.notes.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,

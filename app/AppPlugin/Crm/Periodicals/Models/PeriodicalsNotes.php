@@ -16,10 +16,10 @@ class PeriodicalsNotes extends Model {
 //    public $timestamps = false;
 
 
-    public function release(): BelongsTo {
-        return $this->belongsTo(PeriodicalsRelease::class,'periodicals_id','id')->with('periodicals');
-    }
-
+//    public function release(): BelongsTo {
+//        return $this->belongsTo(PeriodicalsRelease::class,'periodicals_id','id')->with('periodicals');
+//    }
+//
     public function tags(): BelongsToMany {
         return $this->belongsToMany(BooksTags::class, 'book_tags_notes', 'notes_id', 'tag_id');
     }

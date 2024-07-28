@@ -52,6 +52,8 @@ class AppPuzzleTreeProduct {
                 'pro_tags_translations.sql',
                 'pro_tags_product.sql',
                 'pro_product_attribute.sql',
+                'pro_landing_page.sql',
+                'pro_landing_page_translations.sql',
             ],
 
             'adminLangFolder' => "admin/",
@@ -61,6 +63,8 @@ class AppPuzzleTreeProduct {
             'assetsFolder' => null,
             'livewireClass' => null,
             'livewireView' => null,
+            'ComponentFolderClass' => ['AppPlugin/Product'],
+            'ComponentFolderView' => ['app-plugin/product'],
         ];
     }
 
