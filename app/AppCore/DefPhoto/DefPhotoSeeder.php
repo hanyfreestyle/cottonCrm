@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\DB;
 class DefPhotoSeeder extends Seeder {
 
     public function run(): void {
-        DefPhoto::unguard();
-        $tablePath = public_path('db/config_def_photos.sql');
-        DB::unprepared(file_get_contents($tablePath));
+        $folder = config('adminConfig.app_folder');
+
+        if ($folder) {
+            DefPhoto::unguard();
+            $tablePath = public_path('db/' . $folder . '/config_def_photos.sql');
+            DB::unprepared(file_get_contents($tablePath));
+        } else {
+            DefPhoto::unguard();
+            $tablePath = public_path('db/config_def_photos.sql');
+            DB::unprepared(file_get_contents($tablePath));
+        }
     }
 }

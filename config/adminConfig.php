@@ -7,6 +7,7 @@ return [
     'copyright_name' => 'Freestyle4u',
     'copyright_url' => 'http://freestyle4u.com/',
 
+    'app_folder' => env('APP_FOLDER'),
     'app_logo_login' => env('APP_LOGO_LOGIN'),
     'app_logo_back' => env('APP_LOGO_BACK'),
     'app_logo_menu' => env('APP_LOGO_MENU'),
