@@ -96,6 +96,11 @@ class LangFileController extends AdminMainController {
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $addLang = ['SiteMap' => ['id' => 'SiteMap', 'group' => 'admin', 'file_name' => 'siteMap', 'name' => 'SiteMap', 'name_ar' => 'SiteMap']];
+            $LangMenu = array_merge($LangMenu, $addLang);
+        }
+
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
             $LangMenu = ConfigDataTraits::LoadLangFiles($LangMenu);
         }

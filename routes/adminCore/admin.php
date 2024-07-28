@@ -11,6 +11,8 @@ Route::get('/change-collapse', [DashboardController::class, 'ChangeCollapse'])->
 
 if (File::isFile(base_path('app\AppPlugin\Crm\Periodicals\BookDashboardController.php'))) {
 
+}elseif (File::isFile(base_path('app\AppPlugin\Product\ProductDashboardController.php'))){
+
 } else {
     Route::get('/', [DashboardController::class, 'Dashboard'])->name('Dashboard');
 }

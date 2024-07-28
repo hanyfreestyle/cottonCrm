@@ -135,11 +135,19 @@ class PermissionSeeder extends Seeder {
             ['cat_id' => 'config', 'name' => 'config_website', 'name_ar' => 'اعدادات الموقع', 'name_en' => 'Web Site Setting'],
             ['cat_id' => 'config', 'name' => 'config_defPhoto_view', 'name_ar' => 'الصور الافتراضية', 'name_en' => 'View'],
             ['cat_id' => 'config', 'name' => 'config_upFilter_view', 'name_ar' => 'فلاتر الصور', 'name_en' => 'View'],
-            ['cat_id' => 'config', 'name' => 'config_newsletter', 'name_ar' => 'القائمة البريدية', 'name_en' => 'News Letter'],
             ['cat_id' => 'config', 'name' => 'adminlang_view', 'name_ar' => 'ملفات لغة التحكم', 'name_en' => 'Admin Lang File'],
             ['cat_id' => 'config', 'name' => 'weblang_view', 'name_ar' => 'ملفات لغة الموقع', 'name_en' => 'Web Lang File'],
-            ['cat_id' => 'config', 'name' => 'sitemap_view', 'name_ar' => 'SiteMap', 'name_en' => 'SiteMap'],
         ];
+
+        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
+            $newPer = [['cat_id' => 'config', 'name' => 'config_newsletter', 'name_ar' => 'القائمة البريدية', 'name_en' => 'News Letter']];
+            $configPer = array_merge($configPer, $newPer);
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $newPer = [['cat_id' => 'config', 'name' => 'sitemap_view', 'name_ar' => 'SiteMap', 'name_en' => 'SiteMap']];
+            $configPer = array_merge($configPer, $newPer);
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
             $newPer = [['cat_id' => 'config', 'name' => 'config_meta_view', 'name_ar' => 'ميتا تاج', 'name_en' => 'Meta']];

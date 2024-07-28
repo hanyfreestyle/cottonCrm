@@ -88,10 +88,10 @@ class SettingsController extends AdminMainController {
         $saveData->linkedin = $request->input('linkedin');
         $saveData->google_api = $request->input('google_api');
 
-        $saveData->telegram_send = $request->input('telegram_send');
-        $saveData->telegram_key = $request->input('telegram_key');
-        $saveData->telegram_phone = $request->input('telegram_phone');
-        $saveData->telegram_group = $request->input('telegram_group');
+//        $saveData->telegram_send = $request->input('telegram_send');
+//        $saveData->telegram_key = $request->input('telegram_key');
+//        $saveData->telegram_phone = $request->input('telegram_phone');
+//        $saveData->telegram_group = $request->input('telegram_group');
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
             $saveData->page_about = $request->input('page_about');
@@ -103,36 +103,26 @@ class SettingsController extends AdminMainController {
             $saveData->pro_warranty_tab = $request->input('pro_warranty_tab');
             $saveData->pro_shipping_tab = $request->input('pro_shipping_tab');
             $saveData->pro_social_share = $request->input('pro_social_share');
-
-            $saveData->pro_main_city_id = $request->input('pro_main_city_id');
-            $saveData->pro_main_city_rate = $request->input('pro_main_city_rate');
-            $saveData->pro_main_city_discount = $request->input('pro_main_city_discount');
-            $saveData->pro_all_city_rate = $request->input('pro_all_city_rate');
-            $saveData->pro_all_city_discount = $request->input('pro_all_city_discount');
         }
+
+        $saveData->schema_type = $request->input('schema_type');
+        $saveData->schema_lat = $request->input('schema_lat');
+        $saveData->schema_long = $request->input('schema_long');
+        $saveData->schema_postal_code = $request->input('schema_postal_code');
+        $saveData->schema_country = $request->input('schema_country');
 
 
         $saveData->save();
-
-        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
-            $UpdateCity = City::all();
-            foreach ($UpdateCity as $city) {
-                if (in_array($city->id, $request->input('pro_main_city_id'))) {
-                    $city->rate = $saveData->pro_main_city_rate;
-                    $city->discount = $saveData->pro_main_city_discount;
-                } else {
-                    $city->rate = $saveData->pro_all_city_rate;
-                    $city->discount = $saveData->pro_all_city_discount;
-                }
-                $city->save();
-            }
-        }
 
         foreach (config('app.web_lang') as $key => $lang) {
             $saveTranslation = SettingTranslation::where('setting_id', $saveData->id)->where('locale', $key)->firstOrNew();
             $saveTranslation->locale = $key;
             $saveTranslation->name = $request->input($key . '.name');
             $saveTranslation->closed_mass = $request->input($key . '.closed_mass');
+            $saveTranslation->whatsapp_des = $request->input($key . '.whatsapp_des');
+            $saveTranslation->meta_des = $request->input($key . '.meta_des');
+            $saveTranslation->schema_address = $request->input($key . '.schema_address');
+            $saveTranslation->schema_city = $request->input($key . '.schema_city');
             $saveTranslation->save();
         }
 
@@ -212,6 +202,18 @@ class SettingsController extends AdminMainController {
             $subMenu->icon = "fas fa-mail-bulk";
             $subMenu->save();
         }
+
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "SiteMap.index";
+            $subMenu->url = "admin.config.SiteMap.index";
+            $subMenu->name = "Site Maps";
+            $subMenu->roleView = "sitemap_view";
+            $subMenu->icon = "fas fa-sitemap";
+            $subMenu->save();
+        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
             $subMenu = new AdminMenu();

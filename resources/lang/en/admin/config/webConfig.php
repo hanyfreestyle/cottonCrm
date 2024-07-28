@@ -21,4 +21,6 @@ return
 	'website_name' => 'Website Name',
 	'whatsapp' => 'Whatsapp Number',
 	'whatsapp_send' => 'Whatsapp Send To',
+	'meta_des' => '',
+	'whatsapp_des' => '',
 ];

@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder {
                 'slug' => AdminHelper::Url_Slug('احمد عبادى'),
                 'email' => 'sales@cottton.shop',
                 'password' => Hash::make('sales@cottton.shop'),
-                'roles_name' => ['sales'],
+                'roles_name' => ['editor'],
             ],
             [
                 'name' => 'Mohamed Naser',
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder {
         if ($userCount == '1') {
             foreach ($users as $key => $value) {
                 $user = User::create($value);
-                $role = Role::findByName('sales');
+                $role = Role::findByName('editor');
                 $permissions = Permission::where('cat_id', 'Product')->pluck('id');
                 $role->syncPermissions($permissions);
                 $user->assignRole([$role->id]);

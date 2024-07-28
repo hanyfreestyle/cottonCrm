@@ -20,7 +20,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <form action="{{route('config.SiteMap.'.$route)}}" method="post">
+                        <form action="{{route($PrefixRoute.$route)}}" method="post">
                             @csrf
                             <input type="hidden" name="cat_id" value="{{$catid}}">
                             <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>

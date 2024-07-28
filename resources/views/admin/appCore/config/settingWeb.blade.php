@@ -3,13 +3,10 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
-
     <form class="mainForm" action="{{route('admin.webConfigUpdate')}}" method="post">
         @csrf
         <x-admin.hmtl.section>
             <div class="row">
-
-
                 <x-admin.card.normal col="col-lg-12" title="{{__('admin/config/webConfig.app_menu')}}">
                     <div class="row">
                         @if($errors->has([]))
@@ -45,18 +42,23 @@
                                 <x-admin.form.select-arr name="wish_list" :sendvalue="old('wish_list',$setting->wish_list)"
                                                          :label="__('admin/config/webConfig.web_wish_list')" col="4"
                                                          select-type="selActive"/>
-
                             </div>
-
 
                             <div class="row">
                                 @foreach ( config('app.web_lang') as $key=>$lang )
-
                                     <div class="col-lg-{{getColLang(6)}}">
                                         <x-admin.form.trans-input name="name" :row="$setting" :key="$key" :tdir="$key"
                                                                   :label="__('admin/config/webConfig.website_name')"/>
                                         <x-admin.form.trans-text-area name="closed_mass" :row="$setting" :key="$key" :tdir="$key"
                                                                       :label="__('admin/config/webConfig.closed_mass')"/>
+
+                                        <x-admin.form.trans-input name="meta_des" :row="$setting" :key="$key" :tdir="$key"
+                                                                  :label="__('admin/config/webConfig.meta_des')"/>
+
+                                        <x-admin.form.trans-input name="whatsapp_des" :row="$setting" :key="$key" :tdir="$key"
+                                                                  :label="__('admin/config/webConfig.whatsapp_des')"/>
+
+
                                     </div>
                                 @endforeach
                             </div>
@@ -109,39 +111,31 @@
                                 </div>
                             </x-admin.card.normal>
 
-                            <x-admin.card.normal col="col-lg-6" title="{{__('admin/proProduct.web_city_card')}}">
+                            <x-admin.card.normal col="col-lg-6" title="Schema">
                                 <div class="row">
-
-
-                                    <x-admin.form.select-multiple name="pro_main_city_id" label="{{__('admin/form.sel_categories')}}"
-                                                                  :categories="$cashCityList" :sel-cat="json_decode($setting->pro_main_city_id,true)"
-                                                                  :req="false" col="12"
-                                    />
-
-                                    <x-admin.form.input :row="$setting" name="pro_main_city_discount" :label="__('admin/proProduct.web_city_main_discount')" col="6"
-                                                        tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="pro_main_city_rate" :label="__('admin/proProduct.web_city_main_rate')" col="6" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="pro_all_city_discount" :label="__('admin/proProduct.web_city_all_discount')" col="6" tdir="en"/>
-                                    <x-admin.form.input :row="$setting" name="pro_all_city_rate" :label="__('admin/proProduct.web_city_all_rate')" col="6" tdir="en"/>
-
+                                    <x-admin.form.input :row="$setting" name="schema_type" label="Type" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_lat" label="latitude" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_long" label="longitude" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_postal_code" label="postalCode" col="4" tdir="en"/>
+                                    <x-admin.form.input :row="$setting" name="schema_country" label="addressCountry" col="4" tdir="en"/>
+                                </div>
+                                <div class="row">
+                                    @foreach ( config('app.web_lang') as $key=>$lang )
+                                        <div class="col-lg-{{getColLang(6)}}">
+                                            <x-admin.form.trans-input name="schema_address" :row="$setting" :key="$key" :tdir="$key" label="streetAddress"/>
+                                            <x-admin.form.trans-input name="schema_city" :row="$setting" :key="$key" :tdir="$key" label="addressLocality"/>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </x-admin.card.normal>
+
+
                         </div>
                     </div>
                 @endif
 
                 <div class="col-lg-12">
                     <div class="row">
-                        <x-admin.card.normal col="col-lg-6" title="Telegram">
-                            <div class="row">
-                                <x-admin.form.select-arr name="telegram_send" :sendvalue="old('telegram_send',$setting->telegram_send)" label="Send" col="4"
-                                                         select-type="selActive"/>
-                                <x-admin.form.input :row="$setting" name="telegram_key" label="Telegram Key" col="12" tdir="en"/>
-                                <x-admin.form.input :row="$setting" name="telegram_phone" label="Telegram Group" col="12" tdir="en"/>
-                                <x-admin.form.input :row="$setting" name="telegram_group" label="Telegram Phone" col="12" tdir="en"/>
-                            </div>
-                        </x-admin.card.normal>
-
                         <x-admin.card.normal col="col-lg-6" title="{{__('admin/config/webConfig.social_media')}}">
                             <div class="row">
                                 <x-admin.form.input :row="$setting" name="facebook" label="Facebook" col="12" tdir="en"/>
@@ -151,7 +145,19 @@
                                 <x-admin.form.input :row="$setting" name="linkedin" label="Linkedin" col="12" tdir="en"/>
                                 <x-admin.form.input :row="$setting" name="google_api" label="Google Api" col="12" tdir="en"/>
                             </div>
+
+
                         </x-admin.card.normal>
+
+                        {{--                        <x-admin.card.normal col="col-lg-6" title="Telegram">--}}
+                        {{--                            <div class="row">--}}
+                        {{--                                <x-admin.form.select-arr name="telegram_send" :sendvalue="old('telegram_send',$setting->telegram_send)" label="Send" col="4"--}}
+                        {{--                                                         select-type="selActive"/>--}}
+                        {{--                                <x-admin.form.input :row="$setting" name="telegram_key" label="Telegram Key" col="12" tdir="en"/>--}}
+                        {{--                                <x-admin.form.input :row="$setting" name="telegram_phone" label="Telegram Group" col="12" tdir="en"/>--}}
+                        {{--                                <x-admin.form.input :row="$setting" name="telegram_group" label="Telegram Phone" col="12" tdir="en"/>--}}
+                        {{--                            </div>--}}
+                        {{--                        </x-admin.card.normal>--}}
                     </div>
                 </div>
 

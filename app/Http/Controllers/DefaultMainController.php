@@ -66,10 +66,10 @@ class DefaultMainController extends Controller {
 #|||||||||||||||||||||||||||||||||||||| #     getWebConfig
     static function getWebConfig($stopCash = 0) {
         if ($stopCash) {
-            $WebConfig = Setting::where('id', 1)->with('translations')->first();
+            $WebConfig = Setting::where('id', 1)->with('translation')->first();
         } else {
             $WebConfig = Cache::remember('WebConfig_Cash', cashDay(1), function () {
-                return Setting::where('id', 1)->with('translations')->first();
+                return Setting::where('id', 1)->with('translation')->first();
             });
         }
         return $WebConfig;

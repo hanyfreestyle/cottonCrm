@@ -96,7 +96,7 @@ return [
 
     'web_lang' =>[
         'ar'=>'العربية',
-        'en'=>'English',
+//        'en'=>'English',
 
     ],
 
