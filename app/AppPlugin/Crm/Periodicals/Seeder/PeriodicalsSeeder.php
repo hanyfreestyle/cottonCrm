@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\Periodicals\Models\BooksTagsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\Periodicals;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsNotes;
 use App\AppPlugin\Crm\Periodicals\Models\PeriodicalsRelease;
+use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\Helpers\AdminHelper;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,18 +30,19 @@ class PeriodicalsSeeder extends Seeder {
         $tablePath = public_path('db/book_periodicals_release.sql');
         DB::unprepared(file_get_contents($tablePath));
 
-//        BooksTags::unguard();
-//        $tablePath = public_path('db/book_tags.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-
-//        PeriodicalsNotes::unguard();
-//        $tablePath = public_path('db/book_periodicals_notes.sql');
-//        DB::unprepared(file_get_contents($tablePath));
+//        $Periodicals = Periodicals::query()->where('release_id', '!=', null)->get();
+//        foreach ($Periodicals as $Periodical) {
+//            $reId = $Periodical->release_id;
+//            $newId = ConfigData::query()->where('old_id', $reId)->first()->id;
+//            $Periodical->release_id = $newId ;
+//            $Periodical->save() ;
+//        }
 //
-//        BooksTagsNotes::unguard();
-//        $tablePath = public_path('db/book_tags_notes.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-
+//        $Periodicals = Periodicals::query()->get();
+//        foreach ($Periodicals as $Periodical) {
+//            $Periodical->lang_id = 1 ;
+//            $Periodical->save() ;
+//        }
 
         $users = [
             [

@@ -15,10 +15,7 @@ class DefPhotoSeeder extends Seeder {
             DefPhoto::unguard();
             $tablePath = public_path('db/' . $folder . '/config_def_photos.sql');
             DB::unprepared(file_get_contents($tablePath));
-        } else {
-            DefPhoto::unguard();
-            $tablePath = public_path('db/config_def_photos.sql');
-            DB::unprepared(file_get_contents($tablePath));
         }
+
     }
 }

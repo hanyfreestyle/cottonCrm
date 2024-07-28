@@ -57,6 +57,10 @@ class DatabaseSeeder extends Seeder {
         $this->call(UploadFilterSeeder::class);
         $this->call(AdminMenuSeeder::class);
 
+        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+            $this->call(ConfigDataSeeder::class);
+        }
+
         if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
             $this->call(ImportDataSeeder::class);
         }
@@ -84,9 +88,7 @@ class DatabaseSeeder extends Seeder {
             $this->call(SeederBranch::class);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            $this->call(ConfigDataSeeder::class);
-        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
             $this->call(SeederCountry::class);
