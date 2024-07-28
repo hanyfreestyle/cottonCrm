@@ -59,8 +59,13 @@ class AppPuzzleFunRemove extends AppPuzzleFun {
 
         $seeder = issetArr($thisModel,'seeder',null);
         if($seeder != null and is_array($seeder)) {
+            $ClientFolder = issetArr($thisModel, 'ClientFolder', null);
+            if ($ClientFolder){
+                $ClientFolder = $ClientFolder."/";
+            }
+
             foreach ($seeder as $file) {
-                $filePath = public_path('db/' . $file);
+                $filePath = public_path('db/' .$ClientFolder. $file);
                 if(File::isFile($filePath)) {
                     File::delete($filePath);
                 }
