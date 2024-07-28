@@ -70,10 +70,16 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
 
         $seeders = issetArr($thisModel, 'seeder', null);
         if ($seeders != null and is_array($seeders)) {
+            $ClientFolder = issetArr($thisModel, 'ClientFolder', null);
+            if ($ClientFolder){
+                $ClientFolder = $ClientFolder."/";
+            }
+
             foreach ($seeders as $file) {
-                $filePath = public_path('db/' . $file);
+                $filePath = public_path('db/' .$ClientFolder. $file);
+
                 if (File::isFile($filePath)) {
-                    $destinationFolder = $CopyFolder . '/public/db/';
+                    $destinationFolder = $CopyFolder . 'public/db/'.$ClientFolder;
                     self::folderMakeDirectory($destinationFolder);
                     File::copy($filePath, $destinationFolder . $file);
                 }

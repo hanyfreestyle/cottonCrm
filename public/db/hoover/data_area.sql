@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2024 at 10:36 AM
+-- Generation Time: Jul 28, 2024 at 04:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_shop`
+-- Database: `cottton_crm`
 --
 
 --
@@ -131,69 +131,7 @@ INSERT INTO `data_area` (`id`, `old_id`, `country_id`, `city_id`, `is_active`, `
 (103, 295, 66, 4, 1, 0, NULL, NULL),
 (104, 297, 66, 4, 1, 0, NULL, NULL),
 (105, 298, 66, 4, 1, 0, NULL, NULL),
-(106, 299, 66, 4, 1, 0, NULL, NULL),
-(107, NULL, 169, 28, 1, 0, NULL, NULL),
-(108, NULL, 169, 28, 1, 0, NULL, NULL),
-(109, NULL, 169, 28, 1, 0, NULL, NULL),
-(110, NULL, 169, 28, 1, 0, NULL, NULL),
-(111, NULL, 169, 28, 1, 0, NULL, NULL),
-(112, NULL, 169, 28, 1, 0, NULL, NULL),
-(113, NULL, 169, 28, 1, 0, NULL, NULL),
-(114, NULL, 169, 28, 1, 0, NULL, NULL),
-(115, NULL, 169, 28, 1, 0, NULL, NULL),
-(116, NULL, 169, 29, 1, 0, NULL, NULL),
-(117, NULL, 169, 29, 1, 0, NULL, NULL),
-(118, NULL, 169, 29, 1, 0, NULL, NULL),
-(119, NULL, 169, 30, 1, 0, NULL, NULL),
-(120, NULL, 169, 30, 1, 0, NULL, NULL),
-(121, NULL, 169, 30, 1, 0, NULL, NULL),
-(122, NULL, 169, 30, 1, 0, NULL, NULL),
-(123, NULL, 169, 30, 1, 0, NULL, NULL),
-(124, NULL, 169, 30, 1, 0, NULL, NULL),
-(125, NULL, 169, 31, 1, 0, NULL, NULL),
-(126, NULL, 169, 31, 1, 0, NULL, NULL),
-(127, NULL, 169, 31, 1, 0, NULL, NULL),
-(128, NULL, 169, 31, 1, 0, NULL, NULL),
-(129, NULL, 169, 31, 1, 0, NULL, NULL),
-(130, NULL, 169, 31, 1, 0, NULL, NULL),
-(131, NULL, 169, 32, 1, 0, NULL, NULL),
-(132, NULL, 169, 32, 1, 0, NULL, NULL),
-(133, NULL, 169, 32, 1, 0, NULL, NULL),
-(134, NULL, 169, 33, 1, 0, NULL, NULL),
-(135, NULL, 169, 33, 1, 0, NULL, NULL),
-(136, NULL, 169, 33, 1, 0, NULL, NULL),
-(137, NULL, 169, 33, 1, 0, NULL, NULL),
-(138, NULL, 169, 34, 1, 0, NULL, NULL),
-(139, NULL, 169, 34, 1, 0, NULL, NULL),
-(140, NULL, 169, 34, 1, 0, NULL, NULL),
-(141, NULL, 169, 34, 1, 0, NULL, NULL),
-(142, NULL, 169, 34, 1, 0, NULL, NULL),
-(143, NULL, 169, 34, 1, 0, NULL, NULL),
-(144, NULL, 169, 35, 1, 0, NULL, NULL),
-(145, NULL, 169, 35, 1, 0, NULL, NULL),
-(146, NULL, 169, 35, 1, 0, NULL, NULL),
-(147, NULL, 169, 35, 1, 0, NULL, NULL),
-(148, NULL, 169, 35, 1, 0, NULL, NULL),
-(149, NULL, 169, 36, 1, 0, NULL, NULL),
-(150, NULL, 169, 36, 1, 0, NULL, NULL),
-(151, NULL, 169, 36, 1, 0, NULL, NULL),
-(152, NULL, 169, 36, 1, 0, NULL, NULL),
-(153, NULL, 169, 36, 1, 0, NULL, NULL),
-(154, NULL, 169, 36, 1, 0, NULL, NULL),
-(155, NULL, 169, 36, 1, 0, NULL, NULL),
-(156, NULL, 169, 36, 1, 0, NULL, NULL),
-(157, NULL, 169, 36, 1, 0, NULL, NULL),
-(158, NULL, 169, 36, 1, 0, NULL, NULL),
-(159, NULL, 169, 37, 1, 0, NULL, NULL),
-(160, NULL, 169, 37, 1, 0, NULL, NULL),
-(161, NULL, 169, 37, 1, 0, NULL, NULL),
-(162, NULL, 169, 37, 1, 0, NULL, NULL),
-(163, NULL, 169, 37, 1, 0, NULL, NULL),
-(164, NULL, 169, 37, 1, 0, NULL, NULL),
-(165, NULL, 169, 38, 1, 0, NULL, NULL),
-(166, NULL, 169, 38, 1, 0, NULL, NULL),
-(167, NULL, 169, 38, 1, 0, NULL, NULL),
-(168, NULL, 169, 38, 1, 0, NULL, NULL);
+(106, 299, 66, 4, 1, 0, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

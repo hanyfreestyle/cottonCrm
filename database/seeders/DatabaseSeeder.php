@@ -97,7 +97,7 @@ class DatabaseSeeder extends Seeder {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
-            $this->call(AreaSeeder::class);
+           $this->call(AreaSeeder::class);
         }
 
 

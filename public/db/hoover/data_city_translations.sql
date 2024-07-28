@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2024 at 09:43 AM
+-- Generation Time: Jul 28, 2024 at 04:16 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_shop`
+-- Database: `cottton_crm`
 --
 
 --
@@ -79,29 +79,7 @@ INSERT INTO `data_city_translations` (`id`, `city_id`, `locale`, `name`, `g_titl
 (51, 26, 'ar', 'الوادي الجديد', NULL, NULL, NULL),
 (52, 26, 'en', 'New Valley', NULL, NULL, NULL),
 (53, 27, 'ar', 'الدقهلية', NULL, NULL, NULL),
-(54, 27, 'en', 'Dakahlia', NULL, NULL, NULL),
-(55, 28, 'ar', 'الداخلية', NULL, NULL, NULL),
-(56, 28, 'en', 'Ad Dakhiliyah', NULL, NULL, NULL),
-(57, 29, 'ar', 'الظاهرة', NULL, NULL, NULL),
-(58, 29, 'en', 'Ad Dhahirah', NULL, NULL, NULL),
-(59, 30, 'ar', 'شمال الباطنة', NULL, NULL, NULL),
-(60, 30, 'en', 'Al Batinah North', NULL, NULL, NULL),
-(61, 31, 'ar', 'جنوب الباطنة', NULL, NULL, NULL),
-(62, 31, 'en', 'Al Batinah South', NULL, NULL, NULL),
-(63, 32, 'ar', 'البريمي', NULL, NULL, NULL),
-(64, 32, 'en', 'Al Buraymi', NULL, NULL, NULL),
-(65, 33, 'ar', 'الوسطى', NULL, NULL, NULL),
-(66, 33, 'en', 'Al Wusta', NULL, NULL, NULL),
-(67, 34, 'ar', 'شمال الشرقية', NULL, NULL, NULL),
-(68, 34, 'en', 'Ash Sharqiyah North', NULL, NULL, NULL),
-(69, 35, 'ar', 'جنوب الشرقية', NULL, NULL, NULL),
-(70, 35, 'en', 'Ash Sharqiyah South', NULL, NULL, NULL),
-(71, 36, 'ar', 'ظفار', NULL, NULL, NULL),
-(72, 36, 'en', 'Dhofar', NULL, NULL, NULL),
-(73, 37, 'ar', 'مسقط', NULL, NULL, NULL),
-(74, 37, 'en', 'Muscat', NULL, NULL, NULL),
-(75, 38, 'ar', 'مسندم', NULL, NULL, NULL),
-(76, 38, 'en', 'Musandam', NULL, NULL, NULL);
+(54, 27, 'en', 'Dakahlia', NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

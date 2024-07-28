@@ -62,6 +62,7 @@ class AppPuzzleTreeData {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     static function treeDataCity() {
+
         return [
             'view' => true,
             'id' => "DataCity",
@@ -74,6 +75,7 @@ class AppPuzzleTreeData {
             'seeder' => ['data_city.sql', 'data_city_translations.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['dataCity.php'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 

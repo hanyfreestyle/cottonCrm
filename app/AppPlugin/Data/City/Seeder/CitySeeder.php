@@ -9,14 +9,17 @@ use Illuminate\Support\Facades\DB;
 class CitySeeder extends Seeder {
 
     public function run(): void {
+        $folder = config('adminConfig.app_folder');
 
-        City::unguard();
-        $tablePath = public_path('db/data_city.sql');
-        DB::unprepared(file_get_contents($tablePath));
+        if ($folder) {
+            City::unguard();
+            $tablePath = public_path('db/' . $folder . '/data_city.sql');
+            DB::unprepared(file_get_contents($tablePath));
 
-        CityTranslation::unguard();
-        $tablePath = public_path('db/data_city_translations.sql');
-        DB::unprepared(file_get_contents($tablePath));
+            CityTranslation::unguard();
+            $tablePath = public_path('db/' . $folder . '/data_city_translations.sql');
+            DB::unprepared(file_get_contents($tablePath));
+        }
 
     }
 

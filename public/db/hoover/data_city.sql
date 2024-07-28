@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2024 at 09:43 AM
+-- Generation Time: Jul 28, 2024 at 04:16 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_shop`
+-- Database: `cottton_crm`
 --
 
 --
@@ -52,18 +52,7 @@ INSERT INTO `data_city` (`id`, `old_id`, `country_id`, `is_active`, `postion`, `
 (24, NULL, 66, 1, 0, NULL, NULL, 400, 10000),
 (25, NULL, 66, 1, 0, NULL, NULL, 400, 10000),
 (26, NULL, 66, 1, 0, NULL, NULL, 400, 10000),
-(27, NULL, 66, 1, 0, NULL, NULL, 400, 10000),
-(28, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(29, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(30, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(31, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(32, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(33, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(34, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(35, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(36, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(37, NULL, 169, 1, 0, NULL, NULL, NULL, NULL),
-(38, NULL, 169, 1, 0, NULL, NULL, NULL, NULL);
+(27, NULL, 66, 1, 0, NULL, NULL, 400, 10000);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
