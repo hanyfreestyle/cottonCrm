@@ -37,6 +37,7 @@ class AppPuzzleTreeData {
             'routeFile' => 'configData.php',
             'migrations' => ['2019_12_14_000017_create_data_table.php'],
             'seeder' => ['config_data.sql', 'config_data_translations.sql'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 
@@ -94,6 +95,7 @@ class AppPuzzleTreeData {
             'seeder' => ['data_area.sql', 'data_area_translations.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['dataArea.php'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 05:29 PM
+-- Generation Time: Jul 28, 2024 at 06:05 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -144,18 +144,7 @@ INSERT INTO `config_data` (`id`, `old_id`, `cat_id`, `is_active`) VALUES
 (116, 285, 'DeviceType', 1),
 (117, NULL, 'EvaluationCust', 1),
 (118, NULL, 'EvaluationCust', 1),
-(119, NULL, 'EvaluationCust', 1),
-(120, NULL, 'BookRelease', 1),
-(121, NULL, 'BookRelease', 1),
-(122, NULL, 'BookRelease', 1),
-(123, NULL, 'BookRelease', 1),
-(124, NULL, 'BookRelease', 1),
-(125, NULL, 'BookRelease', 1),
-(126, NULL, 'BookLang', 1),
-(127, NULL, 'BookLang', 1),
-(128, NULL, 'BookRelease', 1),
-(129, NULL, 'BookRelease', 1),
-(130, NULL, 'BookRelease', 1);
+(119, NULL, 'EvaluationCust', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
