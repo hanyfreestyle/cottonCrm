@@ -63,7 +63,7 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function repeat($value) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -79,7 +79,7 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -96,101 +96,25 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
-    static function indexQuery() {
-
-        $table = "crm_customers";
-        $table_address = "crm_customers_address";
-        $data = DB::table($table)
-            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-            ->where($table_address . '.is_default', true)
-            ->select("$table.id as id",
-                "$table.name  as name",
-                "$table.mobile  as mobile",
-                "$table.mobile_code  as flag",
-                "$table.whatsapp  as whatsapp",
-                "$table.evaluation_id  as evaluation_id",
-                "$table_address.country_id as country_id",
-                "$table_address.city_id as city_id",
-                "$table_address.area_id as area_id",
-            );
-        return $data;
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
-    public function DataTable(Request $request) {
-        if ($request->ajax()) {
-            $session = self::getSessionData($request);
-            $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-            return self::DataTableColumns($rowData)->make(true);
-        }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
-    public function DataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
-            ->addIndexColumn()
-            ->editColumn('Flag', function ($row) {
-                return TablePhotoFlag_Code($row, 'flag');
-            })
-            ->editColumn('Edit', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-            })
-            ->editColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->rawColumns(['Edit', "Delete", 'is_active', 'Flag']);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function CustomerDataFilterQ($query, $session, $order = null) {
-        $formName = issetArr($session, "formName", null);
-
-        if (isset($session['is_active']) and $session['is_active'] != null) {
-            $query->where('is_active', $session['is_active']);
-        }
-        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
-            $query->where('evaluation_id', $session['evaluation_id']);
-        }
-
-        if (isset($session['country_id']) and $session['country_id'] != null) {
-            $query->where('country_id', $session['country_id']);
-        }
-
-        if (isset($session['city_id']) and $session['city_id'] != null) {
-            $query->where('city_id', $session['city_id']);
-        }
-
-        if (isset($session['area_id']) and $session['area_id'] != null) {
-            $query->where('area_id', $session['area_id']);
-        }
-
-        return $query;
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
 
         $rowData = CrmCustomers::findOrNew(0);
-        $rowDataAdress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
+        $rowDataAddress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
 
         return view('AppPlugin.CrmCustomer.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
-            'rowDataAdress' => $rowDataAdress,
+            'rowDataAddress' => $rowDataAddress,
         ]);
 
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -208,7 +132,7 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
         $saveData = CrmCustomers::findOrNew($id);
         try {
@@ -244,7 +168,84 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+
+        $table = "crm_customers";
+        $table_address = "crm_customers_address";
+        $data = DB::table($table)
+            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
+            ->where($table_address . '.is_default', true)
+            ->select("$table.id as id",
+                "$table.name  as name",
+                "$table.mobile  as mobile",
+                "$table.mobile_code  as flag",
+                "$table.whatsapp  as whatsapp",
+                "$table.evaluation_id  as evaluation_id",
+                "$table_address.country_id as country_id",
+                "$table_address.city_id as city_id",
+                "$table_address.area_id as area_id",
+            );
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $session = self::getSessionData($request);
+            $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
+            return self::DataTableColumns($rowData)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('Flag', function ($row) {
+                return TablePhotoFlag_Code($row, 'flag');
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'is_active', 'Flag']);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CustomerDataFilterQ($query, $session, $order = null) {
+        $formName = issetArr($session, "formName", null);
+
+        if (isset($session['is_active']) and $session['is_active'] != null) {
+            $query->where('is_active', $session['is_active']);
+        }
+        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
+            $query->where('evaluation_id', $session['evaluation_id']);
+        }
+
+        if (isset($session['country_id']) and $session['country_id'] != null) {
+            $query->where('country_id', $session['country_id']);
+        }
+
+        if (isset($session['city_id']) and $session['city_id'] != null) {
+            $query->where('city_id', $session['city_id']);
+        }
+
+        if (isset($session['area_id']) and $session['area_id'] != null) {
+            $query->where('area_id', $session['area_id']);
+        }
+
+        return $query;
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function saveDefField($saveData, $request) {
         $saveData->evaluation_id = $request->input('evaluation_id');
         $saveData->gender_id = $request->input('gender_id');
@@ -275,7 +276,7 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function saveAddressField($saveAddress, $saveData, $request) {
         $saveAddress->uuid = Str::uuid()->toString();
         $saveAddress->customer_id = $saveData->id;
@@ -295,7 +296,7 @@ class CrmCustomersController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeleteException
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ForceDeleteException($id) {
 
         $deleteRow = CrmCustomers::query()->where('id', $id)
@@ -328,7 +329,7 @@ class CrmCustomersController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {
 
         $mainMenu = new AdminMenu();

@@ -20,8 +20,12 @@
                             @if ($value[$sendid] == $sendvalue) selected @endif> @if($addFilde) {{$value[$addFilde]}} @endif {{ $value[$printValName] }}</option>
                 @endforeach
 
-            @elseif($selectType == 'ajax')
+            @elseif($selectType == 'DefCat')
+                @foreach ($sendArr as  $key => $value)
+                    <option value="{{ $value->id }}" @if ($value->id == $sendvalue) selected @endif>{{ $value->name }}</option>
+                @endforeach
 
+            @elseif($selectType == 'ajax')
                 @foreach ($sendArr as  $key => $value)
                     <option value="{{ $value[$sendid] }}" @if ($value[$sendid] == $sendvalue) selected @endif>{{ $value[$printValName] }}</option>
                 @endforeach

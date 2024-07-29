@@ -9,8 +9,9 @@ trait CrmCustomersConfigTraits {
 
         $Config = [
             'defCountry' => config('app.defCountry'),
-            'defCountryCode' => config('app.defCountryCode'),
+            'defCountryId' => config('app.defCountryCode'),
             'addCountry' => true,
+            'OneCountry' => true,
             'phoneAreaCode' => false,
             'fullAddress' => true,
             'evaluation' => true,

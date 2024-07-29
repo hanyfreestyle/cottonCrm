@@ -11,7 +11,7 @@
 
 
         @if($Config['gender'])
-{{--            <x-admin.form.select-arr name="gender_id" :row="$rowData" :send-arr="$DefCat['gender']"  :label="__($defLang.'form_gender')" col="3" :req="false"/>--}}
+            <x-admin.form.select-arr name="gender_id" select-type="DefCat" :row="$rowData" :send-arr="$DefCat['gender']" :label="__($defLang.'form_gender')" col="3" :req="false"/>
         @endif
 
     </div>

@@ -7,8 +7,13 @@
 
 
     <div class="row">
-        <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id'))"
-                                 add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
+        @if($Config['OneCountry'])
+            <input type="hidden" value="{{$Config['defCountryId']}}" name="country_id">
+        @else
+            <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id',$Config['defCountryId']))"
+                                     add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>
+        @endif
+
 
         <x-admin.form.select-arr name="city_id" sendvalue="{{old('city_id',$rowData->city_id)}}"
                                  select-type="ajax" :required-span="false" :send-arr="$Citylist" label="{{__('admin/dataArea.form_sel_city')}}" col="3"/>
