@@ -19,6 +19,8 @@ class CrmCustomersRequest extends FormRequest {
         $phoneCode = $request->input('countryCode_phone');
         $whatsappCode = $request->input('countryCode_whatsapp');
 
+        $config = json_decode($request->config);
+
 
         $rules = [
             'name' => "required|min:4",
@@ -28,23 +30,36 @@ class CrmCustomersRequest extends FormRequest {
 
         if ($request->input('phoneAreaCode')) {
             $rules += [
-                'phone' => ['nullable',"phone:!mobile,$phoneCode",'different:mobile','different:mobile_2', new
-                CrmUniqueMobileNum($id)],
+                'phone' => ['nullable', "phone:!mobile,$phoneCode", 'different:mobile', 'different:mobile_2', new CrmUniqueMobileNum($id)],
             ];
         } else {
             $rules += [
-                'phone' => ['nullable','different:mobile','different:mobile_2', new CrmUniqueMobileNum($id)],
+                'phone' => ['nullable', 'different:mobile', 'different:mobile_2', new CrmUniqueMobileNum($id)],
             ];
         }
 
-        if ($request->input('addAddress')) {
+       if ($config->addressReq and $config->addCountry) {
             $rules += [
+                'country_id' => "required",
+                'city_id' => "required",
+                'area_id' => "required",
+            ];
+            if ($config->fullAddress){
+                $rules += [
+                    'address' => "required|min:4",
+                ];
+            }
+        } else {
+            $rules += [
+                'country_id' => "nullable",
+                'city_id' => "nullable",
+                'area_id' => "nullable",
                 'address' => "nullable|min:4",
-                'floor'=> "nullable|min:1",
-                'unit_num'=> "nullable",
-                'post_code'=> 'nullable|regex:/^[0-9]{3,7}$/',
-                'latitude'=> "nullable|numeric|required_with:latitude",
-                'longitude'=> "nullable|numeric|required_with:longitude",
+                'floor' => "nullable|min:1",
+                'unit_num' => "nullable",
+                'post_code' => 'nullable|regex:/^[0-9]{3,7}$/',
+                'latitude' => "nullable|numeric|required_with:latitude",
+                'longitude' => "nullable|numeric|required_with:longitude",
             ];
         }
 

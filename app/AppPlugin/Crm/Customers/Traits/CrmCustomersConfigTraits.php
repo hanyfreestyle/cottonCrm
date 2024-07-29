@@ -12,10 +12,17 @@ trait CrmCustomersConfigTraits {
             'defCountryId' => config('app.defCountryCode'),
             'addCountry' => true,
             'OneCountry' => true,
+            'addressReq' => true,
+            'googleAddress' => true,
+            'postcode' => true,
+
             'phoneAreaCode' => false,
             'fullAddress' => true,
             'evaluation' => true,
             'gender' => true,
+
+            'list_flag' => false,
+
         ];
 
         return $Config;

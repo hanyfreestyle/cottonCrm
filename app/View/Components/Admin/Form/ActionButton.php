@@ -51,7 +51,7 @@ class ActionButton extends Component {
         $this->count = $count;
         $this->viewbut = $viewbut;
 
-        if($type) {
+        if ($type) {
             switch ($type) {
                 case 'add':
                     $this->icon = 'fas fa-plus-square';
@@ -63,6 +63,12 @@ class ActionButton extends Component {
                     $this->icon = 'fas fa-pencil-alt';
                     $this->bg = getBgColor('i');
                     $this->printLable = __('admin/form.button_edit');
+                    break;
+
+                case 'Profile':
+                    $this->icon = 'fas fa-user-tie';
+                    $this->bg = getBgColor('p');
+                    $this->printLable = __('admin/form.button_profile');
                     break;
 
                 case 'AddRelease':
@@ -139,7 +145,7 @@ class ActionButton extends Component {
 
                 case 'morePhoto':
                     $this->icon = 'fas fa-images';
-                    if(intval($this->count) == '0') {
+                    if (intval($this->count) == '0') {
                         $this->bg = getBgColor('dark');
                     } else {
                         $this->bg = getBgColor('p');
@@ -150,7 +156,7 @@ class ActionButton extends Component {
                 case 'password':
                     $this->icon = 'fas fa-lock';
                     $this->bg = getBgColor('dark');
-                    $this->printLable ="Password";
+                    $this->printLable = "Password";
                     break;
 
                 case 'units':

@@ -32,8 +32,9 @@ return
 	'text_password' => 'كلمة المرور',
 	'text_password_confirm' => 'تاكيد كلمة المرور',
 	'text_published_at' => 'تاريخ النشر',
+	'text_tags' => 'الكلمات البحثية',
 	'text_title' => 'العنوان',
 	'text_youtube' => 'كود يوتيوب',
 	'text_youtube_title' => 'العنوان',
-	'text_tags' => 'الكلمات البحثية',
+	'button_profile' => 'الملف الشخصى',
 ];

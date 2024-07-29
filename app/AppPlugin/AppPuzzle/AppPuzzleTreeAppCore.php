@@ -238,6 +238,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
                 ["resources/lang/$lang/admin/config/" => 'upFilter.php'],
                 ["resources/lang/$lang/admin/config/" => 'webConfig.php'],
                 ["resources/lang/$lang/admin/" => 'formFilter.php'],
+                ["resources/lang/$lang/admin/" => 'form.php'],
                 ["resources/lang/$lang/admin/" => 'def.php'],
                 ["resources/lang/$lang/admin/" => 'defCat.php'],
             ];

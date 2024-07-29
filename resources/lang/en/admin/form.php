@@ -32,8 +32,9 @@ return
 	'text_password' => 'Password',
 	'text_password_confirm' => 'Confirm Password',
 	'text_published_at' => 'Published Date',
+	'text_tags' => 'Tags',
 	'text_title' => 'Title',
 	'text_youtube' => 'Youtube Code',
 	'text_youtube_title' => 'Title',
-	'text_tags' => 'Tags',
+	'button_profile' => '',
 ];

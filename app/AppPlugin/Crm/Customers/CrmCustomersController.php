@@ -22,7 +22,7 @@ use Yajra\DataTables\Facades\DataTables;
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
     use CrmCustomersConfigTraits;
-    use DefCategoryTraits ;
+    use DefCategoryTraits;
 
     function __construct() {
         parent::__construct();
@@ -41,7 +41,6 @@ class CrmCustomersController extends AdminMainController {
 
         $this->DefCat = self::LoadCategory();
         View::share('DefCat', $this->DefCat);
-
 
 
         $this->PageTitle = __($this->defLang . 'app_menu');
@@ -121,15 +120,30 @@ class CrmCustomersController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
         $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
 
-        $rowDataAdress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
+        $rowDataAddress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
 
         return view('AppPlugin.CrmCustomer.form')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
-            'rowDataAdress' => $rowDataAdress,
+            'rowDataAddress' => $rowDataAddress,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function profile($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+//dd($rowData);
+        return view('AppPlugin.CrmCustomer.profile')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
 
         ]);
     }
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -207,13 +221,17 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'flag');
             })
+
+            ->editColumn('Profile', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
+            })
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-            ->rawColumns(['Edit', "Delete", 'is_active', 'Flag']);
+            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

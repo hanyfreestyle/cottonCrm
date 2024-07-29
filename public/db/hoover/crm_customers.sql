@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2024 at 06:49 PM
+-- Generation Time: Jul 29, 2024 at 11:02 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,13 @@ SET time_zone = "+00:00";
 --
 -- Database: `cottton_crm`
 --
+
+--
+-- Dumping data for table `crm_customers`
+--
+
+INSERT INTO `crm_customers` (`id`, `evaluation_id`, `gender_id`, `name`, `mobile`, `mobile_code`, `mobile_2`, `mobile_2_code`, `phone`, `phone_code`, `whatsapp`, `whatsapp_code`, `email`, `notes`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, NULL, 1, 'هانى محمد محمد ددرويش', '01221563252', 'eg', '01221563253', 'eg', '4810303', 'eg', '01221563252', 'eg', 'hany@hanydarwish.com', NULL, 1, '2024-07-29 05:59:16', '2024-07-29 05:59:16', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
