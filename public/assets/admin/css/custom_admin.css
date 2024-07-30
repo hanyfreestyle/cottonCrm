@@ -78,6 +78,9 @@
 
 .def_card_header .card-title{font-size:16px!important;font-weight:700!important;line-height:30px}
 .div_data{padding:0 10px}
+@media (max-width: 600px) {
+    .div_data {padding:0px}
+}
 
 
 .amenity_table_icon{font-size:30px;color:#FFF;padding:10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;min-width:60px;text-align:center}

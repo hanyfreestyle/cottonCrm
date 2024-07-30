@@ -37,6 +37,7 @@
     @endif
 
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_product.css','Seo',true) !!}
+    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/crm_style.css','Seo',true) !!}
 
 </head>
 

@@ -21,6 +21,7 @@ return
 	'form_ad_unit_num' => '',
 	'form_email' => 'Email Address',
 	'form_evaluation' => 'Evaluation',
+	'form_gender' => 'Gender',
 	'form_mobile' => 'Mobile',
 	'form_mobile_2' => 'Mobile',
 	'form_name' => 'Customers Name',
@@ -31,5 +32,5 @@ return
 	'report_city' => 'City',
 	'report_country' => 'Country',
 	'report_evaluation' => 'Evaluation',
-	'form_gender' => 'Gender',
+	'box_profile' => 'Profile',
 ];

@@ -21,6 +21,7 @@ return
 	'form_ad_unit_num' => 'رقم الوحدة',
 	'form_email' => 'البريد الالكترونى',
 	'form_evaluation' => 'تقييم العميل',
+	'form_gender' => 'النوع',
 	'form_mobile' => 'رقم الموبايل',
 	'form_mobile_2' => 'رقم الموبايل اضافى',
 	'form_name' => 'اسم العميل',
@@ -31,5 +32,5 @@ return
 	'report_city' => 'المدن',
 	'report_country' => 'الدول',
 	'report_evaluation' => 'تقييم العميل',
-	'form_gender' => 'النوع',
+	'box_profile' => 'الملف الشخصى',
 ];

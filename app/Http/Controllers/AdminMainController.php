@@ -10,6 +10,7 @@ use App\AppPlugin\Product\Models\Brand;
 use App\Helpers\AdminHelper;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
 
+use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -20,7 +21,7 @@ use Spatie\Valuestore\Valuestore;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminMainController extends DefaultMainController {
-
+    use DefCategoryTraits;
     public $modelSettings;
     public $StopeCash;
 
@@ -93,6 +94,19 @@ class AdminMainController extends DefaultMainController {
         $this->modelSettings = $modelSettings;
         View::share('modelSettings', $modelSettings);
 
+
+        $this->DefCat = self::LoadCategory();
+        View::share('DefCat', $this->DefCat);
+
+        $CashCountryList = self::CashCountryList();
+        View::share('CashCountryList', $CashCountryList);
+
+        $CashCityList = self::CashCityList();
+        View::share('CashCityList', $CashCityList);
+
+        $CashAreaList = self::CashAreaList();
+        View::share('CashAreaList', $CashAreaList);
+
         $adminMenu = AdminMenuController::CashAdminMenu();
         View::share('adminMenu', $adminMenu);
     }
@@ -131,26 +145,6 @@ class AdminMainController extends DefaultMainController {
                     }
                 }
             }
-
-
-//            if($request->input('country_id')){
-//                $session = Session::get($this->formName);
-//                if($session){
-//                    if($session['country_id'] != $request->input('country_id')){
-//                        $request['city_id'] = null;
-//                        $request['area_id'] = null;
-//                    }
-//                }
-//            }
-//
-//            if($request->input('city_id')){
-//                $session = Session::get($this->formName);
-//                if($session){
-//                    if($session['city_id'] != $request->input('city_id')){
-//                        $request['area_id'] = null;
-//                    }
-//                }
-//            }
 
             Session::put($this->formName, $request->all());
             Session::save();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AppCore\DefPhoto\DefPhoto;
 use App\AppCore\WebSettings\Models\Setting;
 use App\AppPlugin\Config\Meta\MetaTag;
+use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\Country\Country;
 use Illuminate\Support\Facades\Cache;
@@ -61,6 +62,18 @@ class DefaultMainController extends Controller {
         return $CashCityList;
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashAreaList($stopCash = 0) {
+        if ($stopCash) {
+            $CashAreaList = Area::with('translation')->get();
+        } else {
+            $CashAreaList = Cache::remember('CashAreaList', cashDay(7), function () {
+                return Area::with('translation')->get();
+            });
+        }
+        return $CashAreaList;
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     getWebConfig

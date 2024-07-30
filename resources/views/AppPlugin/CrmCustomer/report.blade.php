@@ -4,7 +4,7 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
     <x-admin.hmtl.section>
-        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true" :area-id="true"/>
+        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
 
         <div class="row">
 

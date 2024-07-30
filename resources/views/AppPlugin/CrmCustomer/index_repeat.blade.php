@@ -11,17 +11,27 @@
             @if(count($rowData)>0)
                 <div class="card-body table-responsive p-0">
                     <table {!! Table_Style(false,false)  !!} >
-                        @include('AppPlugin.CrmCustomer.index_header')
+                        <thead>
+                        <tr>
+                            <th class="TD_20">#</th>
+                            <th class="TD_200">{{__('admin/crm/customers.form_name')}}</th>
+                            <th class="TD_100">{{__('admin/crm/customers.form_mobile')}}</th>
+                            <th class="TD_100">{{__('admin/crm/customers.form_mobile_2')}}</th>
+                            <th class="TD_100">{{__('admin/crm/customers.form_phone')}}</th>
+                            <th class="TD_100">{{__('admin/crm/customers.form_whatsapp')}}</th>
+                            <x-admin.table.action-but po="top" type="edit"/>
+                        </tr>
+                        </thead>
                         <tbody>
                         @foreach($rowData as $row)
                             <tr>
                                 <td>{{$row->id}}</td>
-                                <td></td>
                                 <td>{{$row->name}}</td>
                                 <td>{{$row->mobile}}</td>
+                                <td>{{$row->mobile_2}}</td>
                                 <td>{{$row->phone}}</td>
+                                <td>{{$row->whatsapp}}</td>
                                 <x-admin.table.action-but type="edit" :row="$row"/>
-                                <x-admin.table.action-but type="delete" :row="$row"/>
                             </tr>
                         @endforeach
                         </tbody>
@@ -35,7 +45,6 @@
 @endsection
 
 @push('JsCode')
-    <x-admin.table.sweet-delete-js/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="false"/>
+
 @endpush
 

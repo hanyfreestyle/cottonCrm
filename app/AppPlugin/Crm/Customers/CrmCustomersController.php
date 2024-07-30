@@ -11,7 +11,6 @@ use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
-use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -22,7 +21,7 @@ use Yajra\DataTables\Facades\DataTables;
 class CrmCustomersController extends AdminMainController {
     use CrudTraits;
     use CrmCustomersConfigTraits;
-    use DefCategoryTraits;
+
 
     function __construct() {
         parent::__construct();
@@ -33,15 +32,8 @@ class CrmCustomersController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
 
-        $CashCountryList = self::CashCountryList();
-        View::share('CashCountryList', $CashCountryList);
-
         $this->Config = self::defConfig();
         View::share('Config', $this->Config);
-
-        $this->DefCat = self::LoadCategory();
-        View::share('DefCat', $this->DefCat);
-
 
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -135,7 +127,6 @@ class CrmCustomersController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-//dd($rowData);
         return view('AppPlugin.CrmCustomer.profile')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -154,7 +145,6 @@ class CrmCustomersController extends AdminMainController {
 
                 $saveData = self::saveDefField($saveData, $request);
                 $saveData->save();
-
 
                 if ($this->Config['addCountry']) {
                     $addressId = intval($request->input('address_id'));
@@ -187,9 +177,12 @@ class CrmCustomersController extends AdminMainController {
 
         $table = "crm_customers";
         $table_address = "crm_customers_address";
+        $dataTable = 'config_data_translations';
         $data = DB::table($table)
             ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
             ->where($table_address . '.is_default', true)
+            ->Join($dataTable, $table . '.evaluation_id', '=', $dataTable . '.data_id')
+            ->where($dataTable . '.locale', 'ar')
             ->select("$table.id as id",
                 "$table.name  as name",
                 "$table.mobile  as mobile",
@@ -199,6 +192,7 @@ class CrmCustomersController extends AdminMainController {
                 "$table_address.country_id as country_id",
                 "$table_address.city_id as city_id",
                 "$table_address.area_id as area_id",
+                "$dataTable.name as evaluation",
             );
         return $data;
     }
@@ -221,7 +215,6 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'flag');
             })
-
             ->editColumn('Profile', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
             })
@@ -237,13 +230,13 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CustomerDataFilterQ($query, $session, $order = null) {
-        $formName = issetArr($session, "formName", null);
 
-        if (isset($session['is_active']) and $session['is_active'] != null) {
-            $query->where('is_active', $session['is_active']);
-        }
         if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
             $query->where('evaluation_id', $session['evaluation_id']);
+        }
+
+        if (isset($session['gender_id']) and $session['gender_id'] != null) {
+            $query->where('gender_id', $session['gender_id']);
         }
 
         if (isset($session['country_id']) and $session['country_id'] != null) {
