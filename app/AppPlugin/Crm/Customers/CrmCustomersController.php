@@ -224,6 +224,7 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
+
             ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
     }
 

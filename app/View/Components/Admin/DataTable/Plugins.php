@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Plugins extends Component
-{
+class Plugins extends Component {
 
     public $style;
     public $jscode;
@@ -16,6 +15,7 @@ class Plugins extends Component
     public $butlist;
     public $isActive;
     public $pageLength;
+
     public function __construct(
         $isActive = false,
         $style = false,
@@ -24,10 +24,9 @@ class Plugins extends Component
         $viewbut = false,
         $butlist = ' "print", "colvis" ', #"copy", "csv", "excel", "pdf", "print", "colvis"
         $pageLength = 10,
-    )
-    {
-        $this->isActive = $isActive ;
-        $this->style = $style ;
+    ) {
+        $this->isActive = $isActive;
+        $this->style = $style;
         $this->jscode = $jscode;
         $this->tablename = $tablename;
         $this->viewbut = $viewbut;
@@ -36,8 +35,7 @@ class Plugins extends Component
     }
 
 
-    public function render(): View|Closure|string
-    {
+    public function render(): View|Closure|string {
         return view('components.admin.data-table.plugins');
     }
 }

@@ -98,6 +98,9 @@ class AdminMainController extends DefaultMainController {
         $this->DefCat = self::LoadCategory();
         View::share('DefCat', $this->DefCat);
 
+        $this->CashConfigDataList = self::CashConfigDataList();
+        View::share('CashConfigDataList', $this->CashConfigDataList);
+
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 

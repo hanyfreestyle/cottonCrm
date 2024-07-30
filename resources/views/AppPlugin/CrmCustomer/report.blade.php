@@ -15,10 +15,12 @@
             @endif
 
             @if($Config['addCountry'])
-                @if(isset($chartData['Country']) and  count($chartData['Country']) > 0)
-                    <x-admin.card.normal col="col-lg-3" :title="__($defLang.'report_country')">
-                        <x-admin.report.chart-def id="Country" :data-row="$chartData['Country']"/>
-                    </x-admin.card.normal>
+                @if(!$Config['OneCountry'])
+                    @if(isset($chartData['Country']) and  count($chartData['Country']) > 0)
+                        <x-admin.card.normal col="col-lg-3" :title="__($defLang.'report_country')">
+                            <x-admin.report.chart-def id="Country" :data-row="$chartData['Country']"/>
+                        </x-admin.card.normal>
+                    @endif
                 @endif
 
                 @if(isset($chartData['City']) and  count($chartData['City']) > 0)

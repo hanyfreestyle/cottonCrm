@@ -11,7 +11,7 @@ trait CrmCustomersConfigTraits {
             'defCountry' => config('app.defCountry'),
             'defCountryId' => config('app.defCountryCode'),
             'addCountry' => true,
-            'OneCountry' => false,
+            'OneCountry' => true,
             'addressReq' => true,
             'googleAddress' => false,
             'postcode' => false,

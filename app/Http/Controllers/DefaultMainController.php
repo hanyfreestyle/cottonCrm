@@ -7,6 +7,7 @@ use App\AppCore\WebSettings\Models\Setting;
 use App\AppPlugin\Config\Meta\MetaTag;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
+use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\Country\Country;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -34,6 +35,19 @@ class DefaultMainController extends Controller {
             View::share('cashCityList', $this->cashCityList);
         }
 
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashConfigDataList($stopCash = 0) {
+        if ($stopCash) {
+            $CashConfigDataList = ConfigData::with('translation')->get();
+        } else {
+            $CashConfigDataList = Cache::remember('CashConfigDataList', cashDay(7), function () {
+                return ConfigData::with('translation')->get();
+            });
+        }
+        return $CashConfigDataList;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

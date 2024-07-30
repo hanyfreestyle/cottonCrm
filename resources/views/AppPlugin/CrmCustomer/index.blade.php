@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
@@ -9,25 +9,29 @@
     <x-admin.hmtl.section>
         <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
-            <table {!!Table_Style(true,true) !!} >
+            <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
-                    <th class="TD_20">#</th>
+                    <th class="all">#</th>
                     @if($Config['list_flag'])
                         <th class="TD_20"></th>
                     @endif
-                    <th class="TD_200">{{__($defLang.'form_name')}}</th>
+                    <th class="all">{{__($defLang.'form_name')}}</th>
+
                     @if($Config['list_evaluation'])
-                        <th class="TD_100">{{__($defLang.'form_evaluation')}}</th>
+                        <th class="desktop">{{__($defLang.'form_evaluation')}}</th>
                     @endif
-                    <th class="TD_100">{{__($defLang.'form_mobile')}}</th>
-                    <th class="TD_100">{{__($defLang.'form_whatsapp')}}</th>
+                    <th class="all">{{__($defLang.'form_mobile')}}</th>
+                    <th class="desktop">{{__($defLang.'form_whatsapp')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
+
+
                 </tr>
                 </thead>
                 <tbody></tbody>
+
             </table>
         </x-admin.card.def>
         <x-admin.hmtl.pages-link :row="$rowData"/>
@@ -37,12 +41,13 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
     <script type="text/javascript">
         $(function () {
-            var table = $('.DataTableView').DataTable({
+            $('#YajraDatatable').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 pageLength: 10,
                 @include('datatable.lang')
 
@@ -66,9 +71,11 @@
                         @endif
 
                     {
-                        data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: "dir_left"
+                        data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: "dir_leftX"
                     },
-                    {data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true, className: "dir_left"},
+                    {data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true, className: "dir_leftX"},
+
+
                         @can($PrefixRole.'_edit')
                     {
                         data: 'Profile', name: 'Profile', orderable: false, searchable: false, className: "text-center"
@@ -85,6 +92,8 @@
                     },
 
                     @endcan
+
+
                 ],
 
             });

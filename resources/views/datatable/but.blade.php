@@ -1,5 +1,5 @@
 @if($btype == 'Edit')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit'/>
+    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit' />
 @elseif($btype == 'Profile')
     <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile'/>
 @elseif($btype == 'AddRelease')

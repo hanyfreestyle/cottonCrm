@@ -10,9 +10,10 @@
 
 @else
     <div class="row">
+
         <x-admin.hmtl.info-div :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="$allData"/>
         @if(issetArr($config,'evaluation',false))
-            <x-admin.hmtl.info-div :t="__($defLang.'form_evaluation')" :arr-data="$DataConfig" :des="$row->evaluation_id" col="2" col-row="col-6" :all-data="$allData"/>
+            <x-admin.hmtl.info-div :t="__($defLang.'form_evaluation')" :arr-data="$CashConfigDataList" :des="$row->evaluation_id" col="2" col-row="col-6" :all-data="$allData"/>
         @endif
         @if(issetArr($config,'gender',false))
             <x-admin.hmtl.info-div :t="__($defLang.'form_gender')" :arr-data="$DefCat['gender']" :des="$row->gender_id" col="2" col-row="col-6" :all-data="$allData"/>

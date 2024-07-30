@@ -16,8 +16,8 @@ if (!function_exists('sidebarCollapse')) {
             } else {
                 $state = null;
             }
-        }else{
-            $state =  $session ;
+        } else {
+            $state = $session;
         }
         return $state;
     }
@@ -30,8 +30,8 @@ if (!function_exists('sidebarCollapseIcon')) {
         $session = Session::get('sidebarCollapse');
         if ($session == null) {
             $icon = '<i class="fas fa-compress-arrows-alt"></i>';
-        }else{
-            $icon =  '<i class="fas fa-compress"></i>';
+        } else {
+            $icon = '<i class="fas fa-compress"></i>';
         }
         return $icon;
     }
@@ -209,6 +209,30 @@ if (!function_exists('getBgColor')) {
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getResponsiveType')) {
+    function getResponsiveType($val) {
+        switch ($val) {
+            case 'a':
+                $sendType = "all";
+                break;
+            case 'd':
+                $sendType = "desktop";
+                break;
+            case 'm':
+                $sendType = "mobile";
+                break;
+            case 'n':
+                $sendType = "none";
+                break;
+            default:
+                $sendType = "all";
+        }
+        return $sendType;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # getAlign
 if (!function_exists('getAlign')) {
     function getAlign($val) {
@@ -270,7 +294,7 @@ if (!function_exists('echobr')) {
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  Table_Header_Style
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('Table_Style')) {
     function Table_Style($viewDataTable, $yajraTable = false) {
         if ($viewDataTable) {
@@ -285,6 +309,16 @@ if (!function_exists('Table_Style')) {
         return $tableHeader;
     }
 }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('Table_Style_Yajra')) {
+    function Table_Style_Yajra() {
+        $tableHeader = ' id="YajraDatatable" class="table table-bordered table-hover DataTableView" ';
+        return $tableHeader;
+    }
+}
+
+
 
 
 

@@ -1,22 +1,22 @@
 @if($po == 'top')
   @if($type == 'edit')
     @can($PrefixRole.'_edit')
-      <th class="td_action"></th>
+      <th class="td_action {{$res}}">تعديل</th>
     @endcan
 
   @elseif($type == 'addLang')
     @if(count(config('app.web_lang')) > 1 )
       @can($PrefixRole.'_edit')
-        <th class="td_action"></th>
+        <th class="td_action {{$res}}"></th>
       @endcan
     @endif
   @elseif($type == 'delete')
     @can($PrefixRole.'_delete')
-      <th class="td_action"></th>
+      <th class="td_action {{$res}}"></th>
     @endcan
   @elseif($type == 'deleteAll')
     @can($PrefixRole.'_delete')
-      <th class="tdc"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
+      <th class="tdc {{$res}}"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
     @endcan
   @endif
 @elseif($po == 'button')
