@@ -12,6 +12,7 @@ return
 	'button_edit_back' => 'حفظ والعودة لنفس المحتوى',
 	'button_more_photo' => 'المزيد من الصور',
 	'button_old_photo' => 'البوم الصور السابقة',
+	'button_profile' => 'بروفايل',
 	'button_serach' => 'بحث',
 	'button_sort' => 'ترتيب',
 	'button_update' => 'تحديث',
@@ -36,5 +37,4 @@ return
 	'text_title' => 'العنوان',
 	'text_youtube' => 'كود يوتيوب',
 	'text_youtube_title' => 'العنوان',
-	'button_profile' => 'الملف الشخصى',
 ];

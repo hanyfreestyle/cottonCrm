@@ -12,6 +12,7 @@ return
 	'button_edit_back' => 'Update &amp; Go Back',
 	'button_more_photo' => 'More Photo',
 	'button_old_photo' => 'Previous Photos',
+	'button_profile' => '',
 	'button_serach' => 'Search',
 	'button_sort' => 'Sort',
 	'button_update' => 'Update',
@@ -36,5 +37,4 @@ return
 	'text_title' => 'Title',
 	'text_youtube' => 'Youtube Code',
 	'text_youtube_title' => 'Title',
-	'button_profile' => '',
 ];

@@ -78,17 +78,17 @@
 
                         @can($PrefixRole.'_edit')
                     {
-                        data: 'Profile', name: 'Profile', orderable: false, searchable: false, className: "text-center"
+                        data: 'Profile', name: 'Profile', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                     {
-                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                         @endcan
 
                         @can($PrefixRole.'_delete')
 
                     {
-                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
                     },
 
                     @endcan

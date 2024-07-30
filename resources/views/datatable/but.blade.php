@@ -1,7 +1,7 @@
 @if($btype == 'Edit')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit' />
+    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit' :tip="false" />
 @elseif($btype == 'Profile')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile'/>
+    <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile' :tip="false"/>
 @elseif($btype == 'AddRelease')
     <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease'/>
 @elseif($btype == 'ListRelease')
@@ -11,7 +11,8 @@
 @elseif($btype == 'MorePhoto')
     <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto'/>
 @elseif($btype == 'Delete')
-    <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm">
+        <i class="fas fa-trash"></i> <span class="tipName"> {{__('admin/form.button_delete')}}</span></a>
 @elseif($btype == 'addLang')
     @if(!isset($row->translate('ar')->name))
         <x-admin.form.action-button url="{{route($PrefixRoute.'.editAr',$row->id)}}" icon="fa-solid fa-globe" :tip="true"

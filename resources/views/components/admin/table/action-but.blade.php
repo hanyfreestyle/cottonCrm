@@ -1,7 +1,7 @@
 @if($po == 'top')
   @if($type == 'edit')
     @can($PrefixRole.'_edit')
-      <th class="td_action {{$res}}">تعديل</th>
+      <th class="td_action {{$res}}"></th>
     @endcan
 
   @elseif($type == 'addLang')

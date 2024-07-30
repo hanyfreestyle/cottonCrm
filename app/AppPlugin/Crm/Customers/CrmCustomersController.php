@@ -80,6 +80,8 @@ class CrmCustomersController extends AdminMainController {
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
 
+//        dd($rowData->get());
+
         return view('AppPlugin.CrmCustomer.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -181,8 +183,12 @@ class CrmCustomersController extends AdminMainController {
         $data = DB::table($table)
             ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
             ->where($table_address . '.is_default', true)
-            ->Join($dataTable, $table . '.evaluation_id', '=', $dataTable . '.data_id')
-            ->where($dataTable . '.locale', 'ar')
+
+            ->leftJoin("config_data_translations", function($join) {
+                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
+                $join->where('config_data_translations.locale','=','ar');
+            })
+
             ->select("$table.id as id",
                 "$table.name  as name",
                 "$table.mobile  as mobile",
@@ -195,6 +201,8 @@ class CrmCustomersController extends AdminMainController {
                 "$dataTable.name as evaluation",
             );
         return $data;
+
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
