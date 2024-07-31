@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
@@ -20,12 +20,12 @@
 
     <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
-            <table {!! Table_Style(true,true)  !!} >
+            <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
                     <th class="tdc"></th>
                     <th>{{__('admin/form.text_name')}}</th>
-                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" res="a" type="edit"/>
                     @if($AppPluginConfig['deleteData'])
                         <x-admin.table.action-but po="top" type="delete"/>
                     @endif
@@ -42,12 +42,13 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
     <script type="text/javascript">
         $(function () {
-            var table = $('.DataTableView').DataTable({
+            $('#YajraDatatable').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 pageLength: 10,
                 order: [0, 'desc'],
                 @include('datatable.lang')

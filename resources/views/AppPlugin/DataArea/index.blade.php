@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
@@ -10,18 +10,18 @@
     <x-admin.hmtl.section>
         <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true"/>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
-            <table {!! Table_Style(true,true)  !!} >
+            <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
-                    <th class="TD_20">#</th>
+                    <th class="all">#</th>
                     @if($AppPluginConfig['add_country'] and File::isFile(base_path('routes/AppPlugin/data/country.php')))
-                        <th class="TD_200">{{__('admin/dataArea.form_country')}}</th>
+                        <th class="desktop">{{__('admin/dataArea.form_country')}}</th>
                     @endif
                     @if($AppPluginConfig['add_city'] and File::isFile(base_path('routes/AppPlugin/data/city.php')))
-                        <th class="TD_200">{{__('admin/dataArea.form_city')}}</th>
+                        <th class="all">{{__('admin/dataArea.form_city')}}</th>
                     @endif
-                    <th class="TD_200">{{__('admin/form.text_name')}}</th>
-                    <th class="TD_20"></th>
+                    <th class="all">{{__('admin/form.text_name')}}</th>
+                    <th class="desktop"></th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     @if($AppPluginConfig['deleteData'])
                         <x-admin.table.action-but po="top" type="delete"/>
@@ -37,12 +37,13 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
     <script type="text/javascript">
         $(function () {
-            var table = $('.DataTableView').DataTable({
+            $('#YajraDatatable').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 pageLength: 10,
                 order: [0, 'desc'],
                 columnDefs: [
@@ -59,15 +60,15 @@
                     {data: 'name', name: 'data_area_translations.name', orderable: true},
                         @can($PrefixRole.'_edit')
                     {
-                        data: 'is_active', name: 'is_active', orderable: false, searchable: false
+                        data: 'is_active', name: 'is_active', orderable: false, searchable: false, className: "text-center actionButView"
                     },
-                    {data: 'Edit', name: 'Edit', orderable: false, searchable: false},
+                    {data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"},
                         @endcan
 
                         @can($PrefixRole.'_delete')
                         @if($AppPluginConfig['deleteData'])
                     {
-                        data: 'Delete', name: 'Delete', orderable: false, searchable: false
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                     @endif
                     @endcan

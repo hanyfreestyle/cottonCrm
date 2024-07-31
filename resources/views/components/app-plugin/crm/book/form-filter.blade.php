@@ -6,14 +6,14 @@
                 <input type="hidden" name="formName" value="{{$formName}}">
                 <div class="row">
 
-                    <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="3"
+                    <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="3" :labelview="false"
                                              add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :required-span="false"/>
 
 
-                    <x-admin.form.select-data name="release_id" :sendvalue="old('release_id',issetArr($getSessionData,'release_id'))"
+                    <x-admin.form.select-data name="release_id" :sendvalue="old('release_id',issetArr($getSessionData,'release_id'))" :labelview="false"
                                               :filter-form="true" cat-id="BookRelease" :label="__($defLang.'form_release_name')" :req="false"/>
 
-                    <x-admin.form.select-data name="lang_id" :sendvalue="old('lang_id',issetArr($getSessionData,'lang_id'))"
+                    <x-admin.form.select-data name="lang_id" :sendvalue="old('lang_id',issetArr($getSessionData,'lang_id'))" :labelview="false"
                                               :filter-form="true" cat-id="BookLang" :label="__($defLang.'form_lang')" :req="false"/>
 
                 </div>

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@
 
     <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
-            <table {!! Table_Style(true,true)  !!} >
+            <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
-                    <th class="TD_20">#</th>
-                    <th class="TD_200">{{__('admin/form.text_name')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_notes_count')}}</th>
+                    <th class="all">#</th>
+                    <th class="all">{{__('admin/form.text_name')}}</th>
+                    <th class="desktop">{{__('admin/Periodicals.form_notes_count')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
@@ -29,13 +29,12 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
     <script type="text/javascript">
         $(function () {
-            var table = $('.DataTableView').DataTable({
-
+            $('#YajraDatatable').DataTable({
+                responsive: true,
                 processing: true,
-
                 serverSide: true,
                 pageLength: 10,
                 order: [0, 'desc'],
@@ -49,14 +48,14 @@
 
                         @can($PrefixRole.'_edit')
                     {
-                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                         @endcan
 
                         @can($PrefixRole.'_delete')
 
                     {
-                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                     @endcan
                 ],
