@@ -1,23 +1,29 @@
 <?php
 
-namespace App\AppPlugin\Crm\Periodicals\Request;
+namespace App\AppPlugin\Crm\Tickets\Request;
 
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class PeriodicalsRequest extends FormRequest {
+class CrmTicketsRequest extends FormRequest {
 
     public function authorize(): bool {
         return true;
     }
 
     public function rules(Request $request): array {
-        $id = $this->route('id');
+
+
+
         $rules = [
-            'name' => "required|min:3",
 
         ];
+
+        $rules += [
+
+        ];
+
         return $rules;
     }
 

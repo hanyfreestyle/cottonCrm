@@ -11,6 +11,7 @@ class AppPuzzleTreeCrm {
         $modelTree = [
             'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
+            'CrmTickets' => self::treeCrmTickets(),
             'Periodicals' => self::treePeriodicals(),
         ];
         return $modelTree;
@@ -47,7 +48,7 @@ class AppPuzzleTreeCrm {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeCrmCustomers() {
         return [
             'view' => true,
@@ -69,6 +70,33 @@ class AppPuzzleTreeCrm {
 
         ];
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeCrmTickets() {
+        return [
+            'view' => true,
+            'id' => "CrmTickets",
+            'CopyFolder' => "Crm_Tickets",
+            'appFolder' => 'Crm/Tickets',
+            'viewFolder' => 'CrmTickets',
+            'routeFolder' => "crm/",
+            'routeFile' => 'ticket.php',
+//            'migrations' => [
+//                '2021_01_01_000001_create_crm_customers_table.php',
+//            ],
+//            'seeder' => ['crm_customers.sql', 'crm_customers_address.sql'],
+//            'adminLangFolder' => "admin/crm/",
+//            'adminLangFiles' => ['customers.php'],
+//            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
+//            'ComponentFolderView' => ['app-plugin/crm/customers'],
+//            'ClientFolder' => config('adminConfig.app_folder'),
+
+        ];
+    }
+
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     static function treeImportData() {

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\AppPlugin\Crm\Periodicals\Request;
-
+namespace App\AppPlugin\Crm\Tickets\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class DashboardRequest extends FormRequest {
+class CrmTicketsDesRequest extends FormRequest {
 
     public function authorize(): bool {
         return true;
@@ -15,11 +14,13 @@ class DashboardRequest extends FormRequest {
     public function rules(Request $request): array {
 
         $rules = [
-            'periodicals_id' => "required",
-            'year' => "required|numeric|between:1900,2024",
-            'month' => "required|numeric|between:1,12",
-            'number' => "required|numeric",
+            'search_type' => "required",
         ];
+
+        $rules += [
+            'name' => "required|numeric|min_digits:7",
+        ];
+
         return $rules;
     }
 
