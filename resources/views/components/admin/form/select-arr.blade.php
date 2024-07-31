@@ -38,6 +38,10 @@
             @elseif($selectType == 'selActive')
                 <option class="status_unactive" value="0" @if ($sendvalue == 0 ) selected @endif>{{__('admin/def.status_unactive')}}</option>
                 <option value="1" @if ($sendvalue == 1) selected @endif>{{__('admin/def.status_active')}}</option>
+
+            @elseif($selectType == 'selActiveFilter')
+                <option value="0" @if ($sendvalue == 0 and $sendvalue != null ) selected @endif>{{__('admin/def.status_unactive')}}</option>
+                <option value="1" @if ($sendvalue == 1 and $sendvalue != null ) selected @endif>{{__('admin/def.status_active')}}</option>
             @elseif($selectType == 'file')
                 @foreach($sendArr as $file)
                     <option value="{{$file}}" @if ($file == $sendvalue) selected @endif>{{pathinfo($file, PATHINFO_BASENAME)}}</option>

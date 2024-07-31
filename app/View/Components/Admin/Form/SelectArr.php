@@ -28,7 +28,7 @@ class SelectArr extends Component {
         $row = array(),
         $name = "",
         $label = "",
-        $sendvalue = "",
+        $sendvalue = null,
         $col = "4",
         $colrow = null,
 
@@ -74,6 +74,7 @@ class SelectArr extends Component {
             $rowName = $this->name;
             $this->sendvalue = old($rowName, issetArr($row,$rowName,null));
         }
+
 
     }
 
