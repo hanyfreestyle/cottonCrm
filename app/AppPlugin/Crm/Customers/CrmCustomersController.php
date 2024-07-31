@@ -43,7 +43,7 @@ class CrmCustomersController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["filterid" => 0],
+            'configArr' => ["filterid" => 0,'datatable'=>0,'orderby'=>0],
             'yajraTable' => true,
             'AddLang' => false,
             'restore' => 0,

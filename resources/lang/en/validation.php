@@ -161,4 +161,5 @@ return [
         'MAX_G_D'=> __('admin.MAX_G_D'),
     ],
 
+    'per_page' => 'The value must be 10,25,50,100',
 ];

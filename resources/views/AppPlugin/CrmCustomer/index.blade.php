@@ -34,7 +34,6 @@
 
             </table>
         </x-admin.card.def>
-        <x-admin.hmtl.pages-link :row="$rowData"/>
 
     </x-admin.hmtl.section>
 @endsection
@@ -48,7 +47,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                pageLength: 10,
+                pageLength: {{$yajraPerPage}},
                 @include('datatable.lang')
 
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",

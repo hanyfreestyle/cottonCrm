@@ -9,24 +9,24 @@ use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\City\Models\CityTranslation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class AreaSeeder extends Seeder {
 
     public function run(): void {
 
         $folder = config('adminConfig.app_folder');
+        if (File::isFile(public_path('db/' . $folder . '/data_area.sql'))) {
+            if ($folder) {
+                Area::unguard();
+                $tablePath = public_path('db/' . $folder . '/data_area.sql');
+                DB::unprepared(file_get_contents($tablePath));
 
-        if ($folder) {
-            Area::unguard();
-            $tablePath = public_path('db/' . $folder . '/data_area.sql');
-            DB::unprepared(file_get_contents($tablePath));
-
-            AreaTranslation::unguard();
-            $tablePath = public_path('db/' . $folder . '/data_area_translations.sql');
-            DB::unprepared(file_get_contents($tablePath));
+                AreaTranslation::unguard();
+                $tablePath = public_path('db/' . $folder . '/data_area_translations.sql');
+                DB::unprepared(file_get_contents($tablePath));
+            }
         }
-
-
 
 //         Area::query()->where('country_id','!=',169)->delete();
 

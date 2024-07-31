@@ -77,6 +77,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
         $copy = new AppPuzzleFunCopy();
         $CopyFolder = self::creatCopyFolder("_Core");
 
+        self::ExportEnvFile($CopyFolder);
         self::ExportFolderApp($CopyFolder);
         self::ExportFolderConfig($CopyFolder);
         self::ExportFolderDatabase($CopyFolder);
@@ -85,6 +86,22 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
         self::ExportFolderLangFiles($CopyFolder);
         return redirect()->back();
 
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ExportEnvFile($CopyFolder) {
+        $fileNames = [
+            '.env.example',
+        ];
+        foreach ($fileNames as $file) {
+            $filePath = base_path($file);
+            if (File::isFile($filePath)) {
+                $destinationFolder = $CopyFolder;
+                self::folderMakeDirectory($destinationFolder);
+                File::copy($filePath, $destinationFolder . $file);
+            }
+        }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

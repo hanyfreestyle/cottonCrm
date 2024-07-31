@@ -7,23 +7,26 @@ use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ConfigDataSeeder extends Seeder {
 
     public function run(): void {
 
         $folder = config('adminConfig.app_folder');
+        if (File::isFile(public_path('db/' . $folder . '/config_data.sql'))) {
+            if ($folder) {
 
-        if ($folder) {
+                ConfigData::unguard();
+                $tablePath = public_path('db/' . $folder . '/config_data.sql');
+                DB::unprepared(file_get_contents($tablePath));
 
-            ConfigData::unguard();
-            $tablePath = public_path('db/' . $folder . '/config_data.sql');
-            DB::unprepared(file_get_contents($tablePath));
-
-            ConfigDataTranslation::unguard();
-            $tablePath = public_path('db/' . $folder . '/config_data_translations.sql');
-            DB::unprepared(file_get_contents($tablePath));
+                ConfigDataTranslation::unguard();
+                $tablePath = public_path('db/' . $folder . '/config_data_translations.sql');
+                DB::unprepared(file_get_contents($tablePath));
+            }
         }
+
 
 //        ConfigData::query()->whereNotIn('cat_id',['EvaluationCust'])->delete();
 

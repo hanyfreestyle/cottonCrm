@@ -10,6 +10,7 @@ use App\AppPlugin\Product\Models\Brand;
 use App\Helpers\AdminHelper;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
 
+use App\Http\Requests\admin\ConfigModelUpdateRequest;
 use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -346,6 +347,10 @@ class AdminMainController extends DefaultMainController {
         $yajraTable = AdminHelper::arrIsset($sendArr, 'yajraTable', false);
         View::share('yajraTable', $yajraTable);
 
+        $this->yajraPerPage = intval(AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_perpage', 10));
+        if($this->yajraPerPage == 0){ $this->yajraPerPage = 10 ;}
+        View::share('yajraPerPage', $this->yajraPerPage);
+
 
         View::share('PrefixRoute', $this->PrefixRoute);
         View::share('PrefixRole', $this->PrefixRole);
@@ -418,18 +423,11 @@ class AdminMainController extends DefaultMainController {
         }
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   ConfigModelUpdate
-    public function ConfigModelUpdate(Request $request) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ConfigModelUpdate(ConfigModelUpdateRequest $request) {
 
         $model_id = $request->input('model_id') . "_";
         $PrefixRoute = $request->input('PrefixRoute') . ".index";
-
-        $this->validate($request, [
-            $model_id . 'perpage' => 'sometimes|required|integer|between:1,100',
-            $model_id . 'datatable' => 'sometimes|required',
-            $model_id . 'filterid' => 'sometimes|required',
-            $model_id . 'orderby' => 'sometimes|required',
-        ]);
 
         $valuestore = Valuestore::make(config_path(config('app.model_settings_name')));
         foreach ($request->all() as $key => $value) {

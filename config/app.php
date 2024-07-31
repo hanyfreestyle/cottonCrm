@@ -86,8 +86,8 @@ return [
 
     'locale' => 'ar',
     'def_dataTableLang' => 'ar',
-    'defCountry' => 'eg',
-    'defCountryCode' => '66',
+    'defCountry' => env('APP_CONFIG_DEF_COUNTRY'),
+    'defCountryId' => env('APP_CONFIG_DEF_COUNTRY_ID'),
 
     'admin_lang' =>[
         'ar'=>'العربية',
