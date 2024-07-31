@@ -303,6 +303,23 @@ if (!function_exists('RandomNumber')) {
         return $randomString;
     }
 }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('loadConfigFromJson')) {
+    function loadConfigFromJson($catId) {
+        $arr = array();
+        $folder = config('adminConfig.app_folder');
+        if ($folder) {
+            $filePath = base_path('config_' . $folder . '/app.json');
+            if (File::isFile($filePath)) {
+                $getArr = json_decode(file_get_contents($filePath), true);
+                $arr = IsArr($getArr, $catId, $arr);
+            }
+        }
+        return $arr;
+    }
+}
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
@@ -401,28 +418,28 @@ if (!function_exists('array_sort')) {
 }
 
 if (!function_exists('findValue_FromArr')) {
-    function findValue_FromArr($OldData,$Key,$Val,$SendName){
-        if(count($OldData) > 0 and intval($Val)> '0' ){
-            $hany = findValue($OldData, array($Key => $Val ), "0");
-            if(!empty($hany)){
+    function findValue_FromArr($OldData, $Key, $Val, $SendName) {
+        if (count($OldData) > 0 and intval($Val) > '0') {
+            $hany = findValue($OldData, array($Key => $Val), "0");
+            if (!empty($hany)) {
                 $SendVall = $hany['0'][$SendName];
-            }else{
+            } else {
                 $SendVall = "";
             }
-        }else{
-            $SendVall  = "" ;
+        } else {
+            $SendVall = "";
         }
-        return $SendVall ;
+        return $SendVall;
     }
 }
 if (!function_exists('findValue')) {
-    function findValue(array $array, array $parameters, $multipleResoult = false){
+    function findValue(array $array, array $parameters, $multipleResoult = false) {
         $result = array();//used when $multipleResoult == true
         $suspicious = false;
-        foreach($array as $childArray){
-            foreach($parameters as $k => $p){
-                if(array_key_exists($k,$childArray)){
-                    if($childArray[$k] == $p){
+        foreach ($array as $childArray) {
+            foreach ($parameters as $k => $p) {
+                if (array_key_exists($k, $childArray)) {
+                    if ($childArray[$k] == $p) {
                         $suspicious = $childArray;
                     } else {
                         $suspicious = false;
@@ -433,9 +450,9 @@ if (!function_exists('findValue')) {
                     continue 2;
                 }
             }
-            if(is_array($suspicious)){
+            if (is_array($suspicious)) {
                 $result[] = $suspicious;
-                if($multipleResoult == true){
+                if ($multipleResoult == true) {
                     $suspicious = false;
                 } else {
                     break;
@@ -445,12 +462,6 @@ if (!function_exists('findValue')) {
         return $result;
     }
 }
-
-
-
-
-
-
 
 
 ?>

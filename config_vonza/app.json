@@ -1,0 +1,17 @@
+{
+    "CrmCustomers": {
+
+        "defCountry": "om",
+        "defCountryId": "169",
+        "OneCountry": false,
+        "addressReq": false,
+        "list_flag": true,
+        "empty": ""
+    },
+
+    "hany": {
+        "empty": ""
+    }
+}
+
+

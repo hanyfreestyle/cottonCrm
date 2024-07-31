@@ -14,7 +14,7 @@
                 <tr>
                     <th class="all">#</th>
                     @if($Config['list_flag'])
-                        <th class="TD_20"></th>
+                        <th class="TD_20 desktop"></th>
                     @endif
                     <th class="all">{{__($defLang.'form_name')}}</th>
 
