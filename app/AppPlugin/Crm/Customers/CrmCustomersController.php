@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
 
+use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Country\Country;
 use App\Http\Controllers\AdminMainController;
@@ -38,12 +39,19 @@ class CrmCustomersController extends AdminMainController {
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
+        $searchType = [
+            ['id' => 1, 'name' => __('admin/crm/customers.search_type_1')],
+            ['id' => 2, 'name' => __('admin/crm/customers.search_type_2')],
+            ['id' => 3, 'name' => __('admin/crm/customers.search_type_3')],
+        ];
+        View::share('searchType', $searchType);
+
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["filterid" => 0,'datatable'=>0,'orderby'=>0],
+            'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
             'yajraTable' => true,
             'AddLang' => false,
             'restore' => 0,
@@ -57,17 +65,19 @@ class CrmCustomersController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function repeat($value) {
         $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
+        $pageData['ViewType'] = "repeat";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
 
         $rowData = CrmCustomers::def()->where('mobile', $value)->orWhere('mobile_2', $value)
             ->orWhere('phone', $value)->orWhere('whatsapp', $value)->get();
 
-        return view('AppPlugin.CrmCustomer.index_repeat')->with([
+        return view('AppPlugin.CrmCustomer.repeat')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
         ]);
     }
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -183,12 +193,10 @@ class CrmCustomersController extends AdminMainController {
         $data = DB::table($table)
             ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
             ->where($table_address . '.is_default', true)
-
-            ->leftJoin("config_data_translations", function($join) {
+            ->leftJoin("config_data_translations", function ($join) {
                 $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
-                $join->where('config_data_translations.locale','=','ar');
+                $join->where('config_data_translations.locale', '=', 'ar');
             })
-
             ->select("$table.id as id",
                 "$table.name  as name",
                 "$table.mobile  as mobile",
@@ -232,7 +240,6 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-
             ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
     }
 
@@ -319,9 +326,9 @@ class CrmCustomersController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ForceDeleteException($id) {
 
-        $deleteRow = CrmCustomers::query()->where('id', $id)
-            ->firstOrFail();
-        $deleteRow->delete();
+//        $deleteRow = CrmCustomers::query()->where('id', $id)
+//            ->firstOrFail();
+//        $deleteRow->delete();
 
 
 //        if ($deleteRow->orders_count == 0) {
@@ -345,6 +352,54 @@ class CrmCustomersController extends AdminMainController {
 
         self::ClearCash();
         return back()->with('confirmDelete', "");
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function search() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "search";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
+        $rowData = CrmCustomers::query()->where('id', 0)->get();
+        return view('AppPlugin.CrmCustomer.search')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'nodata' => false,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function searchFilter(CrmCustomersSearchRequest $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "search";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
+        $pageData['BoxH2'] = __($this->defLang . 'app_menu_search_results');
+
+        if ($request->search_type == 1) {
+            $rowData = CrmCustomers::query()
+                ->where('mobile', $request->name)
+                ->orWhere('mobile_2', $request->name)
+                ->orWhere('phone', $request->name)
+                ->orWhere('whatsapp', $request->name)
+                ->get();
+        } elseif ($request->search_type == 2) {
+            $rowData = CrmCustomers::query()
+                ->where('name', 'like', '%' . $request->name . '%')
+                ->get();
+        } elseif ($request->search_type == 3) {
+            $searchString = $request->name;
+            $rowData = CrmCustomers::query()->with('address')->whereHas('address', function ($query) use ($searchString) {
+                $query->where('address', 'like', '%' . $searchString . '%');
+            })->get();
+        }
+
+        return view('AppPlugin.CrmCustomer.search')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'nodata' => true,
+        ]);
     }
 
 
@@ -376,6 +431,15 @@ class CrmCustomersController extends AdminMainController {
         $subMenu->name = "admin/crm/customers.app_menu_add";
         $subMenu->roleView = "crm_customer_add";
         $subMenu->icon = "fas fa-plus";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "CrmCustomer.search|CrmCustomer.searchFilter";
+        $subMenu->url = "admin.CrmCustomer.search";
+        $subMenu->name = "admin/crm/customers.app_menu_search";
+        $subMenu->roleView = "crm_customer_view";
+        $subMenu->icon = "fas fa-search";
         $subMenu->save();
 
         $subMenu = new AdminMenu();

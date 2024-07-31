@@ -23,11 +23,11 @@
   @if($type == 'edit')
     @can($PrefixRole.'_edit')
       @if($modelid)
-        <td class="td_action">
+        <td  class="td_action">
           <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',[$modelid,$row->id])}}" type="edit"/>
         </td>
       @else
-        <td class="td_action">
+        <td data-th="{{__('admin/def.form_button_edit')}}" class="td_action">
           <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',$row->id)}}" type="edit"/>
         </td>
       @endif
@@ -40,6 +40,13 @@
         <x-admin.lang.add-new-button :row="$row"/>
       @endif
     @endcan
+  @elseif($type == 'profile')
+      @can($PrefixRole.'_edit')
+          <td data-th="{{__('admin/form.button_profile')}}" class="td_action">
+              <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',$row->id)}}" type="Profile"/>
+          </td>
+      @endcan
+
   @elseif($type == 'Photos')
     @can($PrefixRole.'_edit')
       @if($modelid)
@@ -54,7 +61,7 @@
     @endcan
   @elseif($type == 'delete')
     @can($PrefixRole.'_delete')
-      <td class="td_action">
+      <td data-th="{{__('admin/form.button_delete')}}" class="td_action">
         <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" type="deleteSweet"/>
       </td>
     @endcan

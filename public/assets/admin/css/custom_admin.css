@@ -6,7 +6,10 @@
 .TD_80{width:80px!important}.TD_90{width:90px!important}.TD_100{width:100px!important}.TD_110{width:110px!important}.TD_120{width:120px!important}.TD_130{width:130px!important}
 .TD_140{width:140px!important}.TD_150{width:150px!important}.TD_160{width:160px!important}.TD_170{width:170px!important}.TD_180{width:180px!important}
 .TD_190{width:190px!important}.TD_200{width:200px!important}.TD_250{width:250px!important}.TD_300{width:300px!important}.TD_350{width:350px!important}
-.td_action{text-align: center; padding: 5px!important;width:20px!important;}
+@media (min-width: 999px) {
+    .td_action{text-align: center; padding: 5px!important;width:20px!important;}
+}
+
 .td_pro_icon{text-align: center; padding: 5px!important; padding-top:10px!important; width:20px!important;}
 .is_active{text-align: center!important; background: red}
 .ListItem-12{background-color:rgba(255,255,255,1); padding: 10px 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 5px; margin-bottom: 10px }

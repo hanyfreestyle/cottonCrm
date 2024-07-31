@@ -21,5 +21,6 @@ Route::get('/crm/customers/repeat/{num}', [CrmCustomersController::class, 'repea
 Route::get('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.index');
 Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.filter');
 
-
+Route::get('/crm/customers/search/', [CrmCustomersController::class, 'search'])->name('CrmCustomer.search');
+Route::post('/crm/customers/search/', [CrmCustomersController::class, 'searchFilter'])->name('CrmCustomer.searchFilter');
 

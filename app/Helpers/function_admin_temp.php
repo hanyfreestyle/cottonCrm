@@ -311,6 +311,15 @@ if (!function_exists('Table_Style')) {
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('Table_Style_Normal')) {
+    function Table_Style_Normal() {
+        $tableHeader = ' class="table table-hover rwd_table" ';
+        return $tableHeader;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('Table_Style_Yajra')) {
     function Table_Style_Yajra() {
         $tableHeader = ' id="YajraDatatable" class="table table-bordered table-hover DataTableView" ';
