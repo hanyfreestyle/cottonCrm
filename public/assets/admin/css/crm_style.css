@@ -30,11 +30,6 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView{
     text-align: center!important;
 }
 
-table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data{
-
-    width: 100%;
-    text-align: center!important;
-}
 
 
 table.dataTable > tbody > tr.child span.dtr-title {
@@ -49,11 +44,18 @@ table.dataTable > tbody > tr.child span.dtr-title {
 
 table.dataTable > tbody > tr.child span.dtr-data {
     float: right;
-    width: 60%;
+    width: 60% !important;
+    max-width: 250px !important;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: right!important;
     display: block;
 }
+
+table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data{
+    width: 100%!important;
+    text-align: center!important;
+}
+
 

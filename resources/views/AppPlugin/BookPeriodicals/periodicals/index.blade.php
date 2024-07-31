@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
@@ -9,17 +9,17 @@
     <x-admin.hmtl.section>
         <x-app-plugin.crm.book.form-filter form-name="{{$formName}}" :row="$rowData"/>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
-            <table {!!Table_Style(true,true) !!} >
+            <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
-                    <th class="TD_20">#</th>
-                    <th class="TD_150">{{__('admin/Periodicals.form_name')}}</th>
-                    <th class="TD_250">{{__('admin/Periodicals.form_des')}}</th>
-                    <th class="TD_80">{{__('admin/Periodicals.form_country')}}</th>
-                    <th class="TD_80">{{__('admin/Periodicals.form_lang')}}</th>
-                    <th class="TD_80">{{__('admin/Periodicals.form_release_name')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_release_count')}}</th>
-                    <th class="TD_100">{{__('admin/Periodicals.form_release_repeat')}}</th>
+                    <th class=" all">#</th>
+                    <th class=" all">{{__('admin/Periodicals.form_name')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_des')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_country')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_lang')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_release_name')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_release_count')}}</th>
+                    <th class=" desktop">{{__('admin/Periodicals.form_release_repeat')}}</th>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
@@ -36,12 +36,13 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
     <script type="text/javascript">
         $(function () {
-            var table = $('.DataTableView').DataTable({
+            $('#YajraDatatable').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 pageLength: 25,
                 @include('datatable.lang')
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
@@ -60,15 +61,15 @@
 
                         @can($PrefixRole.'_edit')
                     {
-                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"
+                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"
 
                     },
                     {
-                        data: 'AddRelease', name: 'AddRelease', orderable: false, searchable: false, className: "text-center"
+                        data: 'AddRelease', name: 'AddRelease', orderable: false, searchable: false, className: "text-center actionButView"
 
                     },
                     {
-                        data: 'ListRelease', name: 'ListRelease', orderable: false, searchable: false, className: "text-center"
+                        data: 'ListRelease', name: 'ListRelease', orderable: false, searchable: false, className: "text-center actionButView"
 
                     },
                         @endcan
@@ -76,7 +77,7 @@
                         @can($PrefixRole.'_delete')
 
                     {
-                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
                     },
 
                     @endcan

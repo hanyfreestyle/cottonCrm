@@ -80,7 +80,7 @@ class ActionButton extends Component {
                 case 'ListRelease':
                     $this->icon = 'fas fa-search';
                     $this->bg = getBgColor('dark');
-                    $this->printLable = "عرض الاصدارات";
+                    $this->printLable = "الاصدارات";
                     break;
                 case 'delete':
                     $this->icon = 'fas fa-trash';

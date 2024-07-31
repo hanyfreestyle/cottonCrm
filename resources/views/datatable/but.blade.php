@@ -3,9 +3,9 @@
 @elseif($btype == 'Profile')
     <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile' :tip="false"/>
 @elseif($btype == 'AddRelease')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease'/>
+    <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease' :tip="false"/>
 @elseif($btype == 'ListRelease')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".ListRelease",$row->id)}}' type='ListRelease'/>
+    <x-admin.form.action-button url='{{route($PrefixRoute.".ListRelease",$row->id)}}' type='ListRelease' :tip="false"/>
 @elseif($btype == 'is_active_update')
     <x-admin.ajax.update-status-but :row="$row"/>
 @elseif($btype == 'MorePhoto')
