@@ -13,7 +13,7 @@
                     <form class="mainForm" action="{{route($PrefixRoute.'.searchFilter')}}" method="post">
                         @csrf
                         <div class="row CustSearchForm">
-                            <x-admin.form.select-arr name="search_type" :sendvalue="old('search_type',issetArr($_POST,'search_type',1))" :send-arr="$searchType"
+                            <x-admin.form.select-arr name="search_type" :sendvalue="old('search_type',issetArr($_POST,'search_type',1))" :send-arr="$CustomersSearchType"
                                                      :labelview="false" :label="__('admin/crm/customers.search_type')" col="3"/>
 
                             <x-admin.form.input name="name" :labelview="false" :value="old('name', issetArr($_POST,'name'))" :placeholder="true" col="7" tdir="ar"

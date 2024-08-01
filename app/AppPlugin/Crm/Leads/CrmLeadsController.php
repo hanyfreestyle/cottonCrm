@@ -5,6 +5,9 @@ namespace App\AppPlugin\Crm\Leads;
 use App\AppCore\Menu\AdminMenu;
 
 
+use App\AppPlugin\Crm\Customers\CrmCustomersController;
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
+use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
@@ -16,21 +19,18 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CrmLeadsController extends AdminMainController {
 
-    use CrmTicketsConfigTraits ;
-
-
+    use CrmTicketsConfigTraits;
 
     function __construct() {
         parent::__construct();
-        $this->controllerName = "CrmCustomer";
-        $this->PrefixRole = 'crm_customer';
+        $this->controllerName = "CrmLeads";
+        $this->PrefixRole = 'crm_leads';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
-        $this->defLang = "admin/crm/customers.";
+        $this->defLang = "admin/crm/leads.";
         View::share('defLang', $this->defLang);
-
-        $this->Config = self::defConfig();
-        View::share('Config', $this->Config);
+//        $this->Config = self::defConfig();
+//        View::share('Config', $this->Config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -39,7 +39,8 @@ class CrmLeadsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
+            'AddConfig' => false,
+            'AddButToCard' => false,
             'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
             'yajraTable' => true,
             'AddLang' => false,
@@ -50,9 +51,57 @@ class CrmLeadsController extends AdminMainController {
         self::loadConstructData($sendArr);
     }
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddNew() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "search";
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['BoxH1'] = __($this->defLang.'app_menu_search');
+        $rowData = CrmCustomers::query()->where('id', 0)->get();
+        return view('AppPlugin.CrmCustomer.search')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'nodata' => false,
+        ]);
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function searchFilter(CrmCustomersSearchRequest $request) {
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "LeadsSearch";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
+        $pageData['BoxH2'] = __($this->defLang . 'app_menu_search_results');
+        $rowData = CrmCustomersController::CustomersSearchFilter($request);
+        return view('AppPlugin.CrmCustomer.search')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'nodata' => true,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function addTicket($id) {
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "Add";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
+        $customer = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+
+        return view('AppPlugin.CrmLeads.form_add_ticket')->with([
+            'pageData' => $pageData,
+            'customer' => $customer,
+        ]);
+
+    }
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -308,13 +357,12 @@ class CrmLeadsController extends AdminMainController {
         $mainMenu->roleView = "crm_leads_view";
         $mainMenu->save();
 
-        #setActiveRoute("CrmCustomer")
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "";
-        $subMenu->url = "admin.CrmLeads.index";
+        $subMenu->sel_routs = "CrmLeads.addNew|CrmLeads.searchFilter|CrmLeads.addTicket";
+        $subMenu->url = "admin.CrmLeads.addNew";
         $subMenu->name = "admin/crm/leads.app_menu_add";
-        $subMenu->roleView = "crm_leads_view";
+        $subMenu->roleView = "crm_leads_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
 

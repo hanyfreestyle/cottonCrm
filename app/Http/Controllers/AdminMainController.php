@@ -86,6 +86,13 @@ class AdminMainController extends DefaultMainController {
         ];
         View::share('BrokenUrl_Arr', $BrokenUrl_Arr);
 
+        $CustomersSearchType = [
+            ['id' => 1, 'name' => __('admin/crm/customers.search_type_1')],
+            ['id' => 2, 'name' => __('admin/crm/customers.search_type_2')],
+            ['id' => 3, 'name' => __('admin/crm/customers.search_type_3')],
+        ];
+        View::share('CustomersSearchType', $CustomersSearchType);
+
 
         $WebSearchTypeArr = [
             "1" => ['id' => '1', 'name' => __('admin/config/webConfig.web_serach_type_1')],

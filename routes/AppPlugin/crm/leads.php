@@ -1,10 +1,13 @@
 <?php
 
-use App\AppPlugin\Crm\Tickets\CrmTicketsController;
+use App\AppPlugin\Crm\Leads\CrmLeadsController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/crm/leads/', [CrmTicketsController::class, 'index'])->name('CrmLeads.index');
+Route::get('/leads/add-new', [CrmLeadsController::class, 'AddNew'])->name('CrmLeads.addNew');
+Route::post('/leads/search/', [CrmLeadsController::class, 'searchFilter'])->name('CrmLeads.searchFilter');
+Route::get('/leads/add-ticket/{id}', [CrmLeadsController::class, 'addTicket'])->name('CrmLeads.addTicket');
+
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');
 //Route::get('crm/customers/DataTable', [CrmTicketsController::class, 'DataTable'])->name('CrmCustomer.DataTable');
 //Route::get('/crm/customers/create', [CrmTicketsController::class, 'create'])->name('CrmCustomer.create');

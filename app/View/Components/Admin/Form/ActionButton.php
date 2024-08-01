@@ -71,6 +71,12 @@ class ActionButton extends Component {
                     $this->printLable = __('admin/form.button_profile');
                     break;
 
+                case 'addTicket':
+                    $this->icon = 'fas fa-ticket-alt';
+                    $this->bg = getBgColor('p');
+                    $this->printLable = __('admin/crm/leads.but_add_ticket');
+                    break;
+
                 case 'AddRelease':
                     $this->icon = 'fas fa-plus-circle';
                     $this->bg = getBgColor('p');

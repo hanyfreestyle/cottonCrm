@@ -39,12 +39,6 @@ class CrmCustomersController extends AdminMainController {
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
-        $searchType = [
-            ['id' => 1, 'name' => __('admin/crm/customers.search_type_1')],
-            ['id' => 2, 'name' => __('admin/crm/customers.search_type_2')],
-            ['id' => 3, 'name' => __('admin/crm/customers.search_type_3')],
-        ];
-        View::share('searchType', $searchType);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
@@ -376,6 +370,17 @@ class CrmCustomersController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
         $pageData['BoxH2'] = __($this->defLang . 'app_menu_search_results');
 
+        $rowData = self::CustomersSearchFilter($request);
+        return view('AppPlugin.CrmCustomer.search')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'nodata' => true,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CustomersSearchFilter($request) {
         if ($request->search_type == 1) {
             $rowData = CrmCustomers::query()
                 ->where('mobile', $request->name)
@@ -393,14 +398,8 @@ class CrmCustomersController extends AdminMainController {
                 $query->where('address', 'like', '%' . $searchString . '%');
             })->get();
         }
-
-        return view('AppPlugin.CrmCustomer.search')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'nodata' => true,
-        ]);
+        return $rowData;
     }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
