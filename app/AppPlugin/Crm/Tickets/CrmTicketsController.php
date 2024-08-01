@@ -308,41 +308,41 @@ class CrmTicketsController extends AdminMainController {
         $mainMenu->roleView = "crm_ticket_view";
         $mainMenu->save();
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = setActiveRoute("CrmCustomer");;
-//        $subMenu->url = "admin.CrmCustomer.index";
-//        $subMenu->name = "admin/crm/customers.app_menu_list";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-list";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.addNew";
-//        $subMenu->url = "admin.CrmCustomer.addNew";
-//        $subMenu->name = "admin/crm/customers.app_menu_add";
-//        $subMenu->roleView = "crm_customer_add";
-//        $subMenu->icon = "fas fa-plus";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.search|CrmCustomer.searchFilter";
-//        $subMenu->url = "admin.CrmCustomer.search";
-//        $subMenu->name = "admin/crm/customers.app_menu_search";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-search";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.Report.index|CrmCustomer.Report.filter";
-//        $subMenu->url = "admin.CrmCustomer.Report.index";
-//        $subMenu->name = "admin/crm/customers.app_menu_report";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-chart-pie";
-//        $subMenu->save();
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "";
+        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->name = "admin/crm/ticket.app_menu_new";
+        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->icon = "fas fa-eye";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "";
+        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->name = "admin/crm/ticket.app_menu_today";
+        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->icon = "fas fa-bell";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "";
+        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->name = "admin/crm/ticket.app_menu_back";
+        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->icon = "fas fa-thumbs-down";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "";
+        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->name = "admin/crm/ticket.app_menu_next";
+        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->icon = "fas fa-history";
+        $subMenu->save();
 
     }
 

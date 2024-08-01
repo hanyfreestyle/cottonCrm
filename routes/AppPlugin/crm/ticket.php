@@ -4,7 +4,7 @@ use App\AppPlugin\Crm\Tickets\CrmTicketsController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/crm/ticket/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.index');
+Route::get('/crm/ticket/', [CrmTicketsController::class, 'index'])->name('CrmTicket.index');
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');
 //Route::get('crm/customers/DataTable', [CrmTicketsController::class, 'DataTable'])->name('CrmCustomer.DataTable');
 //Route::get('/crm/customers/create', [CrmTicketsController::class, 'create'])->name('CrmCustomer.create');

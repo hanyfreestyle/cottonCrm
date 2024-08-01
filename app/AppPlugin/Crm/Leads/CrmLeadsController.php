@@ -305,36 +305,37 @@ class CrmLeadsController extends AdminMainController {
         $mainMenu->sel_routs = "admin.CrmLeads";
         $mainMenu->name = "admin/crm/leads.app_menu";
         $mainMenu->icon = "fas fa-phone-volume";
-        $mainMenu->roleView = "crm_customer_view";
+        $mainMenu->roleView = "crm_leads_view";
         $mainMenu->save();
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = setActiveRoute("CrmCustomer");;
-//        $subMenu->url = "admin.CrmCustomer.index";
-//        $subMenu->name = "admin/crm/customers.app_menu_list";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-list";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.addNew";
-//        $subMenu->url = "admin.CrmCustomer.addNew";
-//        $subMenu->name = "admin/crm/customers.app_menu_add";
-//        $subMenu->roleView = "crm_customer_add";
-//        $subMenu->icon = "fas fa-plus";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.search|CrmCustomer.searchFilter";
-//        $subMenu->url = "admin.CrmCustomer.search";
-//        $subMenu->name = "admin/crm/customers.app_menu_search";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-search";
-//        $subMenu->save();
-//
+        #setActiveRoute("CrmCustomer")
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "";
+        $subMenu->url = "admin.CrmLeads.index";
+        $subMenu->name = "admin/crm/leads.app_menu_add";
+        $subMenu->roleView = "crm_leads_view";
+        $subMenu->icon = "fas fa-plus";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "admin.CrmLeads.index";
+        $subMenu->url = "admin.CrmLeads.index";
+        $subMenu->name = "admin/crm/leads.app_menu_add_bulk";
+        $subMenu->roleView = "crm_leads_view";
+        $subMenu->icon = "fas fa-file-excel";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "admin.CrmLeads.index";
+        $subMenu->url = "admin.CrmLeads.index";
+        $subMenu->name = "admin/crm/leads.app_menu_distribution";
+        $subMenu->roleView = "crm_customer_view";
+        $subMenu->icon = "fas fa-random";
+        $subMenu->save();
+
 //        $subMenu = new AdminMenu();
 //        $subMenu->parent_id = $mainMenu->id;
 //        $subMenu->sel_routs = "CrmCustomer.Report.index|CrmCustomer.Report.filter";
