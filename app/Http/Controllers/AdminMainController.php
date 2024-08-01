@@ -50,9 +50,13 @@ class AdminMainController extends DefaultMainController {
             "orders" => ['name' => __('admin/orders.app_menu')],
             "customer" => ['name' => __('admin/customer.app_menu')],
             "Pages" => ['name' => __('admin/pages.app_menu')],
-            "Periodicals" => ['name' => __('admin/Periodicals.app_menu')],
-
             "BlogPost" => ['name' => __('admin/model/blogPost.app_menu')],
+
+            "Periodicals" => ['name' => __('admin/Periodicals.app_menu')],
+            "crm_customer" => ['name' => __('admin/crm/customers.app_menu')],
+            "crm_leads" => ['name' => __('admin/crm/leads.app_menu')],
+            "crm_ticket" => ['name' => __('admin/crm/ticket.app_menu')],
+
         ];
 
 

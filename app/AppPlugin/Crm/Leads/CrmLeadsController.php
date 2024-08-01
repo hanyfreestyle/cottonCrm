@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Crm\Tickets;
+namespace App\AppPlugin\Crm\Leads;
 
 use App\AppCore\Menu\AdminMenu;
 
@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class CrmTicketsController extends AdminMainController {
+class CrmLeadsController extends AdminMainController {
 
     use CrmTicketsConfigTraits ;
 
@@ -302,10 +302,10 @@ class CrmTicketsController extends AdminMainController {
 
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
-        $mainMenu->sel_routs = "admin.CrmTicket";
-        $mainMenu->name = "admin/crm/ticket.app_menu";
-        $mainMenu->icon = "fas fa-ticket-alt";
-        $mainMenu->roleView = "crm_ticket_view";
+        $mainMenu->sel_routs = "admin.CrmLeads";
+        $mainMenu->name = "admin/crm/leads.app_menu";
+        $mainMenu->icon = "fas fa-phone-volume";
+        $mainMenu->roleView = "crm_customer_view";
         $mainMenu->save();
 
 //        $subMenu = new AdminMenu();

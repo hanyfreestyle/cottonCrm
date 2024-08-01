@@ -11,6 +11,7 @@ class AppPuzzleTreeCrm {
         $modelTree = [
             'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
+            'CrmLeads' => self::treeCrmLeads(),
             'CrmTickets' => self::treeCrmTickets(),
             'Periodicals' => self::treePeriodicals(),
         ];
@@ -82,18 +83,44 @@ class AppPuzzleTreeCrm {
             'viewFolder' => 'CrmTickets',
             'routeFolder' => "crm/",
             'routeFile' => 'ticket.php',
-//            'migrations' => [
-//                '2021_01_01_000001_create_crm_customers_table.php',
-//            ],
-//            'seeder' => ['crm_customers.sql', 'crm_customers_address.sql'],
-//            'adminLangFolder' => "admin/crm/",
-//            'adminLangFiles' => ['customers.php'],
+            'migrations' => [
+                '2021_01_01_000002_create_crm_tickets_table.php',
+            ],
+            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
+            'adminLangFolder' => "admin/crm/",
+            'adminLangFiles' => ['ticket.php'],
 //            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
 //            'ComponentFolderView' => ['app-plugin/crm/customers'],
 //            'ClientFolder' => config('adminConfig.app_folder'),
 
         ];
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeCrmLeads() {
+        return [
+            'view' => true,
+            'id' => "CrmLeads",
+            'CopyFolder' => "Crm_Leads",
+            'appFolder' => 'Crm/Leads',
+            'viewFolder' => 'CrmLeads',
+            'routeFolder' => "crm/",
+            'routeFile' => 'leads.php',
+//            'migrations' => [
+//                '2021_01_01_000002_create_crm_tickets_table.php',
+//            ],
+//            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
+            'adminLangFolder' => "admin/crm/",
+            'adminLangFiles' => ['leads.php'],
+//            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
+//            'ComponentFolderView' => ['app-plugin/crm/customers'],
+//            'ClientFolder' => config('adminConfig.app_folder'),
+        ];
+    }
+
+
+
 
 
 

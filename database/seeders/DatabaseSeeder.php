@@ -21,6 +21,7 @@ use App\AppPlugin\Config\Branche\SeederBranch;
 use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
 use App\AppPlugin\Crm\Periodicals\Seeder\PeriodicalsSeeder;
+use App\AppPlugin\Crm\Tickets\Seeder\CrmTicketsSeeder;
 use App\AppPlugin\Data\ConfigData\Seeder\ConfigDataSeeder;
 use App\AppPlugin\Data\Country\SeederCountry;
 use App\AppPlugin\Data\City\Seeder\CitySeeder;
@@ -63,6 +64,9 @@ class DatabaseSeeder extends Seeder {
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
             $this->call(ImportDataSeeder::class);
+        }
+        if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
+            $this->call(CrmTicketsSeeder::class);
         }
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
             $this->call(CrmCustomersSeeder::class);

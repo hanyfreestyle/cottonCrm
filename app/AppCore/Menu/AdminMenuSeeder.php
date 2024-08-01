@@ -9,8 +9,6 @@ use App\AppCore\WebSettings\SettingsController;
 use App\AppPlugin\BlogPost\BlogCategoryController;
 use App\AppPlugin\Config\Apps\AppSettingController;
 use App\AppPlugin\Config\WebLangFile\LangFileWebController;
-use App\AppPlugin\Crm\Customers\CrmCustomersController;
-use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
 use App\AppPlugin\CustomersAdmin\CustomerAdminController;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
 use App\AppPlugin\Faq\FaqCategoryController;
@@ -22,6 +20,7 @@ use App\AppPlugin\Pages\PageCategoryController;
 use App\AppPlugin\Product\ProductController;
 
 
+use App\Http\Traits\CrmFunTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -33,6 +32,7 @@ class AdminMenuSeeder extends Seeder {
         SettingsController::AdminMenu();
         PermissionController::AdminMenu();
         LangFileController::AdminMenu();
+        CrmFunTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/config/WebLangFile.php'))) {
             LangFileWebController::AdminMenu();
@@ -71,12 +71,8 @@ class AdminMenuSeeder extends Seeder {
         }
 
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            CrmCustomersController::AdminMenu();
-        }
-        if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
-            PeriodicalsController::AdminMenu();
-        }
+
+
 
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {

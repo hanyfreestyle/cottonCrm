@@ -59,6 +59,7 @@ class CrmCustomersController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['search']]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -89,8 +90,6 @@ class CrmCustomersController extends AdminMainController {
 
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-
-//        dd($rowData->get());
 
         return view('AppPlugin.CrmCustomer.index')->with([
             'pageData' => $pageData,
@@ -447,7 +446,7 @@ class CrmCustomersController extends AdminMainController {
         $subMenu->sel_routs = "CrmCustomer.Report.index|CrmCustomer.Report.filter";
         $subMenu->url = "admin.CrmCustomer.Report.index";
         $subMenu->name = "admin/crm/customers.app_menu_report";
-        $subMenu->roleView = "crm_customer_view";
+        $subMenu->roleView = "crm_customer_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 
