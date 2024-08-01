@@ -23,26 +23,32 @@ class SelectData extends Component {
     public $printName;
     public $catId;
     public $filterForm;
+    public $active;
+    public $l;
 
 
     public function __construct(
         $row = array(),
         $col = "3",
         $labelview = true,
+        $l = true,
         $label = "Input Name",
         $req = true,
         $name = null,
         $id = null,
         $sendid = 'id',
-        $sendvalue = "",
+        $sendvalue = null,
         $printName = 'name',
         $catId = null,
         $filterForm = false,
+        $active = true,
 
     ) {
+        $this->active = $active;
         $this->row = $row;
         $this->col = "col-lg-" . $col;
         $this->labelview = $labelview;
+        $this->l = $l;
         $this->label = $label;
         $this->req = $req;
         $this->name = $name;
@@ -66,7 +72,7 @@ class SelectData extends Component {
                 $this->sendvalue = $sendvalue;
             } else {
                 $rowName = $this->name;
-                $this->sendvalue = old($printName, $row->$rowName);
+                $this->sendvalue = old($printName, $row->$rowName ?? '');
             }
         }
 

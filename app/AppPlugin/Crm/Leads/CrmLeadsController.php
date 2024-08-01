@@ -8,7 +8,8 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
-use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+use App\AppPlugin\Crm\Leads\Request\CreateTicketRequest;
+use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CrmLeadsController extends AdminMainController {
 
-    use CrmTicketsConfigTraits;
+    use CrmLeadsConfigTraits;
 
     function __construct() {
         parent::__construct();
@@ -29,8 +30,9 @@ class CrmLeadsController extends AdminMainController {
         $this->PrefixCatRoute = "";
         $this->defLang = "admin/crm/leads.";
         View::share('defLang', $this->defLang);
-//        $this->Config = self::defConfig();
-//        View::share('Config', $this->Config);
+
+        $this->Config = self::defConfig();
+        View::share('Config', $this->Config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -87,14 +89,14 @@ class CrmLeadsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function addTicket($id) {
+    public function addTicket($customerID) {
         $pageData = $this->pageData;
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
         $pageData['ViewType'] = "Add";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
-        $customer = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+        $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
 
         return view('AppPlugin.CrmLeads.form_add_ticket')->with([
             'pageData' => $pageData,
@@ -103,60 +105,28 @@ class CrmLeadsController extends AdminMainController {
 
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function index(Request $request) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-//        $pageData['SubView'] = false;
-//
-//        $session = self::getSessionData($request);
-//        $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-//
-//
-//
-//        return view('AppPlugin.CrmCustomer.index')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//        ]);
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function create() {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Add";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-//
-//        $rowData = CrmCustomers::findOrNew(0);
-//        $rowDataAddress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
-//
-//        return view('AppPlugin.CrmCustomer.form')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'rowDataAddress' => $rowDataAddress,
-//        ]);
-//
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function edit($id) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Edit";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-//        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-//
-//        $rowDataAddress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
-//
-//        return view('AppPlugin.CrmCustomer.form')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'rowDataAddress' => $rowDataAddress,
-//        ]);
-//    }
-//
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CreateTicket(CreateTicketRequest $request ,$customerID) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+
+        dd($customerID);
+
+        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+
+        $rowDataAddress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
+
+        return view('AppPlugin.CrmCustomer.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'rowDataAddress' => $rowDataAddress,
+        ]);
+    }
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {

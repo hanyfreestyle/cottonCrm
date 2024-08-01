@@ -7,7 +7,19 @@
         <x-admin.hmtl.info-div :t="__($defLang.'form_whatsapp')" :des="$row->whatsapp" col="2" col-row="col-6" :all-data="false"/>
     </div>
 
-
+    @if(issetArr($config,'addCountry',false))
+        @foreach($row->address as $address)
+            <div class="row">
+                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="2" col-row="col-6" :all-data="$allData"/>
+                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="2" col-row="col-6" :all-data="$allData"/>
+                @if(issetArr($config,'fullAddress',false))
+                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_address')" :des="$address->address" col="4" col-row="col-12" :all-data="$allData"/>
+                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-4" :all-data="$allData"/>
+                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_floor')" :des="$address->floor" col="2" col-row="col-4" :all-data="$allData"/>
+                @endif
+            </div>
+        @endforeach
+    @endif
 @else
     <div class="row">
 

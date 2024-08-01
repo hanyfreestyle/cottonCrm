@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/leads/add-new', [CrmLeadsController::class, 'AddNew'])->name('CrmLeads.addNew');
 Route::post('/leads/search/', [CrmLeadsController::class, 'searchFilter'])->name('CrmLeads.searchFilter');
-Route::get('/leads/add-ticket/{id}', [CrmLeadsController::class, 'addTicket'])->name('CrmLeads.addTicket');
-
+Route::get('/leads/add-ticket/{customerID}', [CrmLeadsController::class, 'addTicket'])->name('CrmLeads.addTicket');
+Route::post('/leads/add-ticket/{customerID}', [CrmLeadsController::class, 'CreateTicket'])->name('CrmLeads.createTicket');
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');
 //Route::get('crm/customers/DataTable', [CrmTicketsController::class, 'DataTable'])->name('CrmCustomer.DataTable');
 //Route::get('/crm/customers/create', [CrmTicketsController::class, 'create'])->name('CrmCustomer.create');

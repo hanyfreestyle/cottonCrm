@@ -7,4 +7,5 @@ return
 	'app_menu_add_bulk' => 'Add Bulk',
 	'app_menu_distribution' => 'Distribution Leads',
 	'but_add_ticket' => '',
+	'box_customer_data' => '',
 ];

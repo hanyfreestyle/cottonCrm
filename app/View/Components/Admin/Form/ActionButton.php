@@ -72,7 +72,7 @@ class ActionButton extends Component {
                     break;
 
                 case 'addTicket':
-                    $this->icon = 'fas fa-ticket-alt';
+                    $this->icon = 'fas fa-tags';
                     $this->bg = getBgColor('p');
                     $this->printLable = __('admin/crm/leads.but_add_ticket');
                     break;
