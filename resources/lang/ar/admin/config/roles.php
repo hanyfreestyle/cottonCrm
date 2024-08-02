@@ -2,6 +2,10 @@
 
 return
 [
+	'crm_crm' => 'خدمة عملاء',
+	'crm_sales' => 'مبيعات',
+	'crm_team' => 'فريق العمل',
+	'crm_tech' => 'فنى',
 	'exception_user_name' => 'المستخدم',
 	'exception_user_post' => 'مقال مرتبط بالمستخدم',
 	'menu_roles' => 'الاعضاء والصلاحيات',

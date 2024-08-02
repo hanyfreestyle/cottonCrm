@@ -2,6 +2,10 @@
 
 return
 [
+	'crm_crm' => '',
+	'crm_sales' => '',
+	'crm_team' => '',
+	'crm_tech' => '',
 	'exception_user_name' => '',
 	'exception_user_post' => '',
 	'menu_roles' => 'Users &amp; Permissions',

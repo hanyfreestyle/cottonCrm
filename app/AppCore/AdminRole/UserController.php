@@ -44,7 +44,7 @@ class UserController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -52,31 +52,46 @@ class UserController extends AdminMainController {
 
         $users = self::getSelectQuery(User::where('id', '!=', 0));
         $roles = Role::all();
-        return view('admin.appCore.role.user_index', compact('pageData', 'users', 'roles'));
+        return view('admin.appCore.role.user_index')->with([
+            'pageData' => $pageData,
+            'users' => $users,
+            'roles' => $roles,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function SoftDeletes() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "deleteList";
         $roles = array();
         $users = self::getSelectQuery(User::onlyTrashed());
-        return view('admin.appCore.role.user_index', compact('pageData', 'users', 'roles'));
+        return view('admin.appCore.role.user_index')->with([
+            'pageData' => $pageData,
+            'users' => $users,
+            'roles' => $roles,
+        ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $pageData['passReq'] = true;
         $users = User::findOrNew(0);
         $roles = Role::all();
-        return view('admin.appCore.role.user_form', compact('pageData', 'users', 'roles'));
+        $team = User::query()->where('id','!=',0)->get();
+        return view('admin.appCore.role.user_form')->with([
+            'pageData' => $pageData,
+            'users' => $users,
+            'roles' => $roles,
+            'team' => $team,
+        ]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['passReq'] = false;
@@ -85,11 +100,18 @@ class UserController extends AdminMainController {
         $users = User::findOrFail($id);
         $roles = Role::all();
         $userRole = $users->roles->pluck('name', 'id')->all();
-        return view('admin.appCore.role.user_form', compact('users', 'pageData', 'roles', 'userRole'));
+        $team = User::query()->where('id','!=',$id)->get();
+        return view('admin.appCore.role.user_form')->with([
+            'pageData' => $pageData,
+            'users' => $users,
+            'roles' => $roles,
+            'userRole' => $userRole,
+            'team' => $team,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(UserRequest $request, $id = 0) {
 
         $saveData = User::findOrNew($id);
@@ -98,6 +120,10 @@ class UserController extends AdminMainController {
         $saveData->phone = $request->phone;
         $saveData->slug = AdminHelper::Url_Slug($request->slug);
         $saveData->des = $request->des;
+        $saveData->crm_crm = $request->input('crm_crm');
+        $saveData->crm_sales = $request->input('crm_sales');
+        $saveData->crm_tech = $request->input('crm_tech');
+        $saveData->crm_team = $request->input('crm_team');
 
         if (trim($request->user_password != '')) {
             $saveData->password = Hash::make($request->user_password);
@@ -122,7 +148,7 @@ class UserController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroy
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroy($id) {
         if ($id != '1') {
             $deleteRow = self::DeleteQuery(User::where('id', $id))->firstOrFail();

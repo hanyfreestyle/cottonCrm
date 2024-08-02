@@ -20,6 +20,10 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('des')->nullable();
+            $table->integer('crm_sales')->default(0);
+            $table->integer('crm_crm')->default(0);
+            $table->integer('crm_tech')->default(0);
+            $table->json('crm_team')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

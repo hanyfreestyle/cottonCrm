@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->integer('state')->nullable();
             $table->integer('follow_state')->nullable();
             $table->dateTime('follow_date')->nullable();
-            $table->integer('emp_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->integer('sours_id')->nullable();
             $table->integer('ads_id')->nullable();
             $table->integer('device_id')->nullable();
