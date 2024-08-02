@@ -91,7 +91,7 @@ class AppPuzzleTreeCrm {
             'adminLangFiles' => ['ticket.php'],
 //            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
 //            'ComponentFolderView' => ['app-plugin/crm/customers'],
-//            'ClientFolder' => config('adminConfig.app_folder'),
+            'ClientFolder' => config('adminConfig.app_folder'),
 
         ];
     }
@@ -113,9 +113,9 @@ class AppPuzzleTreeCrm {
 //            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['leads.php'],
-//            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
-//            'ComponentFolderView' => ['app-plugin/crm/customers'],
-//            'ClientFolder' => config('adminConfig.app_folder'),
+            'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
+            'ComponentFolderView' => ['app-plugin/crm/leads'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 

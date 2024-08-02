@@ -89,6 +89,7 @@ trait CrmFunTraits {
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+                ['cat_id' => 'crm_leads', 'name' => 'crm_leads_distribution', 'name_ar' => 'توزيع الاتصالات', 'name_en' => 'Distribution'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],

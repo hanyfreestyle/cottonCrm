@@ -7,9 +7,12 @@ return
 	'app_menu_new' => 'عميل جديد',
 	'app_menu_next' => 'متابعات مؤجلة',
 	'app_menu_today' => 'متابعات اليوم',
+	'fr_follow_date' => 'تاريخ المتابعة',
 	'fr_lead_ads' => 'الحمله الاعلانية',
 	'fr_lead_brand' => 'الماركة',
 	'fr_lead_divce' => 'نوع الجهاز',
 	'fr_lead_sours' => 'مصدر التواصل',
-	'fr_follow_date' => 'تاريخ المتابعة',
+	'fr_user_id' => 'أسم الفنى',
+	'fr_notes_err' => 'العطل المبدئى',
+	'fr_notes' => 'ملاحظات',
 ];

@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->integer('ads_id')->nullable();
             $table->integer('device_id')->nullable();
             $table->integer('brand_id')->nullable();
+            $table->text('notes')->nullable();
+            $table->text('notes_err')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

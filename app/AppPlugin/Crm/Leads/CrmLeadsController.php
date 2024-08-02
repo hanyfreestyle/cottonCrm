@@ -13,6 +13,7 @@ use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -52,6 +53,12 @@ class CrmLeadsController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+
+        $Per_Add = ['AddNew', 'searchFilter', 'addTicket', 'CreateTicket'];
+        $Per_edit = [];
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_edit)]);
+
     }
 
 
@@ -91,6 +98,7 @@ class CrmLeadsController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function addTicket($customerID) {
+
         $pageData = $this->pageData;
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
@@ -98,10 +106,12 @@ class CrmLeadsController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
         $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
+        $ticketInfo = new CrmTickets();
 
         return view('AppPlugin.CrmLeads.form_add_ticket')->with([
             'pageData' => $pageData,
             'customer' => $customer,
+            'ticketInfo' => $ticketInfo,
         ]);
     }
 
@@ -119,11 +129,14 @@ class CrmLeadsController extends AdminMainController {
                 $saveData->state = 1;
                 $saveData->follow_state = 1;
                 $saveData->follow_date = SaveDateFormat($request, 'follow_date');
+                $saveData->user_id = $request->input('user_id') ?? null;
 
                 $saveData->sours_id = $request->input('sours_id');
                 $saveData->ads_id = $request->input('ads_id');
                 $saveData->device_id = $request->input('device_id');
                 $saveData->brand_id = $request->input('brand_id');
+                $saveData->notes_err = $request->input('notes_err');
+                $saveData->notes = $request->input('notes');
                 $saveData->save();
             });
         } catch (\Exception $exception) {

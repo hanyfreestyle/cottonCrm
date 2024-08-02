@@ -7,9 +7,12 @@ return
 	'app_menu_new' => '',
 	'app_menu_next' => '',
 	'app_menu_today' => '',
+	'fr_follow_date' => '',
 	'fr_lead_ads' => '',
 	'fr_lead_brand' => '',
 	'fr_lead_divce' => '',
 	'fr_lead_sours' => '',
-	'fr_follow_date' => '',
+	'fr_user_id' => '',
+	'fr_notes_err' => '',
+	'fr_notes' => '',
 ];
