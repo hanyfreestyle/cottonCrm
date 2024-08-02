@@ -50,6 +50,7 @@
         },
         "files": [
             "app/Helpers/function_admin.php",
+            "app/Helpers/function_crm.php",
             "app/Helpers/function_admin_temp.php",
             "app/Helpers/function_web.php"
         ]

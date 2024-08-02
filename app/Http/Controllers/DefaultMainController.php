@@ -9,6 +9,7 @@ use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\Country\Country;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -88,6 +89,20 @@ class DefaultMainController extends Controller {
         }
         return $CashAreaList;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashUsersList($stopCash = 0) {
+        if ($stopCash) {
+            $CashUsersList = User::get();
+        } else {
+            $CashUsersList = Cache::remember('CashUsersList', cashDay(7), function () {
+                return User::get();
+            });
+        }
+        return $CashUsersList;
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     getWebConfig

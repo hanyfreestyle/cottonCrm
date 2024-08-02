@@ -175,7 +175,7 @@ class CrmLeadsController extends AdminMainController {
         $pageData['SubView'] = false;
         $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
 
-
+//        dd($ticketInfo->customer->address->first()->area_id);
         return view('AppPlugin.CrmLeads.view_info_ticket')->with([
             'pageData' => $pageData,
 

@@ -11,6 +11,7 @@ return new class extends Migration {
         Schema::create('crm_ticket', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('customer_id');
+            $table->integer('open_type')->default(1);
             $table->integer('state')->nullable();
             $table->integer('follow_state')->nullable();
             $table->dateTime('follow_date')->nullable();

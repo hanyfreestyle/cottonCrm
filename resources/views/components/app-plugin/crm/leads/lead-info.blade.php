@@ -6,9 +6,9 @@
 <div class="row">
     <x-admin.hmtl.info-div :t="__('admin/crm/ticket.var_date_add')" :des="PrintDate($row->created_at)" col="2" col-row="col-6" :all-data="false"/>
     <x-admin.hmtl.info-div :t="__('admin/crm/ticket.fr_follow_date')" :des="PrintDate($row->follow_date)" col="2" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.fr_user_id')" :des="$row->id" col="4" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.var_open_type')" :des="$row->id" col="2" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.var_ticket_state')" :des="$row->id" col="2" col-row="col-6" :all-data="false"/>
+    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.fr_user_id')" :arr-data="$CashUsersList" :des="$row->user_id" col="4" col-row="col-6" :all-data="false"/>
+    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.var_open_type')" :arr-data="$DefCat['TicketOpenType']" :des="$row->open_type" col="2" col-row="col-6" :all-data="false"/>
+    <x-admin.hmtl.info-div :t="__('admin/crm/ticket.var_ticket_state')" :arr-data="$DefCat['TicketState']" :des="$row->follow_state" col="2" col-row="col-6" :all-data="false"/>
 </div>
 
 <div class="row">

@@ -122,6 +122,10 @@ class AdminMainController extends DefaultMainController {
         $CashAreaList = self::CashAreaList();
         View::share('CashAreaList', $CashAreaList);
 
+        $CashUsersList = self::CashUsersList();
+        View::share('CashUsersList', $CashUsersList);
+
+
         $adminMenu = AdminMenuController::CashAdminMenu();
         View::share('adminMenu', $adminMenu);
     }

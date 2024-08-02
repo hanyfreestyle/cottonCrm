@@ -11,7 +11,7 @@ class LeadInfo extends Component {
     public $row;
     public $isactive;
     public $addTitle;
-    public $option_2;
+    public $softView;
     public $option_3;
     public $option_4;
     public $option_5;
@@ -22,7 +22,7 @@ class LeadInfo extends Component {
         $row = array(),
         $isactive = true,
         $addTitle = false,
-        $option_2 = null,
+        $softView = false,
         $option_3 = null,
         $option_4 = null,
         $option_5 = null,
@@ -32,7 +32,7 @@ class LeadInfo extends Component {
         $this->row = $row;
         $this->isactive = $isactive;
         $this->addTitle = $addTitle;
-        $this->option_2 = $option_2;
+        $this->softView = $softView;
         $this->option_3 = $option_3;
         $this->option_4 = $option_4;
         $this->option_5 = $option_5;
