@@ -12,18 +12,30 @@ class CardProfile extends Component {
     public $allData;
     public $config;
     public $softData;
+    public $defLang;
+    public $addTitle;
 
     public function __construct(
         $row = array(),
         $allData = true,
         $config = array(),
         $softData = false,
+        $defLang = null,
+        $addTitle = false,
 
     ) {
         $this->row = $row;
         $this->allData = $allData;
         $this->config = $config;
         $this->softData = $softData;
+        $this->addTitle = $addTitle;
+        if($defLang == null){
+            $this->defLang = 'admin/crm/customers.';
+        }else{
+            $this->defLang = $defLang;
+        }
+
+
 
     }
 

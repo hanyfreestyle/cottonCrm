@@ -26,7 +26,7 @@ return
 	'form_evaluation' => 'تقييم العميل',
 	'form_gender' => 'النوع',
 	'form_mobile' => 'رقم الموبايل',
-	'form_mobile_2' => 'رقم الموبايل اضافى',
+	'form_mobile_2' => 'رقم اضافى',
 	'form_name' => 'اسم العميل',
 	'form_notes' => 'ملاحظات',
 	'form_phone' => 'رقم الهاتف',

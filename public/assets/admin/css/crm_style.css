@@ -115,8 +115,19 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
 
 .CustSearchForm .form-group{
     margin-bottom: 10px!important;
+}
 
-
+.h2_info{
+    width: 100%;
+    color: #ffffff;
+    background-color: #494d4d;
+    border-color: #494d4d;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 3px;
+    font-size: 18px;
 }
 
 

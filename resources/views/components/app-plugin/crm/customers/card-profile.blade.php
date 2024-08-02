@@ -1,3 +1,9 @@
+@if($addTitle)
+    <div class="row">
+        <h2 class="h2_info">{{__('admin/crm/ticket.t_h2_customer')}}</h2>
+    </div>
+@endif
+
 @if($softData)
     <div class="row">
         <x-admin.hmtl.info-div :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="false"/>

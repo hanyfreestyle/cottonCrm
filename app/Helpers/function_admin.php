@@ -277,6 +277,15 @@ if (!function_exists('AdminActiveMenu')) {
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('PrintDate')) {
+    function PrintDate($date,$format="Y-m-d") {
+        $dateValue = Carbon::parse($date)->format($format);
+        return $dateValue;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
 if (!function_exists('setActiveRoute')) {
     function setActiveRoute($main, $arrs = array()) {

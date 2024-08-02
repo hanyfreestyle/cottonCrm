@@ -13,11 +13,9 @@ use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
-use Yajra\DataTables\Facades\DataTables;
 
 
 class CrmLeadsController extends AdminMainController {
@@ -98,7 +96,6 @@ class CrmLeadsController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function addTicket($customerID) {
-
         $pageData = $this->pageData;
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
@@ -112,6 +109,7 @@ class CrmLeadsController extends AdminMainController {
             'pageData' => $pageData,
             'customer' => $customer,
             'ticketInfo' => $ticketInfo,
+            'form_route' => '.createTicket',
         ]);
     }
 
@@ -145,38 +143,107 @@ class CrmLeadsController extends AdminMainController {
         return redirect()->route('admin.CrmLeads.addNew');
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function editTicket($id) {
+
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
+        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
+        $customerID =  $ticketInfo->customer_id ;
+        $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
+
+        return view('AppPlugin.CrmLeads.form_add_ticket')->with([
+            'pageData' => $pageData,
+            'customer' => $customer,
+            'ticketInfo' => $ticketInfo,
+            'form_route' => '.updateTicket',
+        ]);
+    }
+
+    public function ViewInfo($id) {
+
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
+        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
 
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function indexQuery() {
-//
-//        $table = "crm_customers";
-//        $table_address = "crm_customers_address";
-//        $dataTable = 'config_data_translations';
-//        $data = DB::table($table)
-//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-//            ->where($table_address . '.is_default', true)
-//            ->leftJoin("config_data_translations", function ($join) {
-//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
-//                $join->where('config_data_translations.locale', '=', 'ar');
-//            })
-//            ->select("$table.id as id",
-//                "$table.name  as name",
-//                "$table.mobile  as mobile",
-//                "$table.mobile_code  as flag",
-//                "$table.whatsapp  as whatsapp",
-//                "$table.evaluation_id  as evaluation_id",
-//                "$table_address.country_id as country_id",
-//                "$table_address.city_id as city_id",
-//                "$table_address.area_id as area_id",
-//                "$dataTable.name as evaluation",
-//            );
-//        return $data;
-//
-//
-//    }
-//
+        return view('AppPlugin.CrmLeads.view_info_ticket')->with([
+            'pageData' => $pageData,
+
+            'row' => $ticketInfo,
+
+        ]);
+    }
+
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicket(CreateTicketRequest $request, $id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $saveData = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();;
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+                $saveData->follow_date = SaveDateFormat($request, 'follow_date');
+                $saveData->user_id = $request->input('user_id') ?? null;
+                $saveData->sours_id = $request->input('sours_id');
+                $saveData->ads_id = $request->input('ads_id');
+                $saveData->device_id = $request->input('device_id');
+                $saveData->brand_id = $request->input('brand_id');
+                $saveData->notes_err = $request->input('notes_err');
+                $saveData->notes = $request->input('notes');
+                $saveData->save();
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        return redirect()->route('admin.CrmLeads.distribution');
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DistributionIndex(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __('admin/crm/leads.app_menu_distribution');
+        $pageData['SubView'] = false;
+
+        $session = self::getSessionData($request);
+        $Data = self::LeadsDataFilterQ(self::indexQuery(), $session);
+        $rowData = $Data->paginate(30);
+//        dd($rowData);
+//        dd($rowData->get());
+        return view('AppPlugin.CrmLeads.distribution')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $data = CrmTickets::query()
+            ->where('state',1)
+            ->where('follow_state',1)
+            ->where('user_id',null)
+            ->with('customer')
+        ;
+        return $data;
+    }
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function DataTable(Request $request) {
@@ -207,97 +274,25 @@ class CrmLeadsController extends AdminMainController {
 //            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
 //    }
 //
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function CustomerDataFilterQ($query, $session, $order = null) {
-//
-//        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
-//            $query->where('evaluation_id', $session['evaluation_id']);
-//        }
-//
-//        if (isset($session['gender_id']) and $session['gender_id'] != null) {
-//            $query->where('gender_id', $session['gender_id']);
-//        }
-//
-//        if (isset($session['country_id']) and $session['country_id'] != null) {
-//            $query->where('country_id', $session['country_id']);
-//        }
-//
-//        if (isset($session['city_id']) and $session['city_id'] != null) {
-//            $query->where('city_id', $session['city_id']);
-//        }
-//
-//        if (isset($session['area_id']) and $session['area_id'] != null) {
-//            $query->where('area_id', $session['area_id']);
-//        }
-//
-//        return $query;
-//    }
-//
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function saveDefField($saveData, $request) {
-//        $saveData->evaluation_id = $request->input('evaluation_id');
-//        $saveData->gender_id = $request->input('gender_id');
-//
-//        $saveData->name = $request->input('name');
-//        $saveData->mobile = $request->input('mobile');
-//        $saveData->mobile_code = $request->input('countryCode_mobile');
-//
-//        $saveData->mobile_2 = $request->input('mobile_2');
-//        if ($request->input('mobile_2')) {
-//            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-//        }
-//
-//        $saveData->phone = $request->input('phone');
-//        if ($request->input('phone')) {
-//            $saveData->phone_code = $request->input('countryCode_phone');
-//        }
-//
-//        $saveData->whatsapp = $request->input('whatsapp');
-//        if ($request->input('whatsapp')) {
-//            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-//        }
-//
-//        $saveData->email = $request->input('email');
-//        $saveData->notes = $request->input('notes');
-//
-//        return $saveData;
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function saveAddressField($saveAddress, $saveData, $request) {
-//        $saveAddress->uuid = Str::uuid()->toString();
-//        $saveAddress->customer_id = $saveData->id;
-//
-//        $saveAddress->country_id = $request->input('country_id');
-//        $saveAddress->city_id = $request->input('city_id');
-//        $saveAddress->area_id = $request->input('area_id');
-//
-//        $saveAddress->address = $request->input('address');
-//        $saveAddress->floor = $request->input('floor');
-//        $saveAddress->post_code = $request->input('post_code');
-//        $saveAddress->unit_num = $request->input('unit_num');
-//        $saveAddress->latitude = $request->input('latitude');
-//        $saveAddress->longitude = $request->input('longitude');
-//
-//        return $saveAddress;
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function ForceDeleteException($id) {
-//
-////        $deleteRow = CrmCustomers::query()->where('id', $id)
-////            ->firstOrFail();
-////        $deleteRow->delete();
-//
-//
-//        self::ClearCash();
-//        return back()->with('confirmDelete', "");
-//    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function LeadsDataFilterQ($query, $session, $order = null) {
+
+
+        return $query;
+    }
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function destroy($id) {
+        $deleteRow = CrmTickets::query()->where('id', $id)
+            ->where('state',1)
+            ->where('follow_state',1)->firstOrFail();
+        $deleteRow->forceDelete();
+        return back()->with('confirmDelete', "");
+    }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -332,10 +327,10 @@ class CrmLeadsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "admin.CrmLeads.index";
-        $subMenu->url = "admin.CrmLeads.index";
+        $subMenu->sel_routs = "CrmLeads.distribution";
+        $subMenu->url = "admin.CrmLeads.distribution";
         $subMenu->name = "admin/crm/leads.app_menu_distribution";
-        $subMenu->roleView = "crm_customer_view";
+        $subMenu->roleView = "crm_leads_distribution";
         $subMenu->icon = "fas fa-random";
         $subMenu->save();
 
