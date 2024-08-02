@@ -8,7 +8,8 @@ return
 	'app_menu_next' => 'متابعات مؤجلة',
 	'app_menu_today' => 'متابعات اليوم',
 	'fr_lead_ads' => 'الحمله الاعلانية',
+	'fr_lead_brand' => 'الماركة',
 	'fr_lead_divce' => 'نوع الجهاز',
 	'fr_lead_sours' => 'مصدر التواصل',
-	'fr_lead_brand' => 'الماركة',
+	'fr_follow_date' => 'تاريخ المتابعة',
 ];

@@ -19,7 +19,7 @@ class CreateTicketRequest extends FormRequest {
 
 
         $rules = [
-            'name'=> 'nullable',
+            'follow_date'=> "required|date_format:Y-m-d|after_or_equal:today",
         ];
 
         if(IsConfig($Config,'leads_sours_id')){$rules += ['sours_id'=>'required'];}

@@ -11,9 +11,9 @@ trait CrmLeadsConfigTraits {
         $CustomersConfig = CrmCustomersConfigTraits::defConfig();
         $Config = [
             'leads_sours_id' => true,
-            'leads_ads_id' => true,
-            'leads_device_id' => true,
-            'leads_brand_id' => true,
+//            'leads_ads_id' => true,
+//            'leads_device_id' => true,
+//            'leads_brand_id' => true,
         ];
         $Config = array_merge($Config, $CustomersConfig);
 

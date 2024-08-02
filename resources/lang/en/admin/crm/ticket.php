@@ -8,7 +8,8 @@ return
 	'app_menu_next' => '',
 	'app_menu_today' => '',
 	'fr_lead_ads' => '',
+	'fr_lead_brand' => '',
 	'fr_lead_divce' => '',
 	'fr_lead_sours' => '',
-	'fr_lead_brand' => '',
+	'fr_follow_date' => '',
 ];

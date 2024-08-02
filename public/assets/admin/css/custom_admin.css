@@ -19,9 +19,6 @@
     font-size: 50px;
 }
 
-
-
-
 .filter_box_total .info-box-text{
     font-size: 18px;
 
@@ -38,8 +35,6 @@
     font-size: 16px;
 }
 
-
-
 .card-body.p-0 .table tbody > tr > td:last-of-type {
 
 }
@@ -48,9 +43,8 @@
     font-size: 14px!important;
     margin-bottom: 10px;
 }
-
-
 .Td_Count{font-size:22px!important;}
+
 
 .BB_Number{font-size:22px!important;}
 .tableImg{ max-width: 60px; max-height: 60px;}
@@ -61,14 +55,21 @@
 .mainForm .form-group{
     margin-bottom: 3px!important;
 }
-
 .mainForm .no_label {
     margin-bottom: 10px!important;
 }
 .mainForm .def_form_label{font-size:14px!important;margin-bottom:0!important;padding-top:8px;padding-bottom:7px;font-weight:700!important;color:rgba(0,0,0,.8)!important; width:100%}
 .error_mass{font-size: 80%;color: #dc3545;}
-.table td,.table th{padding:.75rem;vertical-align:middle;border-top:1px solid #dee2e6}
-.table .tbutaction{ text-align:center;}
+/*.table td,.table th{padding:.75rem;vertical-align:middle;border-top:1px solid #dee2e6}*/
+/*.table .tbutaction{ text-align:center;}*/
+/*tbody > tr > td {*/
+/*    padding-right: 10px!important;*/
+/*    padding-left: 10px!important;*/
+/*}*/
+/*tbody > tr > td:last-of-type {*/
+/*    padding-right: 10px!important;*/
+/*}*/
+
 .TableIcon{font-size:20px}
 .card_body_New{}
 .liError{
@@ -76,7 +77,6 @@
     padding-right: 10px;
     padding-left: 10px;
     color: red;
-
 }
 
 .def_card_header .card-title{font-size:16px!important;font-weight:700!important;line-height:30px}
@@ -84,7 +84,6 @@
 @media (max-width: 600px) {
     .div_data {padding:0px}
 }
-
 
 .amenity_table_icon{font-size:30px;color:#FFF;padding:10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;min-width:60px;text-align:center}
 .popover-body{direction:ltr!important}
@@ -109,36 +108,36 @@
 input.parsley-success,
 select.parsley-success,
 textarea.parsley-success {
-  color: #468847;
-  background-color: #DFF0D8;
-  border: 1px solid #D6E9C6;
+    color: #468847;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
 }
 
 input.parsley-error,
 select.parsley-error,
 textarea.parsley-error {
-  color: #B94A48;
-  background-color: #F2DEDE;
-  border: 1px solid #EED3D7;
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #EED3D7;
 }
 
 .parsley-errors-list {
-  margin: 2px 0 3px;
-  padding: 0;
-  list-style-type: none;
-  font-size: 0.9em;
-  line-height: 0.9em;
-  opacity: 0;
-  color: #B94A48;
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+    color: #B94A48;
 
-  transition: all .3s ease-in;
-  -o-transition: all .3s ease-in;
-  -moz-transition: all .3s ease-in;
-  -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -webkit-transition: all .3s ease-in;
 }
 
 .parsley-errors-list.filled {
-  opacity: 1;
+    opacity: 1;
 }
 
 
@@ -146,26 +145,24 @@ div.dataTables_wrapper div.dataTables_filter input {
     width: 350px;
 }
 
-
-
 .btn_app_new {
-  border-radius: 3px;
-  background-color: #f8f9fa;
-  border: 0px solid #ddd;
-  color: #6c757d;
-  font-size: 12px;
-  height: 55px;
-  margin: 0 0 10px 10px;
-  min-width: 55px;
-  padding: 15px 5px;
-  position: relative;
-  text-align: center;
+    border-radius: 3px;
+    background-color: #f8f9fa;
+    border: 0px solid #ddd;
+    color: #6c757d;
+    font-size: 12px;
+    height: 55px;
+    margin: 0 0 10px 10px;
+    min-width: 55px;
+    padding: 15px 5px;
+    position: relative;
+    text-align: center;
 }
 
 .btn_app_new > .badge {
-  font-size: 12px;
-  font-weight:normal!important;
-  min-width:20px;
+    font-size: 12px;
+    font-weight:normal!important;
+    min-width:20px;
 
 }
 
@@ -184,23 +181,16 @@ div.dataTables_wrapper div.dataTables_filter input {
     float: right;
     width: 100%;
     margin-top: 10px;
-
-
 }
-
-
-
 
 .permission_row label{
-font-size: 15px;
+    font-size: 15px;
     margin-top: 2px;
 }
-
-
-
 .leadInfo .row{
     margin-bottom: 5px;
 }
+
 .leadInfo .title{
     font-weight: bold;
     color: red;
@@ -272,14 +262,6 @@ font-size: 15px;
 
 }
 
-tbody > tr > td {
-    padding-right: 10px!important;
-    padding-left: 10px!important;
-}
-tbody > tr > td:last-of-type {
-    padding-right: 10px!important;
-}
-
 
 
 .mainForm_New{
@@ -321,6 +303,8 @@ tbody > tr > td:last-of-type {
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+
 
 
 
@@ -387,12 +371,6 @@ tbody > tr > td:last-of-type {
 }
 
 
-
-
-
-
-
-
 .adminMenuList{
     padding: 10px 100px;
     margin-bottom: 100px;
@@ -421,10 +399,6 @@ tbody > tr > td:last-of-type {
 
 }
 
-/*.td_action{*/
-/*    width: 20px!important;*/
-/*    background-color: red!important;*/
-/*}*/
 
 
 .dir_left{direction: ltr!important;}

@@ -10,6 +10,15 @@ return new class extends Migration {
 
         Schema::create('crm_ticket', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('customer_id');
+            $table->integer('state')->nullable();
+            $table->integer('follow_state')->nullable();
+            $table->dateTime('follow_date')->nullable();
+            $table->integer('emp_id')->nullable();
+            $table->integer('sours_id')->nullable();
+            $table->integer('ads_id')->nullable();
+            $table->integer('device_id')->nullable();
+            $table->integer('brand_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

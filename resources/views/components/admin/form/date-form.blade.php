@@ -32,7 +32,7 @@
           singleDatePicker: true,
           autoApply: true,
           autoUpdateInput: false,
-          showDropdowns: true,
+          showDropdowns: false,
           minYear: 2022,
           locale: {
               format: "YYYY-MM-DD",

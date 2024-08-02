@@ -10,6 +10,7 @@ use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
 use App\AppPlugin\Crm\Leads\Request\CreateTicketRequest;
 use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +62,7 @@ class CrmLeadsController extends AdminMainController {
         $pageData['ViewType'] = "search";
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
-        $pageData['BoxH1'] = __($this->defLang.'app_menu_search');
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
         $rowData = CrmCustomers::query()->where('id', 0)->get();
         return view('AppPlugin.CrmCustomer.search')->with([
             'pageData' => $pageData,
@@ -102,66 +103,37 @@ class CrmLeadsController extends AdminMainController {
             'pageData' => $pageData,
             'customer' => $customer,
         ]);
-
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function CreateTicket(CreateTicketRequest $request ,$customerID) {
+    public function CreateTicket(CreateTicketRequest $request, $customerID) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $customer = CrmCustomers::where('id', $customerID)->firstOrFail();
+        try {
+            DB::transaction(function () use ($request, $customer) {
+                $saveData = new CrmTickets();
+                $saveData->customer_id = $customer->id;
+                $saveData->state = 1;
+                $saveData->follow_state = 1;
+                $saveData->follow_date = SaveDateFormat($request, 'follow_date');
 
-        dd($customerID);
-
-        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-
-        $rowDataAddress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
-
-        return view('AppPlugin.CrmCustomer.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'rowDataAddress' => $rowDataAddress,
-        ]);
+                $saveData->sours_id = $request->input('sours_id');
+                $saveData->ads_id = $request->input('ads_id');
+                $saveData->device_id = $request->input('device_id');
+                $saveData->brand_id = $request->input('brand_id');
+                $saveData->save();
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        return redirect()->route('admin.CrmLeads.addNew');
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
-//        $saveData = CrmCustomers::findOrNew($id);
-//        try {
-//            DB::transaction(function () use ($request, $saveData) {
-//
-//                $saveData = self::saveDefField($saveData, $request);
-//                $saveData->save();
-//
-//                if ($this->Config['addCountry']) {
-//                    $addressId = intval($request->input('address_id'));
-//                    if ($addressId == 0) {
-//                        $saveAddress = new CrmCustomersAddress();
-//                        $saveAddress->is_default = true;
-//                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-//                        if ($saveAddress->country_id == null) {
-//                            $saveAddress->country_id = Country::where('iso2', $request->input('countryCode_mobile'))->first()->id;
-//                        }
-//                        $saveAddress->save();
-//                    } else {
-//                        $saveAddress = CrmCustomersAddress::query()->where('id', $addressId)->firstOrFail();
-//                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-//                        $saveAddress->save();
-//                    }
-//                }
-//
-//            });
-//        } catch (\Exception $exception) {
-//            return back()->with('data_not_save', "");
-//        }
-//
-//        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-//    }
-//
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    static function indexQuery() {
