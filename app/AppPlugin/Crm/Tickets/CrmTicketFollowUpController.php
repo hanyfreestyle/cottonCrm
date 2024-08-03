@@ -9,9 +9,13 @@ use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
 
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -22,7 +26,7 @@ class CrmTicketFollowUpController extends AdminMainController {
 
     function __construct() {
         parent::__construct();
-        $this->controllerName = "CrmCustomer";
+        $this->controllerName = "TicketFollowUp";
         $this->PrefixRole = 'crm_customer';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
@@ -39,7 +43,8 @@ class CrmTicketFollowUpController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
+            'AddConfig' => false,
+            'AddButToCard' => false,
             'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
             'yajraTable' => true,
             'AddLang' => false,
@@ -58,65 +63,122 @@ class CrmTicketFollowUpController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
 
-        $session = self::getSessionData($request);
-//        $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+        if (Route::currentRouteName() == $this->PrefixRoute . '.archived') {
+            $route = '.DataTableArchived';
+        } else {
+            $route = '.DataTable';
+        }
 
-        dd($rowData->get());
+//        $session = self::getSessionData($request);
+//        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+
+//      dd($rowData->first());
 
         return view('AppPlugin.CrmTickets.index_follow_up')->with([
             'pageData' => $pageData,
-            'rowData' => '',
+//            'rowData' => $rowData,
         ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexQuery() {
-        $data = CrmTickets::query()
+
+        $table = "crm_ticket";
+        $data = DB::table($table)
             ->where('state', 1)
-            ->with('customer');
+            ->where('user_id','!=',null)
+            ->leftJoin("crm_customers", function ($join) {
+                $join->on('crm_ticket.customer_id', '=', 'crm_customers.id');
+            })
+            ->leftJoin("crm_customers_address", function ($join) {
+                $join->on('crm_ticket.customer_id', '=', 'crm_customers_address.customer_id');
+                $join->where('crm_customers_address.is_default', '=', '1');
+            })
+            ->leftJoin("data_area_translations", function ($join) {
+                $join->on('data_area_translations.area_id', '=', 'crm_customers_address.area_id');
+                $join->where('data_area_translations.locale', '=', 'ar');
+            })
+            ->leftJoin("config_data_translations", function ($join) {
+                $join->on('crm_ticket.device_id', '=', 'config_data_translations.data_id');
+                $join->where('config_data_translations.locale', '=', 'ar');
+            })
+            ->leftJoin("users", function ($join) {
+                $join->on('crm_ticket.user_id', '=', 'users.id');
+            })
+
+//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
+//            ->where($table_address . '.is_default', true)
+//            ->leftJoin("config_data_translations", function ($join) {
+//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
+//                $join->where('config_data_translations.locale', '=', 'ar');
+//            })
+            ->select("$table.id as id",
+                "$table.follow_date  as date_follow",
+                "$table.created_at  as date_add",
+                "$table.notes_err  as notes_err",
+                "$table.notes  as notes",
+                "crm_customers.name  as customers_name",
+                "crm_customers.mobile  as customers_mobile",
+                "data_area_translations.name  as customers_area_name",
+                "config_data_translations.name  as device_name",
+                "users.name  as user_name",
+            );
         return $data;
+
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $session = self::getSessionData($request);
+            $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+            return self::DataTableColumns($rowData)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+
+//            ->editColumn('name', function ($row) {
+//                return $row->customer->name ;
+//            })
+//
+//            ->editColumn('mobile', function ($row) {
+//                return $row->customer->mobile ;
+//            })
+//
+//            ->editColumn('area', function ($row) {
+////                return  LoadConfigName($this->CashAreaList,$row->customer->address->first()->area_id)  ;
+//                return  $row->customer->address->first()->area->name ;
+//            })
+
+
+
+            //            ->editColumn('Profile', function ($row) {
+//                return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
+//            })
+//            ->editColumn('Edit', function ($row) {
+//                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+//            })
+//            ->editColumn('Delete', function ($row) {
+//                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+//            })
+            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
+    }
+
+
+
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function create() {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Add";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
-//
-//        $rowData = CrmCustomers::findOrNew(0);
-//        $rowDataAddress = CrmCustomersAddress::query()->where('customer_id', 0)->firstOrNew();
-//
-//        return view('AppPlugin.CrmCustomer.form')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'rowDataAddress' => $rowDataAddress,
-//        ]);
-//
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function edit($id) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Edit";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-//        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-//
-//        $rowDataAddress = CrmCustomersAddress::where('is_default', true)->where('customer_id', $rowData->id)->firstOrNew();
-//
-//        return view('AppPlugin.CrmCustomer.form')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'rowDataAddress' => $rowDataAddress,
-//        ]);
-//    }
-//
+
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
@@ -182,36 +244,8 @@ class CrmTicketFollowUpController extends AdminMainController {
 //
 //    }
 //
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DataTable(Request $request) {
-//        if ($request->ajax()) {
-//            $session = self::getSessionData($request);
-//            $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-//            return self::DataTableColumns($rowData)->make(true);
-//        }
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DataTableColumns($data, $arr = array()) {
-//        return DataTables::query($data)
-//            ->addIndexColumn()
-//            ->editColumn('Flag', function ($row) {
-//                return TablePhotoFlag_Code($row, 'flag');
-//            })
-//            ->editColumn('Profile', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
-//            })
-//            ->editColumn('Edit', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-//            })
-//            ->editColumn('Delete', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-//            })
-//            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
-//    }
-//
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    static function CustomerDataFilterQ($query, $session, $order = null) {

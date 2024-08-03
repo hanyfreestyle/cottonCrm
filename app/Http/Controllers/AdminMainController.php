@@ -119,8 +119,8 @@ class AdminMainController extends DefaultMainController {
         $CashCityList = self::CashCityList();
         View::share('CashCityList', $CashCityList);
 
-        $CashAreaList = self::CashAreaList();
-        View::share('CashAreaList', $CashAreaList);
+        $this->CashAreaList = self::CashAreaList();
+        View::share('CashAreaList', $this->CashAreaList);
 
         $CashUsersList = self::CashUsersList();
         View::share('CashUsersList', $CashUsersList);

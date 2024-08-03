@@ -9,8 +9,10 @@ Route::get('/follow/new', [CrmTicketFollowUpController::class, 'index'])->name('
 Route::get('/follow/today', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Today');
 Route::get('/follow/back', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Back');
 Route::get('/follow/next', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Next');
+Route::get('follow/DataTable', [CrmTicketFollowUpController::class, 'DataTable'])->name('TicketFollowUp.DataTable');
+
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');
-//Route::get('crm/customers/DataTable', [CrmTicketsController::class, 'DataTable'])->name('CrmCustomer.DataTable');
+
 //Route::get('/crm/customers/create', [CrmTicketsController::class, 'create'])->name('CrmCustomer.create');
 //Route::get('/crm/customers/addNew', [CrmTicketsController::class, 'create'])->name('CrmCustomer.addNew');
 //Route::get('/crm/customers/edit/{id}', [CrmTicketsController::class, 'edit'])->name('CrmCustomer.edit');

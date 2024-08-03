@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Jenssegers\Agent\Agent;
 
 class DefaultMainController extends Controller {
 
@@ -20,6 +21,10 @@ class DefaultMainController extends Controller {
     public $Property_TypeArr;
 
     public function __construct() {
+
+
+        $this->agent = new Agent();
+        View::share('agent',$this->agent);
 
         $Continent_Arr = [
             "1" => ['id' => 'AS', 'name' => __('admin/dataCountry.continent_as')],

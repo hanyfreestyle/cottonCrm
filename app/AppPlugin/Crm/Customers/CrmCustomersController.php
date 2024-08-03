@@ -202,8 +202,6 @@ class CrmCustomersController extends AdminMainController {
                 "$dataTable.name as evaluation",
             );
         return $data;
-
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

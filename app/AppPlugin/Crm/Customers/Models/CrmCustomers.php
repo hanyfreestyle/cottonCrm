@@ -18,7 +18,7 @@ class CrmCustomers extends Model {
     }
 
     public function address(): HasMany {
-        return $this->hasMany(CrmCustomersAddress::class,'customer_id','id');
+        return $this->hasMany(CrmCustomersAddress::class,'customer_id','id')->with('area');
     }
 
 }

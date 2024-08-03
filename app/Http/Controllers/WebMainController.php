@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use Phattarachai\LaravelMobileDetect\Agent;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\TwitterCard;
@@ -25,8 +24,8 @@ class WebMainController extends DefaultMainController {
         $this->StopeCash = 0;
 
 
-        $agent = new Agent();
-        View::share('agent', $agent);
+//        $agent = new Agent();
+//        View::share('agent', $agent);
 
         $this->WebConfig = self::getWebConfig($this->StopeCash);
         View::share('WebConfig', $this->WebConfig);
