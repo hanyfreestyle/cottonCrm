@@ -15,6 +15,7 @@ class Date extends Component {
     public $reqspan;
     public $id;
     public $col;
+    public $colMobile;
     public $value;
 
     public function __construct(
@@ -23,18 +24,21 @@ class Date extends Component {
         $labelview = true,
         $reqspan = true,
         $id = null,
-        $col = 'col-lg-3',
+        $col = null,
+        $colMobile = null,
         $value = null,
         $type = null,
     ) {
 
+        $this->col = getCol($col);
+        $this->colMobile = getColMobile($colMobile);
 
-        if($type == 'fromDate') {
+        if ($type == 'fromDate') {
             $this->name = 'from_date';
             $this->label = __('admin/formFilter.fr_date_from');
             $this->reqspan = false;
 
-        } elseif($type == 'toDate') {
+        } elseif ($type == 'toDate') {
             $this->name = 'to_date';
             $this->label = __('admin/formFilter.fr_date_to');
             $this->reqspan = false;
@@ -45,16 +49,16 @@ class Date extends Component {
         }
 
 
-        if($id == null) {
+        if ($id == null) {
             $this->id = $this->name;
         } else {
             $this->id = $id;
         }
 
         $this->labelview = $labelview;
-        $this->col = $col;
 
-        if($value == null) {
+
+        if ($value == null) {
             $this->value = '';
         } else {
             $this->value = Carbon::parse($value)->format("Y-m-d");

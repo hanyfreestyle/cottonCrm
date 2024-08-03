@@ -12,6 +12,7 @@ use Illuminate\View\Component;
 class SelectData extends Component {
     public $row;
     public $col;
+    public $colMobile;
     public $labelview;
     public $label;
     public $req;
@@ -29,7 +30,8 @@ class SelectData extends Component {
 
     public function __construct(
         $row = array(),
-        $col = "3",
+        $col = null,
+        $colMobile = null,
         $labelview = true,
         $l = true,
         $label = "Input Name",
@@ -46,7 +48,8 @@ class SelectData extends Component {
     ) {
         $this->active = $active;
         $this->row = $row;
-        $this->col = "col-lg-" . $col;
+        $this->col = getCol($col);
+        $this->colMobile = getColMobile($colMobile);
         $this->labelview = $labelview;
         $this->l = $l;
         $this->label = $label;

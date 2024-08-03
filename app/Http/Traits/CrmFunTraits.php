@@ -12,7 +12,7 @@ trait CrmFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function LoadMenu(){
+    static function LoadMenu() {
         if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
             PeriodicalsController::AdminMenu();
         }
@@ -22,7 +22,7 @@ trait CrmFunTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
-             CrmTicketsController::AdminMenu();
+            CrmTicketsController::AdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
@@ -90,9 +90,9 @@ trait CrmFunTraits {
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_distribution', 'name_ar' => 'توزيع الاتصالات', 'name_en' => 'Distribution'],
+                ['cat_id' => 'crm_leads', 'name' => 'crm_leads_filter', 'name_ar' => 'تصفية النتائج', 'name_en' => 'Filter'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_leads', 'name' => 'crm_leads_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'crm_leads', 'name' => 'crm_leads_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
             ];
             $data = array_merge($data, $newPer);
         }
@@ -110,9 +110,6 @@ trait CrmFunTraits {
         }
         return $data;
     }
-
-
-
 
 
 }

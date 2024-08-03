@@ -14,6 +14,7 @@ use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
@@ -47,15 +48,18 @@ class CrmLeadsController extends AdminMainController {
             'yajraTable' => true,
             'AddLang' => false,
             'restore' => 0,
-            'formName' => "CrmCustomersFilter",
+            'formName' => "CrmDistributionFilter",
         ];
 
         self::loadConstructData($sendArr);
 
         $Per_Add = ['AddNew', 'searchFilter', 'addTicket', 'CreateTicket'];
-        $Per_edit = [];
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_edit)]);
+        $Per_edit = ['editTicket'];
+        $Per_distribution = ['DistributionIndex'];
+        $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $Per_distribution]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_edit,$Per_distribution)]);
 
     }
 
@@ -154,7 +158,7 @@ class CrmLeadsController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
         $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
-        $customerID =  $ticketInfo->customer_id ;
+        $customerID = $ticketInfo->customer_id;
         $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
 
         return view('AppPlugin.CrmLeads.form_add_ticket')->with([
@@ -224,7 +228,8 @@ class CrmLeadsController extends AdminMainController {
         $Data = self::LeadsDataFilterQ(self::indexQuery(), $session);
         $rowData = $Data->paginate(30);
 //        dd($rowData);
-//        dd($rowData->get());
+//        dd($Data->first());
+
         return view('AppPlugin.CrmLeads.distribution')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -235,49 +240,77 @@ class CrmLeadsController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexQuery() {
         $data = CrmTickets::query()
-            ->where('state',1)
-            ->where('follow_state',1)
-            ->where('user_id',null)
-            ->with('customer')
-        ;
+            ->where('state', 1)
+            ->where('follow_state', 1)
+            ->where('user_id', null)
+            ->with('customer');
         return $data;
     }
 
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DataTable(Request $request) {
-//        if ($request->ajax()) {
-//            $session = self::getSessionData($request);
-//            $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-//            return self::DataTableColumns($rowData)->make(true);
-//        }
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DataTableColumns($data, $arr = array()) {
-//        return DataTables::query($data)
-//            ->addIndexColumn()
-//            ->editColumn('Flag', function ($row) {
-//                return TablePhotoFlag_Code($row, 'flag');
-//            })
-//            ->editColumn('Profile', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
-//            })
-//            ->editColumn('Edit', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-//            })
-//            ->editColumn('Delete', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-//            })
-//            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
-//    }
-//
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LeadsDataFilterQ($query, $session, $order = null) {
 
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['to_date']) and $session['to_date'] != null) {
+            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
+        }
+
+        if (isset($session['follow_from']) and $session['follow_from'] != null) {
+            $query->whereDate('follow_date', '>=', Carbon::createFromFormat('Y-m-d', $session['follow_from']));
+        }
+
+        if (isset($session['follow_to']) and $session['follow_to'] != null) {
+            $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
+        }
+
+        if (isset($session['sours_id']) and $session['sours_id'] != null) {
+            $query->where('sours_id', $session['sours_id']);
+        }
+        if (isset($session['ads_id']) and $session['ads_id'] != null) {
+            $query->where('ads_id', $session['ads_id']);
+        }
+        if (isset($session['device_id']) and $session['device_id'] != null) {
+            $query->where('device_id', $session['device_id']);
+        }
+        if (isset($session['brand_id']) and $session['brand_id'] != null) {
+            $query->where('brand_id', $session['brand_id']);
+        }
+
+
+        if (isset($session['country_id']) and $session['country_id'] != null) {
+            $keyword = $session['country_id'];
+            $query->whereHas('customer.address', function ($query) use ($keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('country_id', $keyword);
+                });
+            });
+        }
+
+        if (isset($session['city_id']) and $session['city_id'] != null) {
+            $keyword = $session['city_id'];
+            $query->whereHas('customer.address', function ($query) use ($keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('city_id', $keyword);
+                });
+            });
+        }
+
+        if (isset($session['area_id']) and $session['area_id'] != null) {
+            $keyword = $session['area_id'];
+            $query->whereHas('customer.address', function ($query) use ($keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('area_id', $keyword);
+                });
+            });
+        }
 
         return $query;
     }
@@ -288,8 +321,8 @@ class CrmLeadsController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroy($id) {
         $deleteRow = CrmTickets::query()->where('id', $id)
-            ->where('state',1)
-            ->where('follow_state',1)->firstOrFail();
+            ->where('state', 1)
+            ->where('follow_state', 1)->firstOrFail();
         $deleteRow->forceDelete();
         return back()->with('confirmDelete', "");
     }
@@ -327,7 +360,7 @@ class CrmLeadsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "CrmLeads.distribution";
+        $subMenu->sel_routs = "CrmLeads.distribution|CrmLeads.filter";
         $subMenu->url = "admin.CrmLeads.distribution";
         $subMenu->name = "admin/crm/leads.app_menu_distribution";
         $subMenu->roleView = "crm_leads_distribution";

@@ -1,5 +1,5 @@
 @if($active)
-    <div class="{{$col}}">
+    <div class="{{$col}} {{$colMobile}}">
         <div class="form-group">
             @if($labelview and $l)
                 <label class="def_form_label col-form-label font-weight-light">

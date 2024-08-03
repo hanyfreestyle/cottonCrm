@@ -10,6 +10,7 @@ Route::get('/leads/add-ticket/{customerID}', [CrmLeadsController::class, 'addTic
 Route::post('/leads/add-ticket/{customerID}', [CrmLeadsController::class, 'CreateTicket'])->name('CrmLeads.createTicket');
 Route::post('/leads/update-ticket/{id}', [CrmLeadsController::class, 'UpdateTicket'])->name('CrmLeads.updateTicket');
 Route::get('/leads/distribution/', [CrmLeadsController::class, 'DistributionIndex'])->name('CrmLeads.distribution');
+Route::post('/leads/distribution/', [CrmLeadsController::class, 'DistributionIndex'])->name('CrmLeads.filter');
 
 Route::get('/leads/edit/{id}', [CrmLeadsController::class, 'editTicket'])->name('CrmLeads.edit');
 Route::get('/leads/destroy/{id}', [CrmLeadsController::class, 'destroy'])->name('CrmLeads.destroy');

@@ -1,4 +1,4 @@
-<div class="{{$col}}">
+<div class="{{$col}} {{$colMobile}}">
     <div class="form-group">
         @if($labelview)
             <label class="def_form_label col-form-label font-weight-light">

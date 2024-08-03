@@ -13,7 +13,7 @@ class SelectArr extends Component {
     public $label;
     public $sendvalue;
     public $col;
-    public $colrow;
+    public $colMobile;
     public $sendArr;
     public $selectType;
     public $printValName;
@@ -29,8 +29,8 @@ class SelectArr extends Component {
         $name = "",
         $label = "",
         $sendvalue = null,
-        $col = "4",
-        $colrow = null,
+        $col = null,
+        $colMobile = null,
 
         $sendArr = array(),
         $selectType = 'normal',
@@ -49,8 +49,8 @@ class SelectArr extends Component {
         $this->sendvalue = $sendvalue;
 
 
-        $this->req = $req;
-        $this->colrow = $colrow;
+        $this->col = getCol($col);
+        $this->colMobile = getColMobile($colMobile);
         $this->col = "col-lg-" . $col;
 
         $this->sendArr = $sendArr;
