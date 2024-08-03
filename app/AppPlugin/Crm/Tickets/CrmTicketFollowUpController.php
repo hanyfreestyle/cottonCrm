@@ -5,19 +5,19 @@ namespace App\AppPlugin\Crm\Tickets;
 use App\AppCore\Menu\AdminMenu;
 
 
+use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class CrmTicketsController extends AdminMainController {
+class CrmTicketFollowUpController extends AdminMainController {
 
-    use CrmTicketsConfigTraits ;
-
+    use CrmTicketsConfigTraits;
 
 
     function __construct() {
@@ -52,27 +52,36 @@ class CrmTicketsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function index(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
 
+        $session = self::getSessionData($request);
+//        $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
+        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+
+        dd($rowData->get());
+
+        return view('AppPlugin.CrmTickets.index_follow_up')->with([
+            'pageData' => $pageData,
+            'rowData' => '',
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $data = CrmTickets::query()
+            ->where('state', 1)
+            ->with('customer');
+        return $data;
+    }
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function index(Request $request) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-//        $pageData['SubView'] = false;
-//
-//        $session = self::getSessionData($request);
-//        $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
-//
-//
-//
-//        return view('AppPlugin.CrmCustomer.index')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//        ]);
-//    }
-//
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function create() {
@@ -302,16 +311,17 @@ class CrmTicketsController extends AdminMainController {
 
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
-        $mainMenu->sel_routs = "admin.CrmTicket";
+        $mainMenu->sel_routs = "admin.TicketFollowUp";
         $mainMenu->name = "admin/crm/ticket.app_menu";
         $mainMenu->icon = "fas fa-ticket-alt";
         $mainMenu->roleView = "crm_ticket_view";
         $mainMenu->save();
 
+
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "";
-        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->sel_routs = "TicketFollowUp.New";
+        $subMenu->url = "admin.TicketFollowUp.New";
         $subMenu->name = "admin/crm/ticket.app_menu_new";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-eye";
@@ -319,8 +329,8 @@ class CrmTicketsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "";
-        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->sel_routs = "TicketFollowUp.Today";
+        $subMenu->url = "admin.TicketFollowUp.Today";
         $subMenu->name = "admin/crm/ticket.app_menu_today";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-bell";
@@ -328,8 +338,8 @@ class CrmTicketsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "";
-        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->sel_routs = "TicketFollowUp.Back";
+        $subMenu->url = "admin.TicketFollowUp.Back";
         $subMenu->name = "admin/crm/ticket.app_menu_back";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-thumbs-down";
@@ -337,8 +347,8 @@ class CrmTicketsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "";
-        $subMenu->url = "admin.CrmTicket.index";
+        $subMenu->sel_routs = "TicketFollowUp.Next";
+        $subMenu->url = "admin.TicketFollowUp.Next";
         $subMenu->name = "admin/crm/ticket.app_menu_next";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-history";

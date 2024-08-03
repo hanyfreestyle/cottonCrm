@@ -53,7 +53,7 @@ class CrmCustomersReportController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function report(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -61,12 +61,13 @@ class CrmCustomersReportController extends AdminMainController {
 
         $session = self::getSessionData($request);
         $rowData = CrmCustomersController::CustomerDataFilterQ(self::indexQuery(), $session);
+        $getData = $rowData->get();
 
-        $evaluationId = $rowData->get()->groupBy('evaluation_id')->toarray();
-        $CountryId = $rowData->get()->groupBy('country_id')->toarray();
-        $CityId = $rowData->get()->groupBy('city_id')->toarray();
-        $AreaId = $rowData->get()->groupBy('area_id')->toarray();
-        $GenderId = $rowData->get()->groupBy('gender_id')->toarray();
+        $evaluationId = $getData->groupBy('evaluation_id')->toarray();
+        $CountryId = $getData->groupBy('country_id')->toarray();
+        $CityId = $getData->groupBy('city_id')->toarray();
+        $AreaId = $getData->groupBy('area_id')->toarray();
+        $GenderId = $getData->groupBy('gender_id')->toarray();
 
         $AllData = $rowData->count();
         $chartData['Evaluation'] = self::ChartDataFromDataConfig($AllData, 'EvaluationCust', $evaluationId);
@@ -78,7 +79,6 @@ class CrmCustomersReportController extends AdminMainController {
             $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $AreaId);
         }
 
-
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
@@ -89,7 +89,7 @@ class CrmCustomersReportController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexQuery() {
         $table = "crm_customers";
         $table_address = "crm_customers_address";

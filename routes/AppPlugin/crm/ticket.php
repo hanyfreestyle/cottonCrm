@@ -1,10 +1,14 @@
 <?php
 
-use App\AppPlugin\Crm\Tickets\CrmTicketsController;
+
+use App\AppPlugin\Crm\Tickets\CrmTicketFollowUpController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/crm/ticket/', [CrmTicketsController::class, 'index'])->name('CrmTicket.index');
+Route::get('/follow/new', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.New');
+Route::get('/follow/today', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Today');
+Route::get('/follow/back', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Back');
+Route::get('/follow/next', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.Next');
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');
 //Route::get('crm/customers/DataTable', [CrmTicketsController::class, 'DataTable'])->name('CrmCustomer.DataTable');
 //Route::get('/crm/customers/create', [CrmTicketsController::class, 'create'])->name('CrmCustomer.create');

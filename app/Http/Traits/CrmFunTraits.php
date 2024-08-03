@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Leads\CrmLeadsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
+use App\AppPlugin\Crm\Tickets\CrmTicketFollowUpController;
 use App\AppPlugin\Crm\Tickets\CrmTicketsController;
 use Illuminate\Support\Facades\File;
 
@@ -22,7 +23,7 @@ trait CrmFunTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
-            CrmTicketsController::AdminMenu();
+            CrmTicketFollowUpController::AdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
