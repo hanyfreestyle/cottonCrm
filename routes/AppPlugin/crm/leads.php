@@ -18,6 +18,8 @@ Route::post('/leads/distribution/', [CrmLeadsController::class, 'DistributionInd
 Route::post('/leads/add-to-user/', [CrmLeadsController::class, 'AddToUser'])->name('CrmLeads.addToUser');
 Route::get('/leads/destroy/{id}', [CrmLeadsController::class, 'destroy'])->name('CrmLeads.destroy');
 
+Route::get('/leads/report/', [CrmLeadsController::class, 'Report'])->name('CrmLeads.report');
+Route::post('/leads/report/', [CrmLeadsController::class, 'Report'])->name('CrmLeads.filterReport');
 Route::get('/leads/view-info/{id}', [CrmLeadsController::class, 'ViewInfo'])->name('CrmLeads.viewInfo');
 
 

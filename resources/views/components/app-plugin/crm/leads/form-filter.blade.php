@@ -4,17 +4,25 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <form class="Filter_Form_Style" action="{{route($PrefixRoute.'.filter')}}" method="post">
+                <form class="Filter_Form_Style" action="{{route($PrefixRoute.$defRoute)}}" method="post">
                     @csrf
                     <input type="hidden" name="formName" value="{{$formName}}">
                     <div class="row">
-                        <x-admin.form.date name="from_date" col="2" value="{{old('from_date',issetArr($getSessionData,'from_date'))}}" :label="__('admin/crm/ticket.filter_date_from')"
-                                           :reqspan="false"/>
-                        <x-admin.form.date name="to_date" col="2" value="{{old('to_date',issetArr($getSessionData,'to_date'))}}" :label="__('admin/crm/ticket.filter_date_to')" :reqspan="false"/>
-                        <x-admin.form.date name="follow_from" col="2" value="{{old('follow_from',issetArr($getSessionData,'follow_from'))}}" :label="__('admin/crm/ticket.filter_follow_from')"
-                                           :reqspan="false"/>
-                        <x-admin.form.date name="follow_to" col="2" value="{{old('follow_to',issetArr($getSessionData,'follow_to'))}}" :label="__('admin/crm/ticket.filter_follow_to')"
-                                           :reqspan="false"/>
+                        @if($viewDates)
+                            @if($dateAdd)
+                                <x-admin.form.date name="from_date" col="2" value="{{old('from_date',issetArr($getSessionData,'from_date'))}}" :label="__('admin/crm/ticket.filter_date_from')"
+                                                   :reqspan="false"/>
+                                <x-admin.form.date name="to_date" col="2" value="{{old('to_date',issetArr($getSessionData,'to_date'))}}" :label="__('admin/crm/ticket.filter_date_to')"
+                                                   :reqspan="false"/>
+
+                            @endif
+                            @if($dateFollow)
+                                <x-admin.form.date name="follow_from" col="2" value="{{old('follow_from',issetArr($getSessionData,'follow_from'))}}" :label="__('admin/crm/ticket.filter_follow_from')"
+                                                   :reqspan="false"/>
+                                <x-admin.form.date name="follow_to" col="2" value="{{old('follow_to',issetArr($getSessionData,'follow_to'))}}" :label="__('admin/crm/ticket.filter_follow_to')"
+                                                   :reqspan="false"/>
+                            @endif
+                        @endif
                     </div>
 
                     <div class="row">
@@ -67,20 +75,7 @@
                         </form>
                     </div>
                 @endif
-
             </div>
-
-
-            {{--        <div class="col-lg-3 filter_box_total">--}}
-            {{--            <div class="info-box mb-3 bg-success">--}}
-            {{--                <span class="info-box-icon"><i class="fas fa-server"></i></span>--}}
-            {{--                <div class="info-box-content">--}}
-            {{--                    <span class="info-box-text">{{__('admin/formFilter.box_total')}}</span>--}}
-            {{--                    <span class="info-box-number">{{number_format($row->count())}}</span>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-            {{--        </div>--}}
-
 
         </div>
     </x-admin.card.collapsed>

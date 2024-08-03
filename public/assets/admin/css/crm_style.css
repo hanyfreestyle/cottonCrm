@@ -108,7 +108,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
     }
 
     .rwd_table th, .rwd_table td {
-        padding: 1em !important;
+        /*padding: 1em !important;*/
     }
 }
 

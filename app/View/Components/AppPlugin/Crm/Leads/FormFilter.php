@@ -10,27 +10,37 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
 
 class FormFilter extends Component {
-
+    public $defRoute;
     public $row;
-    public $config;
-    public $formName;
     public $getSessionData;
-    public $cityId;
+    public $config;
     public $cityList;
     public $areaList;
+    public $viewDates;
+    public $dateAdd;
+    public $dateFollow;
+
 
     public function __construct(
+        $defRoute = '.filter',
         $row = array(),
-        $config = array(),
         $formName = null,
+        $config = array(),
         $cityList = array(),
         $areaList = array(),
+        $viewDates = true,
+        $dateAdd = true,
+        $dateFollow = true,
 
     ) {
+        $this->defRoute = $defRoute;
         $this->row = $row;
-        $this->config = $config;
         $this->formName = $formName;
         $this->getSessionData = Session::get($this->formName);
+        $this->config = $config;
+        $this->viewDates = $viewDates;
+        $this->dateAdd = $dateAdd;
+        $this->dateFollow = $dateFollow;
 
         if (issetArr($config, 'OneCountry')) {
             $this->cityList = City::where('country_id', intval($config['defCountryId']))->with('translation')->get();
@@ -41,7 +51,6 @@ class FormFilter extends Component {
                 $this->cityList = $cityList;
             }
         }
-
 
         if (isset($this->getSessionData['city_id']) and intval($this->getSessionData['city_id']) > 0) {
             $this->areaList = Area::where('city_id', intval($this->getSessionData['city_id']))->with('translation')->get();

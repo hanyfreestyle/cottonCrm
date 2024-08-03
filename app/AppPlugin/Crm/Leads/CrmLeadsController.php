@@ -13,7 +13,11 @@ use App\AppPlugin\Crm\Leads\Request\DistributiontRequest;
 use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+use App\AppPlugin\Data\Area\Models\Area;
+use App\AppPlugin\Data\City\Models\City;
+use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
+use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -24,6 +28,7 @@ class CrmLeadsController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
     use CrmTicketsConfigTraits;
+    use ReportFunTraits;
 
     function __construct() {
         parent::__construct();
@@ -57,14 +62,16 @@ class CrmLeadsController extends AdminMainController {
 
         $Per_Add = ['AddNew', 'searchFilter', 'addTicket', 'CreateTicket'];
         $Per_Edit = ['editTicket'];
+        $Per_report = ['Report'];
         $Per_Delete = ['destroy'];
         $Per_distribution = ['DistributionIndex'];
 
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
         $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $Per_report]);
         $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $Per_distribution]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_Edit, $Per_Delete, $Per_distribution)]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_Edit, $Per_Delete, $Per_distribution,$Per_report)]);
 
     }
 
@@ -255,6 +262,47 @@ class CrmLeadsController extends AdminMainController {
         return back()->with('confirmDelete', "");
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#|||||||||||||||||||||||||||||||||||||| #
+    public function report(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $chartData = array();
+
+        $this->formName = "CrmDistributionReportFilter";
+        View::share('formName', $this->formName);
+
+        $session = self::getSessionData($request);
+        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+        $getData = $rowData->get();
+
+
+        $deviceId = $getData->groupBy('device_id')->toarray();
+        $brandId = $getData->groupBy('brand_id')->toarray();
+        $soursId = $getData->groupBy('sours_id')->toarray();
+        $adsId = $getData->groupBy('ads_id')->toarray();
+        $city_id = $getData->groupBy('customer.address.0.city_id')->toarray();
+        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+
+
+        $AllData = $rowData->count();
+        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
+        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
+        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $soursId);
+        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $adsId);
+        $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $city_id);
+        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+//        $chartData['Gender'] = self::ChartDataFromDefCategory($AllData, 'gender', $GenderId);
+        return view('AppPlugin.CrmLeads.report')->with([
+            'pageData' => $pageData,
+            'AllData' => $AllData,
+            'chartData' => $chartData,
+            'rowData' => $rowData,
+        ]);
+
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -295,14 +343,14 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->icon = "fas fa-random";
         $subMenu->save();
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmCustomer.Report.index|CrmCustomer.Report.filter";
-//        $subMenu->url = "admin.CrmCustomer.Report.index";
-//        $subMenu->name = "admin/crm/customers.app_menu_report";
-//        $subMenu->roleView = "crm_customer_view";
-//        $subMenu->icon = "fas fa-chart-pie";
-//        $subMenu->save();
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "CrmLeads.report|CrmLeads.filterReport";
+        $subMenu->url = "admin.CrmLeads.report";
+        $subMenu->name = "admin/crm/leads.app_menu_report";
+        $subMenu->roleView = "crm_leads_report";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
 
     }
 

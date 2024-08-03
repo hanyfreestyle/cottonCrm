@@ -22,7 +22,7 @@
             <th class="tdc {{$res}}"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
         @endcan
     @elseif($type == 'selectAll')
-        <th class="tdc {{$res}}"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
+        <th class="td_action"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
     @endif
 @elseif($po == 'button')
     @if($type == 'edit')
