@@ -8,6 +8,11 @@ return
 	'app_menu_distribution' => 'Distribution Leads',
 	'box_customer_data' => '',
 	'but_add_ticket' => '',
+	'but_add_to_user' => '',
+	'distribution_err_user' => '',
 	'model_title' => '',
 	't_cust_name' => '',
+	'distribution_err_req' => '',
+	'distribution_err_min' => '',
+	'distribution_err_max' => '',
 ];

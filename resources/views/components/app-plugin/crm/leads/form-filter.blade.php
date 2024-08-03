@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="row">
-                        @if($Config['addCountry'])
+                        @if(IsConfig($Config,'addCountry'))
                             @if(File::isFile(base_path('routes/AppPlugin/data/country.php')) )
                                 @if($config['OneCountry'] == false )
                                     <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="3" :labelview="false"

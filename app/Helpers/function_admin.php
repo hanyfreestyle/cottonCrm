@@ -88,18 +88,6 @@ if (!function_exists('IsArr')) {
         return $SendVal;
     }
 }
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('IsConfig')) {
-    function IsConfig($Arr, $Name, $DefVall = false) {
-        if (isset($Arr[$Name])) {
-            $SendVal = $Arr[$Name];
-        } else {
-            $SendVal = $DefVall;
-        }
-        return $SendVal;
-    }
-}
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  issetArr
@@ -273,15 +261,6 @@ if (!function_exists('AdminActiveMenu')) {
             }
 
         }
-    }
-}
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('PrintDate')) {
-    function PrintDate($date,$format="Y-m-d") {
-        $dateValue = Carbon::parse($date)->format($format);
-        return $dateValue;
     }
 }
 

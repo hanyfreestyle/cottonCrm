@@ -9,12 +9,13 @@ use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
 use App\AppPlugin\Crm\Leads\Request\CreateTicketRequest;
+use App\AppPlugin\Crm\Leads\Request\DistributiontRequest;
 use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\View;
 class CrmLeadsController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
+    use CrmTicketsConfigTraits;
 
     function __construct() {
         parent::__construct();
@@ -54,12 +56,15 @@ class CrmLeadsController extends AdminMainController {
         self::loadConstructData($sendArr);
 
         $Per_Add = ['AddNew', 'searchFilter', 'addTicket', 'CreateTicket'];
-        $Per_edit = ['editTicket'];
+        $Per_Edit = ['editTicket'];
+        $Per_Delete = ['destroy'];
         $Per_distribution = ['DistributionIndex'];
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
         $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $Per_distribution]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_edit,$Per_distribution)]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_Edit, $Per_Delete, $Per_distribution)]);
 
     }
 
@@ -114,6 +119,7 @@ class CrmLeadsController extends AdminMainController {
             'customer' => $customer,
             'ticketInfo' => $ticketInfo,
             'form_route' => '.createTicket',
+            'followDate' => null,
         ]);
     }
 
@@ -150,7 +156,6 @@ class CrmLeadsController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function editTicket($id) {
-
         $pageData = $this->pageData;
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
@@ -166,30 +171,9 @@ class CrmLeadsController extends AdminMainController {
             'customer' => $customer,
             'ticketInfo' => $ticketInfo,
             'form_route' => '.updateTicket',
+            'followDate' => PrintDate($ticketInfo->follow_date),
         ]);
     }
-
-    public function ViewInfo($id) {
-
-        $pageData = $this->pageData;
-        $this->defLang = "admin/crm/customers.";
-        View::share('defLang', $this->defLang);
-        $pageData['ViewType'] = "Edit";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-        $pageData['SubView'] = false;
-        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
-
-//        dd($ticketInfo->customer->address->first()->area_id);
-        return view('AppPlugin.CrmLeads.view_info_ticket')->with([
-            'pageData' => $pageData,
-
-            'row' => $ticketInfo,
-
-        ]);
-    }
-
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -225,10 +209,8 @@ class CrmLeadsController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-        $Data = self::LeadsDataFilterQ(self::indexQuery(), $session);
+        $Data = self::TicketFilterQuery(self::indexQuery(), $session);
         $rowData = $Data->paginate(30);
-//        dd($rowData);
-//        dd($Data->first());
 
         return view('AppPlugin.CrmLeads.distribution')->with([
             'pageData' => $pageData,
@@ -249,72 +231,18 @@ class CrmLeadsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function LeadsDataFilterQ($query, $session, $order = null) {
+    public function AddToUser(DistributiontRequest $request) {
 
-        if (isset($session['from_date']) and $session['from_date'] != null) {
-            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        if ($request->input('ids') and is_array($request->input('ids'))) {
+            $ticketIds = $request->input('ids');
+            $Tickets = CrmTickets::query()->defNew()->wherein('id', $ticketIds)->get();
+            foreach ($Tickets as $ticket) {
+                $ticket->user_id = $request->input('user_id');
+                $ticket->save();
+            }
         }
-
-        if (isset($session['from_date']) and $session['from_date'] != null) {
-            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
-        }
-
-        if (isset($session['to_date']) and $session['to_date'] != null) {
-            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
-        }
-
-        if (isset($session['follow_from']) and $session['follow_from'] != null) {
-            $query->whereDate('follow_date', '>=', Carbon::createFromFormat('Y-m-d', $session['follow_from']));
-        }
-
-        if (isset($session['follow_to']) and $session['follow_to'] != null) {
-            $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
-        }
-
-        if (isset($session['sours_id']) and $session['sours_id'] != null) {
-            $query->where('sours_id', $session['sours_id']);
-        }
-        if (isset($session['ads_id']) and $session['ads_id'] != null) {
-            $query->where('ads_id', $session['ads_id']);
-        }
-        if (isset($session['device_id']) and $session['device_id'] != null) {
-            $query->where('device_id', $session['device_id']);
-        }
-        if (isset($session['brand_id']) and $session['brand_id'] != null) {
-            $query->where('brand_id', $session['brand_id']);
-        }
-
-
-        if (isset($session['country_id']) and $session['country_id'] != null) {
-            $keyword = $session['country_id'];
-            $query->whereHas('customer.address', function ($query) use ($keyword) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('country_id', $keyword);
-                });
-            });
-        }
-
-        if (isset($session['city_id']) and $session['city_id'] != null) {
-            $keyword = $session['city_id'];
-            $query->whereHas('customer.address', function ($query) use ($keyword) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('city_id', $keyword);
-                });
-            });
-        }
-
-        if (isset($session['area_id']) and $session['area_id'] != null) {
-            $keyword = $session['area_id'];
-            $query->whereHas('customer.address', function ($query) use ($keyword) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('area_id', $keyword);
-                });
-            });
-        }
-
-        return $query;
+        return back()->with('confirmDone', "");
     }
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -376,6 +304,24 @@ class CrmLeadsController extends AdminMainController {
 //        $subMenu->icon = "fas fa-chart-pie";
 //        $subMenu->save();
 
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ViewInfo($id) {
+
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
+        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
+
+        return view('AppPlugin.CrmLeads.view_info_ticket')->with([
+            'pageData' => $pageData,
+            'row' => $ticketInfo,
+        ]);
     }
 
 }

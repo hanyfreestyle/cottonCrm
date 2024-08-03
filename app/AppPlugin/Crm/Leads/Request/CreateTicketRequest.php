@@ -2,8 +2,7 @@
 
 namespace App\AppPlugin\Crm\Leads\Request;
 
-
-use App\AppPlugin\Crm\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
@@ -14,9 +13,7 @@ class CreateTicketRequest extends FormRequest {
     }
 
     public function rules(Request $request): array {
-
-        $Config = CrmLeadsConfigTraits::defConfig();
-
+        $Config = CrmTicketsConfigTraits::defConfig();
 
         $rules = [
             'follow_date'=> "required|date_format:Y-m-d|after_or_equal:today",

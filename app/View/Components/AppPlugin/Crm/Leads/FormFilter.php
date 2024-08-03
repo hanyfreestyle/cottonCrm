@@ -33,7 +33,7 @@ class FormFilter extends Component {
         $this->getSessionData = Session::get($this->formName);
 
         if (issetArr($config, 'OneCountry')) {
-            $this->cityList = City::where('country_id', intval($config['defCountryId']))->get();
+            $this->cityList = City::where('country_id', intval($config['defCountryId']))->with('translation')->get();
         } else {
             if (isset($this->getSessionData['country_id']) and intval($this->getSessionData['country_id']) > 0) {
                 $this->cityList = City::where('country_id', intval($this->getSessionData['country_id']))->get();
@@ -44,7 +44,7 @@ class FormFilter extends Component {
 
 
         if (isset($this->getSessionData['city_id']) and intval($this->getSessionData['city_id']) > 0) {
-            $this->areaList = Area::where('city_id', intval($this->getSessionData['city_id']))->get();
+            $this->areaList = Area::where('city_id', intval($this->getSessionData['city_id']))->with('translation')->get();
         } else {
             $this->areaList = $areaList;
         }

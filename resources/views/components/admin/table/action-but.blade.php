@@ -21,6 +21,8 @@
         @can($PrefixRole.'_delete')
             <th class="tdc {{$res}}"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
         @endcan
+    @elseif($type == 'selectAll')
+        <th class="tdc {{$res}}"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
     @endif
 @elseif($po == 'button')
     @if($type == 'edit')
@@ -90,6 +92,9 @@
                 <x-admin.form.action-button url="{{route($PrefixRoute.'.addTicket',$row->id)}}" type="addTicket"/>
             </td>
         @endcan
+
+    @elseif($type == 'selectAll')
+        <td class="tdc"><input type="checkbox" name="ids[]"  @if(in_array($row->id, old('ids') ?? [])) checked @endif value="{{$row->id}}" class=""></td>
     @endif
 
 @endif

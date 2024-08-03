@@ -15,7 +15,7 @@ class UserSelect extends Component {
     public $label;
     public $req;
     public $col;
-    public $option_4;
+    public $labelview;
     public $option_5;
     public $option_6;
     public $option_7;
@@ -25,7 +25,7 @@ class UserSelect extends Component {
         $row = array(),
         $req = true,
         $col = '3',
-        $option_4 = null,
+        $labelview = true,
         $option_5 = null,
         $option_6 = null,
         $option_7 = null,
@@ -44,7 +44,7 @@ class UserSelect extends Component {
 
 
         $this->col = $col;
-        $this->option_4 = $option_4;
+        $this->labelview = $labelview;
         $this->option_5 = $option_5;
         $this->option_6 = $option_6;
         $this->option_7 = $option_7;
