@@ -1,7 +1,11 @@
 @if($btype == 'Edit')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit' :tip="false" />
+    <x-admin.form.action-button url='{{route($PrefixRoute.".edit",$row->id)}}' type='edit' :tip="false"/>
 @elseif($btype == 'Profile')
     <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile' :tip="false"/>
+@elseif($btype == 'viewTicket')
+    <x-admin.form.action-button url='{{route($PrefixRoute.".viewTicket",$row->id)}}' type='viewTicket' :tip="false"/>
+@elseif($btype == 'changeUser')
+    <x-admin.form.action-button url='{{route($PrefixRoute.".changeUser",$row->id)}}' type='changeUser' :tip="false"/>
 @elseif($btype == 'AddRelease')
     <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease' :tip="false"/>
 @elseif($btype == 'ListRelease')
@@ -13,6 +17,11 @@
 @elseif($btype == 'Delete')
     <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm">
         <i class="fas fa-trash"></i> <span class="tipName"> {{__('admin/form.button_delete')}}</span></a>
+@elseif($btype == 'viewInfo')
+{{--    <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal_{{$row->id}}"><i class="fas fa-eye"></i></button>--}}
+<button type='button' class='btn btn-sm btn-dark' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
+<x-app-plugin.crm.leads.popup-lead-info :id="$row->id" :config="$Config" :row="$row"/>
+
 @elseif($btype == 'addLang')
     @if(!isset($row->translate('ar')->name))
         <x-admin.form.action-button url="{{route($PrefixRoute.'.editAr',$row->id)}}" icon="fa-solid fa-globe" :tip="true"

@@ -4,18 +4,12 @@ namespace App\AppPlugin\Crm\Tickets;
 
 use App\AppCore\Menu\AdminMenu;
 
-
-use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
-use Jenssegers\Agent\Agent;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -27,7 +21,7 @@ class CrmTicketFollowUpController extends AdminMainController {
     function __construct() {
         parent::__construct();
         $this->controllerName = "TicketFollowUp";
-        $this->PrefixRole = 'crm_customer';
+        $this->PrefixRole = 'crm_ticket';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
         $this->defLang = "admin/crm/customers.";
@@ -61,24 +55,104 @@ class CrmTicketFollowUpController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-        $pageData['SubView'] = false;
 
-        if (Route::currentRouteName() == $this->PrefixRoute . '.archived') {
-            $route = '.DataTableArchived';
-        } else {
-            $route = '.DataTable';
+
+        $session = self::getSessionData($request);
+        $RouteName = Route::currentRouteName();
+
+        if ($RouteName == $this->PrefixRoute . '.New') {
+            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
+            $pageData['IconPage'] = 'fa-eye';
+            $RouteVal = "New";
+
+        } elseif ($RouteName == $this->PrefixRoute . '.Today') {
+            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_today');
+            $pageData['IconPage'] = 'fa-bell';
+            $RouteVal = "Today";
+
+        } elseif ($RouteName == $this->PrefixRoute . '.Back') {
+            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_back');
+            $pageData['IconPage'] = 'fa-thumbs-down';
+            $RouteVal = "Back";
+
+        } elseif ($RouteName == $this->PrefixRoute . '.Next') {
+            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_next');
+            $pageData['IconPage'] = 'fa-history';
+            $RouteVal = "Next";
         }
 
-//        $session = self::getSessionData($request);
-//        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+        $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($RouteVal, $this->PrefixRole), $session);
+        $rowData = $rowData->get();
 
-//      dd($rowData->first());
 
         return view('AppPlugin.CrmTickets.index_follow_up')->with([
             'pageData' => $pageData,
+            'RouteVal' => $RouteVal,
 //            'rowData' => $rowData,
         ]);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request, $view) {
+        if ($request->ajax()) {
+            $session = self::getSessionData($request);
+//            $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+            $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($view, $this->PrefixRole), $session);
+            return self::DataTableColumns($rowData)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTableColumns($data, $arr = array()) {
+        return DataTables::eloquent($data)
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->created_at)),
+                    'timestamp' => strtotime($row->created_at)
+                ];
+            })
+            ->editColumn('follow_date', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->follow_date)),
+                    'timestamp' => strtotime($row->follow_date)
+                ];
+            })
+            ->editColumn('name', function ($row) {
+                return $row->customer->name;
+            })
+            ->editColumn('mobile', function ($row) {
+                return $row->customer->mobile;
+            })
+            ->editColumn('user_name', function ($row) {
+                return $row->user->name;
+            })
+            ->editColumn('area', function ($row) {
+                return $row->customer->address->first()->area->name;
+            })
+            ->editColumn('device', function ($row) {
+                return $row->device_name->name;
+            })
+            ->editColumn('follow_state', function ($row) {
+                return LoadConfigName($this->DefCat['TicketState'], $row->follow_state);
+            })
+            ->editColumn('viewTicket', function ($row) {
+                return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
+            })
+            ->editColumn('changeUser', function ($row) {
+                return view('datatable.but')->with(['btype' => 'changeUser', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->editColumn('viewInfo', function ($row) {
+                return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
+            })
+            ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo']);
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -87,7 +161,7 @@ class CrmTicketFollowUpController extends AdminMainController {
         $table = "crm_ticket";
         $data = DB::table($table)
             ->where('state', 1)
-            ->where('user_id','!=',null)
+            ->where('user_id', '!=', null)
             ->leftJoin("crm_customers", function ($join) {
                 $join->on('crm_ticket.customer_id', '=', 'crm_customers.id');
             })
@@ -128,203 +202,6 @@ class CrmTicketFollowUpController extends AdminMainController {
 
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function DataTable(Request $request) {
-        if ($request->ajax()) {
-            $session = self::getSessionData($request);
-            $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
-            return self::DataTableColumns($rowData)->make(true);
-        }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function DataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
-            ->addIndexColumn()
-
-//            ->editColumn('name', function ($row) {
-//                return $row->customer->name ;
-//            })
-//
-//            ->editColumn('mobile', function ($row) {
-//                return $row->customer->mobile ;
-//            })
-//
-//            ->editColumn('area', function ($row) {
-////                return  LoadConfigName($this->CashAreaList,$row->customer->address->first()->area_id)  ;
-//                return  $row->customer->address->first()->area->name ;
-//            })
-
-
-
-            //            ->editColumn('Profile', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
-//            })
-//            ->editColumn('Edit', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-//            })
-//            ->editColumn('Delete', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-//            })
-            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
-    }
-
-
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
-//        $saveData = CrmCustomers::findOrNew($id);
-//        try {
-//            DB::transaction(function () use ($request, $saveData) {
-//
-//                $saveData = self::saveDefField($saveData, $request);
-//                $saveData->save();
-//
-//                if ($this->Config['addCountry']) {
-//                    $addressId = intval($request->input('address_id'));
-//                    if ($addressId == 0) {
-//                        $saveAddress = new CrmCustomersAddress();
-//                        $saveAddress->is_default = true;
-//                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-//                        if ($saveAddress->country_id == null) {
-//                            $saveAddress->country_id = Country::where('iso2', $request->input('countryCode_mobile'))->first()->id;
-//                        }
-//                        $saveAddress->save();
-//                    } else {
-//                        $saveAddress = CrmCustomersAddress::query()->where('id', $addressId)->firstOrFail();
-//                        $saveAddress = self::saveAddressField($saveAddress, $saveData, $request);
-//                        $saveAddress->save();
-//                    }
-//                }
-//
-//            });
-//        } catch (\Exception $exception) {
-//            return back()->with('data_not_save', "");
-//        }
-//
-//        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function indexQuery() {
-//
-//        $table = "crm_customers";
-//        $table_address = "crm_customers_address";
-//        $dataTable = 'config_data_translations';
-//        $data = DB::table($table)
-//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-//            ->where($table_address . '.is_default', true)
-//            ->leftJoin("config_data_translations", function ($join) {
-//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
-//                $join->where('config_data_translations.locale', '=', 'ar');
-//            })
-//            ->select("$table.id as id",
-//                "$table.name  as name",
-//                "$table.mobile  as mobile",
-//                "$table.mobile_code  as flag",
-//                "$table.whatsapp  as whatsapp",
-//                "$table.evaluation_id  as evaluation_id",
-//                "$table_address.country_id as country_id",
-//                "$table_address.city_id as city_id",
-//                "$table_address.area_id as area_id",
-//                "$dataTable.name as evaluation",
-//            );
-//        return $data;
-//
-//
-//    }
-//
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function CustomerDataFilterQ($query, $session, $order = null) {
-//
-//        if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
-//            $query->where('evaluation_id', $session['evaluation_id']);
-//        }
-//
-//        if (isset($session['gender_id']) and $session['gender_id'] != null) {
-//            $query->where('gender_id', $session['gender_id']);
-//        }
-//
-//        if (isset($session['country_id']) and $session['country_id'] != null) {
-//            $query->where('country_id', $session['country_id']);
-//        }
-//
-//        if (isset($session['city_id']) and $session['city_id'] != null) {
-//            $query->where('city_id', $session['city_id']);
-//        }
-//
-//        if (isset($session['area_id']) and $session['area_id'] != null) {
-//            $query->where('area_id', $session['area_id']);
-//        }
-//
-//        return $query;
-//    }
-//
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function saveDefField($saveData, $request) {
-//        $saveData->evaluation_id = $request->input('evaluation_id');
-//        $saveData->gender_id = $request->input('gender_id');
-//
-//        $saveData->name = $request->input('name');
-//        $saveData->mobile = $request->input('mobile');
-//        $saveData->mobile_code = $request->input('countryCode_mobile');
-//
-//        $saveData->mobile_2 = $request->input('mobile_2');
-//        if ($request->input('mobile_2')) {
-//            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-//        }
-//
-//        $saveData->phone = $request->input('phone');
-//        if ($request->input('phone')) {
-//            $saveData->phone_code = $request->input('countryCode_phone');
-//        }
-//
-//        $saveData->whatsapp = $request->input('whatsapp');
-//        if ($request->input('whatsapp')) {
-//            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-//        }
-//
-//        $saveData->email = $request->input('email');
-//        $saveData->notes = $request->input('notes');
-//
-//        return $saveData;
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function saveAddressField($saveAddress, $saveData, $request) {
-//        $saveAddress->uuid = Str::uuid()->toString();
-//        $saveAddress->customer_id = $saveData->id;
-//
-//        $saveAddress->country_id = $request->input('country_id');
-//        $saveAddress->city_id = $request->input('city_id');
-//        $saveAddress->area_id = $request->input('area_id');
-//
-//        $saveAddress->address = $request->input('address');
-//        $saveAddress->floor = $request->input('floor');
-//        $saveAddress->post_code = $request->input('post_code');
-//        $saveAddress->unit_num = $request->input('unit_num');
-//        $saveAddress->latitude = $request->input('latitude');
-//        $saveAddress->longitude = $request->input('longitude');
-//
-//        return $saveAddress;
-//    }
-//
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function ForceDeleteException($id) {

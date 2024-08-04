@@ -24,7 +24,7 @@ trait CrmFunTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
-//            CrmTicketFollowUpController::AdminMenu();
+            CrmTicketFollowUpController::AdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'))) {
@@ -111,6 +111,8 @@ trait CrmFunTraits {
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+                ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
+                ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],
             ];
             $data = array_merge($data, $newPer);
         }

@@ -71,6 +71,23 @@ class ActionButton extends Component {
                     $this->printLable = __('admin/form.button_profile');
                     break;
 
+                case 'changeUser':
+                    $this->icon = 'fas fa-people-arrows';
+                    $this->bg = getBgColor('w');
+                    $this->printLable = __('admin/form.button_profile');
+                    break;
+
+                case 'viewTicket':
+                    $this->icon = 'fas fa-search';
+                    $this->bg = getBgColor('p');
+                    $this->printLable = __('admin/form.button_profile');
+                    break;
+
+
+
+
+
+
                 case 'addTicket':
                     $this->icon = 'fas fa-tags';
                     $this->bg = getBgColor('p');

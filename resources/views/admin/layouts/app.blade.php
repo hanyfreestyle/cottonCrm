@@ -31,7 +31,7 @@
     @if( thisCurrentLocale() == 'ar')
         <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/adminlte-rtl.css') }}">
         <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/custom.css') }}">
-        <link rel="stylesheet" href="{{ defAdminAssets('css/custom_ar.css') }}">
+        {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_ar.css','Seo',true) !!}
         {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/chart.css','Seo',true) !!}
     @elseif( thisCurrentLocale() == 'en')
         <link rel="stylesheet" href="{{ defAdminAssets('css/custom_en.css') }}">

@@ -13,25 +13,19 @@
                 <thead>
                 <tr>
                     <th class="all">#</th>
-                    <th class="all">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
-                    <th class="desktop">{{__($defLang.'form_name')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_date_add')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_date_follow')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_user_name')}}</th>
+                    <th class="all">{{__('admin/crm/ticket.t_customer_name')}}</th>
+                    <th class="all">{{__('admin/crm/ticket.t_customer_mobile')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_customer_area')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_device')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_ticket_state')}}</th>
 
-
-                    {{--                    @if($Config['list_evaluation'])--}}
-                    {{--                        <th class="desktop">{{__($defLang.'form_evaluation')}}</th>--}}
-                    {{--                    @endif--}}
-                    {{--                    <th class="all">{{__($defLang.'form_mobile')}}</th>--}}
-                    {{--                    <th class="desktop">{{__($defLang.'form_whatsapp')}}</th>--}}
-                    {{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
-                    {{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
-                    {{--                    <x-admin.table.action-but po="top" type="delete"/>--}}
-
-
+                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="delete"/>
+                    <x-admin.table.action-but po="top" type="edit"/>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -40,6 +34,8 @@
         </x-admin.card.normal>
 
     </x-admin.hmtl.section>
+
+
 @endsection
 
 @push('JsCode')
@@ -54,47 +50,61 @@
                 pageLength: {{$yajraPerPage}},
                 @include('datatable.lang')
 
-                ajax: "{{ route( $PrefixRoute.".DataTable") }}",
+                ajax: "{{ route( $PrefixRoute.".DataTable",$RouteVal) }}",
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false},
-                    {data: 'customers_name', name: 'crm_customers.name', orderable: true, searchable: true},
-                    {data: 'customers_mobile', name: 'crm_customers.mobile', orderable: true, searchable: true},
+                    {
+                        'name': 'created_at',
+                        'data': {
+                            '_': 'created_at.display',
+                            'sort': 'created_at.timestamp'
+                        }
+                    },
+                    {
+                        'name': 'follow_date',
+                        'data': {
+                            '_': 'follow_date.display',
+                            'sort': 'created_at.timestamp'
+                        }
+                    },
+
                     {data: 'user_name', name: 'user.name', orderable: true, searchable: true},
-                    {data: 'customers_area_name', name: 'data_area_translations.name', orderable: true, searchable: true},
-                    {data: 'device_name', name: 'config_data_translations.name', orderable: true, searchable: true},
-                    {data: 'notes_err', name: 'crm_ticket.notes_err', orderable: true, searchable: true},
-                    {data: 'notes', name: 'crm_ticket.notes', orderable: true, searchable: true},
+                    {data: 'name', name: 'customer.name', orderable: true, searchable: true},
+                    {data: 'mobile', name: 'customer.mobile', orderable: true, searchable: true},
+                    {data: 'area', name: 'area', orderable: false, searchable: false},
+                    {data: 'device', name: 'device_name.name', orderable: true, searchable: true},
+                    {data: 'follow_state', name: 'follow_state', orderable: false, searchable: false},
 
-                    {{--    @if($Config['list_evaluation'])--}}
-                    {{--{--}}
-                    {{--    data: 'evaluation', name: 'evaluation', orderable: true, searchable: false--}}
-                    {{--},--}}
-                    {{--    @endif--}}
+                    // {data: 'user_name', name: 'users.name', orderable: true, searchable: true},
+                    // {data: 'customers_area_name', name: 'data_area_translations.name', orderable: true, searchable: true},
+                    // {data: 'device_name', name: 'config_data_translations.name', orderable: true, searchable: true},
+                    // {data: 'notes_err', name: 'crm_ticket.notes_err', orderable: true, searchable: true},
+                    // {data: 'notes', name: 'crm_ticket.notes', orderable: true, searchable: true},
 
-                    {{--{--}}
-                    {{--    data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: "dir_leftX"--}}
-                    {{--},--}}
-                    {{--{data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true, className: "dir_leftX"},--}}
-
-
-                    {{--    @can($PrefixRole.'_edit')--}}
-                    {{--{--}}
-                    {{--    data: 'Profile', name: 'Profile', orderable: false, searchable: false, className: "text-center actionButView"--}}
-                    {{--},--}}
-                    {{--{--}}
-                    {{--    data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"--}}
-                    {{--},--}}
-                    {{--    @endcan--}}
-
-                    {{--    @can($PrefixRole.'_delete')--}}
-
-                    {{--{--}}
-                    {{--    data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"--}}
-                    {{--},--}}
-
-                    {{--@endcan--}}
+                        @can($PrefixRole.'_edit')
+                    {
+                        data: 'viewTicket', name: 'viewTicket', orderable: false, searchable: false, className: "text-center actionButView"
+                    },
+                    {
+                        data: 'changeUser', name: 'changeUser', orderable: false, searchable: false, className: "text-center actionButView"
+                    },
 
 
+                        @endcan
+
+                        @can($PrefixRole.'_delete')
+
+                    {
+                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
+                    },
+                        @endcan
+                        @can($PrefixRole.'_edit')
+                    {
+                        data: 'viewInfo', name: 'viewInfo', orderable: false, searchable: false, className: "text-center actionButView"
+                    },
+
+
+                    @endcan
                 ],
 
             });

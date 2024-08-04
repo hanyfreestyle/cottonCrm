@@ -83,7 +83,7 @@ class CrmTicketTechFollowController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::TicketFilterQuery(self::indexQuery($RouteVal), $session);
+        $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($RouteVal,$this->PrefixRole), $session);
         $rowData = $rowData->get();
 
         return view('AppPlugin.CrmTechFollow.index')->with([
@@ -93,40 +93,8 @@ class CrmTicketTechFollowController extends AdminMainController {
 
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function indexQuery($RouteVal) {
-        $data = self::FilterUserPer();
-        if ($RouteVal == "New") {
-            $data->where('follow_state', 1);
-        } elseif ($RouteVal == 'Today') {
-            $data->where('follow_date', '=', Carbon::today());
-        } elseif ($RouteVal == 'Back') {
-            $data->where('follow_date', '<', Carbon::today());
-        } elseif ($RouteVal == 'Next') {
-            $data->where('follow_date', '>', Carbon::today());
-        }
-        return $data;
-    }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function FilterUserPer() {
-        if (Auth::user()->hasPermissionTo('crm_tech_follow_admin')) {
-            $data = CrmTickets::defOpen();
-        } else {
-            if (Auth::user()->hasPermissionTo('crm_tech_follow_team_leader')) {
-                $thisUserId = [Auth::user()->id];
-                if (is_array(Auth::user()->crm_team)) {
-                    $thisUserId = array_merge($thisUserId, Auth::user()->crm_team);
-                }
-                $data = CrmTickets::defOpen()->WhereIn('user_id', $thisUserId);
-            } else {
-                $data = CrmTickets::defOpen()->where('user_id', Auth::user()->id);
-            }
-        }
-        return $data;
-    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -139,7 +107,7 @@ class CrmTicketTechFollowController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::TicketFilterQuery(self::FilterUserPer(), $session);
+        $rowData = self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $getData = $rowData->get();
 
         $deviceId = $getData->groupBy('device_id')->toarray();
@@ -159,9 +127,9 @@ class CrmTicketTechFollowController extends AdminMainController {
 
         $card = [];
         $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Today');
-        $card['back_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Back');
-        $card['next_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Next');
+        $card['today_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
         return view('AppPlugin.CrmTechFollow.report')->with([
             'pageData' => $pageData,
