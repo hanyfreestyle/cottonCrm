@@ -15,7 +15,6 @@ use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
-use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
@@ -266,8 +265,6 @@ class CrmLeadsController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
     public function report(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";

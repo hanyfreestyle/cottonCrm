@@ -5,7 +5,9 @@ namespace App\AppPlugin\Crm\TicketsTechFollow;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
+use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\View;
 
 class CrmTicketTechFollowController extends AdminMainController {
     use CrmTicketsConfigTraits;
+    use ReportFunTraits;
 
     function __construct() {
         parent::__construct();
@@ -38,6 +41,16 @@ class CrmTicketTechFollowController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
+
+
+        $Per_Edit = ['ViewTicket'];
+        $Per_report = ['Report'];
+        $Per_view = ['index'];
+
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $Per_report]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge( $Per_view,$Per_Edit,$Per_report)]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -68,21 +81,10 @@ class CrmTicketTechFollowController extends AdminMainController {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_next');
             $pageData['IconPage'] = 'fa-history';
             $RouteVal = "Next";
-
         }
 
         $rowData = self::TicketFilterQuery(self::indexQuery($RouteVal), $session);
         $rowData = $rowData->get();
-
-//        foreach ($rowData as $row){
-//            $diff_h = Carbon::parse($row->follow_date)->diff(Carbon::now());
-//            $diff = Carbon::parse($row->follow_date)->diffForHumans(Carbon::now());
-//            if($diff_h->d > 0){
-//                echobr($diff);
-//            }
-//
-//            echoPrintR($diff_h);
-//        }
 
         return view('AppPlugin.CrmTechFollow.index')->with([
             'pageData' => $pageData,
@@ -94,7 +96,22 @@ class CrmTicketTechFollowController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexQuery($RouteVal) {
+        $data = self::FilterUserPer();
+        if ($RouteVal == "New") {
+            $data->where('follow_state', 1);
+        } elseif ($RouteVal == 'Today') {
+            $data->where('follow_date', '=', Carbon::today());
+        } elseif ($RouteVal == 'Back') {
+            $data->where('follow_date', '<', Carbon::today());
+        } elseif ($RouteVal == 'Next') {
+            $data->where('follow_date', '>', Carbon::today());
+        }
+        return $data;
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function FilterUserPer() {
         if (Auth::user()->hasPermissionTo('crm_tech_follow_admin')) {
             $data = CrmTickets::defOpen();
         } else {
@@ -108,18 +125,65 @@ class CrmTicketTechFollowController extends AdminMainController {
                 $data = CrmTickets::defOpen()->where('user_id', Auth::user()->id);
             }
         }
-
-        if ($RouteVal == "New") {
-            $data->where('follow_state', 1);
-        } elseif ($RouteVal == 'Today') {
-            $data->where('follow_date', '=', Carbon::today());
-        } elseif ($RouteVal == 'Back') {
-            $data->where('follow_date', '<', Carbon::today());
-        } elseif ($RouteVal == 'Next') {
-            $data->where('follow_date', '>', Carbon::today());
-        }
-
         return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function report(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $chartData = array();
+
+        $this->formName = "CrmDistributionReportFilter";
+        View::share('formName', $this->formName);
+
+        $session = self::getSessionData($request);
+        $rowData = self::TicketFilterQuery(self::FilterUserPer(), $session);
+        $getData = $rowData->get();
+
+        $deviceId = $getData->groupBy('device_id')->toarray();
+        $userId = $getData->groupBy('user_id')->toarray();
+        $brandId = $getData->groupBy('brand_id')->toarray();
+        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+        $follow_state = $getData->groupBy('follow_state')->toarray();
+
+//      dd($follow_state);
+
+        $AllData = $rowData->count();
+        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
+        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
+        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+        $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
+        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'TicketState', $follow_state);
+
+        $card = [];
+        $card['all_count'] = $AllData;
+        $card['today_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Today');
+        $card['back_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Back');
+        $card['next_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer(), $session), 'Next');
+
+        return view('AppPlugin.CrmTechFollow.report')->with([
+            'pageData' => $pageData,
+            'AllData' => $AllData,
+            'chartData' => $chartData,
+            'rowData' => $rowData,
+            'card' => $card,
+        ]);
+
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CountData($data, $RouteVal) {
+        if ($RouteVal == "Today") {
+            $count = $data->where('follow_date', '=', Carbon::today())->count();
+        } elseif ($RouteVal == 'Back') {
+            $count = $data->where('follow_date', '<', Carbon::today())->count();
+        } elseif ($RouteVal == 'Next') {
+            $count = $data->where('follow_date', '>', Carbon::today())->count();
+        }
+        return $count;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -170,6 +234,16 @@ class CrmTicketTechFollowController extends AdminMainController {
         $subMenu->roleView = "crm_tech_follow_view";
         $subMenu->icon = "fas fa-history";
         $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "TechFollowUp.Report";
+        $subMenu->url = "admin.TechFollowUp.Report";
+        $subMenu->name = "admin/crm/ticket.app_menu_report";
+        $subMenu->roleView = "crm_tech_follow_report";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
+
 
     }
 

@@ -11,6 +11,7 @@ return
 	'but_call' => 'اتصال',
 	'but_update' => 'تحديث',
 	'but_whatsapp' => 'وتس اب',
+	'but_whatsapp_mass' => 'مساء الخير',
 	'filter_date_from' => 'تاريخ الاضافة من',
 	'filter_date_to' => 'تاريخ الاضافة الى',
 	'filter_follow_from' => 'تاريخ المتابعة من',
@@ -37,5 +38,5 @@ return
 	'var_ticket_state_5' => 'الغاء',
 	'var_ticket_state_6' => 'رفض',
 	'var_ticket_state_7' => 'رفض',
-	'but_whatsapp_mass' => 'مساء الخير',
+	'app_menu_report' => 'تقارير',
 ];

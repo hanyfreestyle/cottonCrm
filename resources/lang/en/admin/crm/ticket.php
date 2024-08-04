@@ -11,6 +11,7 @@ return
 	'but_call' => '',
 	'but_update' => '',
 	'but_whatsapp' => '',
+	'but_whatsapp_mass' => '',
 	'filter_date_from' => '',
 	'filter_date_to' => '',
 	'filter_follow_from' => '',
@@ -37,5 +38,5 @@ return
 	'var_ticket_state_5' => '',
 	'var_ticket_state_6' => '',
 	'var_ticket_state_7' => '',
-	'but_whatsapp_mass' => '',
+	'app_menu_report' => '',
 ];

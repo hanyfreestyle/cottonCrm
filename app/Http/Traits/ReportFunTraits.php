@@ -4,6 +4,7 @@ namespace App\Http\Traits;
 
 
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
+use App\Models\User;
 use mysql_xdevapi\Collection;
 
 trait ReportFunTraits {
@@ -11,7 +12,16 @@ trait ReportFunTraits {
     use DefCategoryTraits;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ChartDataFromUsers($AllData, $selectDataId, $limit = 15) {
+        $selectDataIdKey = array_keys($selectDataId);
+        $getSoursData = User::query()->whereIn('id', $selectDataIdKey)->get();
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
+        return $sendArr;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ChartDataFromModel($AllData, $Model, $selectDataId, $limit = 15) {
 
         $selectDataIdKey = array_keys($selectDataId);
@@ -27,13 +37,13 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function ChartDataFromGroup($AllData, $selectDataId,$addName = null, $limit = 20) {
-        $sendArr = self::LoopForGetDataSoft($AllData, $selectDataId,$addName, $limit);
+    public function ChartDataFromGroup($AllData, $selectDataId, $addName = null, $limit = 20) {
+        $sendArr = self::LoopForGetDataSoft($AllData, $selectDataId, $addName, $limit);
         return $sendArr;
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function  LoopForGetDataSoft($AllData, $selectDataId,$addName, $limit) {
+    public function LoopForGetDataSoft($AllData, $selectDataId, $addName, $limit) {
         $countAllData = $AllData;
         $sendArr = [];
         $countData = 0;
@@ -45,7 +55,7 @@ trait ReportFunTraits {
         foreach ($selectDataId as $key => $value) {
             $persent = round((count($value) / $countAllData) * 100) . "%";
             $arr = [
-                'name' => "(" . count($value) . ") " .$addName ." ". $key . " " . $persent,
+                'name' => "(" . count($value) . ") " . $addName . " " . $key . " " . $persent,
                 'count' => count($value)
             ];
             $countData = $countData + count($value);
@@ -118,7 +128,7 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function  LoopForGetData($AllData, $getSoursData, $selectDataId, $limit) {
+    public function LoopForGetData($AllData, $getSoursData, $selectDataId, $limit) {
         $countAllData = $AllData;
         $sendArr = [];
         $countData = 0;
@@ -129,7 +139,7 @@ trait ReportFunTraits {
 
         foreach ($selectDataId as $key => $value) {
 
-            $name = $getSoursData->where('id', $key)->first()->name ?? '' ;
+            $name = $getSoursData->where('id', $key)->first()->name ?? '';
 
             $persent = round((count($value) / $countAllData) * 100) . "%";
             $arr = [
@@ -178,7 +188,6 @@ trait ReportFunTraits {
 
         return $sendArr;
     }
-
 
 
 }

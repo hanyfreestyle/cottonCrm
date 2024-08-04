@@ -106,8 +106,8 @@ trait CrmFunTraits {
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
             $newPer = [
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+                ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_filter', 'name_ar' => 'تصفية النتائج', 'name_en' => 'Filter'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
                 ['cat_id' => 'crm_ticket', 'name' => 'crm_ticket_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
@@ -118,8 +118,8 @@ trait CrmFunTraits {
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'))) {
             $newPer = [
                 ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
                 ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_filter', 'name_ar' => 'تصفية النتائج', 'name_en' => 'Filter'],
                 ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
                 ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],

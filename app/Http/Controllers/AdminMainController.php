@@ -56,6 +56,7 @@ class AdminMainController extends DefaultMainController {
             "crm_customer" => ['name' => __('admin/crm/customers.app_menu')],
             "crm_leads" => ['name' => __('admin/crm/leads.app_menu')],
             "crm_ticket" => ['name' => __('admin/crm/ticket.app_menu')],
+            "crm_tech_follow" => ['name' => __('admin/crm/ticket.app_menu_teck_follow')],
 
         ];
 
