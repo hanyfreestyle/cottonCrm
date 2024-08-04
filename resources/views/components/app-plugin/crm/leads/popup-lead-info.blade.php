@@ -8,9 +8,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body leadInfo">
+                <div class="modal-body leadInfo InfoViewList">
                     <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-                    <x-app-plugin.crm.leads.lead-info :add-title="true"  :row="$row"/>
+                    <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{__('admin/form.button_close')}}</button>

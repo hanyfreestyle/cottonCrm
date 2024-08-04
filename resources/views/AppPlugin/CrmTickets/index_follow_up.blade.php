@@ -13,19 +13,22 @@
                 <thead>
                 <tr>
                     <th class="all">#</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_date_add')}}</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_date_follow')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_add')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_follow')}}</th>
                     <th class="desktop">{{__('admin/crm/ticket.t_user_name')}}</th>
-                    <th class="all">{{__('admin/crm/ticket.t_customer_name')}}</th>
+                    <th class="desktop">{{__('admin/crm/ticket.t_customer_name')}}</th>
                     <th class="all">{{__('admin/crm/ticket.t_customer_mobile')}}</th>
                     <th class="desktop">{{__('admin/crm/ticket.t_customer_area')}}</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_device')}}</th>
+
                     <th class="desktop">{{__('admin/crm/ticket.t_ticket_state')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_device')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes_err')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes')}}</th>
 
                     <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top"  res="all" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
-                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" res="all" type="edit"/>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -41,6 +44,7 @@
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
     <x-admin.data-table.plugins-yajra :jscode="true"/>
+
     <script type="text/javascript">
         $(function () {
             $('#YajraDatatable').DataTable({
@@ -74,12 +78,8 @@
                     {data: 'area', name: 'area', orderable: false, searchable: false},
                     {data: 'device', name: 'device_name.name', orderable: true, searchable: true},
                     {data: 'follow_state', name: 'follow_state', orderable: false, searchable: false},
-
-                    // {data: 'user_name', name: 'users.name', orderable: true, searchable: true},
-                    // {data: 'customers_area_name', name: 'data_area_translations.name', orderable: true, searchable: true},
-                    // {data: 'device_name', name: 'config_data_translations.name', orderable: true, searchable: true},
-                    // {data: 'notes_err', name: 'crm_ticket.notes_err', orderable: true, searchable: true},
-                    // {data: 'notes', name: 'crm_ticket.notes', orderable: true, searchable: true},
+                    {data: 'notes_err', name: 'follow_state', orderable: false, searchable: false},
+                    {data: 'notes', name: 'follow_state', orderable: false, searchable: false},
 
                         @can($PrefixRole.'_edit')
                     {
@@ -88,23 +88,20 @@
                     {
                         data: 'changeUser', name: 'changeUser', orderable: false, searchable: false, className: "text-center actionButView"
                     },
-
-
                         @endcan
 
                         @can($PrefixRole.'_delete')
-
                     {
                         data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
                     },
                         @endcan
+
                         @can($PrefixRole.'_edit')
                     {
                         data: 'viewInfo', name: 'viewInfo', orderable: false, searchable: false, className: "text-center actionButView"
                     },
-
-
                     @endcan
+
                 ],
 
             });

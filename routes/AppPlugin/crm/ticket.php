@@ -13,7 +13,8 @@ Route::get('follow/DataTable/{view}', [CrmTicketFollowUpController::class, 'Data
 
 
 Route::get('/follow/view-ticket/{id}', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.viewTicket');
-Route::get('/follow/change-user/{id}', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.changeUser');
+Route::get('/follow/change-user/{id}', [CrmTicketFollowUpController::class, 'changeUser'])->name('TicketFollowUp.changeUser');
+Route::post('/follow/change-user/{id}', [CrmTicketFollowUpController::class, 'changeUserUpdate'])->name('TicketFollowUp.changeUserUpdate');
 Route::get('/follow/destroy-ticket/{id}', [CrmTicketFollowUpController::class, 'index'])->name('TicketFollowUp.destroy');
 
 //Route::post('/crm/customers/', [CrmTicketsController::class, 'index'])->name('CrmCustomer.filter');

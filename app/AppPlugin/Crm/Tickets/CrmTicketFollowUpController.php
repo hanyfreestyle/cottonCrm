@@ -4,11 +4,16 @@ namespace App\AppPlugin\Crm\Tickets;
 
 use App\AppCore\Menu\AdminMenu;
 
+use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
+use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\Tickets\Request\ChangeUserRequest;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -110,13 +115,13 @@ class CrmTicketFollowUpController extends AdminMainController {
             ->addIndexColumn()
             ->editColumn('created_at', function ($row) {
                 return [
-                    'display' => date("Y-m-d", strtotime($row->created_at)),
+                    'display' => date("Y-m-d", strtotime($row->created_at)) .''. TicketDateFrom($row->created_at).'',
                     'timestamp' => strtotime($row->created_at)
                 ];
             })
             ->editColumn('follow_date', function ($row) {
                 return [
-                    'display' => date("Y-m-d", strtotime($row->follow_date)),
+                    'display' => date("Y-m-d", strtotime($row->follow_date)) .''. TicketDateFrom($row->follow_date).'' ,
                     'timestamp' => strtotime($row->follow_date)
                 ];
             })
@@ -150,57 +155,55 @@ class CrmTicketFollowUpController extends AdminMainController {
             ->editColumn('viewInfo', function ($row) {
                 return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
             })
-            ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo']);
+            ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function changeUser($id) {
+        $previous = Route::getRoutes()->match(request()->create(url()->previousPath()))->getName();
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __('admin/crm/ticket.fr_change_but');
+        $rowData = CrmTickets::defOpen()->where('id', $id)->firstOrFail();
+        return view('AppPlugin.CrmTickets.form_change_user')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'previous' => $previous,
+        ]);
+
+    }
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function indexQuery() {
+    public function changeUserUpdate(Request $request, $id) {
 
-        $table = "crm_ticket";
-        $data = DB::table($table)
-            ->where('state', 1)
-            ->where('user_id', '!=', null)
-            ->leftJoin("crm_customers", function ($join) {
-                $join->on('crm_ticket.customer_id', '=', 'crm_customers.id');
-            })
-            ->leftJoin("crm_customers_address", function ($join) {
-                $join->on('crm_ticket.customer_id', '=', 'crm_customers_address.customer_id');
-                $join->where('crm_customers_address.is_default', '=', '1');
-            })
-            ->leftJoin("data_area_translations", function ($join) {
-                $join->on('data_area_translations.area_id', '=', 'crm_customers_address.area_id');
-                $join->where('data_area_translations.locale', '=', 'ar');
-            })
-            ->leftJoin("config_data_translations", function ($join) {
-                $join->on('crm_ticket.device_id', '=', 'config_data_translations.data_id');
-                $join->where('config_data_translations.locale', '=', 'ar');
-            })
-            ->leftJoin("users", function ($join) {
-                $join->on('crm_ticket.user_id', '=', 'users.id');
-            })
+        $saveData = CrmTickets::defOpen()->where('id', $id)->firstOrFail();
+        $saveData->user_id = $request->input('user_id');
 
-//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-//            ->where($table_address . '.is_default', true)
-//            ->leftJoin("config_data_translations", function ($join) {
-//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
-//                $join->where('config_data_translations.locale', '=', 'ar');
-//            })
-            ->select("$table.id as id",
-                "$table.follow_date  as date_follow",
-                "$table.created_at  as date_add",
-                "$table.notes_err  as notes_err",
-                "$table.notes  as notes",
-                "crm_customers.name  as customers_name",
-                "crm_customers.mobile  as customers_mobile",
-                "data_area_translations.name  as customers_area_name",
-                "config_data_translations.name  as device_name",
-                "users.name  as user_name",
-            );
-        return $data;
+        if(intval($request->input('user_id')) != 0){
+            $saveData->save();
+        }
+
+        if($this->agent->isDesktop()){
+            return back()->with('confirmDelete', "");
+        }else{
+            if ($saveData->follow_date == Carbon::today()) {
+                return redirect()->route($this->PrefixRoute . '.Today');
+            } elseif ($saveData->follow_date < Carbon::today()) {
+                return redirect()->route($this->PrefixRoute . '.Back');
+            } elseif ($saveData->follow_date > Carbon::today()) {
+                return redirect()->route($this->PrefixRoute . '.Next');
+            } else {
+                return back()->with('confirmDelete', "");
+            }
+        }
+
 
     }
+
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -266,5 +269,53 @@ class CrmTicketFollowUpController extends AdminMainController {
         $subMenu->save();
 
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery_DataTable() {
+        $table = "crm_ticket";
+        $data = DB::table($table)
+            ->where('state', 1)
+            ->where('user_id', '!=', null)
+            ->leftJoin("crm_customers", function ($join) {
+                $join->on('crm_ticket.customer_id', '=', 'crm_customers.id');
+            })
+            ->leftJoin("crm_customers_address", function ($join) {
+                $join->on('crm_ticket.customer_id', '=', 'crm_customers_address.customer_id');
+                $join->where('crm_customers_address.is_default', '=', '1');
+            })
+            ->leftJoin("data_area_translations", function ($join) {
+                $join->on('data_area_translations.area_id', '=', 'crm_customers_address.area_id');
+                $join->where('data_area_translations.locale', '=', 'ar');
+            })
+            ->leftJoin("config_data_translations", function ($join) {
+                $join->on('crm_ticket.device_id', '=', 'config_data_translations.data_id');
+                $join->where('config_data_translations.locale', '=', 'ar');
+            })
+            ->leftJoin("users", function ($join) {
+                $join->on('crm_ticket.user_id', '=', 'users.id');
+            })
+
+//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
+//            ->where($table_address . '.is_default', true)
+//            ->leftJoin("config_data_translations", function ($join) {
+//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
+//                $join->where('config_data_translations.locale', '=', 'ar');
+//            })
+            ->select("$table.id as id",
+                "$table.follow_date  as date_follow",
+                "$table.created_at  as date_add",
+                "$table.notes_err  as notes_err",
+                "$table.notes  as notes",
+                "crm_customers.name  as customers_name",
+                "crm_customers.mobile  as customers_mobile",
+                "data_area_translations.name  as customers_area_name",
+                "config_data_translations.name  as device_name",
+                "users.name  as user_name",
+            );
+        return $data;
+
+    }
+
 
 }

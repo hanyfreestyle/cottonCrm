@@ -14,6 +14,7 @@ class CardProfile extends Component {
     public $softData;
     public $defLang;
     public $addTitle;
+    public $viewList;
 
     public function __construct(
         $row = array(),
@@ -22,9 +23,11 @@ class CardProfile extends Component {
         $softData = false,
         $defLang = null,
         $addTitle = false,
+        $viewList = 'icon',
 
     ) {
         $this->row = $row;
+        $this->viewList = $viewList;
         $this->allData = $allData;
         $this->config = $config;
         $this->softData = $softData;

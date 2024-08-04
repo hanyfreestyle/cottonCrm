@@ -5,24 +5,31 @@
 @endif
 
 @if($softData)
+    {{--    {{$viewList}}--}}
     <div class="row">
-        <x-admin.hmtl.info-div :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="false"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_mobile')" :des="$row->mobile" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_mobile_2')" :des="$row->mobile_2" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_phone')" :des="$row->phone" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_whatsapp')" :des="$row->whatsapp" col="2" col-row="col-6" :all-data="false"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="false"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_mobile')" :des="$row->mobile" col="2" col-row="col-6" :all-data="false"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_mobile_2')" :des="$row->mobile_2" col="2" col-row="col-6" :all-data="false"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-phone-square" :t="__($defLang.'form_phone')" :des="$row->phone" col="2" col-row="col-6" :all-data="false"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-whatsapp" :t="__($defLang.'form_whatsapp')" :des="$row->whatsapp" col="2" col-row="col-6" :all-data="false"/>
     </div>
 
     @if(issetArr($config,'addCountry',false))
         @foreach($row->address as $address)
             <div class="row">
-                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="2" col-row="col-6" :all-data="$allData"/>
-                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="2" col-row="col-6" :all-data="$allData"/>
                 @if(issetArr($config,'fullAddress',false))
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_address')" :des="$address->address" col="4" col-row="col-12" :all-data="$allData"/>
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-4" :all-data="$allData"/>
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_floor')" :des="$address->floor" col="2" col-row="col-4" :all-data="$allData"/>
+                    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-hotel" :t="__($defLang.'form_ad_address')" :des="$address->address" col="4" col-row="col-12" :all-data="$allData"/>
+
+                    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-couch" :t="__($defLang.'form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-6"
+                                           :all-data="$allData"/>
+
+                    <x-admin.hmtl.info-div :sub-des="true"  i="fas fa-layer-group" :t="__($defLang.'form_ad_floor')" :des="$address->floor" col="2" col-row="col-6"
+                                           :all-data="$allData"/>
                 @endif
+                <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-flag" :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="2" col-row="col-6"
+                                       :all-data="$allData"/>
+                <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-map-pin" :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="2" col-row="col-6"
+                                       :all-data="$allData"/>
             </div>
         @endforeach
     @endif

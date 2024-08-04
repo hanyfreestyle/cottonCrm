@@ -17,7 +17,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control {
 table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before,
 table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
   top: 50%;
-  left: 5px;
+  left: 15px;
   height: 1em;
   width: 1em;
   margin-top: -9px;

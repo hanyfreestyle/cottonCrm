@@ -84,3 +84,15 @@ if (!function_exists('getColMobile')) {
         return $col;
     }
 }
+
+if (!function_exists('returnTableRes')) {
+    function returnTableRes($agent) {
+        if($agent->isDesktop()){
+            $res = 'not-desktop';
+        }else{
+            $res = 'desktop';
+        }
+
+        return $res ;
+    }
+}

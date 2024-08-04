@@ -117,6 +117,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
 }
 
 .infoDiv {
+
     margin-bottom: 10px;
 }
 
@@ -145,11 +146,15 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
     background-color: #494d4d;
     border-color: #494d4d;
     padding: 10px 12px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-radius: 3px;
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 23px;
+
+
 }
 
 .followUp_Card .card-header {
@@ -162,7 +167,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
 }
 
 .followUp_Card .bg-warning .username, .followUp_Card .bg-warning .description {
-    color: rgba(24,24,24, 1) !important;
+    color: rgba(24, 24, 24, 1) !important;
 }
 
 .followUp_Card .user-block .username {
@@ -210,4 +215,164 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
     color: red;
     color: rgba(102, 102, 102, 1);
 }
+
+
+.InfoViewList .h2_info {
+    font-size: 16px;
+    background-color: rgba(0, 123, 255, .7)!important;
+}
+
+.InfoViewList .h2_info.des {
+    font-size: 14px;
+}
+
+.InfoViewList .infoDiv_icon {
+    margin-bottom: 13px;
+
+}
+
+.InfoViewList .infoDiv_icon .des {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    color: rgba(102, 102, 102, .8);
+    text-align: right!important;
+
+}
+
+.InfoViewList .infoDiv_icon i {
+    color: rgba(204, 24, 30, .7);
+}
+
+.InfoViewList .infoDiv {
+
+}
+
+.InfoViewList .infoDiv .des {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+
+    color: rgba(102, 102, 102, .8);
+
+}
+
+.InfoViewList .infoDiv .title {
+
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+
+    color: rgba(204, 24, 30, .7);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+}
+
+.InfoViewList .infoDiv .title i {
+
+    color: rgba(204, 24, 30, .7);
+    font-size: 15px;
+
+}
+
+@media (max-width: 1366px) {
+
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+
+    margin-right: 0!important;
+
+}
+#YajraDatatable_info{
+    font-size: 13px;
+    padding-top: 3px!important;
+    margin-bottom: 8px;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    justify-content: left !important;
+}
+
+.paginate_button {
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    .InfoViewList .infoDiv_icon .des {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .InfoViewList .infoDiv .des {
+
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 28px
+
+    }
+    .InfoViewList .h2_info.des {
+        font-size: 12px;
+    }
+    #YajraDatatable_length{
+        display: none;
+
+    }
+
+    .InfoViewList .infoDiv_icon .des {
+
+       margin-bottom: 0!important;
+
+
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        max-width: 991px;
+    }
+}
+
+
+@media (min-width: 992px) {
+    table.dataTable > tbody > tr.child ul.dtr-details {
+        width:100% !important;
+        float: right;
+
+
+    }
+    table.dataTable > tbody > tr.child ul.dtr-details > li:first-child {
+        padding: .5em 0;
+    }
+
+    table.dataTable > tbody > tr.child ul.dtr-details li {
+        width:50% !important;
+        float: right;
+
+
+    }
+}
+
+
+.modal-header {
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: rgba(73, 77, 77, 1);
+}
+.modal-title {
+  font-size: 20px;
+}
+.close {
+    color: #fff;
+}
+.close:hover, .mailbox-attachment-close:hover {
+    color: #fff;
+}
+
+
+
+
+
+
 

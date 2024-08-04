@@ -83,5 +83,12 @@ body {
 
     text-align: right !important;
 }
+.InfoViewList .infoDiv_icon .des {
+    text-align: right!important;
+}
+
+.dtr-detailsdtr-details{
+    background-color: red;
+}
 
 
