@@ -9,11 +9,13 @@ class AppPuzzleTreeCrm {
 #|||||||||||||||||||||||||||||||||||||| #  ProductTree
     static function CrmTree() {
         $modelTree = [
+            'Periodicals' => self::treePeriodicals(),
             'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
             'CrmLeads' => self::treeCrmLeads(),
             'CrmTickets' => self::treeCrmTickets(),
-            'Periodicals' => self::treePeriodicals(),
+            'CrmTechFollow' => self::treeCrmTechFollow(),
+
         ];
         return $modelTree;
     }
@@ -89,12 +91,29 @@ class AppPuzzleTreeCrm {
             'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['ticket.php'],
-//            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
-//            'ComponentFolderView' => ['app-plugin/crm/customers'],
+            'ComponentFolderClass' => ['AppPlugin/Crm/Ticket'],
+            'ComponentFolderView' => ['app-plugin/crm/ticket'],
             'ClientFolder' => config('adminConfig.app_folder'),
 
         ];
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeCrmTechFollow() {
+        return [
+            'view' => true,
+            'id' => "CrmTechFollow",
+            'CopyFolder' => "Crm_TechFollow",
+            'appFolder' => 'Crm/TicketsTechFollow',
+            'viewFolder' => 'CrmTechFollow',
+            'routeFolder' => "crm/",
+            'routeFile' => 'ticket_tech_follow.php',
+        ];
+    }
+
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

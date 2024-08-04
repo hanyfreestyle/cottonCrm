@@ -2,11 +2,15 @@
 
 return
 [
-	'app_menu' => 'متابعة العملاء',
+	'app_menu' => 'ادارة التذاكر المفتوحة',
 	'app_menu_back' => 'متابعات لم تتم',
 	'app_menu_new' => 'عميل جديد',
 	'app_menu_next' => 'متابعات مؤجلة',
+	'app_menu_teck_follow' => 'متابعة العملاء',
 	'app_menu_today' => 'متابعات اليوم',
+	'but_call' => 'اتصال',
+	'but_update' => 'تحديث',
+	'but_whatsapp' => 'وتس اب',
 	'filter_date_from' => 'تاريخ الاضافة من',
 	'filter_date_to' => 'تاريخ الاضافة الى',
 	'filter_follow_from' => 'تاريخ المتابعة من',
@@ -27,4 +31,10 @@ return
 	'var_open_type_2' => 'زيارة مرتجع',
 	'var_ticket_state' => 'حالة التذكرة',
 	'var_ticket_state_1' => 'جديدة',
+	'var_ticket_state_2' => 'خالص',
+	'var_ticket_state_3' => 'متوقف على قطع غير',
+	'var_ticket_state_4' => 'مؤجله',
+	'var_ticket_state_5' => 'الغاء',
+	'var_ticket_state_6' => 'رفض',
+	'var_ticket_state_7' => 'رفض',
 ];

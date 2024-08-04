@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\Leads\CrmLeadsController;
 use App\AppPlugin\Crm\Periodicals\PeriodicalsController;
 use App\AppPlugin\Crm\Tickets\CrmTicketFollowUpController;
 use App\AppPlugin\Crm\Tickets\CrmTicketsController;
+use App\AppPlugin\Crm\TicketsTechFollow\CrmTicketTechFollowController;
 use Illuminate\Support\Facades\File;
 
 trait CrmFunTraits {
@@ -23,7 +24,11 @@ trait CrmFunTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
-            CrmTicketFollowUpController::AdminMenu();
+//            CrmTicketFollowUpController::AdminMenu();
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'))) {
+            CrmTicketTechFollowController::AdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
@@ -109,6 +114,20 @@ trait CrmFunTraits {
             ];
             $data = array_merge($data, $newPer);
         }
+
+        if (File::isFile(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'))) {
+            $newPer = [
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
+                ['cat_id' => 'crm_tech_follow', 'name' => 'crm_tech_follow_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],
+            ];
+            $data = array_merge($data, $newPer);
+        }
+
+
         return $data;
     }
 

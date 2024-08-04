@@ -23,6 +23,24 @@ if (!function_exists('PrintDate')) {
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('PrintDateFrom')) {
+    function PrintDateFrom($date) {
+        $diff_h = Carbon::parse($date)->diff(Carbon::now());
+        $diff = Carbon::parse($date)->diffForHumans(Carbon::now());
+        return " ( ".$diff." )"   ;
+
+//         if($diff_h->h > 24 and $diff_h->d > 0 ){
+//
+//         }else{
+//             return null;
+//         }
+//return $diff_h->d ;
+    }
+}
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('LoadConfigName')) {
     function LoadConfigName($row, $val) {
         if (is_array($row)) {

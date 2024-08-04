@@ -1,13 +1,35 @@
-@if($allData)
-    <div class="infoDiv {{$col}} {{$colRow}}">
-        <div class="title">{{$t}}</div>
-        <div class="des">{{$des ?? ''}}</div>
-    </div>
-@else
-    @if($des)
+@if($vType == 'text')
+    @if($allData)
         <div class="infoDiv {{$col}} {{$colRow}}">
-            <div class="title">{{$t}}</div>
-            <div class="des">{{$des ?? ''}}</div>
+            <div class="title"><i class="{{$i}}"></i> {{$t}}
+                @if($subDes)
+                    : <span class="span_des">{{$des ?? ''}}</span>
+                @endif
+            </div>
+            @if(!$subDes)
+                <div class="des">{{$des ?? ''}}</div>
+            @endif
+
+        </div>
+    @else
+        @if($des)
+            <div class="infoDiv {{$col}} {{$colRow}}">
+                <div class="title"><i class="{{$i}}"></i> {{$t}}
+                    @if($subDes)
+                       : <span class="span_des">{{$des ?? ''}}</span>
+                    @endif
+                </div>
+                @if(!$subDes)
+                    <div class="des">{{$des ?? ''}}</div>
+                @endif
+            </div>
+        @endif
+    @endif
+@elseif($vType == 'icon')
+    @if($des)
+        <div class="infoDiv_icon {{$col}} {{$colRow}}">
+            <div class="des"><i class="{{$i}}"></i> {{$des}}</div>
         </div>
     @endif
 @endif
+

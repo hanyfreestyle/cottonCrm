@@ -11,6 +11,9 @@ if (File::isFile(base_path('routes/AppPlugin/crm/leads.php'))) {
 if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/crm/ticket.php'));
 }
+if (File::isFile(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/crm/ticket_tech_follow.php'));
+}
 
 if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/crm/customers.php'));

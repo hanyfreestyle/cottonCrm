@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 08:54 AM
+-- Generation Time: Aug 03, 2024 at 09:54 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -27,7 +27,8 @@ SET time_zone = "+00:00";
 
 INSERT INTO `crm_customers` (`id`, `evaluation_id`, `gender_id`, `name`, `mobile`, `mobile_code`, `mobile_2`, `mobile_2_code`, `phone`, `phone_code`, `whatsapp`, `whatsapp_code`, `email`, `notes`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 119, 1, 'هانى محمد محمد ددرويش', '01221563252', 'eg', '01221563253', 'eg', '4810303', 'eg', '01221563252', 'eg', 'hany@hanydarwish.com', NULL, 1, '2024-07-29 05:59:16', '2024-07-29 06:04:52', NULL),
-(2, NULL, NULL, 'كريم درويش', '01221563259', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-03 03:54:41', '2024-08-03 03:54:41', NULL);
+(2, NULL, NULL, 'كريم درويش', '01221563259', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-03 03:54:41', '2024-08-03 03:54:41', NULL),
+(3, NULL, NULL, 'احمد عباس', '01221563255', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-03 16:42:43', '2024-08-03 16:42:43', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

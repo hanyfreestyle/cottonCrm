@@ -15,6 +15,9 @@ class InfoDiv extends Component {
     public $colRow;
     public $arrData;
     public $allData;
+    public $vType;
+    public $i;
+    public $subDes;
 
 
     public function __construct(
@@ -24,19 +27,25 @@ class InfoDiv extends Component {
         $colRow = null,
         $arrData = null,
         $allData = true,
+        $vType = "text",
+        $i = null,
+        $subDes = false,
 
     ) {
         $this->t = $t;
+        $this->i = $i;
 
         $this->col = "col-lg-" . $col;
         $this->colRow = $colRow;
         $this->arrData = $arrData;
         $this->allData = $allData;
+        $this->vType = $vType;
+        $this->subDes = $subDes;
 
 
         if ($this->arrData) {
-            if (is_array($this->arrData)){
-                $this->arrData = collect($this->arrData) ;
+            if (is_array($this->arrData)) {
+                $this->arrData = collect($this->arrData);
             }
             $this->des = $this->arrData->where('id', $des)->first()->name ?? '';
         } else {

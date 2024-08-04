@@ -370,7 +370,7 @@ class AdminMainController extends DefaultMainController {
         View::share('PrefixRoute', $this->PrefixRoute);
         View::share('PrefixRole', $this->PrefixRole);
         View::share('controllerName', $this->controllerName);
-        View::share('PrefixCatRoute', $this->PrefixCatRoute);
+        View::share('PrefixCatRoute', $this->PrefixCatRoute ?? null);
         View::share('configArr', $this->configArr);
         View::share('PrintLocaleName', 'name_' . thisCurrentLocale());
         View::share('DefCategoryTextName', null);

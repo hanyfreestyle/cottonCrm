@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Crm\Tickets\Models;
 
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,9 @@ class CrmTickets extends Model {
 
     public function customer(): BelongsTo {
         return $this->belongsTo(CrmCustomers::class,'customer_id','id')->with('address');
+    }
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
 }
