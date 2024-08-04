@@ -6,12 +6,9 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\Http\Controllers\AdminMainController;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -24,6 +21,7 @@ class CrmTicketTechFollowController extends AdminMainController {
         $this->controllerName = "TechFollowUp";
         $this->PrefixRole = 'crm_tech_follow';
         $this->selMenu = "admin.";
+
         $this->Config = self::defConfig();
         View::share('Config', $this->Config);
 
@@ -36,11 +34,7 @@ class CrmTicketTechFollowController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'AddButToCard' => false,
-            'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
-            'formName' => "CrmCustomersFilter",
+            'formName' => "CrmTechFollowUpFilter",
         ];
 
         self::loadConstructData($sendArr);
@@ -57,27 +51,44 @@ class CrmTicketTechFollowController extends AdminMainController {
 
         if ($RouteName == $this->PrefixRoute . '.New') {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
+            $pageData['IconPage'] = 'fa-eye';
             $RouteVal = "New";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Today') {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_today');
+            $pageData['IconPage'] = 'fa-bell';
             $RouteVal = "Today";
+
         } elseif ($RouteName == $this->PrefixRoute . '.Back') {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_back');
+            $pageData['IconPage'] = 'fa-thumbs-down';
             $RouteVal = "Back";
+
         } elseif ($RouteName == $this->PrefixRoute . '.Next') {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_next');
+            $pageData['IconPage'] = 'fa-history';
             $RouteVal = "Next";
-        }
 
+        }
 
         $rowData = self::TicketFilterQuery(self::indexQuery($RouteVal), $session);
         $rowData = $rowData->get();
+
+//        foreach ($rowData as $row){
+//            $diff_h = Carbon::parse($row->follow_date)->diff(Carbon::now());
+//            $diff = Carbon::parse($row->follow_date)->diffForHumans(Carbon::now());
+//            if($diff_h->d > 0){
+//                echobr($diff);
+//            }
+//
+//            echoPrintR($diff_h);
+//        }
 
         return view('AppPlugin.CrmTechFollow.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
         ]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -85,18 +96,16 @@ class CrmTicketTechFollowController extends AdminMainController {
     static function indexQuery($RouteVal) {
 
         if (Auth::user()->hasPermissionTo('crm_tech_follow_admin')) {
-            $data = CrmTickets::query()->with('customer')->with('user')->where('state', 1);
+            $data = CrmTickets::defOpen();
         } else {
             if (Auth::user()->hasPermissionTo('crm_tech_follow_team_leader')) {
                 $thisUserId = [Auth::user()->id];
                 if (is_array(Auth::user()->crm_team)) {
                     $thisUserId = array_merge($thisUserId, Auth::user()->crm_team);
                 }
-                $data = CrmTickets::query()->where('state', 1)
-                    ->WhereIn('user_id', $thisUserId);
-//                dd($data->count());
+                $data = CrmTickets::defOpen()->WhereIn('user_id', $thisUserId);
             } else {
-                $data = CrmTickets::query()->where('state', 1)->where('user_id', Auth::user()->id);
+                $data = CrmTickets::defOpen()->where('user_id', Auth::user()->id);
             }
         }
 
@@ -110,15 +119,8 @@ class CrmTicketTechFollowController extends AdminMainController {
             $data->where('follow_date', '>', Carbon::today());
         }
 
-
         return $data;
-
     }
-
-
-
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -7,7 +7,7 @@
                     {{ LoadConfigName($CashConfigDataList,$row->device_id)}} -
                     {{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}
                 </span>
-                <span class="description"><i class="far fa-clock"></i> {{ PrintDate($row->follow_date)}} {{PrintDateFrom($row->follow_date)}}</span>
+                <span class="description"><i class="far fa-clock"></i> {{ PrintDate($row->follow_date)}} {{TicketDateFrom($row->follow_date)}}</span>
             </div>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas {{$open_style}}"></i></button>
@@ -56,9 +56,9 @@
             </div>
 
             <div class="row text-center follow_action_but py-2">
-                <a href="#" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm/ticket.but_call')}}</a>
-                <a href="#" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm/ticket.but_whatsapp')}}</a>
-                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm/ticket.but_update')}}</a>
+                <a href="tel:{{$row->customer->mobile}}" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm/ticket.but_call')}}</a>
+                <a href="{{TicketSendWhatsapp($row)}}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm/ticket.but_whatsapp')}}</a>
+                <a href="{{route($PrefixRoute.'.ViewTicket',$row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm/ticket.but_update')}}</a>
             </div>
         </div>
 

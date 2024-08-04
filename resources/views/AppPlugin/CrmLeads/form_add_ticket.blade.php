@@ -15,13 +15,20 @@
     <x-admin.hmtl.section>
         <x-admin.card.collapsed :title="__('admin/crm/leads.but_add_ticket')" :collapsed="false">
             <x-admin.form.print-error-div :full-err="false"/>
-            <form class="mainForm" action="{{route($PrefixRoute.$form_route,$customer->id)}}" method="post">
+            <form class="mainForm" action="{{route($PrefixRoute.$form_route,$UpdateId)}}" method="post">
                 @csrf
                 <div class="row">
-                    <x-admin.form.select-data name="sours_id" :row="$ticketInfo" cat-id="LeadSours" :active="IsConfig($Config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
-                    <x-admin.form.select-data name="ads_id" :row="$ticketInfo" cat-id="LeadCategory" :active="IsConfig($Config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
-                    <x-admin.form.select-data name="device_id" :row="$ticketInfo" cat-id="DeviceType" :active="IsConfig($Config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
-                    <x-admin.form.select-data name="brand_id" :row="$ticketInfo" cat-id="BrandName" :active="IsConfig($Config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
+                    <x-admin.form.select-data name="sours_id" :sendvalue="old('sours_id',$ticketInfo->sours_id)" cat-id="LeadSours"
+                                              :active="IsConfig($Config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
+
+                    <x-admin.form.select-data name="ads_id" :sendvalue="old('ads_id',$ticketInfo->ads_id)" cat-id="LeadCategory"
+                                              :active="IsConfig($Config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
+
+                    <x-admin.form.select-data name="device_id" :sendvalue="old('device_id',$ticketInfo->device_id)" cat-id="DeviceType"
+                                              :active="IsConfig($Config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
+
+                    <x-admin.form.select-data name="brand_id" :sendvalue="old('brand_id',$ticketInfo->brand_id)" cat-id="BrandName"
+                                              :active="IsConfig($Config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
                 </div>
 
                 <div class="row">
@@ -31,8 +38,8 @@
                     @endcan
                 </div>
                 <div class="row">
-                    <x-admin.form.textarea :row="$ticketInfo" name="notes_err" :value="old('notes_err',$ticketInfo->notes_err)"  :label="__('admin/crm/ticket.fr_notes_err')" col="6" tdir="ar"/>
-                    <x-admin.form.textarea :row="$ticketInfo" name="notes" :value="old('notes_err',$ticketInfo->notes)" :label="__('admin/crm/ticket.fr_notes')" col="6" :req="false" tdir="ar"/>
+                    <x-admin.form.textarea :row="$ticketInfo" name="notes_err" :value="old('notes_err',$ticketInfo->notes_err)" :label="__('admin/crm/ticket.fr_notes_err')" col="6" tdir="ar"/>
+                    <x-admin.form.textarea :row="$ticketInfo" name="notes" :value="old('notes',$ticketInfo->notes)" :label="__('admin/crm/ticket.fr_notes')" col="6" :req="false" tdir="ar"/>
                 </div>
 
                 <div class="container-fluid mt-3 mb-5">

@@ -71,6 +71,8 @@ class SelectData extends Component {
         if($filterForm){
             $this->sendvalue = $sendvalue;
         }else{
+
+
             if ($sendvalue != null) {
                 $this->sendvalue = $sendvalue;
             } else {

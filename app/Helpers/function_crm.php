@@ -16,25 +16,36 @@ if (!function_exists('IsConfig')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('PrintDate')) {
-    function PrintDate($date,$format="Y-m-d") {
+    function PrintDate($date, $format = "Y-m-d") {
         $dateValue = Carbon::parse($date)->format($format);
         return $dateValue;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('PrintDateFrom')) {
-    function PrintDateFrom($date) {
+if (!function_exists('TicketDateFrom')) {
+    function TicketDateFrom($date) {
         $diff_h = Carbon::parse($date)->diff(Carbon::now());
         $diff = Carbon::parse($date)->diffForHumans(Carbon::now());
-        return " ( ".$diff." )"   ;
-
-//         if($diff_h->h > 24 and $diff_h->d > 0 ){
-//
-//         }else{
-//             return null;
-//         }
-//return $diff_h->d ;
+        if ($diff_h->d > 0) {
+            return " ( " . $diff . " )";
+        } else {
+            return null;
+        }
+    }
+}
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('TicketSendWhatsapp')) {
+    function TicketSendWhatsapp($row) {
+        $Brek = "%0a";
+        $GetMass = __('admin/crm/ticket.but_whatsapp_mass') . $Brek;
+        $GetMass .= $row->customer->name;
+        $Mass = str_replace(" ", "+", $GetMass);
+        if ($row->customer->mobile_code == 'eg') {
+            $Whatsapp_Url = 'https://api.whatsapp.com/send/?phone=2' . $row->customer->mobile . '&text=' . $Mass;
+        }
+        return $Whatsapp_Url;
     }
 }
 
@@ -55,8 +66,8 @@ if (!function_exists('getCol')) {
     function getCol($col) {
         if ($col == null) {
             $col = "col-lg-3";
-        }else{
-            $col = "col-lg-".$col;
+        } else {
+            $col = "col-lg-" . $col;
         }
         return $col;
     }
@@ -67,8 +78,8 @@ if (!function_exists('getColMobile')) {
     function getColMobile($col) {
         if ($col == null) {
             $col = "col-6";
-        }else{
-            $col = "col-".$col;
+        } else {
+            $col = "col-" . $col;
         }
         return $col;
     }

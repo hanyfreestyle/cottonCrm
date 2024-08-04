@@ -127,6 +127,7 @@ class CrmLeadsController extends AdminMainController {
             'ticketInfo' => $ticketInfo,
             'form_route' => '.createTicket',
             'followDate' => null,
+            'UpdateId' => $customerID
         ]);
     }
 
@@ -179,6 +180,7 @@ class CrmLeadsController extends AdminMainController {
             'ticketInfo' => $ticketInfo,
             'form_route' => '.updateTicket',
             'followDate' => PrintDate($ticketInfo->follow_date),
+            'UpdateId' => $ticketInfo->id
         ]);
     }
 
@@ -188,11 +190,11 @@ class CrmLeadsController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-        $saveData = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();;
+        $saveData = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
         try {
             DB::transaction(function () use ($request, $saveData) {
                 $saveData->follow_date = SaveDateFormat($request, 'follow_date');
-                $saveData->user_id = $request->input('user_id') ?? null;
+                $saveData->user_id = $request->input('user_id');
                 $saveData->sours_id = $request->input('sours_id');
                 $saveData->ads_id = $request->input('ads_id');
                 $saveData->device_id = $request->input('device_id');

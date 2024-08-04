@@ -19,6 +19,15 @@ class CrmTickets extends Model {
         return $query->where('id','!=',0);
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function scopeDefOpen(Builder $query): Builder {
+        return $query->where('state',1)
+            ->where('user_id','!=',null)
+            ->with('customer')
+            ->with('user');
+    }
+
     public function scopeDefNew(Builder $query): Builder {
         return $query->where('state',1)->where('follow_state',1);
     }

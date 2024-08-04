@@ -27,18 +27,6 @@ trait CrmTicketsConfigTraits {
         return $Config;
     }
 
-//    static function defConfig() {
-//
-//        $Config = [
-//            'list_evaluation' => true,
-//
-//        ];
-//        $appConfig = loadConfigFromJson('CrmTickets');
-//        $Config = array_merge($Config, $appConfig);
-//
-//        return $Config;
-//    }
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function TicketFilterQuery($query, $session, $order = null) {
@@ -106,6 +94,5 @@ trait CrmTicketsConfigTraits {
 
         return $query;
     }
-
 
 }
