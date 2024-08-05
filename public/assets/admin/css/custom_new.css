@@ -20,24 +20,60 @@
     }
 }
 
-.adminCard {
 
-
+.admin_err_list {
+    list-style: none;
+    padding: 8px !important;
 }
+
+.admin_err_list li {
+    font-size: 14px;
+}
+
+
+.adminCard .card-outline .card-title {
+    color: var(--cardColor);
+}
+
+
+
+.adminCard {
+}
+
 .adminCard .card-body {
     padding-top: 10px;
+}
+
+.adminCard .card-header {
+    padding: 10px 15px !important;
+}
+.adminCard .card-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+@media (max-width: 480px) {
+    .adminCard .card-title {
+        font-size: 15px;
+    }
+    .adminCard .card-header {
+        padding: 10px 15px !important;
+        line-height: 20px;
+
+    }
 
 }
 
-.Filter_Form_Style{
-    padding: 0!important;
-    margin: 0!important;
 
+.Filter_Form_Style {
+    padding: 0 !important;
+    margin: 0 !important;
 }
+
 .Filter_Form_Style .def_form_label {
     font-size: 14px !important;
     margin-bottom: 0 !important;
-    padding-top: 0px;
+    padding-top: 0 !important;
     padding-bottom: 5px;
     font-weight: 700 !important;
     color: rgba(0, 0, 0, .8) !important;
@@ -50,10 +86,11 @@
 
 @media (max-width: 480px) {
     .Filter_Form_Style .def_form_label {
-        margin-top: 0!important;
-        padding-top: 0!important;
-        padding-bottom: 0!important;
+        margin-top: -5px !important;
+        padding-top: 0 !important;
+        padding-bottom: 5px !important;
         font-size: 12px !important;
+        line-height: 15px;
     }
 
     .Filter_Form_Style .form-group {
@@ -62,49 +99,15 @@
 }
 
 
-
-
-
-.adminCard .card-outline .card-title {
-    color: var(--cardColor);
-}
-
-
-.adminCard .card-title {
-    font-weight: bold;
-    font-size: 17px;
-}
-
-.admin_err_list {
-    list-style: none;
-    padding: 8px !important;
-}
-
-.admin_err_list li {
-    font-size: 14px;
-}
-
-
 @media (max-width: 480px) {
-    .adminCard .card-header {
-        padding-top: 15px;
-        padding-bottom: 10px;
-    }
-
-    .adminCard .card-title {
-        font-size: 15px;
+    .adminButMobile i {
+        line-height: 22px !important;
     }
 
     .adminButMobile {
-
         padding-top: 5px !important;
         padding-bottom: 3px !important;
         line-height: 20px !important;
-
-    }
-
-    .adminButMobile i {
-        line-height: 22px !important;
     }
 
     .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__rendered {
