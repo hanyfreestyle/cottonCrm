@@ -11,8 +11,10 @@
             <x-app-plugin.crm.customers.form-address :row-data="$rowDataAddress" :config="$Config" :title="__('admin/crm/customers.box_address')"/>
         @endif
 
+        <div class="row float-left">
+            <x-admin.form.submit-role-back :page-data="$pageData"/>
+        </div>
 
-        <x-admin.form.submit-role-back :page-data="$pageData"/>
     </x-admin.form.form-def>
 
 @endsection

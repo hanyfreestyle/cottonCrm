@@ -321,69 +321,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 
 
-.mainForm_NewBox{
-
-
-
-}
-.mainForm_NewBox .form-group{
-    margin-bottom: 10px!important;
-}
-
-
-.mainForm_NewBox .def_form_label{
-    font-size:13px!important;
-    margin-bottom:0!important;
-    padding-top:2px;
-    padding-bottom:5px;
-    font-weight:700!important;
-    color:rgba(0,0,0,.8)!important;
-    width:100%
-}
-.mainForm_NewBox .alert-dismissible {
-    padding: 8px 20px!important;
-    font-size: 13px !important;
-    margin-bottom: 5px!important;
-    display: block;
-}
-.mainForm_NewBox .alert-danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-    margin-bottom: 20px!important;
-}
-
-.mainForm_NewBox .alert {
-    margin-bottom: 20px!important;
-}
-
-
-.mainForm_NewBox .box_form{
-    clear: both!important;
-    padding: 10px 15px;
-    padding-bottom: 30px;
-    padding-top: 0px;
-    border: 1px solid rgba(0,0,0,.1);
-    margin-bottom: 40px;
-}
-
-
-.mainForm_NewBox .box_title{
-    position:relative;
-    display: inline-block;
-    font-weight: normal;
-    top:-15px!important;
-    padding:4px 25px;
-    border-radius:4px;
-
-    margin-bottom: 0!important;
-    border: 1px solid #007bff;
-    min-width: 200px!important;
-    background-color: #007bff;
-    color: #fff;
-}
-
-
 
 .adminMenuTitle{
     padding:10px;
