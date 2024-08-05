@@ -1,0 +1,95 @@
+.infoDiv {
+    margin-bottom: 10px;
+}
+
+.infoDiv h2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--h2Color);
+    margin-bottom: 0 !important;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted rgba(0, 0, 0, .2);
+    margin-top: 15px !important;
+}
+
+.infoDiv h2.mass_notes {
+    font-size: 14px;
+    font-weight: normal;
+    padding: 10px 15px;
+    margin-bottom: 10px !important;
+    border-radius: 5px;
+}
+
+
+.infoDiv .title {
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    color: var(--infoTitle) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.infoDiv .des {
+    font-size: 16px;
+    color: var(--infoDes) !important;
+}
+
+.infoDiv .span_des {
+    font-size: 14px;
+    color: var(--infoDes) !important;
+}
+
+
+.infoDiv_icon {
+    margin-bottom: 8px;
+}
+
+.infoDiv_icon .des {
+    font-size: 17px;
+
+    padding-bottom: 5px;
+    color: var(--infoDes) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.infoDiv_icon .des i {
+    color: var(--infoIcon) !important;
+}
+
+.infoDiv_icon .number {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+
+}
+
+.infoDiv_icon .semi_number {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: .5px;
+}
+
+@media (max-width: 480px) {
+    .infoDiv_icon .des {
+        font-size: 15px;
+    }
+
+    .infoDiv_icon .number {
+        font-size: 14px;
+    }
+
+    .infoDiv_icon .semi_number {
+        font-size: 14px;
+    }
+
+}
+
+
+
+
+
+
+
+

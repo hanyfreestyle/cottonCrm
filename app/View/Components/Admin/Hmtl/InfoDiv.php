@@ -18,25 +18,29 @@ class InfoDiv extends Component {
     public $vType;
     public $i;
     public $subDes;
+    public $s;
 
 
     public function __construct(
         $t = null,
         $des = null,
-        $col = 3,
-        $colRow = null,
+        $col = null,
+
         $arrData = null,
         $allData = true,
         $vType = "text",
         $i = null,
         $subDes = false,
+        $s = null,
 
     ) {
         $this->t = $t;
         $this->i = $i;
+        $this->s = $s;
 
-        $this->col = "col-lg-" . $col;
-        $this->colRow = $colRow;
+
+        $this->col =  $col;
+
         $this->arrData = $arrData;
         $this->allData = $allData;
         $this->vType = $vType;

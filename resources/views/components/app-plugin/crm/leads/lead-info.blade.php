@@ -1,25 +1,30 @@
 @if($addTitle)
-    <div class="row">
-        <h2 class="h2_info">{{__('admin/crm/ticket.t_h2_ticket')}}</h2>
+    <div class="row infoDiv">
+        <div class="col-lg-12">
+            <h2 class="">{{__('admin/crm/ticket.t_h2_ticket')}}</h2>
+        </div>
     </div>
 @endif
 <div class="row">
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-calendar-alt" :t="__('admin/crm/ticket.var_date_add')" :des="PrintDate($row->created_at)" col="2" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tools"  :t="__('admin/crm/ticket.fr_follow_date')" :des="PrintDate($row->follow_date)" col="2" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-cog"  :sub-des="true" :t="__('admin/crm/ticket.fr_user_id')" :arr-data="$CashUsersList" :des="$row->user_id" col="4" col-row="col-12" :all-data="false"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-eye" :t="__('admin/crm/ticket.var_open_type')" :arr-data="$DefCat['TicketOpenType']" :des="$row->open_type" col="2" col-row="col-6" :all-data="false"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tag" :t="__('admin/crm/ticket.var_ticket_state')" :arr-data="$DefCat['TicketState']" :des="$row->follow_state" col="2" col-row="col-6" :all-data="false"/>
+    <x-admin.hmtl.info-div-list n="created_at" :row="$row" col="col-lg-2 col-6"/>
+    <x-admin.hmtl.info-div-list n="follow_date" :row="$row" col="col-lg-2 col-6"/>
+    <x-admin.hmtl.info-div-list n="user_id" :row="$row" col="col-lg-4 col-12"/>
+    <x-admin.hmtl.info-div-list n="open_type" :row="$row" col="col-lg-2 col-6"/>
+    <x-admin.hmtl.info-div-list n="follow_state" :row="$row" col="col-lg-2 col-6"/>
+
 </div>
 
 <div class="row">
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-filter" :t="__('admin/crm/ticket.fr_lead_sours')" :arr-data="$CashConfigDataList" :des="$row->sours_id" col="3" col-row="col-6"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-google" :t="__('admin/crm/ticket.fr_lead_ads')" :arr-data="$CashConfigDataList" :des="$row->ads_id" col="3" col-row="col-6"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-desktop" :t="__('admin/crm/ticket.fr_lead_divce')" :arr-data="$CashConfigDataList" :des="$row->device_id" col="3" col-row="col-6"/>
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-copyright" :t="__('admin/crm/ticket.fr_lead_brand')" :arr-data="$CashConfigDataList" :des="$row->brand_id" col="3" col-row="col-6"/>
+    <x-admin.hmtl.info-div-list n="sours_id" :row="$row" col="col-lg-3 col-6"/>
+    <x-admin.hmtl.info-div-list n="ads_id" :row="$row" col="col-lg-3 col-6"/>
+    <x-admin.hmtl.info-div-list n="device_id" :row="$row" col="col-lg-3 col-6"/>
+    <x-admin.hmtl.info-div-list n="brand_id" :row="$row" col="col-lg-3 col-6"/>
+
 </div>
 
 <div class="row">
-    <x-admin.hmtl.info-div i="fas fa-exclamation-triangle"  :t="__('admin/crm/ticket.fr_notes_err')" :des="$row->notes_err" col="6" col-row="col-12" :all-data="false"/>
-    <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm/ticket.fr_notes')" :des="$row->notes" col="6" col-row="col-12" :all-data="false"/>
+    <x-admin.hmtl.info-div-list n="notes_err" :row="$row" col="col-lg-6 col-12"/>
+    <x-admin.hmtl.info-div-list n="notes" :row="$row" col="col-lg-6 col-12"/>
+
 </div>
 

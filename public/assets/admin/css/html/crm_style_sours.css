@@ -1,0 +1,229 @@
+.but_add_to_user{
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+.rwd_table th {
+    display: none;
+}
+
+.rwd_table td {
+    display: block;
+}
+
+.rwd_table td:before {
+    content: attr(data-th) "";
+    font-weight: bold;
+    font-size: 14px;
+    width: 6em;
+    display: inline-block;
+}
+
+@media (max-width: 480px) {
+    .rwd_table td:first-child {
+        padding-top: 0!important;
+        border-top: 0!important;
+    }
+
+    .rwd_table td:last-child {
+        padding-bottom: .5em;
+        border-bottom: 1px dashed rgba(0, 0, 0, .2);
+        margin-bottom: 20px;
+
+    }
+}
+
+@media (min-width: 480px) {
+
+
+    .rwd_table td:before {
+        display: none;
+    }
+
+    .rwd_table th, .rwd_table td {
+        display: table-cell;
+        /*padding: .25em .5em;*/
+    }
+
+    .rwd_table th:first-child, .rwd_table td:first-child {
+        padding-left: 0;
+    }
+
+    .rwd_table th:last-child, .rwd_table td:last-child {
+        padding-right: 0;
+    }
+
+    .rwd_table th, .rwd_table td {
+        /*padding: 1em !important;*/
+    }
+}
+
+.CustSearchForm .form-group {
+    margin-bottom: 10px !important;
+}
+
+
+
+
+
+.h2_info {
+    width: 100%;
+    color: #ffffff;
+    background-color: #494d4d;
+    border-color: #494d4d;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    line-height: 23px;
+
+
+}
+
+.followUp_Card .card-header {
+    padding: 0.4rem .75rem;
+}
+
+.followUp_Card .btn-tool {
+    color: #ffffff;
+    margin-top: 22px;
+}
+
+.followUp_Card .bg-warning .username, .followUp_Card .bg-warning .description {
+    color: rgba(24, 24, 24, 1) !important;
+}
+
+.followUp_Card .user-block .username {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.followUp_Card .user-block .description {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    font-weight: normal;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.followUp_Card .user-block .description :last-child {
+    margin-bottom: 0 !important;
+}
+
+.followUp_Card .follow_action_but a {
+    margin: auto;
+}
+
+.followUp_Card .follow_action_but .btn-whatsapp {
+    background-color: rgba(37, 211, 102, 1);
+    color: #ffffff;
+}
+
+
+
+
+
+@media (max-width: 480px) {
+    .InfoViewList .infoDiv_icon .des {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .InfoViewList .infoDiv .des {
+
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 28px
+
+    }
+    .InfoViewList .h2_info.des {
+        font-size: 12px;
+    }
+
+
+    .InfoViewList .infoDiv_icon .des {
+
+       margin-bottom: 0!important;
+
+
+    }
+}
+
+
+
+
+
+
+
+.InfoViewList .h2_info {
+    font-size: 16px;
+    background-color: rgba(0, 123, 255, .7)!important;
+}
+
+.InfoViewList .h2_info.des {
+    font-size: 14px;
+}
+
+.InfoViewList .infoDiv_icon {
+    margin-bottom: 13px;
+
+}
+
+.InfoViewList .infoDiv_icon .des {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    color: rgba(102, 102, 102, .8);
+    text-align: right!important;
+
+}
+
+.InfoViewList .infoDiv_icon i {
+    color: rgba(204, 24, 30, .7);
+}
+
+.InfoViewList .infoDiv {
+
+}
+
+.InfoViewList .infoDiv .des {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+
+    color: rgba(102, 102, 102, .8);
+
+}
+
+.InfoViewList .infoDiv .title {
+
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+
+    color: rgba(204, 24, 30, .7);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+}
+
+.InfoViewList .infoDiv .title i {
+
+    color: rgba(204, 24, 30, .7);
+    font-size: 15px;
+
+}
+
+

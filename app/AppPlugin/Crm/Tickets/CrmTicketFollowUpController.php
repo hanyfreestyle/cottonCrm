@@ -99,6 +99,24 @@ class CrmTicketFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function viewTicket(Request $request, $ticketId) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+
+        $session = self::getSessionData($request);
+
+        $Query = self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $ticket = $Query->where('id', $ticketId)->firstOrFail();
+
+
+        return view('AppPlugin.CrmTickets.view')->with([
+            'pageData' => $pageData,
+            'ticket' => $ticket,
+        ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request, $view) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
@@ -113,15 +131,22 @@ class CrmTicketFollowUpController extends AdminMainController {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                if ($this->agent->isDesktop()) {
+                    return $row->id;
+                } else {
+                    return null;
+                }
+            })
             ->editColumn('created_at', function ($row) {
                 return [
-                    'display' => date("Y-m-d", strtotime($row->created_at)) .''. TicketDateFrom($row->created_at).'',
+                    'display' => date("Y-m-d", strtotime($row->created_at)) . '' . TicketDateFrom($row->created_at) . '',
                     'timestamp' => strtotime($row->created_at)
                 ];
             })
             ->editColumn('follow_date', function ($row) {
                 return [
-                    'display' => date("Y-m-d", strtotime($row->follow_date)) .''. TicketDateFrom($row->follow_date).'' ,
+                    'display' => date("Y-m-d", strtotime($row->follow_date)) . '' . TicketDateFrom($row->follow_date) . '',
                     'timestamp' => strtotime($row->follow_date)
                 ];
             })
@@ -183,13 +208,13 @@ class CrmTicketFollowUpController extends AdminMainController {
         $saveData = CrmTickets::defOpen()->where('id', $id)->firstOrFail();
         $saveData->user_id = $request->input('user_id');
 
-        if(intval($request->input('user_id')) != 0){
+        if (intval($request->input('user_id')) != 0) {
             $saveData->save();
         }
 
-        if($this->agent->isDesktop()){
+        if ($this->agent->isDesktop()) {
             return back()->with('confirmDelete', "");
-        }else{
+        } else {
             if ($saveData->follow_date == Carbon::today()) {
                 return redirect()->route($this->PrefixRoute . '.Today');
             } elseif ($saveData->follow_date < Carbon::today()) {

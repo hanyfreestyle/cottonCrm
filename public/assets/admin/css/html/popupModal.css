@@ -1,0 +1,32 @@
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        max-width: 991px;
+    }
+}
+
+.AdminModal .modal-header {
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: rgba(73, 77, 77, 1);
+}
+.AdminModal .modal-title {
+    font-size: 18px;
+}
+.AdminModal .close {
+    color: #fff;
+}
+.AdminModal .close:hover, .mailbox-attachment-close:hover {
+    color: #fff;
+}
+
+.AdminModal .modal-body{
+    text-align: right;
+    padding: 10px 20px!important;
+}
+.AdminModal .modal-footer{
+    padding: .25rem;
+}
+
+
+
+

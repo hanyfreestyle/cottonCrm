@@ -18,7 +18,7 @@ class CardProfile extends Component {
 
     public function __construct(
         $row = array(),
-        $allData = true,
+        $allData = false,
         $config = array(),
         $softData = false,
         $defLang = null,

@@ -1,102 +1,90 @@
 @if($addTitle)
-    <div class="row">
-        <h2 class="h2_info">{{__('admin/crm/ticket.t_h2_customer')}}</h2>
+    <div class="row infoDiv">
+        <div class="col-lg-12">
+            <h2 class="">{{__('admin/crm/ticket.t_h2_customer')}}</h2>
+        </div>
     </div>
 @endif
 
 @if($softData)
 
     <div class="row">
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="false"/>
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_mobile')" :des="$row->mobile" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_mobile_2')" :des="$row->mobile_2" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-phone-square" :t="__($defLang.'form_phone')" :des="$row->phone" col="2" col-row="col-6" :all-data="false"/>
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-whatsapp" :t="__($defLang.'form_whatsapp')" :des="$row->whatsapp" col="2" col-row="col-6" :all-data="false"/>
+        <x-admin.hmtl.info-div-list n="name" :row="$row" col="col-lg-4 col-12"/>
+        <x-admin.hmtl.info-div-list n="mobile" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="mobile_2" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="phone" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="whatsapp" :row="$row" col="col-lg-2 col-6"/>
     </div>
+
 
     @if(issetArr($config,'addCountry',false))
         @foreach($row->address as $address)
             <div class="row">
                 @if(issetArr($config,'fullAddress',false))
-                    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-hotel" :t="__($defLang.'form_ad_address')" :des="$address->address" col="4" col-row="col-12" :all-data="$allData"/>
-
-                    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-couch" :t="__($defLang.'form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-6"
-                                           :all-data="$allData"/>
-
-                    <x-admin.hmtl.info-div :sub-des="true"  i="fas fa-layer-group" :t="__($defLang.'form_ad_floor')" :des="$address->floor" col="2" col-row="col-6"
-                                           :all-data="$allData"/>
+                    <x-admin.hmtl.info-div-list n="address" :row="$address" col="col-lg-4 col-12"/>
+                    <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-2 col-6"/>
+                    <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-2 col-6"/>
                 @endif
-                <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-flag" :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="2" col-row="col-6"
-                                       :all-data="$allData"/>
-                <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-map-pin" :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="2" col-row="col-6"
-                                       :all-data="$allData"/>
+                <x-admin.hmtl.info-div-list n="city_id" :row="$address" col="col-lg-2 col-6"/>
+                <x-admin.hmtl.info-div-list n="area_id" :row="$address" col="col-lg-2 col-6"/>
             </div>
         @endforeach
     @endif
 @else
     <div class="row">
 
-        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="$allData"/>
-
+        <x-admin.hmtl.info-div-list n="name" :row="$row" col="col-lg-4 col-12"/>
         @if(issetArr($config,'evaluation',false))
-            <x-admin.hmtl.info-div :t="__($defLang.'form_evaluation')" :arr-data="$CashConfigDataList" :des="$row->evaluation_id" col="2" col-row="col-6" :all-data="$allData"/>
+            <x-admin.hmtl.info-div-list n="evaluation_id" :row="$row" col="col-lg-2 col-6"/>
         @endif
+
         @if(issetArr($config,'gender',false))
-            <x-admin.hmtl.info-div :t="__($defLang.'form_gender')" :arr-data="$DefCat['gender']" :des="$row->gender_id" col="2" col-row="col-6" :all-data="$allData"/>
+            <x-admin.hmtl.info-div-list n="gender_id" :row="$row" col="col-lg-2 col-6"/>
         @endif
     </div>
 
     <div class="row">
-        <x-admin.hmtl.info-div :t="__($defLang.'form_mobile')" :des="$row->mobile" col="3" col-row="col-6" :all-data="$allData"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_mobile_2')" :des="$row->mobile_2" col="3" col-row="col-6" :all-data="$allData"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_phone')" :des="$row->phone" col="3" col-row="col-6" :all-data="$allData"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_whatsapp')" :des="$row->whatsapp" col="3" col-row="col-6" :all-data="$allData"/>
-        <x-admin.hmtl.info-div :t="__($defLang.'form_email')" :des="$row->email" col="3" :all-data="$allData"/>
+        <x-admin.hmtl.info-div-list n="mobile" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="mobile_2" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="phone" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="whatsapp" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="email" :row="$row" col="col-lg-2 col-12"/>
     </div>
 
 
 
     @if(issetArr($config,'addCountry',false))
         @if(issetArr($config,'fullAddress',false))
-            <div class="row">
-                <div class="col-lg-12"><h2 class="card_h2">{{__($defLang.'box_address')}}</h2></div>
+            <div class="row infoDiv">
+                <div class="col-lg-12"><h2 class="">{{__($defLang.'box_address')}}</h2></div>
             </div>
         @endif
         @foreach($row->address as  $address)
-            <div class="row">
-                @if(!issetArr($config,'OneCountry',false))
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_country')" :arr-data="$CashCountryList" :des="$address->country_id" col="4" col-row="col-6" :all-data="$allData"/>
-                @endif
-                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="4" col-row="col-6" :all-data="$allData"/>
-                <x-admin.hmtl.info-div :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="4" col-row="col-6" :all-data="$allData"/>
-            </div>
+
             @if(issetArr($config,'fullAddress',false))
                 <div class="row">
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_address')" :des="$address->address" col="6" col-row="col-12" :all-data="$allData"/>
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-4" :all-data="$allData"/>
-                    <x-admin.hmtl.info-div :t="__($defLang.'form_ad_floor')" :des="$address->floor" col="2" col-row="col-4" :all-data="$allData"/>
-
+                    <x-admin.hmtl.info-div-list n="address" :row="$address" col="col-lg-4 col-12"/>
+                    <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-2 col-6"/>
+                    <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-2 col-6"/>
+                    <x-admin.hmtl.info-div-list n="post_code" :row="$address" col="col-lg-2 col-6"/>
                     @if(issetArr($config,'postcode',false))
                         <x-admin.hmtl.info-div :t="__($defLang.'form_ad_post_code')" :des="$address->post_code" col="2" col-row="col-4" :all-data="$allData"/>
                     @endif
-
-                    @if(issetArr($config,'googleAddress',false))
-                        <x-admin.hmtl.info-div t="latitude" :des="$address->latitude" col="3" col-row="col-6" :all-data="$allData"/>
-                        <x-admin.hmtl.info-div t="longitude" :des="$address->longitude" col="3" col-row="col-6" :all-data="$allData"/>
-                    @endif
-
                 </div>
             @endif
+
+            <div class="row">
+                @if(!issetArr($config,'OneCountry',false))
+                    <x-admin.hmtl.info-div-list n="country_id" :row="$address" col="col-lg-2 col-6"/>
+
+                @endif
+                <x-admin.hmtl.info-div-list n="city_id" :row="$address" col="col-lg-2 col-6"/>
+                <x-admin.hmtl.info-div-list n="area_id" :row="$address" col="col-lg-2 col-6"/>
+
+                @if(issetArr($config,'googleAddress',false))
+                    <x-admin.hmtl.info-div-list n="latitude" :row="$address" col="col-lg-2 col-6"/>
+                @endif
+            </div>
         @endforeach
     @endif
 @endif
-
-
-
-
-
-
-
-
-
-
