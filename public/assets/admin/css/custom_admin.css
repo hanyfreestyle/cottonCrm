@@ -372,12 +372,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 
-.adminMenuList{
-    padding: 10px 100px;
-    margin-bottom: 100px;
-}
+
 .adminMenuTitle{
-    padding: 10px 100px;
+    padding:10px;
     margin-bottom: 10px;
 }
 .adminMenuTitle .def_h1{

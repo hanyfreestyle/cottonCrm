@@ -8,20 +8,17 @@
         <div class="row adminMenuTitle">
             <div class="col-lg-9">
                 @if($pageData['ViewType'] == 'Sub')
-                   <h1 class="def_h1">{{__($mainMenu->name)}}</h1>
+                    <h1 class="def_h1">{{__($mainMenu->name)}}</h1>
                 @endif
             </div>
             <div class="col-lg-3 dir_button">
-                <x-admin.form.action-button  url="{{route($PrefixRoute.'.index')}}"  type="back" :tip="false"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.index')}}" type="back" :tip="false"/>
             </div>
         </div>
     </x-admin.hmtl.section>
 
     <x-admin.hmtl.section>
-
         <div class="row adminMenuList">
-
-
             @if(count($rowData)>0)
                 <div class="row col-lg-12 hanySort">
                     @foreach($rowData as $row)
@@ -45,8 +42,6 @@
                 </div>
             @endif
         </div>
-
-
     </x-admin.hmtl.section>
 
 @endsection
