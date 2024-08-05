@@ -31,7 +31,7 @@
 @elseif($btype == 'MorePhoto')
     <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto'/>
 @elseif($btype == 'Delete')
-    <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm">
+    <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm adminButMobile">
         <i class="fas fa-trash"></i> <span class="tipName"> {{__('admin/form.button_delete')}}</span></a>
 @elseif($btype == 'viewInfo')
 <button type='button' class='btn btn-sm btn-dark' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
