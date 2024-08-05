@@ -9,11 +9,13 @@
     <x-admin.hmtl.section>
 
         @if(count($rowData)>0)
-            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
+            <div class="col-lg-12">
+                <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
+            </div>
         @endif
+
         <form name="myform" action="{{route('admin.CrmLeads.addToUser')}}" method="post">
             @csrf
-
             <x-admin.card.normal :page-data="$pageData" :full-error="true" :title="$pageData['BoxH1']">
                 @if(count($rowData)>0)
                     @if($errors->has([]))
