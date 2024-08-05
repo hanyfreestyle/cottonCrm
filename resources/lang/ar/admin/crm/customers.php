@@ -13,6 +13,7 @@ return
 	'box_address' => 'تفاصيل العنوان',
 	'box_def' => 'البيانات الاساسية',
 	'box_profile' => 'الملف الشخصى',
+	'but_add_new' => 'اضافة العميل',
 	'err_repeat_num' => 'مستخدم من قبل',
 	'err_repeat_search' => 'عرض',
 	'form_ad_address' => 'العنوان',
@@ -25,7 +26,7 @@ return
 	'form_email' => 'البريد الالكترونى',
 	'form_evaluation' => 'تقييم العميل',
 	'form_gender' => 'النوع',
-	'form_mobile' => 'رقم الموبايل',
+	'form_mobile' => 'الموبايل',
 	'form_mobile_2' => 'رقم اضافى',
 	'form_name' => 'اسم العميل',
 	'form_notes' => 'ملاحظات',
@@ -40,5 +41,4 @@ return
 	'search_type_1' => 'البحث بواسطة رقم الهاتف',
 	'search_type_2' => 'البحث بواسطة الاسم',
 	'search_type_3' => 'البحث بواسطة العنوان',
-	'but_add_new' => 'اضافة العميل',
 ];

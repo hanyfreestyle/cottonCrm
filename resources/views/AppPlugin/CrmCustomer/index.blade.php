@@ -6,35 +6,37 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
     <x-admin.hmtl.section>
-        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
-        <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
-            <table {!! Table_Style_Yajra() !!} >
-                <thead>
-                <tr>
-                    <th class="all">#</th>
-                    @if($Config['list_flag'])
-                        <th class="TD_20 desktop"></th>
-                    @endif
-                    <th class="all">{{__($defLang.'form_name')}}</th>
-
-                    @if($Config['list_evaluation'])
-                        <th class="desktop">{{__($defLang.'form_evaluation')}}</th>
-                    @endif
-                    <th class="all">{{__($defLang.'form_mobile')}}</th>
-                    <th class="desktop">{{__($defLang.'form_whatsapp')}}</th>
-                    <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="delete"/>
-
-
-                </tr>
-                </thead>
-                <tbody></tbody>
-
-            </table>
-        </x-admin.card.def>
-
+        @if(($rowData->count())>0)
+            <div class="col-lg-12">
+                <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
+            </div>
+        @endif
+        <div class="col-lg-12">
+            <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
+                <table {!! Table_Style_Yajra() !!} >
+                    <thead>
+                    <tr>
+                        <th class="all">#</th>
+                        @if($Config['list_flag'])
+                            <th class="TD_20 desktop"></th>
+                        @endif
+                        <th class="all">{{__($defLang.'form_name')}}</th>
+                        @if($Config['list_evaluation'])
+                            <th class="desktop">{{__($defLang.'form_evaluation')}}</th>
+                        @endif
+                        <th class="all">{{__($defLang.'form_mobile')}}</th>
+                        <th class="desktop">{{__($defLang.'form_whatsapp')}}</th>
+                        <x-admin.table.action-but po="top" type="edit"/>
+                        <x-admin.table.action-but po="top" type="edit"/>
+                        <x-admin.table.action-but po="top" type="delete"/>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </x-admin.card.def>
+        </div>
     </x-admin.hmtl.section>
 @endsection
 
@@ -52,7 +54,7 @@
 
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
                 columns: [
-                    {data: 'id', name: 'id', orderable: false, searchable: false},
+                    {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
                         @if($Config['list_flag'])
                     {
                         data: 'Flag', name: 'Flag', orderable: false, searchable: false, className: "text-center"

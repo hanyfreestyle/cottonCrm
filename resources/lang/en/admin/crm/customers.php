@@ -13,6 +13,7 @@ return
 	'box_address' => 'تفاصيل العنوان',
 	'box_def' => 'البيانات الاساسية',
 	'box_profile' => 'Profile',
+	'but_add_new' => '',
 	'err_repeat_num' => 'The number is already in use.',
 	'err_repeat_search' => 'View',
 	'form_ad_address' => '',
@@ -40,5 +41,4 @@ return
 	'search_type_1' => '',
 	'search_type_2' => '',
 	'search_type_3' => '',
-	'but_add_new' => '',
 ];

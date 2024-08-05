@@ -222,6 +222,15 @@ class CrmCustomersController extends AdminMainController {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
+
+            ->editColumn('id', function ($row) {
+                if($this->agent->isDesktop()){
+                    return  $row->id ;
+                }else{
+                    return null;
+                }
+
+            })
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'flag');
             })

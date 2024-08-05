@@ -1,6 +1,8 @@
-<div class="row">
-    <div class="col-lg-9">
-        <x-admin.card.normal>
+<x-admin.card.collapsed :open="isset($getSessionData)" :outline="false"
+                        :title="__('admin/formFilter.box_total') .' '.number_format($row->count()) ">
+    <div class="row">
+        <div class="col-lg-12">
+
             <form action="{{route($PrefixRoute.'.filter')}}" method="post">
                 @csrf
                 <input type="hidden" name="formName" value="{{$formName}}">
@@ -30,7 +32,7 @@
                     @endif
 
                     @if($Config['evaluation'])
-                        <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}"  :labelview="false"
+                        <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}" :labelview="false"
                                                   cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :filter-form="true" :req="false"/>
                     @endif
 
@@ -54,15 +56,9 @@
                     </form>
                 </div>
             @endif
-        </x-admin.card.normal>
-    </div>
-    <div class="col-lg-3 filter_box_total">
-        <div class="info-box mb-3 bg-success">
-            <span class="info-box-icon"><i class="fas fa-server"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-text">{{__('admin/formFilter.box_total')}}</span>
-                <span class="info-box-number">{{number_format($row->count())}}</span>
-            </div>
+
         </div>
     </div>
-</div>
+
+</x-admin.card.collapsed>
+
