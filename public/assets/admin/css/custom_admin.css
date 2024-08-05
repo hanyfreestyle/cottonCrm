@@ -45,8 +45,13 @@
 .adminCard{
 
 }
-.adminCard .card-title{
+
+.adminCard .card-outline .card-title{
     color: var(--cardColor);
+}
+
+
+.adminCard .card-title {
     font-weight: bold;
     font-size: 17px;
 }
@@ -55,7 +60,7 @@
 
 @media (max-width: 480px) {
     .adminCard .card-header{
-        padding-top: 8px;
+        padding-top: 10px;
         padding-bottom: 10px;
     }
     .adminCard .card-title{
