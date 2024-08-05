@@ -17,7 +17,7 @@
             <x-admin.card.normal :page-data="$pageData" :full-error="true" :title="$pageData['BoxH1']">
                 @if(count($rowData)>0)
                     @if($errors->has([]))
-                        <div class="alert alert-danger alert-dismissible">
+                        <div class="alert alert-danger alert-dismissible admin_err_list">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
