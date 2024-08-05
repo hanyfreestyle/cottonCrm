@@ -70,11 +70,6 @@ class AdminMenuSeeder extends Seeder {
             FileBrowserController::AdminMenu();
         }
 
-
-
-
-
-
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
             ProductController::AdminMenu();
         }
@@ -90,6 +85,9 @@ class AdminMenuSeeder extends Seeder {
         if (File::isFile(base_path('routes/AppPlugin/leads/contactUs.php'))) {
             ContactUsFormController::AdminMenu();
         }
+
+
+
 
 
         Cache::forget('CashAdminMenuList');
