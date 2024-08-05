@@ -36,7 +36,7 @@
         @else
             @if($nodata)
                 <div class="col-lg-12">
-                    <x-admin.hmtl.alert-massage type="nodata" />
+                    <x-admin.hmtl.alert-massage type="nodata"/>
                 </div>
             @endif
         @endif
@@ -46,5 +46,16 @@
 
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
+    <script>
+        $('#search_type').change(function () {
+            var typeis = $(this).val();
+            if (typeis == 1) {
+                $('#name').attr('type', 'number');
+            }else{
+                $('#name').attr('type', 'text');
+            }
+            $("#name").val('');
+        });
+    </script>
 @endpush
 
