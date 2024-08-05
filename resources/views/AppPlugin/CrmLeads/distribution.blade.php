@@ -27,7 +27,7 @@
                     <div class="row">
                         <x-app-plugin.crm.leads.user-select :col-mobile="8" type="tech" :labelview="false" :req="true"/>
                         <div class="col">
-                            <button type="submit" name="B1" class="btn btn-primary but_add_to_user float-left"><i class="fas fa-user-plus"></i> {{__('admin/crm/leads.but_add_to_user')}}</button>
+                            <button type="submit" name="B1" class="btn btn-primary but_add_to_user adminButMobile float-left"><i class="fas fa-user-plus"></i> {{__('admin/crm/leads.but_add_to_user')}}</button>
                         </div>
                     </div>
 
