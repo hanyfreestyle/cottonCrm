@@ -42,7 +42,7 @@
                     @endif
                 </div>
                 <div class="row formFilterBut">
-                    <button type="submit" name="Forget" class="btn btn-dark btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
+                    <button type="submit" name="Forget" class="btn btn-dark btn-sm adminButMobile"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
                 </div>
             </form>
 
@@ -52,7 +52,7 @@
                     <form action="{{route('admin.ForgetSession')}}" method="post">
                         @csrf
                         <input type="hidden" name="formName" value="{{$formName}}">
-                        <button type="submit" name="Forget" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> {{__('admin/formFilter.but_clear')}}</button>
+                        <button type="submit" name="Forget" class="btn btn-danger btn-sm adminButMobile"><i class="fas fa-trash-alt"></i> {{__('admin/formFilter.but_clear')}}</button>
                     </form>
                 </div>
             @endif
