@@ -40,4 +40,5 @@ return
 	'search_type_1' => '',
 	'search_type_2' => '',
 	'search_type_3' => '',
+	'but_add_new' => '',
 ];

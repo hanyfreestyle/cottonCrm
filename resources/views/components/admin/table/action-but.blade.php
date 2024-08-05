@@ -45,13 +45,6 @@
                 <x-admin.lang.add-new-button :row="$row"/>
             @endif
         @endcan
-    @elseif($type == 'profile')
-        @can($PrefixRole.'_edit')
-            <td data-th="{{__('admin/form.button_profile')}}" class="td_action">
-                <x-admin.form.action-button url="{{route($PrefixRoute.'.profile',$row->id)}}" type="Profile"/>
-            </td>
-        @endcan
-
     @elseif($type == 'Photos')
         @can($PrefixRole.'_edit')
             @if($modelid)
@@ -92,9 +85,14 @@
                 <x-admin.form.action-button url="{{route($PrefixRoute.'.addTicket',$row->id)}}" :tip="$agent->isDesktop()" type="addTicket"/>
             </td>
         @endcan
-
+    @elseif($type == 'profile')
+        @can($PrefixRole.'_edit')
+            <td class="td_action">
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.profile',$row->id)}}" type="Profile"/>
+            </td>
+        @endcan
     @elseif($type == 'selectAll')
-        <td class="tdc"><input type="checkbox" name="ids[]"  @if(in_array($row->id, old('ids') ?? [])) checked @endif value="{{$row->id}}" class=""></td>
+        <td class="tdc"><input type="checkbox" name="ids[]" @if(in_array($row->id, old('ids') ?? [])) checked @endif value="{{$row->id}}" class=""></td>
     @endif
 
 @endif

@@ -2,6 +2,7 @@
 
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\CrmCustomersReportController;
+use App\AppPlugin\Crm\Leads\CrmLeadsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,4 +24,4 @@ Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'rep
 
 Route::get('/crm/customers/search/', [CrmCustomersController::class, 'search'])->name('CrmCustomer.search');
 Route::post('/crm/customers/search/', [CrmCustomersController::class, 'searchFilter'])->name('CrmCustomer.searchFilter');
-
+Route::get('/crm/customers/add-ticket/{customerID}', [CrmCustomersController::class, 'addTicket'])->name('CrmCustomer.addTicket');

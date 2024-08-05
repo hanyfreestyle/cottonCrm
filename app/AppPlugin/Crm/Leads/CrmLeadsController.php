@@ -105,6 +105,7 @@ class CrmLeadsController extends AdminMainController {
             'pageData' => $pageData,
             'rowData' => $rowData,
             'nodata' => true,
+            'request'=> $request,
         ]);
     }
 

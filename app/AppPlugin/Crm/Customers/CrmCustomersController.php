@@ -96,6 +96,7 @@ class CrmCustomersController extends AdminMainController {
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
+        View::share('FormType', $pageData['ViewType']);
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_add');
 
         $rowData = CrmCustomers::findOrNew(0);
@@ -114,6 +115,8 @@ class CrmCustomersController extends AdminMainController {
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
+        View::share('FormType', $pageData['ViewType']);
+
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
         $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
 
@@ -373,6 +376,7 @@ class CrmCustomersController extends AdminMainController {
             'pageData' => $pageData,
             'rowData' => $rowData,
             'nodata' => true,
+            'request' => $request,
         ]);
     }
 
@@ -399,6 +403,11 @@ class CrmCustomersController extends AdminMainController {
         return $rowData;
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function addTicket($id) {
+        return redirect()->route('admin.CrmLeads.addTicket',$id);
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {

@@ -15,8 +15,16 @@
     </div>
 
     <div class="row">
-        <x-admin.form.phone name="mobile" :row="$rowData" :label="__($defLang.'form_mobile')"
-                            :initial-country="issetArr($rowData,'mobile_code',$Config['defCountry'])" col="3"/>
+
+        @if(issetArr($_GET,'s',null) == 1 and issetArr($_GET,'n',null) != null and $FormType == 'Add' and old('mobile') == null )
+
+            <x-admin.form.phone name="mobile" :value="issetArr($_GET,'n',null)" :label="__($defLang.'form_mobile')"
+                                :initial-country="issetArr($rowData,'mobile_code',$Config['defCountry'])" col="3"/>
+        @else
+            <x-admin.form.phone name="mobile" :row="$rowData" :label="__($defLang.'form_mobile')"
+                                :initial-country="issetArr($rowData,'mobile_code',$Config['defCountry'])" col="3"/>
+        @endif
+
 
         <x-admin.form.phone name="mobile_2" :row="$rowData" :label="__($defLang.'form_mobile_2')"
                             :initial-country="issetArr($rowData,'mobile_2_code',$Config['defCountry'])" col="3" :req="false"/>

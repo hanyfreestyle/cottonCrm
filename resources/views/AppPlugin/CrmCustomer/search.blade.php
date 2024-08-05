@@ -38,6 +38,15 @@
                 <div class="col-lg-12">
                     <x-admin.hmtl.alert-massage type="nodata"/>
                 </div>
+                @if($request->search_type == 1)
+                    <div class="col-lg-3 float-left">
+                        <div class="form-group col-lg-12">
+                            <a href="{{route('admin.CrmCustomer.addNew',['s'=>$request->search_type,'n'=>$request->name])}}" class="btn btn-primary w-100 but_icon ">
+                                <i class="fas fa-user-plus"></i> {{__('admin/crm/customers.but_add_new')}}</a>
+                        </div>
+                    </div>
+                @endif
+
             @endif
         @endif
 
@@ -51,7 +60,7 @@
             var typeis = $(this).val();
             if (typeis == 1) {
                 $('#name').attr('type', 'number');
-            }else{
+            } else {
                 $('#name').attr('type', 'text');
             }
             $("#name").val('');

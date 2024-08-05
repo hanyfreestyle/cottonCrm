@@ -1,5 +1,4 @@
 <div class="{{$noLabel}} form-group col-lg-{{$col}} {{$style}} MobilePhone">
-
     @if ($labelview)
         <label class="def_form_label col-form-label label_{{$dir}} font-weight-light" for="{{$id}}">
             {{$label}}
