@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
-{{--    <link rel="stylesheet" href="{{ defAdminAssets('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css') }}">--}}
+    {{--    <link rel="stylesheet" href="{{ defAdminAssets('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css') }}">--}}
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css','Seo',true) !!}
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -66,8 +66,9 @@
         </aside>
     @endif
 
-
-    @include('admin.layouts.inc.footer')
+    @if($agent->isDesktop())
+        @include('admin.layouts.inc.footer')
+    @endif
 </div>
 
 <script src="{{defAdminAssets('plugins/jquery/jquery.min.js')}}"></script>

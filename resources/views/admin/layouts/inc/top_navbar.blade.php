@@ -4,33 +4,37 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.ChangeCollapse')}}" role="button">{!! sidebarCollapseIcon() !!}</a>
-        </li>
+        @if($agent->isDesktop())
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.ChangeCollapse')}}" role="button">{!! sidebarCollapseIcon() !!}</a>
+            </li>
 
-        @if(config('app.puzzle_active') and File::isFile(base_path('routes/AppPlugin/appCore.php')))
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.AppPuzzle.Config.IndexModel')}}" role="button">
-                    <i class="fas fa-puzzle-piece"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.adminlang.edit')}}" role="button">
-                    <i class="fas fa-language"></i>
-                </a>
-            </li>
+            @if(config('app.puzzle_active') and File::isFile(base_path('routes/AppPlugin/appCore.php')))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.AppPuzzle.Config.IndexModel')}}" role="button">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.adminlang.edit')}}" role="button">
+                        <i class="fas fa-language"></i>
+                    </a>
+                </li>
+            @endif
         @endif
+
     </ul>
 
     <ul class="navbar-nav ml-auto">
         @include('admin.layouts.inc.topNav.search')
 
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.AdminMenu.index')}}" role="button">
-                <i class="fas fa-list-ul"></i>
-            </a>
-        </li>
+        @if($agent->isDesktop())
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.AdminMenu.index')}}" role="button">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+            </li>
+        @endif
 
         <li class="nav-item dropdown">
             <a href="#" class="nav-link" data-toggle="dropdown">
@@ -66,20 +70,23 @@
             <a class="nav-link" target="_blank" href="{{ route('page_index') }}"><i class="fas fa-home"></i></a>
         </li>
 
-        @if(config('adminConfig.top_navbar_fullscreen') == true)
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-        @endif
 
-        @if(config('adminConfig.top_navbar_control') == true)
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
-                </a>
-            </li>
+        @if($agent->isDesktop())
+            @if(config('adminConfig.top_navbar_fullscreen') == true)
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            @endif
+
+            @if(config('adminConfig.top_navbar_control') == true)
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            @endif
         @endif
 
     </ul>

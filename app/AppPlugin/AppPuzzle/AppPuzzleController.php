@@ -6,9 +6,12 @@ namespace App\AppPlugin\AppPuzzle;
 use App\AppCore\Menu\AdminMenu;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use Jenssegers\Agent\Agent;
 
 
 class AppPuzzleController extends AppPuzzleFun {
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   IndexModel

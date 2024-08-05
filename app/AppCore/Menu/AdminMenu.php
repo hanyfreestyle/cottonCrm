@@ -13,7 +13,7 @@ class AdminMenu extends Model {
     public $timestamps = false;
 
     public function subMenu(): HasMany {
-        return $this->hasMany(AdminMenu::class,'parent_id')->orderBy('postion');
+        return $this->hasMany(AdminMenu::class,'parent_id');
     }
 
 }
