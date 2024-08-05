@@ -94,8 +94,8 @@ class AdminMenuController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CashAdminMenu
-    static function CashAdminMenu($stopCash = 0) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashAdminMenu($stopCash = 1) {
         if ($stopCash) {
             $CashAdminMenuList = AdminMenu::where('is_active',true)
                 ->where('parent_id',null)
