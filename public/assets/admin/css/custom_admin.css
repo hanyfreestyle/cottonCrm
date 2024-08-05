@@ -18,6 +18,24 @@
 .filter_box_total .info-box-icon i{
     font-size: 50px;
 }
+.test_bg{
+    background-color: red;
+}
+
+.def_breadcrumb_h1{
+    font-size: 20px!important;
+    margin-bottom: 5px!important;
+    padding-top: 5px;
+
+
+}
+@media (max-width: 480px) {
+    .def_breadcrumb_h1{
+        font-size: 17px!important;
+
+
+    }
+}
 
 .filter_box_total .info-box-text{
     font-size: 18px;
