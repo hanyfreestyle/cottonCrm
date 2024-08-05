@@ -32,8 +32,8 @@
                     <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',[$modelid,$row->id])}}" type="edit"/>
                 </td>
             @else
-                <td data-th="{{__('admin/def.form_button_edit')}}" class="td_action">
-                    <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',$row->id)}}" type="edit"/>
+                <td class="td_action">
+                    <x-admin.form.action-button url="{{route($PrefixRoute.'.edit',$row->id)}}" :tip="$agent->isDesktop()" type="edit"/>
                 </td>
             @endif
         @endcan
@@ -59,8 +59,8 @@
         @endcan
     @elseif($type == 'delete')
         @can($PrefixRole.'_delete')
-            <td data-th="{{__('admin/form.button_delete')}}" class="td_action">
-                <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" type="deleteSweet"/>
+            <td class="td_action">
+                <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" :tip="$agent->isDesktop()" type="deleteSweet"/>
             </td>
         @endcan
     @elseif($type == 'liveDelete')
@@ -88,7 +88,7 @@
     @elseif($type == 'profile')
         @can($PrefixRole.'_edit')
             <td class="td_action">
-                <x-admin.form.action-button url="{{route($PrefixRoute.'.profile',$row->id)}}" type="Profile"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.profile',$row->id)}}" :tip="$agent->isDesktop()" type="Profile"/>
             </td>
         @endcan
     @elseif($type == 'selectAll')

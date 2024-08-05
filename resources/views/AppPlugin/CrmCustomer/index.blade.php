@@ -31,6 +31,10 @@
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="delete"/>
+                        @can('crm_leads_add')
+                            <x-admin.table.action-but po="top" type="add"/>
+                        @endcan
+
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -90,6 +94,13 @@
 
                     {
                         data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center actionButView"
+                    },
+
+                    @endcan
+
+                    @can('crm_leads_add')
+                    {
+                        data: 'addTicket', name: 'addTicket', orderable: false, searchable: false, className: "text-center actionButView"
                     },
 
                     @endcan

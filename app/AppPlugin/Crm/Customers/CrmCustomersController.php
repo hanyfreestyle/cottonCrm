@@ -222,17 +222,20 @@ class CrmCustomersController extends AdminMainController {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
-
             ->editColumn('id', function ($row) {
-                if($this->agent->isDesktop()){
-                    return  $row->id ;
-                }else{
+                if ($this->agent->isDesktop()) {
+                    return $row->id;
+                } else {
                     return null;
                 }
 
             })
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'flag');
+            })
+
+            ->editColumn('addTicket', function ($row) {
+                return view('datatable.but')->with(['btype' => 'addTicket', 'row' => $row])->render();
             })
             ->editColumn('Profile', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Profile', 'row' => $row])->render();
@@ -243,7 +246,7 @@ class CrmCustomersController extends AdminMainController {
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag']);
+            ->rawColumns(['Edit', "Delete", 'Profile', 'Flag', 'addTicket']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -415,7 +418,7 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function addTicket($id) {
-        return redirect()->route('admin.CrmLeads.addTicket',$id);
+        return redirect()->route('admin.CrmLeads.addTicket', $id);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

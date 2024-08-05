@@ -30,7 +30,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 }
 
 table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView {
-    width: 33.333333333333333333% !important;
+    width: 49.999999999999% !important;
     text-align: center !important;
 }
 
@@ -303,6 +303,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .paginate_button {
     font-size: 13px;
 }
+table.dataTable > tbody > tr.child ul.dtr-details > li:last-child{
+    border-bottom: 1px solid #efefef!important;
+}
 
 @media (max-width: 480px) {
     .InfoViewList .infoDiv_icon .des {
@@ -349,6 +352,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     }
     table.dataTable > tbody > tr.child ul.dtr-details > li:first-child {
         padding: .5em 0;
+
     }
 
     table.dataTable > tbody > tr.child ul.dtr-details li {
@@ -357,7 +361,13 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 
     }
+
+
+
 }
+
+
+
 
 
 .modal-header {

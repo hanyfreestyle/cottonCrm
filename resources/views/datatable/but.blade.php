@@ -4,6 +4,11 @@
     <x-admin.form.action-button url='{{route($PrefixRoute.".profile",$row->id)}}' type='Profile' :tip="false"/>
 @elseif($btype == 'viewTicket')
     <x-admin.form.action-button url='{{route($PrefixRoute.".viewTicket",$row->id)}}' type='viewTicket' :tip="false"/>
+@elseif($btype == 'addTicket')
+    <x-admin.form.action-button url='{{route($PrefixRoute.".addTicket",$row->id)}}' type='addTicket' :tip="false"/>
+
+
+
 @elseif($btype == 'changeUser')
             <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#modal_user_{{$row->id}}'>
                 <i class="fas fa-people-arrows"></i></button>
