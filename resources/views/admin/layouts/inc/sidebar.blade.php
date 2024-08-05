@@ -32,7 +32,7 @@
         @endif
 
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column {{sideBarNavUlStyle()}}" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column {{sideBarNavUlStyle()}}" data-widget="treeview" role="menu" {{sideBarAccordion()}} >
                 @foreach( $adminMenu as $MenuList )
                     @if($MenuList->type == "One")
                         @can($MenuList->roleView)

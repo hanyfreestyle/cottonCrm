@@ -138,11 +138,8 @@ class CrmCustomersController extends AdminMainController {
         return view('AppPlugin.CrmCustomer.profile')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
-
         ]);
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

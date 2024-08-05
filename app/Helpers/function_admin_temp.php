@@ -36,6 +36,19 @@ if (!function_exists('sidebarCollapseIcon')) {
         return $icon;
     }
 }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('sideBarAccordion')) {
+    function sideBarAccordion($state=true) {
+        if($state == true){
+            $style = null;
+        }else{
+            $style = ' data-accordion="false" ';
+        }
+        return $style;
+    }
+}
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

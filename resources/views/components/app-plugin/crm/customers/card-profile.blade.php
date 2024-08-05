@@ -5,7 +5,7 @@
 @endif
 
 @if($softData)
-    {{--    {{$viewList}}--}}
+
     <div class="row">
         <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="false"/>
         <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_mobile')" :des="$row->mobile" col="2" col-row="col-6" :all-data="false"/>
@@ -36,7 +36,8 @@
 @else
     <div class="row">
 
-        <x-admin.hmtl.info-div :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="$allData"/>
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" :t="__($defLang.'form_name')" :des="$row->name" col="4" col-row="col-12" :all-data="$allData"/>
+
         @if(issetArr($config,'evaluation',false))
             <x-admin.hmtl.info-div :t="__($defLang.'form_evaluation')" :arr-data="$CashConfigDataList" :des="$row->evaluation_id" col="2" col-row="col-6" :all-data="$allData"/>
         @endif
