@@ -199,7 +199,8 @@
 }
 @media (max-width: 480px) {
     .mainForm_NewBox .box_title {
-        line-height: 30px;
+        line-height: 20px;
+        padding-bottom: 7px!important;
 
     }
 }
