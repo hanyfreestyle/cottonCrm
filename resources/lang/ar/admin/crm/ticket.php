@@ -26,7 +26,7 @@ return
 	'fr_lead_divce' => 'نوع الجهاز',
 	'fr_lead_sours' => 'مصدر التواصل',
 	'fr_notes' => 'ملاحظات',
-	'fr_notes_err' => 'العطل المبدئى',
+	'fr_notes_err' => 'العطل',
 	'fr_user_id' => 'أسم الفنى',
 	't_but_view' => 'التفاصيل',
 	't_customer_area' => 'المنطقة',
