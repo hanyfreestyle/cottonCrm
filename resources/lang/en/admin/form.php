@@ -5,6 +5,7 @@ return
 	'button_add' => 'Add',
 	'button_add_anther' => 'Save &amp; Add New',
 	'button_back' => 'Back',
+	'button_close' => 'Close',
 	'button_delete' => 'Delete',
 	'button_delete_all' => 'Delete All',
 	'button_delete_content' => 'Delete all content',
@@ -37,5 +38,4 @@ return
 	'text_title' => 'Title',
 	'text_youtube' => 'Youtube Code',
 	'text_youtube_title' => 'Title',
-	'button_close' => 'Close',
 ];
