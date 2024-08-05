@@ -201,6 +201,7 @@
     .mainForm_NewBox .box_title {
         line-height: 20px;
         padding-bottom: 7px!important;
+        padding-top: 7px;
 
     }
 }
