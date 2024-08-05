@@ -29,77 +29,7 @@
 .filter_box_total .info-box-icon i{
     font-size: 50px;
 }
-.test_bg{
-    background-color: red;
-}
 
-.def_breadcrumb_h1{
-    font-size: 20px!important;
-    margin-bottom: 5px!important;
-    padding-top: 5px;
-}
-.but_icon i{
-    font-size: 12px;
-    line-height: 22px;
-}
-@media (max-width: 480px) {
-    .def_breadcrumb_h1{
-        font-size: 17px!important;
-    }
-}
-.adminCard{
-
-}
-
-.adminCard .card-outline .card-title{
-    color: var(--cardColor);
-}
-
-
-.adminCard .card-title {
-    font-weight: bold;
-    font-size: 17px;
-}
-.admin_err_list{
-    list-style: none;
-    padding: 8px!important;
-}
-.admin_err_list li{
-    font-size:14px;
-}
-
-
-
-@media (max-width: 480px) {
-    .adminCard .card-header{
-        padding-top: 15px;
-        padding-bottom: 10px;
-    }
-    .adminCard .card-title{
-        font-size: 15px;
-    }
-    .adminButMobile{
-
-        padding-top: 5px!important;
-        padding-bottom: 3px!important;
-        line-height: 20px!important;
-
-    }
-    .adminButMobile i{
-        line-height: 22px!important;
-    }
-
-    .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__rendered {
-        font-size: 14px;
-
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        margin-top: 0!important;
-        line-height: 28px!important;
-    }
-
-
-}
 
 
 .filter_box_total .info-box-text{
@@ -142,7 +72,6 @@
     margin-bottom: 10px!important;
 }
 .mainForm .def_form_label{font-size:14px!important;margin-bottom:0!important;padding-top:8px;padding-bottom:7px;font-weight:700!important;color:rgba(0,0,0,.8)!important; width:100%}
-.Filter_Form_Style .def_form_label{font-size:14px!important;margin-bottom:0!important;padding-top:8px;padding-bottom:7px;font-weight:700!important;color:rgba(0,0,0,.8)!important; width:100%}
 .error_mass{font-size: 80%;color: #dc3545;}
 /*.table td,.table th{padding:.75rem;vertical-align:middle;border-top:1px solid #dee2e6}*/
 /*.table .tbutaction{ text-align:center;}*/

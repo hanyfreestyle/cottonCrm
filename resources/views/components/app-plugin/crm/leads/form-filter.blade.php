@@ -63,7 +63,7 @@
                                                   col="2" :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
                     </div>
                     <div class="row formFilterBut">
-                        <button type="submit" name="Forget" class="btn btn-dark btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
+                        <button type="submit" name="Forget" class="btn btn-dark adminButMobile btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
                     </div>
                 </form>
                 @if(isset($getSessionData))
@@ -71,7 +71,7 @@
                         <form action="{{route('admin.ForgetSession')}}" method="post">
                             @csrf
                             <input type="hidden" name="formName" value="{{$formName}}">
-                            <button type="submit" name="Forget" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> {{__('admin/formFilter.but_clear')}}</button>
+                            <button type="submit" name="Forget" class="btn btn-danger adminButMobile btn-sm"><i class="fas fa-trash-alt"></i> {{__('admin/formFilter.but_clear')}}</button>
                         </form>
                     </div>
                 @endif

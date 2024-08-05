@@ -27,6 +27,7 @@
     @yield('StyleFile')
     <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.css') }}">
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_admin.css','Seo',true) !!}
+    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_new.css','Seo',true) !!}
 
     @if( thisCurrentLocale() == 'ar')
         <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/adminlte-rtl.css') }}">
