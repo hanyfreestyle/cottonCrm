@@ -10,7 +10,7 @@
 
           @can($pageData['AddRole'])
             @if(isset($pageData['AddPageUrl']))
-              <a href="{{$pageData['AddPageUrl']}}" class="btn btn-sm btn-primary adminButMobile">{{$pageData['addButName']}}</a>
+              <a href="{{$pageData['AddPageUrl']}}" class="btn btn-sm btn-primary adminButMobile"><i class="fas fa-plus-circle"></i> {{$pageData['addButName']}}</a>
             @endif
           @endcan
 
