@@ -37,11 +37,8 @@
                     @if($pageData['ViewType'] == 'search')
                         <x-admin.table.action-but type="profile" :row="$row"/>
                         <x-admin.table.action-but type="delete" :row="$row"/>
-
                     @endif
                 @endif
-
-
             </tr>
         @endforeach
         </tbody>

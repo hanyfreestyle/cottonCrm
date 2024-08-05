@@ -89,7 +89,7 @@
     @elseif($type == 'addTicket')
         @can($PrefixRole.'_add')
             <td class="td_action">
-                <x-admin.form.action-button url="{{route($PrefixRoute.'.addTicket',$row->id)}}" type="addTicket"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.addTicket',$row->id)}}" :tip="$agent->isDesktop()" type="addTicket"/>
             </td>
         @endcan
 

@@ -77,12 +77,13 @@ table.dataTable > tbody > tr.child ul.dtr-details > li.actionButView .dtr-data {
 
 @media (max-width: 480px) {
     .rwd_table td:first-child {
-        padding-top: .5em;
+        padding-top: 0!important;
+        border-top: 0!important;
     }
 
     .rwd_table td:last-child {
         padding-bottom: .5em;
-        border-bottom: 6px double rgba(0, 0, 0, .2);
+        border-bottom: 1px dashed rgba(0, 0, 0, .2);
 
     }
 }
