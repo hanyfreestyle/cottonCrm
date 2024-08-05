@@ -58,7 +58,7 @@ class CountryController extends AdminMainController {
         $session = self::getSessionData($request);
         $rowData = self::ManageDataFilterQ(self::indexQuery(), $session);
 
-        return view('AppPlugin.dataCountry.index', compact('pageData', 'rowData'));
+        return view('AppPlugin.DataCountry.index', compact('pageData', 'rowData'));
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
