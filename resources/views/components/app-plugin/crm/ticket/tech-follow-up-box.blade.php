@@ -11,48 +11,43 @@
             </div>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas {{$open_style}}"></i></button>
-                {{--                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>--}}
             </div>
         </div>
         <div class="card-footer">
             <div class="row">
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-mobile-alt" :t="__('admin/crm/customers.form_mobile')" :des="$row->customer->mobile" col="4" col-row="col-4" :all-data="false"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-mobile-alt" :t="__('admin/crm/customers.form_mobile_2')" :des="$row->customer->mobile_2" col="4" col-row="col-4" :all-data="false"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-mobile-alt" :t="__('admin/crm/customers.form_phone')" :des="$row->customer->phone" col="4" col-row="col-4" :all-data="false"/>
+                <x-admin.hmtl.info-div-list n="mobile" :row="$row->customer" col="col-lg-4 col-6"/>
+                <x-admin.hmtl.info-div-list n="mobile_2" :row="$row->customer" col="col-lg-4 col-6"/>
+                <x-admin.hmtl.info-div-list n="phone" :row="$row->customer" col="col-lg-4 col-6"/>
             </div>
             @foreach($row->customer->address as $address)
                 <div class="row">
-                    <x-admin.hmtl.info-div v-type="icon" i="fas fa-hotel" :t="__('admin/crm/customers.form_ad_address')" :des="$address->address" col="12" col-row="col-12" :all-data="false"/>
+                    <x-admin.hmtl.info-div-list n="address" :row="$address" col="col-lg-12 col-12"/>
                 </div>
                 <div class="row">
-                    <x-admin.hmtl.info-div v-type="icon" i="fas fa-flag" :t="__('admin/crm/customers.form_ad_city')" :arr-data="$CashCityList" :des="$address->city_id" col="6" col-row="col-6"
-                                           :all-data="false"/>
-                    <x-admin.hmtl.info-div v-type="icon" i="fas fa-map-pin" :t="__('admin/crm/customers.form_ad_area')" :arr-data="$CashAreaList" :des="$address->area_id" col="6" col-row="col-6"
-                                           :all-data="false"/>
-                    <x-admin.hmtl.info-div v-type="icon" i="fas fa-couch" :t="__('admin/crm/customers.form_ad_unit_num')" :des="$address->unit_num" col="2" col-row="col-3" :all-data="false"/>
-                    <x-admin.hmtl.info-div v-type="icon" i="fas fa-layer-group" :t="__('admin/crm/customers.form_ad_floor')" :des="$address->floor" col="2" col-row="col-3" :all-data="false"/>
+                    <x-admin.hmtl.info-div-list n="city_id" :row="$address" col="col-lg-6 col-6"/>
+                    <x-admin.hmtl.info-div-list n="area_id" :row="$address" col="col-lg-6 col-6"/>
+                    <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-4 col-6"/>
+                    <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-4 col-6"/>
                 </div>
             @endforeach
             <div class="row">
-                <x-admin.hmtl.info-div i="fas fa-exclamation-triangle" :t="__('admin/crm/ticket.fr_notes_err')" :des="$row->notes_err" col="12" col-row="col-12" :all-data="false"/>
-                <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm/ticket.fr_notes')" :des="$row->notes" col="12" col-row="col-12" :all-data="false"/>
-
+                <x-admin.hmtl.info-div-list n="notes_err" :row="$row" col="col-lg-12 col-12"/>
+                <x-admin.hmtl.info-div-list n="notes" :row="$row" col="col-lg-12 col-12"/>
                 @canany(['crm_tech_follow_admin', 'crm_tech_follow_team_leader'])
-                    <x-admin.hmtl.info-div i="fas fa-user-cog" :t="__('admin/crm/ticket.fr_user_id')" :sub-des="true" :des="$row->user->name" col="12" col-row="col-12" :all-data="false"/>
+                    <x-admin.hmtl.info-div-list n="user_id" :row="$row" col="col-lg-12 col-12"/>
                 @endcan
+            </div>
 
-            </div>
             <div class="row">
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-calendar-alt" :t="__('admin/crm/ticket.var_date_add')" :des="PrintDate($row->created_at)" col="6" col-row="col-6" :all-data="false"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-tools" :t="__('admin/crm/ticket.fr_follow_date')" :des="PrintDate($row->follow_date)" col="6" col-row="col-6" :all-data="false"/>
+                <x-admin.hmtl.info-div-list n="created_at" :row="$row" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="follow_date" :row="$row" col="col-lg-6 col-6"/>
             </div>
+
             <div class="row">
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-eye" :t="__('admin/crm/ticket.var_open_type')" :arr-data="$DefCat['TicketOpenType']" :des="$row->open_type" col="6" col-row="col-6"
-                                       :all-data="false"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-tag" :t="__('admin/crm/ticket.var_ticket_state')" :arr-data="$DefCat['TicketState']" :des="$row->follow_state" col="6" col-row="col-6"
-                                       :all-data="false"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-desktop" :t="__('admin/crm/ticket.fr_lead_divce')" :arr-data="$CashConfigDataList" :des="$row->device_id" col="6" col-row="col-6"/>
-                <x-admin.hmtl.info-div v-type="icon" i="fas fa-copyright" :t="__('admin/crm/ticket.fr_lead_brand')" :arr-data="$CashConfigDataList" :des="$row->brand_id" col="6" col-row="col-6"/>
+                <x-admin.hmtl.info-div-list n="open_type" :row="$row" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="follow_state" :row="$row" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="device_id" :row="$row" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="brand_id" :row="$row" col="col-lg-6 col-6"/>
             </div>
 
             <div class="row text-center follow_action_but py-2">
@@ -61,7 +56,5 @@
                 <a href="{{route($PrefixRoute.'.ViewTicket',$row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm/ticket.but_update')}}</a>
             </div>
         </div>
-
-
     </div>
 </div>

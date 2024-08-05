@@ -1,40 +1,40 @@
 @if($n == 'name')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-tie" :t="__($defLang.'form_name')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-tie" :t="__('admin/crm/customers.form_name')"
                            :des="$row->name" :col="$col" :all-data="$allData"/>
 
 @elseif($n =='mobile')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" s="number" :t="__($defLang.'form_mobile')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" s="number" :t="__('admin/crm/customers.form_mobile')"
                            :des="$row->mobile" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='mobile_2')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" s="number" :t="__($defLang.'form_mobile_2')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-mobile-alt" s="number" :t="__('admin/crm/customers.form_mobile_2')"
                            :des="$row->mobile_2" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='phone')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-phone-square" s="number" :t="__($defLang.'form_phone')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-phone-square" s="number" :t="__('admin/crm/customers.form_phone')"
                            :des="$row->phone" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='whatsapp')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-whatsapp" s="number" :t="__($defLang.'form_whatsapp')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-whatsapp" s="number" :t="__('admin/crm/customers.form_whatsapp')"
                            :des="$row->whatsapp" :col="$col" :all-data="$allData"/>
 @elseif($n=='country_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-globe-americas" :t="__($defLang.'form_ad_country')" :arr-data="$CashCountryList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-globe-americas" :t="__('admin/crm/customers.form_ad_country')" :arr-data="$CashCountryList"
                            :des="$row->country_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='city_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-flag" :t="__($defLang.'form_ad_city')" :arr-data="$CashCityList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-flag" :t="__('admin/crm/customers.form_ad_city')" :arr-data="$CashCityList"
                            :des="$row->city_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='area_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-map-pin" :t="__($defLang.'form_ad_area')" :arr-data="$CashAreaList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-map-pin" :t="__('admin/crm/customers.form_ad_area')" :arr-data="$CashAreaList"
                            :des="$row->area_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='address')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-hotel" :t="__($defLang.'form_ad_address')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-hotel" :t="__('admin/crm/customers.form_ad_address')"
                            :des="$row->address" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='unit_num')
-    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-couch" :t="__($defLang.'form_ad_unit_num')"
+    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-couch" :t="__('admin/crm/customers.form_ad_unit_num')"
                            :des="$row->unit_num" :col="$col" :all-data="$allData"/>
 @elseif($n=='floor')
-    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-layer-group" :t="__($defLang.'form_ad_floor')"
+    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-layer-group" :t="__('admin/crm/customers.form_ad_floor')"
                            :des="$row->floor" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='latitude')
@@ -42,17 +42,17 @@
                            des="[{{$row->latitude.' , '.$row->longitude}}]" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='evaluation_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-star" :t="__($defLang.'form_evaluation')" :arr-data="$CashConfigDataList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-star" :t="__('admin/crm/customers.form_evaluation')" :arr-data="$CashConfigDataList"
                            :des="$row->evaluation_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='gender_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-restroom" :t="__($defLang.'form_gender')" :arr-data="$DefCat['gender']"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-restroom" :t="__('admin/crm/customers.form_gender')" :arr-data="$DefCat['gender']"
                            :des="$row->gender_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='email')
 
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-at" :t="__($defLang.'form_email')" s="semi_number"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-at" :t="__('admin/crm/customers.form_email')" s="semi_number"
                            :des="$row->email" :col="$col" :all-data="$allData"/>
 @elseif($n=='post_code')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-inbox" :t="__($defLang.'form_ad_post_code')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-inbox" :t="__('admin/crm/customers.form_ad_post_code')"
                            :des="$row->post_code" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='created_at')

@@ -3,14 +3,12 @@
 namespace App\AppPlugin\Crm\TicketsTechFollow;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 

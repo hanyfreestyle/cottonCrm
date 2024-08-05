@@ -44,6 +44,7 @@
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/table.css','Seo',true) !!}
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/infoDive.css','Seo',true) !!}
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/popupModal.css','Seo',true) !!}
+    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/user_follow.css','Seo',true) !!}
 
 </head>
 

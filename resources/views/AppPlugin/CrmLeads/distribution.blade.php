@@ -29,7 +29,8 @@
                     <div class="row">
                         <x-app-plugin.crm.leads.user-select :col-mobile="8" type="tech" :labelview="false" :req="true"/>
                         <div class="col">
-                            <button type="submit" name="B1" class="btn btn-primary but_add_to_user adminButMobile float-left"><i class="fas fa-user-plus"></i> {{__('admin/crm/leads.but_add_to_user')}}</button>
+                            <button type="submit" name="B1" class="btn btn-primary but_add_to_user adminButMobile float-left"><i class="fas fa-user-plus"></i> {{__('admin/crm/leads.but_add_to_user')}}
+                            </button>
                         </div>
                     </div>
 
@@ -53,21 +54,28 @@
                             </thead>
                             <tbody>
                             @foreach($rowData as $row)
-                                <tr>
-                                    <td data-th="{{__('admin/crm/ticket.var_date_add')}}">{{ PrintDate($row->created_at)}}</td>
-                                    <td data-th="{{__('admin/crm/ticket.fr_follow_date')}}">{{PrintDate($row->follow_date)}}</td>
-                                    <td data-th="{{__('admin/crm/customers.form_name')}}">{{$row->customer->name ?? ''}}</td>
-                                    <td data-th="{{__('admin/crm/customers.form_mobile')}}">{{$row->customer->mobile ?? ''}}</td>
-                                    <td data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
-                                    <td data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
-                                    <td data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
-                                    <td data-th="{{__('admin/crm/ticket.t_but_view')}}" class="td_action">
-                                        <button type="button" class="btn btn-sm btn-default adminButMobile" data-toggle="modal" data-target="#modal_{{$row->id}}"><i class="fas fa-eye"></i></button>
-                                    </td>
-                                    <x-app-plugin.crm.leads.popup-lead-info :id="$row->id" :config="$Config" :row="$row"/>
-                                    <x-admin.table.action-but type="edit" :row="$row"/>
-                                    <x-admin.table.action-but type="delete" :row="$row"/>
-                                    <x-admin.table.action-but type="selectAll" :row="$row"/>
+                                <td>
+                                <td data-th="{{__('admin/crm/ticket.var_date_add')}}">{{ PrintDate($row->created_at)}}</td>
+                                <td data-th="{{__('admin/crm/ticket.fr_follow_date')}}">{{PrintDate($row->follow_date)}}</td>
+                                <td data-th="{{__('admin/crm/customers.form_name')}}">{{$row->customer->name ?? ''}}</td>
+                                <td data-th="{{__('admin/crm/customers.form_mobile')}}">{{$row->customer->mobile ?? ''}}</td>
+                                <td data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
+                                <td data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
+                                <td data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
+
+
+                                <td data-th="{{__('admin/crm/ticket.t_but_view')}}" class="td_action">
+                                    <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
+                                </td>
+
+                                <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">
+                                    <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$Config"/>
+                                    <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>
+                                </x-admin.hmtl.popup-modal>
+
+                                <x-admin.table.action-but type="edit" :row="$row"/>
+                                <x-admin.table.action-but type="delete" :row="$row"/>
+                                <x-admin.table.action-but type="selectAll" :row="$row"/>
                                 </tr>
                             @endforeach
                             </tbody>

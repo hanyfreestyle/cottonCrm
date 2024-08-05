@@ -12,7 +12,7 @@
         @if(count($rowData) > 0 )
             <div class="row">
                 @foreach($rowData as $row)
-                    <x-app-plugin.crm.ticket.tech-follow-up-box :row="$row" :open="true"/>
+                    <x-app-plugin.crm.ticket.tech-follow-up-box :row="$row" :open="false"/>
                 @endforeach
             </div>
         @else
