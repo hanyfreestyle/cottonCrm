@@ -17,9 +17,9 @@ class Submit extends Component {
     public $outline;
     public $buttonBackGround;
     public $dir;
+    public $icon;
 
-    public function __construct
-    (
+    public function __construct(
         $type = 'submit',
         $name = 'B1',
         $text = 'Hany',
@@ -27,6 +27,7 @@ class Submit extends Component {
         $bg = 'p',
         $outline = false,
         $dir = '',
+        $icon = null,
     ) {
         $this->type = $type;
         $this->name = $name;
@@ -38,6 +39,7 @@ class Submit extends Component {
 
         if ($text == 'Add') {
             $this->text = __('admin/form.button_add');
+            $this->icon = 'fas fa-plus-circle';
         } elseif ($text == 'Edit') {
             $this->text = __('admin/form.button_edit');
         } elseif ($text == 'Update') {

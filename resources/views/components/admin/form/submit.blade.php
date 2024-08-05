@@ -3,7 +3,7 @@
         <button
             type="{{$type}}"
             name="{{$name}}"
-            class="btn {{$size}} {{$buttonBackGround}} {{$dir}}">
-            {{$text}}</button>
+            class="btn {{$size}} {{$buttonBackGround}} {{$dir}} adminButMobile">
+            <i class="{{$icon}}"></i> {{$text}}</button>
     </div>
 </div>

@@ -34,7 +34,7 @@
                 <div class="row">
                     <x-admin.form.date-crm name="follow_date" :label="__('admin/crm/ticket.fr_follow_date')" value="{{old('follow_date',$followDate)}}" col="3"/>
                     @can($PrefixRole."_distribution")
-                        <x-app-plugin.crm.leads.user-select type="tech" :req="false"/>
+                        <x-app-plugin.crm.leads.user-select type="tech" col-mobile="12" :req="false"/>
                     @endcan
                 </div>
                 <div class="row">
