@@ -60,7 +60,7 @@
 
 @media (max-width: 480px) {
     .adminCard .card-header{
-        padding-top: 10px;
+        padding-top: 15px;
         padding-bottom: 10px;
     }
     .adminCard .card-title{
