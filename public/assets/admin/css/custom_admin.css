@@ -87,7 +87,7 @@
     }
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         margin-top: 0!important;
-        line-height: 22px;
+        line-height: 28px!important;
     }
 
 
