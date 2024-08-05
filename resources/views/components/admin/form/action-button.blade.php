@@ -9,7 +9,7 @@
        @if($tip)
        data-toggle="tooltip" data-placement="top" title="{{$printLable}}"
        @endif
-       class="btn {{$size}} btn-{{$bg}} {{$sweetDelClass}}">
+       class="adminButMobile btn {{$size}} btn-{{$bg}} {{$sweetDelClass}}">
         @if($icon)
             <i class="fa {{$icon}}"></i> @if(!$tip) @endif
         @endif
