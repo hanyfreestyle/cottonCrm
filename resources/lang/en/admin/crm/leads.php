@@ -16,6 +16,7 @@ return
 	'distribution_err_user' => '',
 	'model_title' => '',
 	'report_brand' => '',
+	'report_card_all_count' => '',
 	'report_device' => '',
 	'report_lead_area' => '',
 	'report_lead_category' => '',
@@ -23,5 +24,4 @@ return
 	'report_lead_sours' => '',
 	'report_users' => '',
 	't_cust_name' => '',
-	'report_card_all_count' => '',
 ];
