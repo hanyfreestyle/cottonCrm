@@ -1,4 +1,4 @@
-<div class="card card-{{$bg}} card-outline">
+<div class=" card card-{{$bg}} card-outline">
   <div class="card-header def_card_header">
     <h3 class="card-title text-{{$bg}} font-weight-normal ">{{$title}}</h3>
     <div class="card-tools">
@@ -10,7 +10,7 @@
 
           @can($pageData['AddRole'])
             @if(isset($pageData['AddPageUrl']))
-              <a href="{{$pageData['AddPageUrl']}}" class="btn btn-sm btn-primary">{{$pageData['addButName']}}</a>
+              <a href="{{$pageData['AddPageUrl']}}" class="btn btn-sm btn-primary adminButMobile">{{$pageData['addButName']}}</a>
             @endif
           @endcan
 
@@ -23,7 +23,7 @@
 
         @if( $pageData['ViewType'] == 'List' and $pageData['AddConfig'] == true and isset($pageData['ConfigRoute']))
           @can($pageData['EditRole'])
-            <a href="{{$pageData['ConfigRoute']}}" class="btn btn-sm btn-dark"><i class="fas fa-cogs"></i></a>
+            <a href="{{$pageData['ConfigRoute']}}" class="btn btn-sm btn-dark adminButMobile"><i class="fas fa-cogs"></i></a>
           @endcan
         @endif
       @endif
