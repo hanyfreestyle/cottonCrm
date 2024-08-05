@@ -59,8 +59,8 @@
                                     <td data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
                                     <td data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
                                     <td data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
-                                    <td class="td_action">
-                                        <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal_{{$row->id}}"><i class="fas fa-eye"></i></button>
+                                    <td data-th="{{__('admin/crm/ticket.t_but_view')}}" class="td_action">
+                                        <button type="button" class="btn btn-sm btn-default adminButMobile" data-toggle="modal" data-target="#modal_{{$row->id}}"><i class="fas fa-eye"></i></button>
                                     </td>
                                     <x-app-plugin.crm.leads.popup-lead-info :id="$row->id" :config="$Config" :row="$row"/>
                                     <x-admin.table.action-but type="edit" :row="$row"/>
