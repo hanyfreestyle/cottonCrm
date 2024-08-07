@@ -28,9 +28,9 @@
 
                     <div class="col-lg-12">
                         <div class="row">
-{{--                            <x-admin.web-config.form model="product" col="col-lg-6" :row="$setting"  />--}}
-{{--                            <x-admin.web-config.form model="schema" col="col-lg-6" :row="$setting"  />--}}
-{{--                            <x-admin.web-config.form model="social" col="col-lg-6" :row="$setting"  />--}}
+                            <x-admin.web-config.form model="product" col="col-lg-6" :row="$setting"  />
+                            <x-admin.web-config.form model="schema" col="col-lg-6" :row="$setting"  />
+                            <x-admin.web-config.form model="social" col="col-lg-6" :row="$setting"  />
 {{--                            <x-admin.web-config.form model="telegram" col="col-lg-6" :row="$setting"  />--}}
                         </div>
                     </div>
