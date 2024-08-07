@@ -38,7 +38,7 @@ class Input extends Component {
         $tdir = null,
         $holder = false,
         $noLabel = null,
-        
+
     ) {
         $this->type = $type;
         $this->id = $id;
