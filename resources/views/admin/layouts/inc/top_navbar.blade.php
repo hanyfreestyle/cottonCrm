@@ -36,20 +36,23 @@
             </li>
         @endif
 
-        <li class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown">
-                {!! AdminHelper::detectFlag(LaravelLocalization::getSupportedLocales()[LaravelLocalization::getCurrentLocale()]['regional'])['flagIcon'] !!}
-            </a>
-            <div class="dropdown-menu dropdown-menu-right p-0">
-                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    @if (thisCurrentLocale() != $localeCode)
-                        <a class="dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                            {!! AdminHelper::detectFlag($properties['regional'])['flagIcon'] !!} {{ $properties['native'] }}
-                        </a>
-                    @endif
-                @endforeach
-            </div>
-        </li>
+        @if(count(config('app.admin_lang')) > 1)
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link" data-toggle="dropdown">
+                    {!! AdminHelper::detectFlag(LaravelLocalization::getSupportedLocales()[LaravelLocalization::getCurrentLocale()]['regional'])['flagIcon'] !!}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if (thisCurrentLocale() != $localeCode)
+                            <a class="dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {!! AdminHelper::detectFlag($properties['regional'])['flagIcon'] !!} {{ $properties['native'] }}
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </li>
+        @endif
+
 
         @include('admin.layouts.inc.topNav.messages')
         @include('admin.layouts.inc.topNav.user_profile')
@@ -66,9 +69,12 @@
             </form>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" target="_blank" href="{{ route('page_index') }}"><i class="fas fa-home"></i></a>
-        </li>
+        @if(config('app.WEB_VIEW'))
+            <li class="nav-item">
+                <a class="nav-link" target="_blank" href="{{ route('page_index') }}"><i class="fas fa-home"></i></a>
+            </li>
+        @endif
+
 
 
         @if($agent->isDesktop())

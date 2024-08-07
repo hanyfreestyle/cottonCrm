@@ -11,12 +11,10 @@ return new class extends Migration {
         Schema::create('config_settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('web_url')->nullable();
-            $table->integer('web_status')->default('1');
-            $table->integer('switch_lang')->default('1');
-            $table->integer('users_login')->default('1');
-            $table->integer('serach')->default('1');
-            $table->integer('serach_type')->default('1');
-            $table->integer('wish_list')->default('1');
+            $table->integer('web_status')->nullable()->default('1');
+            $table->integer('switch_lang')->nullable()->default('1');
+            $table->integer('users_login')->nullable();
+
 
             $table->string('phone_num')->nullable();
             $table->string('whatsapp_num')->nullable();
@@ -33,19 +31,22 @@ return new class extends Migration {
             $table->string('google_api')->nullable();
 
             $table->integer('telegram_send')->nullable();
-            $table->string('telegram_key')->nullable();
-            $table->string('telegram_phone')->nullable();
-            $table->string('telegram_group')->nullable();
+            $table->text('telegram_key')->nullable();
+            $table->text('telegram_phone')->nullable();
+            $table->text('telegram_group')->nullable();
 
-            $table->integer('page_about')->default('1');
-            $table->integer('page_warranty')->default('1');
-            $table->integer('page_shipping')->default('1');
-            $table->integer('pro_sale_lable')->default('1');
-            $table->integer('pro_quick_view')->default('1');
-            $table->integer('pro_quick_shop')->default('1');
-            $table->integer('pro_warranty_tab')->default('1');
-            $table->integer('pro_shipping_tab')->default('1');
-            $table->integer('pro_social_share')->default('1');
+            $table->integer('page_about')->nullable()->default('1');
+            $table->integer('page_warranty')->nullable()->default('1');
+            $table->integer('page_shipping')->nullable()->default('1');
+            $table->integer('pro_sale_lable')->nullable()->default('1');
+            $table->integer('pro_quick_view')->nullable()->default('1');
+            $table->integer('pro_quick_shop')->nullable()->default('1');
+            $table->integer('pro_warranty_tab')->nullable()->default('1');
+            $table->integer('pro_shipping_tab')->nullable()->default('1');
+            $table->integer('pro_social_share')->nullable()->default('1');
+            $table->integer('serach')->nullable()->default('1');
+            $table->integer('serach_type')->nullable()->default('1');
+            $table->integer('wish_list')->nullable()->default('1');
 
             $table->string('schema_type')->nullable();
             $table->string('schema_lat')->nullable();

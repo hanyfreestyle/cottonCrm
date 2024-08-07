@@ -16,7 +16,7 @@ class SettingFormRequest extends FormRequest {
     public function rules(): array {
 
         $rules = [
-            'web_status' => 'required',
+
 
             'phone_num' => 'required',
             'whatsapp_num' => 'required',
@@ -30,14 +30,24 @@ class SettingFormRequest extends FormRequest {
             'instagram' => 'nullable|url',
             'linkedin' => 'nullable|url',
             'google_api' => 'nullable',
-
-
-            'switch_lang' => 'required',
-            'users_login' => 'required',
-            'serach' => 'required',
-            'serach_type' => 'required',
-            'wish_list' => 'required',
         ];
+
+        if (config('app.WEB_VIEW')) {
+            $rules += ['web_status' => 'required'];
+        }
+
+        if (config('app.WEB_VIEW') and count(config('app.web_lang')) > 1) {
+            $rules += ['switch_lang' => 'required'];
+        }
+
+        if (config('app.USER_LOGIN')) {
+            $rules += ['users_login' => 'required'];
+        }
+
+
+        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
+
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
             $rules += [
@@ -50,23 +60,32 @@ class SettingFormRequest extends FormRequest {
                 'pro_warranty_tab' => 'required',
                 'pro_shipping_tab' => 'required',
                 'pro_social_share' => 'required',
-
+                'serach' => 'required',
+                'serach_type' => 'required',
+                'wish_list' => 'required',
             ];
         }
 
-        $rules += [
-            'schema_type' => 'required|alpha',
-            'schema_lat'=> "nullable|numeric|required_with:schema_lat",
-            'schema_long'=> "nullable|numeric|required_with:schema_long",
-            'schema_country' => 'required|alpha',
-            'schema_postal_code'=> 'required|regex:/^[0-9]{3,7}$/',
-        ];
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $rules += [
+                'schema_type' => 'required|alpha',
+                'schema_lat' => "nullable|numeric|required_with:schema_lat",
+                'schema_long' => "nullable|numeric|required_with:schema_long",
+                'schema_country' => 'required|alpha',
+                'schema_postal_code' => 'required|regex:/^[0-9]{3,7}$/',
+            ];
+        }
+
 
         foreach (config('app.web_lang') as $key => $lang) {
-            $rules[$key . ".name"] = 'required';
-            $rules[$key . ".closed_mass"] = 'required';
-            $rules[$key . ".schema_address"] = 'required';
-            $rules[$key . ".schema_city"] = 'required';
+            if (config('app.WEB_VIEW')) {
+                $rules[$key . ".name"] = 'required';
+                $rules[$key . ".closed_mass"] = 'required';
+            }
+            if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+                $rules[$key . ".schema_address"] = 'required';
+                $rules[$key . ".schema_city"] = 'required';
+            }
         }
         return $rules;
     }

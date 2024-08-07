@@ -10,7 +10,7 @@ class PagesViewController extends WebMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
 
         $meta = parent::getMeatByCatId('home');
@@ -23,19 +23,6 @@ class PagesViewController extends WebMainController {
         return view('web.index')->with([
             'pageView' => $pageView,
         ]);
-
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   UnderConstruction
-    public function UnderConstruction() {
-        $config = WebMainController::getWebConfig(0);
-        if($config->web_status == 1 or Auth::check()) {
-            return redirect()->route('page_index');
-        }
-        $meta = parent::getMeatByCatId('home');
-        parent::printSeoMeta($meta, 'page_index');
-
-        return view('under');
-    }
 }

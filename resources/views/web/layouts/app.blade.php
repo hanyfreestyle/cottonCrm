@@ -21,7 +21,7 @@
 </head>
 
 <body class="{{htmlBodyStyle($pageView)}}">
-
+@yield('content')
 <a id="nt_backtop" class="pf br__50 z__100 des_bt2" href="#"><span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span></a>
 
 {{--{!! (new \App\Helpers\MinifyTools)->MinifyJs('temp/js/jquery-3.5.1.min.js',"Web",false) !!}--}}

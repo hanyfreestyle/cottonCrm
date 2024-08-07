@@ -17,7 +17,11 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'configAdminDir' => env('ADMIN_DIR', 'admin'),
+    'configAdminDir' => env('APP_ADMIN_DIR', 'admin'),
+    'WEB_VIEW' => env('APP_WEB_VIEW', true),
+    'WEB_CONFIG_TELEGRAM' => env('APP_WEB_CONFIG_TELEGRAM', true),
+    'USER_LOGIN' => env('USER_LOGIN', true),
+    'CONFIG_TELEGRAM' => env('CONFIG_TELEGRAM', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -92,7 +96,7 @@ return [
 
     'admin_lang' =>[
         'ar'=>'العربية',
-        'en'=>'English',
+//        'en'=>'English',
     ],
 
     'web_lang' =>[

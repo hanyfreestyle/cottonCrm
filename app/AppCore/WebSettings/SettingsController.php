@@ -11,6 +11,7 @@ use App\AppPlugin\Pages\Models\Page;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 
 class SettingsController extends AdminMainController {
@@ -54,10 +55,12 @@ class SettingsController extends AdminMainController {
             $pagesList = [];
         }
 
+        View::share('pagesList', $pagesList);
+
         return view('admin.appCore.config.settingWeb')->with([
             'pageData' => $pageData,
             'setting' => $setting,
-            'pagesList' => $pagesList,
+
         ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -67,11 +70,7 @@ class SettingsController extends AdminMainController {
         $saveData = Setting::findorfail('1');
         $saveData->web_status = $request->input('web_status');
         $saveData->switch_lang = $request->input('switch_lang');
-
-        $saveData->wish_list = $request->input('wish_list');
         $saveData->users_login = $request->input('users_login');
-        $saveData->serach = $request->input('serach');
-        $saveData->serach_type = $request->input('serach_type');
 
 
         $saveData->phone_num = $request->input('phone_num');
@@ -81,17 +80,23 @@ class SettingsController extends AdminMainController {
         $saveData->email = $request->input('email');
         $saveData->def_url = $request->input('def_url');
 
-        $saveData->facebook = $request->input('facebook');
-        $saveData->youtube = $request->input('youtube');
-        $saveData->twitter = $request->input('twitter');
-        $saveData->instagram = $request->input('instagram');
-        $saveData->linkedin = $request->input('linkedin');
-        $saveData->google_api = $request->input('google_api');
+        if (config('app.WEB_VIEW')) {
+            $saveData->facebook = $request->input('facebook');
+            $saveData->youtube = $request->input('youtube');
+            $saveData->twitter = $request->input('twitter');
+            $saveData->instagram = $request->input('instagram');
+            $saveData->linkedin = $request->input('linkedin');
+            $saveData->google_api = $request->input('google_api');
+        }
 
-//        $saveData->telegram_send = $request->input('telegram_send');
-//        $saveData->telegram_key = $request->input('telegram_key');
-//        $saveData->telegram_phone = $request->input('telegram_phone');
-//        $saveData->telegram_group = $request->input('telegram_group');
+
+        if (config('app.CONFIG_TELEGRAM')) {
+            $saveData->telegram_send = $request->input('telegram_send');
+            $saveData->telegram_key = $request->input('telegram_key');
+            $saveData->telegram_phone = $request->input('telegram_phone');
+            $saveData->telegram_group = $request->input('telegram_group');
+        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
             $saveData->page_about = $request->input('page_about');
@@ -103,13 +108,18 @@ class SettingsController extends AdminMainController {
             $saveData->pro_warranty_tab = $request->input('pro_warranty_tab');
             $saveData->pro_shipping_tab = $request->input('pro_shipping_tab');
             $saveData->pro_social_share = $request->input('pro_social_share');
+            $saveData->wish_list = $request->input('wish_list');
+            $saveData->serach = $request->input('serach');
+            $saveData->serach_type = $request->input('serach_type');
         }
 
-        $saveData->schema_type = $request->input('schema_type');
-        $saveData->schema_lat = $request->input('schema_lat');
-        $saveData->schema_long = $request->input('schema_long');
-        $saveData->schema_postal_code = $request->input('schema_postal_code');
-        $saveData->schema_country = $request->input('schema_country');
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $saveData->schema_type = $request->input('schema_type');
+            $saveData->schema_lat = $request->input('schema_lat');
+            $saveData->schema_long = $request->input('schema_long');
+            $saveData->schema_postal_code = $request->input('schema_postal_code');
+            $saveData->schema_country = $request->input('schema_country');
+        }
 
 
         $saveData->save();

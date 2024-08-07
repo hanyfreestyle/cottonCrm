@@ -21,9 +21,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 });
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-    Route::get('/under-construction', [PagesViewController::class, 'UnderConstruction'])->name('UnderConstruction');
-});
+if (config('app.WEB_VIEW')) {
+    Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+        Route::get('/under-construction', [PagesViewController::class, 'UnderConstruction'])->name('UnderConstruction');
+    });
+}else{
+    Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+        Route::get('/index', [PagesViewController::class, 'NoIndex'])->name('NoIndex');
+    });
+}
+
 
 
 Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () {
@@ -32,7 +39,6 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
 
     });
 });
-
 
 
 Route::fallback(RouteNotFoundController::class);

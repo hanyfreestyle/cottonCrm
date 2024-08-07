@@ -29,6 +29,7 @@ class RouteNotFoundController extends Controller {
             abort('410');
         } else {
             abort('404');
+
         }
 
     }
