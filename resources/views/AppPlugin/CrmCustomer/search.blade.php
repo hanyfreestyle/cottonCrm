@@ -12,7 +12,7 @@
                 <div class="col-md-12">
                     <form class="mainForm" action="{{route($PrefixRoute.'.searchFilter')}}" method="post">
                         @csrf
-                        <div class="row CustSearchForm">
+                        <div class="row CustomersSearchForm">
                             <x-admin.form.select-arr name="search_type" :sendvalue="old('search_type',issetArr($_POST,'search_type',1))" :send-arr="$CustomersSearchType"
                                                      :labelview="false" :label="__('admin/crm/customers.search_type')" col="3" :col-mobile="12"/>
 

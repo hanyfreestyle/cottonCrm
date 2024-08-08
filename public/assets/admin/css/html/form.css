@@ -113,3 +113,16 @@ textarea.parsley-error {
     }
 }
 
+
+.CustomersSearchForm{
+    padding-top: 7px;
+    padding-bottom: 8px;
+}
+
+.CustomersSearchForm .form-group{
+    padding-top: 7px;
+    padding-bottom: 8px;
+}
+
+
+
