@@ -11,6 +11,12 @@ trait DefCategoryTraits {
             (object)['id' => 1, 'name' => __('admin/defCat.gender_1')],
             (object)['id' => 2, 'name' => __('admin/defCat.gender_2')],
         ];
+        $Cat['CustomersSearchType'] = [
+            ['id' => 1, 'name' => __('admin/crm/customers.search_type_1')],
+            ['id' => 2, 'name' => __('admin/crm/customers.search_type_2')],
+            ['id' => 3, 'name' => __('admin/crm/customers.search_type_3')],
+        ];
+
 
         $Cat['month'] = [
             (object)['id' => 1, "name" => __('admin/defCat.month_1')],
@@ -37,6 +43,34 @@ trait DefCategoryTraits {
             (object)['id' => 3, 'name' => __('admin/crm/ticket.var_ticket_state_3')],
             (object)['id' => 4, 'name' => __('admin/crm/ticket.var_ticket_state_4')],
             (object)['id' => 5, 'name' => __('admin/crm/ticket.var_ticket_state_5')],
+        ];
+
+        $Cat['ContinentArr'] = [
+            ['id' => 'AS', 'name' => __('admin/dataCountry.continent_as')],
+            ['id' => 'EU', 'name' => __('admin/dataCountry.continent_eu')],
+            ['id' => 'AF', 'name' => __('admin/dataCountry.continent_af')],
+            ['id' => 'OC', 'name' => __('admin/dataCountry.continent_oc')],
+            ['id' => 'NA', 'name' => __('admin/dataCountry.continent_na')],
+            ['id' => 'AN', 'name' => __('admin/dataCountry.continent_an')],
+            ['id' => 'SA', 'name' => __('admin/dataCountry.continent_sa')],
+        ];
+
+        $Cat['FilterTypeArr'] = [
+            ['id' => '1', 'name' => __('admin/config/upFilter.filter_action_1')],
+            ['id' => '2', 'name' => __('admin/config/upFilter.filter_action_2')],
+            ['id' => '3', 'name' => __('admin/config/upFilter.filter_action_3')],
+            ['id' => '4', 'name' => __('admin/config/upFilter.filter_action_4')],
+            ['id' => '5', 'name' => __('admin/config/upFilter.filter_action_5')],
+        ];
+
+        $Cat['PrintPhotoPosition'] = [
+            ['id' => '1', 'name' => "Top"],
+            ['id' => '2', 'name' => "Bottom"],
+        ];
+
+        $Cat['WebSearchTypeArr'] = [
+            ['id' => '1', 'name' => __('admin/config/webConfig.web_serach_type_1')],
+            ['id' => '2', 'name' => __('admin/config/webConfig.web_serach_type_2')],
         ];
 
 

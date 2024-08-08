@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AdminHelper;
 use App\Helpers\Seo\SchemaTools;
+use App\Http\Traits\GetCashListWeb;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -12,12 +13,8 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\TwitterCard;
 
-
-
-
-
 class WebMainController extends DefaultMainController {
-
+    use GetCashListWeb;
 
     public $pageView;
     public $StopeCash = 0;
@@ -286,8 +283,5 @@ class WebMainController extends DefaultMainController {
         }
         return $meta;
     }
-
-
-
 
 }
