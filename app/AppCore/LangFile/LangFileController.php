@@ -37,6 +37,11 @@ class LangFileController extends AdminMainController {
 
         $selId = AdminHelper::arrIsset($_GET, 'id', '');
         View::share('selId', $selId);
+
+        if (!config('app.ADMIN_LANG')) {
+            abort('403');
+        }
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -313,7 +318,7 @@ class LangFileController extends AdminMainController {
         for ($i = 0; $i < $forloop; $i++) {
             $langloop = [];
             foreach ($AppLang as $key => $lang) {
-                $langloop += $rowData[$key][$i];
+                $langloop += $rowData[$key][$i] ?? [];
             }
             array_push($LastData, $langloop);
         }

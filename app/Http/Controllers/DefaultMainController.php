@@ -17,14 +17,11 @@ use Jenssegers\Agent\Agent;
 
 class DefaultMainController extends Controller {
 
-    public $priceRang_Arr;
-    public $Property_TypeArr;
-
     public function __construct() {
 
 
         $this->agent = new Agent();
-        View::share('agent',$this->agent);
+        View::share('agent', $this->agent);
 
         $Continent_Arr = [
             "1" => ['id' => 'AS', 'name' => __('admin/dataCountry.continent_as')],
@@ -42,6 +39,8 @@ class DefaultMainController extends Controller {
         }
 
     }
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

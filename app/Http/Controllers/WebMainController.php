@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AdminHelper;
 use App\Helpers\Seo\SchemaTools;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\TwitterCard;
+
+
+
 
 
 class WebMainController extends DefaultMainController {
@@ -22,10 +25,6 @@ class WebMainController extends DefaultMainController {
     public function __construct() {
         parent::__construct();
         $this->StopeCash = 0;
-
-
-//        $agent = new Agent();
-//        View::share('agent', $agent);
 
         $this->WebConfig = self::getWebConfig($this->StopeCash);
         View::share('WebConfig', $this->WebConfig);
@@ -56,6 +55,23 @@ class WebMainController extends DefaultMainController {
 
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UnderConstruction() {
+        $config = WebMainController::getWebConfig(0);
+        if ($config->web_status == 1 or Auth::check()) {
+            return redirect()->route('page_index');
+        }
+        $meta = self::getMeatByCatId('home');
+        self::printSeoMeta($meta, 'page_index');
+
+        return view('under');
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function NoIndex() {
+        return view('no_index');
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     printSeoMeta
     public function printSeoMeta($row, $route = null, $defPhoto = "logo", $sendArr = array()) {
@@ -271,32 +287,7 @@ class WebMainController extends DefaultMainController {
         return $meta;
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function abortError404($from = "root") {
 
-        $Meta = DefaultMainController::getMeatByCatId('err_404');
-
-        WebMainController::printSeoMeta($Meta, null, null, array('ErrorPage' => true));
-        $pageView = [
-            'SelMenu' => '',
-            'show_fix' => true,
-            'slug' => null,
-            'go_home' => route('page_index'),
-        ];
-        View::share('pageView', $pageView);
-        View::share('meta', $Meta);
-
-        $adminDir = config('app.configAdminDir');
-        $currentSlug = Route::current()->originalParameters();
-
-        if (isset($currentSlug['slug']) and mb_substr($currentSlug['slug'], 0, strlen($adminDir)) == $adminDir) {
-            abort('410');
-        } else {
-            abort('404');
-        }
-
-    }
 
 
 }

@@ -114,8 +114,9 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             ['Http/Controllers/' => 'Controller.php'],
             ['Http/Controllers/' => 'DefaultMainController.php'],
             ['Http/Controllers/' => 'RouteNotFoundController.php'],
-
+            ['Http/Controllers/' => 'WebMainController.php'],
         ];
+
         foreach ($fileNames as $fileName) {
             foreach ($fileName as $folder => $file) {
                 $filePath = app_path($folder . $file);
@@ -180,6 +181,23 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
                 self::recursive_files_copy($thisDir, $destinationFolder);
             }
         }
+
+        $fileNames = [
+            ['views/' => 'no_index.blade.php'],
+            ['views/' => 'under.blade.php'],
+        ];
+
+        foreach ($fileNames as $fileName) {
+            foreach ($fileName as $folder => $file) {
+                $filePath = resource_path($folder . $file);
+                if (File::isFile($filePath)) {
+                    $destinationFolder = $CopyFolder . 'resources/' . $folder;
+                    self::folderMakeDirectory($destinationFolder);
+                    File::copy($filePath, $destinationFolder . $file);
+                }
+            }
+        }
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

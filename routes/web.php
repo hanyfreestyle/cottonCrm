@@ -10,6 +10,7 @@ use App\Http\Controllers\web\PagesViewController;
 use App\Http\Controllers\web\ProductsCategoriesViewController;
 use App\Http\Controllers\web\ProductsPageController;
 use App\Http\Controllers\web\ProductsViewController;
+use App\Http\Controllers\WebMainController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -23,11 +24,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 if (config('app.WEB_VIEW')) {
     Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-        Route::get('/under-construction', [PagesViewController::class, 'UnderConstruction'])->name('UnderConstruction');
+        Route::get('/under-construction', [WebMainController::class, 'UnderConstruction'])->name('UnderConstruction');
     });
 }else{
     Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-        Route::get('/index', [PagesViewController::class, 'NoIndex'])->name('NoIndex');
+        Route::get('/index', [WebMainController::class, 'NoIndex'])->name('NoIndex');
     });
 }
 

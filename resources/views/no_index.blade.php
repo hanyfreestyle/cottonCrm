@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <meta name="author" content="Awaiken Theme">
     <meta name='robots' content='noindex,nofollow'/>
-    {!! SEO::generate() !!}
+    <title>Welcome</title>
     <x-site.def.fav-icon/>
     <link href="{{ underAssets('css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <link href="{{ underAssets('css/custom.css') }}" rel="stylesheet" media="screen">
@@ -29,28 +28,6 @@
         </div>
     </div>
 </div>
-<script src="{{ underAssets('js/jquery-1.12.4.min.js') }}"></script>
-<script src="{{ underAssets('js/countdown-timer.js') }}"></script>
-<script src="{{ underAssets('js/SmoothScroll.js') }}"></script>
-<script src="{{ underAssets('js/bootstrap.min.js') }}"></script>
-<script src="{{ underAssets('js/function.js') }}"></script>
-<script>
-    $(document).ready(function () {
-        //var myDate = new Date("2024/02/02");
-        var myDate = new Date();
-        myDate.setDate(myDate.getDate() + 5);
-        $("#countdown").countdown(myDate, function (event) {
-            $(this).html(
-                event.strftime(
-                    '<div class="timer-wrapper">' +
-                    '<div class="time">%D</div><span class="text">{{__('under.days')}}</span></div>' +
-                    '<div class="timer-wrapper"><div class="time">%H</div><span class="text">{{__('under.hours')}}</span></div>' +
-                    '<div class="timer-wrapper"><div class="time">%M</div><span class="text">{{__('under.minutes')}}</span></div>' +
-                    '<div class="timer-wrapper"><div class="time">%S</div><span class="text">{{__('under.seconds')}}</span></div>'
-                )
-            );
-        });
-    });
-</script>
+
 </body>
 </html>
