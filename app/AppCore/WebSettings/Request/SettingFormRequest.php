@@ -16,8 +16,6 @@ class SettingFormRequest extends FormRequest {
     public function rules(): array {
 
         $rules = [
-
-
             'phone_num' => 'required',
             'whatsapp_num' => 'required',
             'phone_call' => 'required|numeric',
@@ -40,7 +38,7 @@ class SettingFormRequest extends FormRequest {
             $rules += ['switch_lang' => 'required'];
         }
 
-        if (config('app.USER_LOGIN')) {
+        if (config('app.WEB_VIEW') and config('app.USER_LOGIN')) {
             $rules += ['users_login' => 'required'];
         }
 
@@ -66,7 +64,7 @@ class SettingFormRequest extends FormRequest {
             ];
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php')) and config('app.WEB_VIEW')) {
             $rules += [
                 'schema_type' => 'required|alpha',
                 'schema_lat' => "nullable|numeric|required_with:schema_lat",
@@ -81,12 +79,14 @@ class SettingFormRequest extends FormRequest {
             if (config('app.WEB_VIEW')) {
                 $rules[$key . ".name"] = 'required';
                 $rules[$key . ".closed_mass"] = 'required';
-            }
-            if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
-                $rules[$key . ".schema_address"] = 'required';
-                $rules[$key . ".schema_city"] = 'required';
+
+                if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+                    $rules[$key . ".schema_address"] = 'required';
+                    $rules[$key . ".schema_city"] = 'required';
+                }
             }
         }
+
         return $rules;
     }
 }

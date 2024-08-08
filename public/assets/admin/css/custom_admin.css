@@ -23,6 +23,7 @@
     }
 
 }
+.alert-dismissible{list-style: none}
 
 .td_pro_icon{text-align: center; padding: 5px!important; padding-top:10px!important; width:20px!important;}
 .is_active{text-align: center!important; background: red}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2024 at 01:56 PM
+-- Generation Time: Aug 08, 2024 at 02:23 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_shop`
+-- Database: `cottton_crm`
 --
 
 --
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 
 INSERT INTO `config_setting_translations` (`id`, `setting_id`, `locale`, `name`, `closed_mass`, `meta_des`, `whatsapp_des`, `schema_address`, `schema_city`) VALUES
 (1, 1, 'ar', 'متجر قطن', 'عذرا جارى اجراء بعض التحديثات \r\nسنعود قريبا', 'متجر قطن لبيع كل براندات وانواع مراتب السرير', 'اريد الاستفسار عن', 'التجمع الخامس', 'القاهرة الجديدة'),
-(2, 1, 'en', 'Cotton Shop', 'Sorry, some updates are being made\r\nWe will be back soon', 'متجر قطن لبيع كل براندات وانواع مراتب السرير', 'اريد الاستفسار عن', NULL, NULL);
+(2, 1, 'en', 'Cotton Shop', 'Sorry, some updates are being made\r\nWe will be back soon', 'متجر قطن لبيع كل براندات وانواع مراتب السرير', 'اريد الاستفسار عن', 'streetAddress', 'streetAddress');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -64,7 +64,7 @@ class SettingsController extends AdminMainController {
         ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     webConfigUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function webConfigUpdate(SettingFormRequest $request) {
 
         $saveData = Setting::findorfail('1');
@@ -127,12 +127,19 @@ class SettingsController extends AdminMainController {
         foreach (config('app.web_lang') as $key => $lang) {
             $saveTranslation = SettingTranslation::where('setting_id', $saveData->id)->where('locale', $key)->firstOrNew();
             $saveTranslation->locale = $key;
-            $saveTranslation->name = $request->input($key . '.name');
-            $saveTranslation->closed_mass = $request->input($key . '.closed_mass');
-            $saveTranslation->whatsapp_des = $request->input($key . '.whatsapp_des');
-            $saveTranslation->meta_des = $request->input($key . '.meta_des');
-            $saveTranslation->schema_address = $request->input($key . '.schema_address');
-            $saveTranslation->schema_city = $request->input($key . '.schema_city');
+
+            if (config('app.WEB_VIEW')) {
+                $saveTranslation->name = $request->input($key . '.name');
+                $saveTranslation->closed_mass = $request->input($key . '.closed_mass');
+                $saveTranslation->meta_des = $request->input($key . '.meta_des');
+                $saveTranslation->whatsapp_des = $request->input($key . '.whatsapp_des');
+            }
+
+            if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+                $saveTranslation->schema_address = $request->input($key . '.schema_address');
+                $saveTranslation->schema_city = $request->input($key . '.schema_city');
+            }
+
             $saveTranslation->save();
         }
 

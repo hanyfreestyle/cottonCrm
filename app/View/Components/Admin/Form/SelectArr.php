@@ -22,7 +22,9 @@ class SelectArr extends Component {
     public $changelang;
     public $sendid;
     public $addFilde;
-    public $req ;
+    public $req;
+    public $type;
+    public $l;
 
     public function __construct(
         $row = array(),
@@ -41,10 +43,17 @@ class SelectArr extends Component {
         $sendid = 'id',
         $addFilde = null,
         $req = true,
+        $type = null,
+        $l = null,
 
     ) {
         $this->name = $name;
-        $this->label = $label;
+        if($l){
+            $this->label = $l;
+        }else{
+            $this->label = $label;
+        }
+
         $this->printValName = $printValName;
         $this->sendvalue = $sendvalue;
 
@@ -54,7 +63,12 @@ class SelectArr extends Component {
         $this->col = "col-lg-" . $col;
 
         $this->sendArr = $sendArr;
-        $this->selectType = $selectType;
+        if($type != null){
+            $this->selectType = $type;
+        }else{
+            $this->selectType = $selectType;
+        }
+
 
         $this->labelview = $labelview;
         $this->sendid = $sendid;
@@ -72,7 +86,7 @@ class SelectArr extends Component {
             $this->sendvalue = $sendvalue;
         } else {
             $rowName = $this->name;
-            $this->sendvalue = old($rowName, issetArr($row,$rowName,null));
+            $this->sendvalue = old($rowName, issetArr($row, $rowName, null));
         }
 
 

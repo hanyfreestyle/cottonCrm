@@ -17,8 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'encryption_key' => 'fFovUNahPDZCbuD4p3Cd714SsHirz+s3blAu3spDP5s=',
-
+    'encryption_key' => env('ENCRYPTION_KEY', 'fFovUNahPDZCbuD4p3Cd714SsHirz+s3blAu3spDP5s='),
     'configAdminDir' => env('APP_ADMIN_DIR', 'admin'),
     'WEB_VIEW' => env('APP_WEB_VIEW', true),
     'WEB_CONFIG_TELEGRAM' => env('APP_WEB_CONFIG_TELEGRAM', true),
@@ -98,12 +97,12 @@ return [
 
     'admin_lang' =>[
         'ar'=>'العربية',
-//        'en'=>'English',
+        'en'=>'English',
     ],
 
     'web_lang' =>[
         'ar'=>'العربية',
-//        'en'=>'English',
+        'en'=>'English',
     ],
 
     'core_lang' =>[
