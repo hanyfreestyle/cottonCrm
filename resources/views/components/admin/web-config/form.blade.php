@@ -49,44 +49,23 @@
 @elseif($model == "product")
     @if(File::isFile(base_path('routes/AppPlugin/proProduct.php')))
         <x-admin.card.normal col="{{$col}}" title="{{__('admin/proProduct.web_setting_card')}}">
-
-
             <div class="row">
-
-
-                <x-admin.form.select-arr name="serach" :sendvalue="old('serach',$row->serach)" :label="__('admin/config/webConfig.web_serach')"
-                                         col="4" select-type="selActive"/>
-                <x-admin.form.select-arr name="serach_type" :sendvalue="old('serach_type',$row->serach_type)"
-                                         :label="__('admin/config/webConfig.web_serach_type')" col="4"
-                                         :send-arr="$WebSearchTypeArr"/>
-                <x-admin.form.select-arr name="wish_list" :sendvalue="old('wish_list',$row->wish_list)"
-                                         :label="__('admin/config/webConfig.web_wish_list')" col="4"
-                                         select-type="selActive"/>
+                <x-admin.form.select-arr type="selActive" name="serach" :row="$row" :l="__('admin/config/webConfig.web_serach')" col="4"/>
+                <x-admin.form.select-arr :send-arr="$WebSearchTypeArr" name="serach_type" :row="$row" :label="__('admin/config/webConfig.web_serach_type')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="wish_list" :row="$row" :label="__('admin/config/webConfig.web_wish_list')" col="4"/>
             </div>
 
-
             <div class="row">
-                <x-admin.form.select-arr name="page_about" :sendvalue="old('page_about',$row->page_about)"
-                                         :label="__('admin/proProduct.web_page_about')" col="4" :send-arr="$pagesList"/>
-                <x-admin.form.select-arr name="page_warranty" :sendvalue="old('page_warranty',$row->page_warranty)"
-                                         :label="__('admin/proProduct.web_page_warranty')" col="4" :send-arr="$pagesList"/>
-                <x-admin.form.select-arr name="page_shipping" :sendvalue="old('page_shipping',$row->page_shipping)"
-                                         :label="__('admin/proProduct.web_page_shipping')" col="4" :send-arr="$pagesList"/>
-                <x-admin.form.select-arr name="pro_sale_lable" :sendvalue="old('pro_sale_lable',$row->pro_sale_lable)"
-                                         :label="__('admin/proProduct.web_sale_lable')" col="4" select-type="selActive"/>
-                <x-admin.form.select-arr name="pro_quick_view" :sendvalue="old('pro_quick_view',$row->pro_quick_view)"
-                                         :label="__('admin/proProduct.web_quick_view')" col="4" select-type="selActive"/>
-                <x-admin.form.select-arr name="pro_quick_shop" :sendvalue="old('pro_quick_shop',$row->pro_quick_shop)"
-                                         :label="__('admin/proProduct.web_quick_shop')" col="4" select-type="selActive"/>
-                <x-admin.form.select-arr name="pro_warranty_tab" :sendvalue="old('pro_warranty_tab',$row->pro_warranty_tab)"
-                                         :label="__('admin/proProduct.web_warranty_tab')" col="4"
-                                         select-type="selActive"/>
-                <x-admin.form.select-arr name="pro_shipping_tab" :sendvalue="old('pro_shipping_tab',$row->pro_shipping_tab)"
-                                         :label="__('admin/proProduct.web_shipping_tab')" col="4"
-                                         select-type="selActive"/>
-                <x-admin.form.select-arr name="pro_social_share" :sendvalue="old('pro_social_share',$row->pro_social_share)"
-                                         :label="__('admin/proProduct.web_social_share')" col="4"
-                                         select-type="selActive"/>
+                <x-admin.form.select-arr :send-arr="$pagesList" name="page_about" :row="$row" :l="__('admin/proProduct.web_page_about')" col="4"/>
+                <x-admin.form.select-arr :send-arr="$pagesList" name="page_warranty" :row="$row" :l="__('admin/proProduct.web_page_warranty')" col="4"/>
+                <x-admin.form.select-arr :send-arr="$pagesList" name="page_shipping" :row="$row" :l="__('admin/proProduct.web_page_shipping')" col="4"/>
+
+                <x-admin.form.select-arr type="selActive" name="pro_sale_lable" :row="$row" :l="__('admin/proProduct.web_sale_lable')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="pro_quick_view" :row="$row" :l="__('admin/proProduct.web_quick_view')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="pro_quick_shop" :row="$row" :l="__('admin/proProduct.web_quick_shop')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="pro_warranty_tab" :row="$row" :l="__('admin/proProduct.web_warranty_tab')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="pro_shipping_tab" :row="$row" :l="__('admin/proProduct.web_shipping_tab')" col="4"/>
+                <x-admin.form.select-arr type="selActive" name="pro_social_share" :row="$row" :l="__('admin/proProduct.web_social_share')" col="4"/>
             </div>
         </x-admin.card.normal>
     @endif

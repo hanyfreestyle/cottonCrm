@@ -48,6 +48,8 @@ class SelectArr extends Component {
 
     ) {
         $this->name = $name;
+        $this->req = $req;
+
         if($l){
             $this->label = $l;
         }else{

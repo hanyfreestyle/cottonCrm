@@ -60,8 +60,8 @@ class SettingsController extends AdminMainController {
         return view('admin.appCore.config.settingWeb')->with([
             'pageData' => $pageData,
             'setting' => $setting,
-
         ]);
+
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
