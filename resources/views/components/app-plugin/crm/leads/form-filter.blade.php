@@ -1,6 +1,5 @@
 @can($PrefixRole.'_filter')
-    <x-admin.card.collapsed :open="isset($getSessionData)" :outline="false"
-                            :title="__('admin/formFilter.box_total') .' '.number_format($row->count()) ">
+    <x-admin.card.collapsed  :filter="true" :row="$row" :open="isset($getSessionData)" >
         <div class="row">
             <div class="col-lg-12">
 

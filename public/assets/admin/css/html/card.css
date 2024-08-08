@@ -13,3 +13,7 @@
 .adminCard .card-outline .card-title {
     color: var(--cardColor);
 }
+.card_header_filter{
+    border-radius: 0px;
+}
+

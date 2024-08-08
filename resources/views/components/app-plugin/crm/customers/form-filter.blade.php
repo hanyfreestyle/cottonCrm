@@ -1,5 +1,4 @@
-<x-admin.card.collapsed :open="isset($getSessionData)" :outline="false"
-                        :title="__('admin/formFilter.box_total') .' '.number_format($row->count()) ">
+<x-admin.card.collapsed :open="isset($getSessionData)" :filter="true" :row="$row">
     <div class="row">
         <div class="col-lg-12">
 

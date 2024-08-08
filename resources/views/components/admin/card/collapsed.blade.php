@@ -1,5 +1,5 @@
 <div class="adminCard card {{$outline}} card-{{$bg}} {{$collapsed_style}}">
-    <div class="card-header">
+    <div class="card-header {{$header_filter}}">
         @if($title)
             <h3 class="card-title">{{$title}}</h3>
         @endif

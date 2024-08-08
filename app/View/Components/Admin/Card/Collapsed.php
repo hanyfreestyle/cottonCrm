@@ -16,8 +16,8 @@ class Collapsed extends Component {
     public $open;
     public $open_style;
     public $bg;
-    public $option_6;
-    public $option_7;
+    public $filter;
+    public $header_filter;
 
     public function __construct(
         $row = array(),
@@ -26,11 +26,19 @@ class Collapsed extends Component {
         $collapsed = true,
         $open = false,
         $bg = 'p',
-        $option_6 = null,
-        $option_7 = null,
+        $filter = false,
+        $header_filter = null,
     ) {
         $this->row = $row;
         $this->title = $title;
+        $this->header_filter = $header_filter;
+
+        if ($filter) {
+            $outline = false;
+            $this->title = __('admin/formFilter.box_total') . ' ' . number_format($row->count());
+            $this->header_filter = 'card_header_filter';
+        }
+
 
         if ($outline) {
             $this->outline = "card-outline";
@@ -60,8 +68,6 @@ class Collapsed extends Component {
         $this->bg = getBgColor($bg);
 
 
-        $this->option_6 = $option_6;
-        $this->option_7 = $option_7;
     }
 
     public function render(): View|Closure|string {
