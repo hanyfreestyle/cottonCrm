@@ -335,8 +335,8 @@ if (!function_exists('Table_Style')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('Table_Style_Normal')) {
-    function Table_Style_Normal() {
-        $tableHeader = ' class="table table-hover rwd_table" ';
+    function Table_Style_Normal($addClass=null) {
+        $tableHeader = ' class="table table-hover rwd_table '.$addClass.' " ';
         return $tableHeader;
     }
 }
@@ -344,8 +344,8 @@ if (!function_exists('Table_Style_Normal')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('Table_Style_Yajra')) {
-    function Table_Style_Yajra() {
-        $tableHeader = ' id="YajraDatatable" class="table table-bordered table-hover DataTableView" ';
+    function Table_Style_Yajra($addClass=null) {
+        $tableHeader = ' id="YajraDatatable" class="table table-bordered table-hover DataTableView '.$addClass.' " ';
         return $tableHeader;
     }
 }

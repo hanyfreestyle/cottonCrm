@@ -92,7 +92,7 @@
             </td>
         @endcan
     @elseif($type == 'selectAll')
-        <td class="tdc"><input type="checkbox" name="ids[]" @if(in_array($row->id, old('ids') ?? [])) checked @endif value="{{$row->id}}" class=""></td>
+        <td class="td_action"><input class="selectAll_checkbox" type="checkbox" name="ids[]" @if(in_array($row->id, old('ids') ?? [])) checked @endif value="{{$row->id}}"></td>
     @endif
 
 @endif

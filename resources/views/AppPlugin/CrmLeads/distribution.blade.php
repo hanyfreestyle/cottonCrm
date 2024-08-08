@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="card-body table-responsive p-0">
-                        <table {!! Table_Style_Normal()  !!} >
+                        <table {!! Table_Style_Normal('distribution_table')  !!} >
                             <thead>
                             <tr>
                                 <th>{{__('admin/crm/ticket.var_date_add')}}</th>
@@ -47,17 +47,19 @@
                             <tbody>
                             @foreach($rowData as $row)
 
-                                <td data-th="{{__('admin/crm/ticket.var_date_add')}}">{{ PrintDate($row->created_at)}}</td>
-                                <td data-th="{{__('admin/crm/ticket.fr_follow_date')}}">{{PrintDate($row->follow_date)}}</td>
+                                <td class="hideForMobile" data-th="{{__('admin/crm/ticket.var_date_add')}}">{{ PrintDate($row->created_at)}}</td>
+                                <td class="hideForMobile" data-th="{{__('admin/crm/ticket.fr_follow_date')}}">{{PrintDate($row->follow_date)}}</td>
                                 <td data-th="{{__('admin/crm/customers.form_name')}}">{{$row->customer->name ?? ''}}</td>
                                 <td data-th="{{__('admin/crm/customers.form_mobile')}}">{{$row->customer->mobile ?? ''}}</td>
-                                <td data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
-                                <td data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
-                                <td data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
+                                <td class="hideForMobile" data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
+                                <td class="hideForMobile" data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
+                                <td class="hideForMobile" data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
 
 
-                                <td data-th="{{__('admin/crm/ticket.t_but_view')}}" class="td_action">
-                                    <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
+                                <td class="td_action">
+                                    <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
+                                        <span class="tipName"> {{__('admin/crm/ticket.t_but_view')}}</span> <i class="fas fa-eye"></i>
+                                    </button>
                                 </td>
 
                                 <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">

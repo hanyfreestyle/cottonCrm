@@ -19,6 +19,12 @@
     font-size: 14px;
 }
 
+@media (max-width: 480px) {
+    .but_add_to_user{
+        font-size: 13px;
+    }
+}
+
 .rwd_table th {
     display: none;
 }
@@ -87,4 +93,41 @@
     overflow: hidden!important;
     border-radius: 0.2rem;
 }
+
+@media (max-width: 480px) {
+    .distribution_table .hideForMobile{
+        display: none;
+    }
+    .distribution_table td.td_action{
+        display: table-cell;
+        float: right;
+        text-align: center;
+        width: 49.9999999999%;
+    }
+    .distribution_table.rwd_table td.td_action::before {
+        display: none;
+    }
+
+    .distribution_table td.td_action input[type=checkbox] {
+        -ms-transform: scale(1.5); /* IE */
+        -moz-transform: scale(1.5); /* FF */
+        -webkit-transform: scale(1.5); /* Safari and Chrome */
+        -o-transform: scale(1.5); /* Opera */
+        transform: scale(1.5);
+        padding: 10px;
+        border: 0!important;
+
+
+    }
+
+
+
+}
+
+
+@media (min-width: 600px) {
+    .tipName {display: none;}
+}
+
+
 
