@@ -1,0 +1,47 @@
+:root {
+    --cardColor: rgba(0, 123, 255, 1);
+    --h1Color:  rgb(36, 55, 87);
+    --h2Color:  rgba(0, 123, 255, 1);
+    --infoTitle: rgba(204, 24, 30, .8);
+    --infoIcon: rgba(204, 24, 30, .8);
+    --infoDes: rgba(102, 102, 102, .8);
+    --textColor: #808080;
+}
+.main-footer{background-color:#343a40;border-color:#4b545c}
+.required_Span{color:red!important;font-weight:700}
+.back-to-top{bottom:2.7rem!important}
+.select2-results__option {font-size: 14px!important;}
+.dir_ar{direction:rtl!important;text-align:right}
+.dir_en{direction:ltr!important;text-align:left;width:100%}
+.dir_left{direction: ltr!important;}
+.hidediv{display: none!important;}
+
+.test_bg {background-color: red;}
+.but_icon i {font-size: 12px;line-height: 22px;}
+.admin_err_list {list-style: none;padding: 8px !important;}
+.admin_err_list li {font-size: 14px;}
+.alert-dismissible{list-style: none}
+.def_breadcrumb_h1 {
+    font-size: 20px !important;
+    margin-bottom: 5px !important;
+    padding-top: 5px;
+}
+@media (max-width: 480px) {
+    .def_breadcrumb_h1 {
+        font-size: 17px !important;
+    }
+}
+
+.ListItem-12{background-color:rgba(255,255,255,1); padding: 10px 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 5px; margin-bottom: 10px }
+.ListItem-12 .subsort{ display: inline-block; float: left; margin: 0!important }
+.ListItem-12 .subsort a{ padding: 3px 7px; margin: 0!important; }
+
+.adminMenuTitle{padding:10px;margin-bottom: 10px;}
+.adminMenuTitle .def_h1{padding-top: 10px;font-size: 25px;}
+.adminMenuList .ListItem-12{background-color:rgba(255,255,255,1); padding: 8px 15px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px; border-radius: 5px; margin-bottom: 10px }
+.adminMenuList .ListItem-12 .subsort{ display: inline-block; float: left; margin: 0!important }
+.adminMenuList .ListItem-12 .subsort a{ padding: 3px 7px; margin: 0!important; }
+.adminMenuList .statusBut {float: left;}
+.is_active{text-align: center!important; background: red}
+.def_h1{font-size: 20px; line-height: 25px}
+.def_h1_new{font-size: 20px; line-height: 25px}

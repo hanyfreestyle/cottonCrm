@@ -1,0 +1,115 @@
+.uploadNotes{color: red;font-size: 14px!important;margin-bottom: 10px;}
+.amenity_table_icon{font-size:30px;color:#FFF;padding:10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;min-width:60px;text-align:center}
+.popover-body{direction:ltr!important}
+#iconpicker_target{width:150px;font-size:40px;padding:0!important}
+#iconpicker_target i{margin-right:10px;margin-left:10px;font-size:35px}
+.ThisSelectLang input,.ThisSelectLang textarea {background:rgba(255, 0, 0, .3);border: 1px solid rgba(255, 0, 0, .3);}
+
+.watermark_imgView{background:#6f6f80;float:right;width:100%;text-align:center!important;height:300px}
+.watermark_imgView img{max-height:300px;max-width:400px}
+
+.PhotoImageCard{text-align:center;width:100%;height:200px;background-color:rgba(0,0,0,.3)}
+.PhotoImageCard img{max-width:95%;max-height:200px}
+
+.uploadFilterForm .form-control{padding:10px!important;font-size:14px;height:40px}
+.uploadFilterForm .select2-container--default .select2-selection--single{border:1px solid #ced4da;height:40px;padding:10px!important;font-size:14px}
+.uploadFilterForm .select2-container--default .select2-selection--single .select2-selection__rendered{color:#444;line-height:22px!important}
+.uploadFilterForm hr{margin-top:.7rem;margin-bottom:.7rem}
+.uploadFilterForm .form-group{margin-bottom:.2rem}
+.fileUploadCurrent img {max-width:250px;}
+.bigTextArea textarea{height: 315px;}
+.cust_country{max-height: 25px;}
+
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+    color: #468847;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #EED3D7;
+}
+
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+    color: #B94A48;
+    transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+    opacity: 1;
+}
+
+
+.mainForm .form-group{
+    margin-bottom: 3px!important;
+}
+.mainForm .no_label {
+    margin-bottom: 10px!important;
+}
+.mainForm .def_form_label{font-size:14px!important;margin-bottom:0!important;padding-top:8px;padding-bottom:7px;font-weight:700!important;color:rgba(0,0,0,.8)!important; width:100%}
+
+
+
+.mainForm_NewBox { margin-top: 10px;}
+.mainForm_NewBox .alert-dismissible{padding:8px 20px!important;font-size:13px!important;margin-bottom:5px!important;display:block}
+.mainForm_NewBox .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1;margin-bottom:20px!important}
+.mainForm_NewBox .alert{margin-bottom:20px!important}
+.mainForm_NewBox .form-group{margin-bottom:10px!important}
+.mainForm_NewBox .def_form_label{font-size:13px!important;margin-bottom:0!important;padding-top:2px;padding-bottom:5px;font-weight:700!important;color:rgba(0,0,0,.8)!important;width:100%}
+.mainForm_NewBox .box_form{clear:both!important;padding:10px 15px;padding-bottom:30px;padding-top:0;border:1px solid rgba(0,0,0,.1);margin-bottom:40px}
+.mainForm_NewBox .box_title{position:relative;display:inline-block;font-weight:400;top:-15px!important;padding:4px 25px;border-radius:4px;margin-bottom:0!important;border:1px solid #007bff;min-width:200px!important;background-color:#007bff;color:#fff}
+.mainForm_NewBox .required_Span{color:red!important;font-weight:700}
+@media (max-width: 480px) {
+    .mainForm_NewBox .box_title{line-height:20px;padding-bottom:2px!important;padding-top:7px}
+}
+
+
+
+.Filter_Form_Style {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.Filter_Form_Style .def_form_label {
+    font-size: 14px !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 5px;
+    font-weight: 700 !important;
+    color: rgba(0, 0, 0, .8) !important;
+    width: 100%;
+}
+
+.Filter_Form_Style .form-group {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+    .Filter_Form_Style .def_form_label {
+        margin-top: -5px !important;
+        padding-top: 0 !important;
+        padding-bottom: 5px !important;
+        font-size: 12px !important;
+        line-height: 15px;
+    }
+
+    .Filter_Form_Style .form-group {
+        margin-bottom: .5rem;
+    }
+}
+

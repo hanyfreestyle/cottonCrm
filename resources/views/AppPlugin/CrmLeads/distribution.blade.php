@@ -10,7 +10,7 @@
 
         @if(count($rowData)>0)
             <div class="col-lg-12">
-                <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
+                <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData"  :config="$Config"/>
             </div>
         @endif
 
@@ -18,14 +18,7 @@
             @csrf
             <x-admin.card.normal :page-data="$pageData" :full-error="true" :title="$pageData['BoxH1']">
                 @if(count($rowData)>0)
-                    @if($errors->has([]))
-                        <div class="alert alert-danger alert-dismissible admin_err_list">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </div>
-                    @endif
-
+                    <x-admin.form.print-error-div :full-err="true"/>
                     <div class="row">
                         <x-app-plugin.crm.leads.user-select :col-mobile="8" type="tech" :labelview="false" :req="true"/>
                         <div class="col">
@@ -38,8 +31,7 @@
                         <table {!! Table_Style_Normal()  !!} >
                             <thead>
                             <tr>
-
-                                <th class="TD_100">{{__('admin/crm/ticket.var_date_add')}}</th>
+                                <th>{{__('admin/crm/ticket.var_date_add')}}</th>
                                 <th>{{__('admin/crm/ticket.fr_follow_date')}}</th>
                                 <th>{{__('admin/crm/customers.form_name')}}</th>
                                 <th>{{__('admin/crm/customers.form_mobile')}}</th>
@@ -54,7 +46,7 @@
                             </thead>
                             <tbody>
                             @foreach($rowData as $row)
-                                <td>
+
                                 <td data-th="{{__('admin/crm/ticket.var_date_add')}}">{{ PrintDate($row->created_at)}}</td>
                                 <td data-th="{{__('admin/crm/ticket.fr_follow_date')}}">{{PrintDate($row->follow_date)}}</td>
                                 <td data-th="{{__('admin/crm/customers.form_name')}}">{{$row->customer->name ?? ''}}</td>

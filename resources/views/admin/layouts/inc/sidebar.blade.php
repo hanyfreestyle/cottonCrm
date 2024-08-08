@@ -35,16 +35,31 @@
             <ul class="nav nav-pills nav-sidebar flex-column {{sideBarNavUlStyle()}}" data-widget="treeview" role="menu" {{sideBarAccordion()}} >
                 @foreach( $adminMenu as $MenuList )
                     @if($MenuList->type == "One")
-                        @can($MenuList->roleView)
-                            @if( Route::has($MenuList->url))
-                                <li class="nav-item">
-                                    <a href="{{ route($MenuList->url) }}" class="nav-link  @if(Route::is($MenuList->sel_routs.'.*')) active @endif ">
-                                        @if(isset($MenuList->icon))<i class="nav-icon {{$MenuList->icon}}"></i>@endif
-                                        <p>{!! __($MenuList->name) !!}</p>
-                                    </a>
-                                </li>
+                        @if( $MenuList->roleView == 'adminlang_view')
+                            @if(config('app.ADMIN_LANG'))
+                                @can($MenuList->roleView)
+                                    @if( Route::has($MenuList->url))
+                                        <li class="nav-item">
+                                            <a href="{{ route($MenuList->url) }}" class="nav-link  @if(Route::is($MenuList->sel_routs.'.*')) active @endif ">
+                                                @if(isset($MenuList->icon))<i class="nav-icon {{$MenuList->icon}}"></i>@endif
+                                                <p>{!! __($MenuList->name) !!}</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endcan
                             @endif
-                        @endcan
+                        @else
+                            @can($MenuList->roleView)
+                                @if( Route::has($MenuList->url))
+                                    <li class="nav-item">
+                                        <a href="{{ route($MenuList->url) }}" class="nav-link  @if(Route::is($MenuList->sel_routs.'.*')) active @endif ">
+                                            @if(isset($MenuList->icon))<i class="nav-icon {{$MenuList->icon}}"></i>@endif
+                                            <p>{!! __($MenuList->name) !!}</p>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endcan
+                        @endif
                     @elseif($MenuList->type == "Many")
                         @can($MenuList->roleView)
                             <li class="nav-item @if(Route::is($MenuList->sel_routs.'.*'))  menu-open @endif ">

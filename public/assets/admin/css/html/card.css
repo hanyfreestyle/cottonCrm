@@ -1,0 +1,15 @@
+.adminCard .card-body {
+    padding-top: 10px;
+}
+
+.adminCard .card-header {
+    padding: 13px 15px !important;
+}
+
+.adminCard .card-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+.adminCard .card-outline .card-title {
+    color: var(--cardColor);
+}
