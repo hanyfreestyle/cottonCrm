@@ -34,6 +34,10 @@ class AdminMenuSeeder extends Seeder {
         LangFileController::AdminMenu();
         CrmFunTraits::LoadMenu();
 
+        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+            ConfigDataTraits::AdminMenu();
+        }
+
         if (File::isFile(base_path('routes/AppPlugin/config/WebLangFile.php'))) {
             LangFileWebController::AdminMenu();
         }
@@ -42,9 +46,7 @@ class AdminMenuSeeder extends Seeder {
             AppSettingController::AdminMenu();
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            ConfigDataTraits::AdminMenu();
-        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
             if (File::isFile(base_path('routes/AppPlugin/model/blogPost.php'))) {

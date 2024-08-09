@@ -8,6 +8,7 @@ use App\AppPlugin\Product\Models\Brand;
 use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\Product;
 use App\Http\Controllers\AdminMainController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
@@ -27,8 +28,7 @@ class SiteMapController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0, 'selectfilterid' => 0, "orderby" => 0],
+
             'yajraTable' => true,
             'AddButToCard' => false,
             'restore' => 1,
@@ -50,13 +50,70 @@ class SiteMapController extends AdminMainController {
 
         $this->middleware('permission:sitemap_view', ['only' => ['index']]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+
         $rowData = SiteMap::get();
         return view('AppPlugin.ConfigSiteMap.index')->with([
-            'rowData' => $rowData
+            'rowData' => $rowData,
+            'pageData' => $pageData
         ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function Robots() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $googleCode = GoogleCode::query()->first();
+
+        return view('AppPlugin.ConfigSiteMap.robots')->with([
+            'pageData' => $pageData,
+            'googleCode' => $googleCode,
+        ]);
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function RobotsUpdate(Request $request) {
+        $googleCode = GoogleCode::query()->first();
+        $googleCode->robots = $request->input('robots');
+        $googleCode->save();
+        return back()->with('Update.Done', '');
+    }
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function GoogleCode() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $googleCode = GoogleCode::query()->first();
+
+        return view('AppPlugin.ConfigSiteMap.google-code')->with([
+            'pageData' => $pageData,
+            'googleCode' => $googleCode,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function GoogleCodeUpdate(Request $request) {
+        $googleCode = GoogleCode::query()->first();
+        $googleCode->tag_manager_code = $request->input('tag_manager_code');
+        $googleCode->analytics_code = $request->input('analytics_code');
+        $googleCode->web_master_html = $request->input('web_master_html');
+        $googleCode->web_master_meta = $request->input('web_master_meta');
+        $googleCode->google_api = $request->input('google_api');
+        $googleCode->save();
+
+        return back()->with('Update.Done', '');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -78,8 +135,8 @@ class SiteMapController extends AdminMainController {
         }
 
         $stringData .= self::UpdateIndexPages('index');
-        $stringData .= self::UpdateBlogPages('blog');
-        $stringData .= self::UpdateProductsPages('product');
+//        $stringData .= self::UpdateBlogPages('blog');
+//        $stringData .= self::UpdateProductsPages('product');
 
         if ($this->config['singlePage']) {
             $stringData .= "</urlset>\n";
@@ -110,8 +167,11 @@ class SiteMapController extends AdminMainController {
             $stringData = "";
         }
 
-        $routes = ['page_index', 'page_AboutUs', 'page_Trems', 'page_WishList', 'page_AboutUs',
-            'page_ContactUs', 'page_ShopView', 'page_Offers'];
+//        $routes = ['page_index', 'page_AboutUs', 'page_Trems', 'page_WishList', 'page_AboutUs',
+//            'page_ContactUs', 'page_ShopView', 'page_Offers'];
+
+        $routes = ['web_index'];
+
 
         foreach (config('app.web_lang') as $key => $lang) {
             foreach ($routes as $route) {

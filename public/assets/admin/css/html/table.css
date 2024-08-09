@@ -126,7 +126,7 @@
 
 
 @media (min-width: 600px) {
-    .tipName {display: none;}
+    td.tipName {display: none;}
 }
 
 

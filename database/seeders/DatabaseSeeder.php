@@ -18,6 +18,7 @@ use App\AppPlugin\Config\Privacy\SeederWebPrivacy;
 use App\AppPlugin\Config\Apps\Seeder\AppSettingSeeder;
 use App\AppPlugin\Config\Branche\SeederBranch;
 
+use App\AppPlugin\Config\SiteMap\GoogleCodeSeeder;
 use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
 use App\AppPlugin\Crm\Periodicals\Seeder\PeriodicalsSeeder;
@@ -60,6 +61,10 @@ class DatabaseSeeder extends Seeder {
 
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
             $this->call(ConfigDataSeeder::class);
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $this->call(GoogleCodeSeeder::class);
         }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {

@@ -223,7 +223,7 @@ class SettingsController extends AdminMainController {
         if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
-            $subMenu->sel_routs = "SiteMap.index";
+            $subMenu->sel_routs = "SiteMap.index|SiteMap.Robots|SiteMap.GoogleCode";
             $subMenu->url = "admin.config.SiteMap.index";
             $subMenu->name = "Site Maps";
             $subMenu->roleView = "sitemap_view";

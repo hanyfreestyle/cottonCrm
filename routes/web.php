@@ -36,7 +36,7 @@ if (config('app.WEB_VIEW')) {
 
 Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () {
     Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-        Route::get('/', [PagesViewController::class, 'index'])->name('page_index');
+        Route::get('/', [PagesViewController::class, 'index'])->name('web_index');
 
     });
 });

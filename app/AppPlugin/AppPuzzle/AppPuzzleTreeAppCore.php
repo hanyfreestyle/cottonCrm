@@ -93,6 +93,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     public function ExportEnvFile($CopyFolder) {
         $fileNames = [
             '.env.example',
+            '.gitignore',
         ];
         foreach ($fileNames as $file) {
             $filePath = base_path($file);

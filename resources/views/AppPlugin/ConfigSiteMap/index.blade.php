@@ -1,17 +1,21 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
 
-            </div>
-        </div>
-    </div>
-
+    <x-admin.hmtl.breadcrumb :page-data="$pageData"/>
     <x-admin.hmtl.section>
-        <div class="row mt-3">
-            <x-admin.card.normal title="Site Maps">
+        @if(count($rowData)>0)
+            <div class="row">
+                <div class="col-lg-12 siteMapBut">
+                    <x-admin.form.action-button :url="route($PrefixRoute.'.Robots')" :tip="false" print-lable="Update Robots" size="m" icon="fas fa-robot" bg="i"/>
+                    <x-admin.form.action-button :url="route($PrefixRoute.'.GoogleCode')" :tip="false" print-lable="Update Google Code" size="m" icon="fas fa-code" bg="d"/>
+                </div>
+            </div>
+        @endif
+        <x-admin.card.normal title="Update Site Maps">
+
+            @if(count($rowData)>0)
+
                 <div class="card-body table-responsive p-0">
                     <table {!! Table_Style(false,false)  !!} >
                         <thead>
@@ -34,18 +38,22 @@
                         </tbody>
                     </table>
                 </div>
-            </x-admin.card.normal>
-        </div>
+            @else
+                <div class="col-lg-12">
+                    <x-admin.hmtl.alert-massage type="nodata"/>
+                </div>
+            @endif
+
+        </x-admin.card.normal>
     </x-admin.hmtl.section>
 
+
     <x-admin.hmtl.section>
-        <div class="row">
-            <div class="col-lg-12">
-                <form action="{{route($PrefixRoute.".Update")}}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
-                </form>
-            </div>
+        <div class="col-lg-12">
+            <form action="{{route($PrefixRoute.".Update")}}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
+            </form>
         </div>
     </x-admin.hmtl.section>
 @endsection

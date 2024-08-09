@@ -148,8 +148,13 @@ class AppPuzzleTreeConfig {
             'migrations' => [
                 '2019_12_14_000016_create_site_maps_table.php',
             ],
+            'seeder' => [
+                'config_site_robots.sql',
+            ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['siteMap.php'],
+            'ComponentFolderClass' => ['AppPlugin/GoogleCode'],
+            'ComponentFolderView' => ['app-plugin/google-code'],
         ];
     }
 
