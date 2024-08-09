@@ -20,6 +20,7 @@ class ActionButton extends Component {
     public $target;
     public $count;
     public $viewbut;
+    public $l;
 
     public function __construct(
         $url = "#",
@@ -35,9 +36,15 @@ class ActionButton extends Component {
         $printLable = '',
         $count = 0,
         $viewbut = true,
+        $l = null,
     ) {
-        //  dd($printLable);
-        $this->printLable = $printLable;
+
+        if ($l) {
+            $this->printLable = $l;
+        } else {
+            $this->printLable = $printLable;
+        }
+
         $this->lable = $lable;
         $this->tip = $tip;
         $this->url = $url;

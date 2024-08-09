@@ -1,8 +1,8 @@
 @if($isactive)
     <div class="adminCard {{$col}}" >
-        <div class="card card-primary {{$outline_style}}">
+        <div class="card card-{{$bg}} {{$outline_style}}">
             @if($title)
-                <div class="card-header"><h3 class="card-title">{!! $title !!}</h3></div>
+                <div class="card-header"><h3 class="card-title">{!! $icon . $title !!}</h3></div>
             @endif
             <div class="card-body">
                     {{$slot}}

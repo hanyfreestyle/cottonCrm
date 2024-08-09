@@ -3,19 +3,12 @@
 @section('content')
 
     <x-admin.hmtl.breadcrumb :page-data="$pageData"/>
+    @include('AppPlugin.ConfigSiteMap.menu')
+
     <x-admin.hmtl.section>
-        @if(count($rowData)>0)
-            <div class="row">
-                <div class="col-lg-12 siteMapBut">
-                    <x-admin.form.action-button :url="route($PrefixRoute.'.Robots')" :tip="false" print-lable="Update Robots" size="m" icon="fas fa-robot" bg="i"/>
-                    <x-admin.form.action-button :url="route($PrefixRoute.'.GoogleCode')" :tip="false" print-lable="Update Google Code" size="m" icon="fas fa-code" bg="d"/>
-                </div>
-            </div>
-        @endif
-        <x-admin.card.normal title="Update Site Maps">
-
+        <x-admin.form.print-error-div/>
+        <x-admin.card.normal :outline="false" icon="fas fa-sitemap" title="Update Site Maps">
             @if(count($rowData)>0)
-
                 <div class="card-body table-responsive p-0">
                     <table {!! Table_Style(false,false)  !!} >
                         <thead>
@@ -43,16 +36,14 @@
                     <x-admin.hmtl.alert-massage type="nodata"/>
                 </div>
             @endif
-
         </x-admin.card.normal>
     </x-admin.hmtl.section>
-
 
     <x-admin.hmtl.section>
         <div class="col-lg-12">
             <form action="{{route($PrefixRoute.".Update")}}" method="post">
                 @csrf
-                <button type="submit" class="btn btn-block btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
+                <button type="submit" class="btn float-left btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
             </form>
         </div>
     </x-admin.hmtl.section>

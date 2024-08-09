@@ -2,18 +2,15 @@
 
 namespace App\AppPlugin\Config\SiteMap;
 
-use App\AppPlugin\BlogPost\Models\Blog;
-use App\AppPlugin\BlogPost\Models\BlogCategory;
-use App\AppPlugin\Product\Models\Brand;
-use App\AppPlugin\Product\Models\Category;
-use App\AppPlugin\Product\Models\Product;
+
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
 
 class SiteMapController extends AdminMainController {
+    use SiteMapModelTraits;
+
     function __construct() {
 
         parent::__construct();
@@ -28,13 +25,8 @@ class SiteMapController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-
-            'yajraTable' => true,
             'AddButToCard' => false,
-            'restore' => 1,
-            'formName' => "ShopOrdersFilters",
         ];
-
 
         $this->config = [
             'singlePage' => true,
@@ -44,19 +36,16 @@ class SiteMapController extends AdminMainController {
             'langEn' => false,
         ];
         View::share('Config', $this->config);
-
-
         self::loadConstructData($sendArr);
-
-        $this->middleware('permission:sitemap_view', ['only' => ['index']]);
+        $this->middleware('permission:sitemap_view', ['only' => ['index','Robots','GoogleCode','UpdateSiteMap']]);
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-
         $rowData = SiteMap::get();
         return view('AppPlugin.ConfigSiteMap.index')->with([
             'rowData' => $rowData,
@@ -77,7 +66,6 @@ class SiteMapController extends AdminMainController {
         ]);
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function RobotsUpdate(Request $request) {
@@ -86,8 +74,6 @@ class SiteMapController extends AdminMainController {
         $googleCode->save();
         return back()->with('Update.Done', '');
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -112,7 +98,6 @@ class SiteMapController extends AdminMainController {
         $googleCode->web_master_meta = $request->input('web_master_meta');
         $googleCode->google_api = $request->input('google_api');
         $googleCode->save();
-
         return back()->with('Update.Done', '');
     }
 
@@ -134,7 +119,8 @@ class SiteMapController extends AdminMainController {
             $stringData = "";
         }
 
-        $stringData .= self::UpdateIndexPages('index');
+        $addRoute = ['web_contact_us', 'web_about_us'];
+        $stringData .= self::UpdateIndexPages('index', ['addRoute' => $addRoute]);
 //        $stringData .= self::UpdateBlogPages('blog');
 //        $stringData .= self::UpdateProductsPages('product');
 
@@ -145,157 +131,7 @@ class SiteMapController extends AdminMainController {
         }
 
         SiteMapTools::updateIndexSiteMapXmlFile($this->config['singlePage']);
-        return redirect()->back();
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateIndexPages($catId) {
-        $siteMapTools = new SiteMapTools();
-        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
-        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', false);
-        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
-        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
-        $urlCount = 0;
-
-        if (!$this->config['singlePage']) {
-            $xmlFileName = public_path("sitemap." . $catId . ".xml");
-            $fh = fopen($xmlFileName, 'w') or die("can't open file");
-            $stringData = $siteMapTools->XML_Header();
-        } else {
-            $stringData = "";
-        }
-
-//        $routes = ['page_index', 'page_AboutUs', 'page_Trems', 'page_WishList', 'page_AboutUs',
-//            'page_ContactUs', 'page_ShopView', 'page_Offers'];
-
-        $routes = ['web_index'];
-
-
-        foreach (config('app.web_lang') as $key => $lang) {
-            foreach ($routes as $route) {
-                $stringData .= $siteMapTools->AddSinglePage($key, $route);
-            }
-            $urlCount = $urlCount + count($routes);
-        }
-
-        SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
-
-        if (!$this->config['singlePage']) {
-            $stringData .= "</urlset>\n";
-            fwrite($fh, $stringData);
-            fclose($fh);
-        } else {
-            return $stringData;
-        }
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateBlogPages($catId) {
-        $siteMapTools = new SiteMapTools();
-        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
-        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', true);
-        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
-        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
-        $urlCount = 0;
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-
-            if (!$this->config['singlePage']) {
-                $xmlFileName = public_path("sitemap." . $catId . ".xml");
-                $fh = fopen($xmlFileName, 'w') or die("can't open file");
-                $stringData = $siteMapTools->XML_Header();
-            } else {
-                $stringData = "";
-            }
-
-            $dataRows = BlogCategory::orderBy('id')
-                ->where('is_active', true)
-                ->get();
-            $urlCount = $urlCount + count($dataRows);
-            $siteMapTools->urlRoute = "BlogCategoryView";
-            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
-
-            foreach (config('app.web_lang') as $key => $lang) {
-                $stringData .= $siteMapTools->AddSinglePage($key, 'BlogList');
-                $urlCount = $urlCount + 1;
-            }
-
-            $dataRows = Blog::orderBy('id')
-                ->where('is_active', true)
-                ->get();
-            $urlCount = $urlCount + count($dataRows);
-            $siteMapTools->urlRoute = "BlogView";
-            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
-
-            SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
-
-            if (!$this->config['singlePage']) {
-                $stringData .= "</urlset>\n";
-                fwrite($fh, $stringData);
-                fclose($fh);
-            } else {
-                return $stringData;
-            }
-        }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateProductsPages($catId) {
-        $siteMapTools = new SiteMapTools();
-        $siteMapTools->addAlternate = IsArr($this->config, 'addAlternate', false);
-        $siteMapTools->addPhoto = IsArr($this->config, 'addPhoto', true);
-        $siteMapTools->langAr = IsArr($this->config, 'langAr', false);
-        $siteMapTools->langEn = IsArr($this->config, 'langEn', false);
-        $urlCount = 0;
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-
-            if (!$this->config['singlePage']) {
-                $xmlFileName = public_path("sitemap." . $catId . ".xml");
-                $fh = fopen($xmlFileName, 'w') or die("can't open file");
-                $stringData = $siteMapTools->XML_Header();
-            } else {
-                $stringData = "";
-            }
-
-            $dataRows = Category::orderBy('id')
-                ->where('is_active', true)
-                ->get();
-            $urlCount = $urlCount + count($dataRows);
-            $siteMapTools->urlRoute = "ProductsCategoriesView";
-            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
-
-
-            $dataRows = Brand::orderBy('id')
-                ->where('is_active', true)
-                ->get();
-            $urlCount = $urlCount + count($dataRows);
-            $siteMapTools->urlRoute = "BrandView";
-            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
-
-
-            $dataRows = Product::orderBy('id')
-                ->where('parent_id', null)
-                ->where('is_active', true)
-                ->get();
-            $urlCount = $urlCount + count($dataRows);
-            $siteMapTools->urlRoute = "ProductView";
-            $stringData .= $siteMapTools->Create_XML_Code_new($dataRows);
-
-
-            SiteMapTools::updateIndexSiteOneFile($catId, $urlCount);
-
-            if (!$this->config['singlePage']) {
-                $stringData .= "</urlset>\n";
-                fwrite($fh, $stringData);
-                fclose($fh);
-            } else {
-                return $stringData;
-            }
-        }
+        return back()->with('Update.Done', '');
     }
 
 }
