@@ -60,6 +60,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             "public/assets/admin/",
             "public/assets/images/",
             "public/assets/pdf/",
+            "public/assets/flag/",
         ];
 
         foreach ($folderNames as $folderName) {

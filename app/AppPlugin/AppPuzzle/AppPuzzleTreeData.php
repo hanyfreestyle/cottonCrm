@@ -56,7 +56,7 @@ class AppPuzzleTreeData {
             'seeder' => ['data_countries.sql', 'data_country_translations.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['dataCountry.php'],
-            'assetsFolder' => ['flag'],
+//            'assetsFolder' => ['flag'],
         ];
     }
 
