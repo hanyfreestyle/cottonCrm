@@ -1,13 +1,4 @@
 @extends('admin.layouts.app')
-@section('StyleFile')
-    <style>
-        #robots {
-            direction: ltr;
-            min-height: 450px;
-            font-size: 13px;
-        }
-    </style>
-@endsection
 @section('content')
 
     <x-admin.hmtl.breadcrumb :page-data="$pageData"/>

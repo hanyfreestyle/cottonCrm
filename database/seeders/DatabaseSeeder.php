@@ -98,7 +98,6 @@ class DatabaseSeeder extends Seeder {
         }
 
 
-
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
             $this->call(SeederCountry::class);
         }
