@@ -32,6 +32,12 @@
     }
 }
 
+.div_data{padding:0 10px}
+@media (max-width: 600px) {
+    .div_data {padding:0!important;}
+}
+
+
 .ListItem-12{background-color:rgba(255,255,255,1); padding: 10px 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 5px; margin-bottom: 10px }
 .ListItem-12 .subsort{ display: inline-block; float: left; margin: 0!important }
 .ListItem-12 .subsort a{ padding: 3px 7px; margin: 0!important; }

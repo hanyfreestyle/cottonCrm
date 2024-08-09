@@ -68,9 +68,9 @@ if (!function_exists('TablePhoto')) {
 if (!function_exists('TablePhotoFlag')) {
     function TablePhotoFlag($row, $fildeName = 'photo_thum_1') {
         if ($row->$fildeName) {
-            $sendImg = '<img  class="tableImg cust_country img-rounded" src="' . flagAssets($row->$fildeName) . '">';
+            $sendImg = '<img  class="tableImg country_table_flag img-rounded" src="' . flagAssets($row->$fildeName) . '">';
         } else {
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
+            $sendImg = '<img  class="tableImg img-rounded country_table_flag elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }
         return $sendImg;
     }

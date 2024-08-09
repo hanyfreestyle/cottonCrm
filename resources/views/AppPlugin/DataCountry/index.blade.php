@@ -5,36 +5,35 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
     <x-admin.hmtl.section>
-        <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :continent="true"/>
+        <x-admin.filter-card.country form-name="{{$formName}}" :row="$rowData" :continent="true"/>
+    </x-admin.hmtl.section>
+
+    <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
             <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
                     <th class="all">#</th>
                     <th class="all"></th>
-                    <th class="desktop">ISO2</th>
-                    <th class="desktop">ISO3</th>
-                    <th class="desktop">Code</th>
-                    <th class="desktop">Symbol</th>
+                    <th class="{{returnTableRes($agent)}}">ISO2</th>
+                    <th class="{{returnTableRes($agent)}}">ISO3</th>
+                    <th class="{{returnTableRes($agent)}}">Code</th>
+                    <th class="{{returnTableRes($agent)}}">Symbol</th>
                     <th class="all">{{__('admin/dataCountry.t_name')}}</th>
                     <th class="desktop">{{__('admin/dataCountry.t_capital')}}</th>
                     <th class="desktop">{{__('admin/dataCountry.t_currency')}}</th>
                     <th class="desktop">{{__('admin/dataCountry.t_continent')}}</th>
-                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" res="all" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
-
                 </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
-
-
         </x-admin.card.def>
-
-
     </x-admin.hmtl.section>
 @endsection
 
@@ -54,7 +53,7 @@
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
 
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'id', name: 'id', orderable: true, searchable: true},
                     {data: 'Flag', name: 'Flag', orderable: false, searchable: false, className: "text-center"},
                     {data: 'iso2', name: 'iso2', orderable: true, searchable: true},
                     {data: 'iso3', name: 'iso3', orderable: true, searchable: true},

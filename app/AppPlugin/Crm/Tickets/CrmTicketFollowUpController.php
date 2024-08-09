@@ -132,12 +132,9 @@ class CrmTicketFollowUpController extends AdminMainController {
         return DataTables::eloquent($data)
             ->addIndexColumn()
             ->editColumn('id', function ($row) {
-                if ($this->agent->isDesktop()) {
-                    return $row->id;
-                } else {
-                    return null;
-                }
+                return returnTableId($this->agent,$row);
             })
+
             ->editColumn('created_at', function ($row) {
                 return [
                     'display' => date("Y-m-d", strtotime($row->created_at)) . '' . TicketDateFrom($row->created_at) . '',

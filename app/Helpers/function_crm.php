@@ -48,8 +48,6 @@ if (!function_exists('TicketSendWhatsapp')) {
         return $Whatsapp_Url;
     }
 }
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('LoadConfigName')) {
@@ -84,7 +82,8 @@ if (!function_exists('getColMobile')) {
         return $col;
     }
 }
-
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnTableRes')) {
     function returnTableRes($agent) {
         if($agent->isDesktop()){
@@ -94,5 +93,16 @@ if (!function_exists('returnTableRes')) {
         }
 
         return $res ;
+    }
+}
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('returnTableId')) {
+    function returnTableId($agent,$row) {
+        if ($agent->isDesktop()) {
+            return $row->id;
+        } else {
+            return null;
+        }
     }
 }

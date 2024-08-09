@@ -102,6 +102,10 @@ class CountryController extends AdminMainController {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent,$row);
+            })
+
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag($row);
             })

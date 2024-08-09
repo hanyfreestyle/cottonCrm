@@ -18,7 +18,7 @@
 .uploadFilterForm .form-group{margin-bottom:.2rem}
 .fileUploadCurrent img {max-width:250px;}
 .bigTextArea textarea{height: 315px;}
-.cust_country{max-height: 25px;}
+.country_table_flag{max-height: 25px!important;}
 
 input.parsley-success,
 select.parsley-success,

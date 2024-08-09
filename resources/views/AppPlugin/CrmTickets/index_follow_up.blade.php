@@ -8,33 +8,36 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         {{--        <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>--}}
-        <x-admin.card.normal :page-data="$pageData" :title="$pageData['BoxH1']">
-            <table {!! Table_Style_Yajra() !!} >
-                <thead>
-                <tr>
-                    <th class="all">#</th>
-                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_add')}}</th>
-                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_follow')}}</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_user_name')}}</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_customer_name')}}</th>
-                    <th class="all">{{__('admin/crm/ticket.t_customer_mobile')}}</th>
-                    <th class="desktop">{{__('admin/crm/ticket.t_customer_area')}}</th>
+        <div class="row">
+            <x-admin.card.normal :page-data="$pageData" :title="$pageData['BoxH1']">
+                <table {!! Table_Style_Yajra() !!} >
+                    <thead>
+                    <tr>
+                        <th class="all">#</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_add')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_date_follow')}}</th>
+                        <th class="desktop">{{__('admin/crm/ticket.t_user_name')}}</th>
+                        <th class="desktop">{{__('admin/crm/ticket.t_customer_name')}}</th>
+                        <th class="all">{{__('admin/crm/ticket.t_customer_mobile')}}</th>
+                        <th class="desktop">{{__('admin/crm/ticket.t_customer_area')}}</th>
 
-                    <th class="desktop">{{__('admin/crm/ticket.t_ticket_state')}}</th>
-                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_device')}}</th>
-                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes_err')}}</th>
-                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes')}}</th>
+                        <th class="desktop">{{__('admin/crm/ticket.t_ticket_state')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_device')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes_err')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes')}}</th>
 
-                    <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top"  res="all" type="edit"/>
-                    <x-admin.table.action-but po="top" type="delete"/>
-                    <x-admin.table.action-but po="top" res="all" type="edit"/>
-                </tr>
-                </thead>
-                <tbody></tbody>
+                        <x-admin.table.action-but po="top" type="edit"/>
+                        <x-admin.table.action-but po="top"  res="all" type="edit"/>
+                        <x-admin.table.action-but po="top" type="delete"/>
+                        <x-admin.table.action-but po="top" res="all" type="edit"/>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
 
-            </table>
-        </x-admin.card.normal>
+                </table>
+            </x-admin.card.normal>
+        </div>
+
 
     </x-admin.hmtl.section>
 
