@@ -33,12 +33,24 @@ class CountryController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'configArr' => ["filterid" => 0],
-            'restore' => 1,
             'formName' => "CountryFilter",
         ];
         self::loadConstructData($sendArr);
 
-        $this->middleware('permission:country_view', ['only' => ['index']]);
+
+        $Per_View = ['index'];
+        $Per_Add = ['create'];
+        $Per_Edit = ['edit', 'updateStatus'];
+        $Per_Delete = ['ForceDeleteException'];
+        $Per_Restore = ['SoftDeletes'];
+        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete, $Per_Restore);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $Per_ViewAll]);
+        $this->middleware('permission:country_view', ['only' => $Per_ViewAll]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -53,6 +65,7 @@ class CountryController extends AdminMainController {
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
+        $pageData['Trashed'] = Country::onlyTrashed()->count() ;
         $pageData['BoxH1'] = __($this->defLang . '.app_menu_list');
 
         $session = self::getSessionData($request);
@@ -67,7 +80,7 @@ class CountryController extends AdminMainController {
         $table = "data_countries";
         $table_trans = "data_country_translations";
 
-        $data = DB::table($table)
+        $data = DB::table($table)->where('deleted_at',null)
             ->Join($table_trans, $table . '.id', '=', $table_trans . '.country_id')
             ->where($table_trans . '.locale', '=', self::defLang())
             ->select("$table.id as id",
@@ -81,14 +94,12 @@ class CountryController extends AdminMainController {
                 "$table_trans.capital as capital",
                 "$table_trans.continent as continent_name",
                 "$table_trans.currency as currency",
-
             );
-
         return $data;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
@@ -98,14 +109,13 @@ class CountryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
             ->editColumn('id', function ($row) {
-                return returnTableId($this->agent,$row);
+                return returnTableId($this->agent, $row);
             })
-
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag($row);
             })
@@ -122,16 +132,7 @@ class CountryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(Country::onlyTrashed());
-        return view('AppPlugin.DataCountry.index', compact('pageData', 'rowData'));
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
@@ -140,7 +141,7 @@ class CountryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -148,9 +149,8 @@ class CountryController extends AdminMainController {
         return view('AppPlugin.DataCountry.form', compact('pageData', 'rowData'));
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(CountryRequest $request, $id = 0) {
 
         try {
@@ -197,16 +197,17 @@ class CountryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDelete
-    public function ForceDelete($id) {
-        $deleteRow = Country::onlyTrashed()->where('id', $id)->firstOrFail();
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ForceDeleteException($id) {
+        $deleteRow = Country::query()->where('id', $id)->firstOrFail();
+        dd('ForceDeleteException');
         $deleteRow->forceDelete();
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  updateStatus
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function updateStatus(Request $request) {
         $thisId = $request->send_id;
         $updateData = Country::findOrFail($thisId);
@@ -221,7 +222,7 @@ class CountryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function printName() {
         $Countries = Country::take(900)->get();
         $line = "[ ";

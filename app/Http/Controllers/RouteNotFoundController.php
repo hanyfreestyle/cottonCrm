@@ -8,20 +8,6 @@ use Illuminate\Support\Facades\View;
 
 class RouteNotFoundController extends Controller {
     public function __invoke() {
-
-        $Meta = DefaultMainController::getMeatByCatId('err_404');
-
-        $w = new WebMainController();
-        $w->printSeoMeta($Meta);
-
-        $pageView = [
-            'SelMenu' => '',
-            'show_fix' => true,
-            'slug' => null,
-            'go_home' => route('page_index'),
-        ];
-        View::share('pageView', $pageView);
-
         $adminDir = config('app.configAdminDir');
 
         $currentSlug = Route::current()->originalParameters();
@@ -30,5 +16,20 @@ class RouteNotFoundController extends Controller {
         } else {
             abort('404');
         }
+
+//        $Meta = DefaultMainController::getMeatByCatId('err_404');
+//
+//        $w = new WebMainController();
+//        $w->printSeoMeta($Meta);
+//
+//        $pageView = [
+//            'SelMenu' => '',
+//            'show_fix' => true,
+//            'slug' => null,
+//            'go_home' => route('page_index'),
+//        ];
+//        View::share('pageView', $pageView);
+
+
     }
 }

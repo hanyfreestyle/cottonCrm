@@ -14,9 +14,5 @@ Route::get('/Country/create/en',[CountryController::class,'create'])->name('data
 Route::get('/Country/edit/{id}',[CountryController::class,'edit'])->name('data.Country.edit');
 Route::get('/Country/emptyPhoto/{id}', [CountryController::class,'emptyPhoto'])->name('data.Country.emptyPhoto');
 Route::post('/Country/update/{id}',[CountryController::class,'storeUpdate'])->name('data.Country.update');
-Route::get('/Country/destroy/{id}',[CountryController::class,'destroy'])->name('data.Country.destroy');
-Route::get('/Country/SoftDelete/',[CountryController::class,'SoftDeletes'])->name('data.Country.SoftDelete');
-Route::get('/Country/restore/{id}',[CountryController::class,'Restore'])->name('data.Country.restore');
-Route::get('/Country/force/{id}',[CountryController::class,'ForceDelete'])->name('data.Country.force');
-//Route::get('/Country/config', [CountryController::class,'config'])->name('data.Country.config');
+Route::get('/Country/destroy/{id}',[CountryController::class,'ForceDeleteException'])->name('data.Country.destroy');
 Route::post('/Country/updateStatus', [CountryController::class,'updateStatus'])->name('data.Country.updateStatus');

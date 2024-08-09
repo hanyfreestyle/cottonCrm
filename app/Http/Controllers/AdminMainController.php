@@ -103,17 +103,17 @@ class AdminMainController extends DefaultMainController {
 //       'configArr'=> [ "filterid"=>1,"morePhotoFilterid"=>1 ,selectfilterid ]
         $this->configArr = AdminHelper::arrIsset($sendArr, 'configArr', array());
 
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['index', 'CategoryIndex']]);
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => ['create', 'CategoryCreate']]);
-
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => [
-            'edit', 'updateStatus', 'emptyPhoto', 'editRoleToPermission',
-            'CategoryEdit', 'CategoryStoreUpdate', 'CategorySort', 'CategorySaveSort',
-            'TagsEdit', 'TagsConfig', 'TagsOnFly',
-        ]]);
-
-        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => ['destroy', 'destroyException']]);
-        $this->middleware('permission:' . $this->PrefixRole . '_restore', ['only' => ['SoftDeletes', 'Restore', 'ForceDelete']]);
+//        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['index', 'CategoryIndex']]);
+//        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => ['create', 'CategoryCreate']]);
+//
+//        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => [
+//            'edit', 'updateStatus', 'emptyPhoto', 'editRoleToPermission',
+//            'CategoryEdit', 'CategoryStoreUpdate', 'CategorySort', 'CategorySaveSort',
+//            'TagsEdit', 'TagsConfig', 'TagsOnFly',
+//        ]]);
+//
+//        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => ['destroy', 'destroyException']]);
+//        $this->middleware('permission:' . $this->PrefixRole . '_restore', ['only' => ['SoftDeletes', 'Restore', 'ForceDelete']]);
 
         $this->viewDataTable = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_datatable', 0);
         View::share('viewDataTable', $this->viewDataTable);

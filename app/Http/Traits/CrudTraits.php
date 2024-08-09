@@ -14,7 +14,6 @@ trait CrudTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     destroy
     public function destroy($id) {
-
         $deleteRow = $this->model->where('id', $id)->firstOrFail();
         $deleteRow->delete();
         self::ClearCash();

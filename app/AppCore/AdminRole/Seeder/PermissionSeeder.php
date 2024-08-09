@@ -157,7 +157,6 @@ class PermissionSeeder extends Seeder {
                 ['cat_id' => 'data', 'name' => 'data_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
                 ['cat_id' => 'data', 'name' => 'data_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
                 ['cat_id' => 'data', 'name' => 'data_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'data', 'name' => 'data_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
             ];
             $manageData = ConfigDataTraits::LoadPermission($manageData);
             $data = array_merge($data, $manageData);
