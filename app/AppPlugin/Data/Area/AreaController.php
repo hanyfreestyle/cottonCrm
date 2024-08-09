@@ -43,29 +43,33 @@ class AreaController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
-            'configArr' => ["filterid" => 0, 'selectfilterid' => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
             'formName' => "AreaFilter",
         ];
 
         self::loadConstructData($sendArr);
-        if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
-            $CashCountryList = self::CashCountryList();
-            View::share('CashCountryList', $CashCountryList);
-        }
+
+        $Per_View = ['index'];
+        $Per_Add = ['create'];
+        $Per_Edit = ['edit'];
+        $Per_Delete = ['ForceDeleteException'];
+        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $Per_ViewAll]);
+        $this->middleware('permission:area_view', ['only' => $Per_ViewAll]);
 
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashCityList');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -76,7 +80,7 @@ class AreaController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function indexQuery() {
         $table = "data_area";
         $table_trans = "data_area_translations";
@@ -100,7 +104,7 @@ class AreaController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
@@ -111,14 +115,14 @@ class AreaController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   fetchCity
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function fetchCity(Request $request) {
         $data = City::where('country_id', $request->country_id)->with('translation')->get();
         return response()->json($data);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   fetchArea
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function fetchArea(Request $request) {
         $data = Area::where('city_id', $request->city_id)->with('translation')->get();
         return response()->json($data);
@@ -126,7 +130,7 @@ class AreaController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
@@ -154,7 +158,7 @@ class AreaController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -182,7 +186,7 @@ class AreaController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(AreaRequest $request, $id = 0) {
         $saveData = $this->model::findOrNew($id);
         try {
@@ -220,8 +224,6 @@ class AreaController extends AdminMainController {
 //        self::ClearCash();
 //        return back()->with('confirmDelete', "");
 //    }
-//
-//
 
 
 }

@@ -8,7 +8,11 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
     <x-admin.hmtl.section>
-        <x-admin.main.filter-form-data form-name="{{$formName}}" :row="$rowData" :country-id="true" :city-id="true"/>
+        <x-admin.filter-card.country form-name="{{$formName}}" :row="$rowData" :country-id="true"/>
+    </x-admin.hmtl.section>
+
+
+    <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
             <table {!! Table_Style_Yajra() !!} >
                 <thead>
@@ -21,7 +25,8 @@
                         <th class="all">{{__('admin/dataArea.form_city')}}</th>
                     @endif
                     <th class="all">{{__('admin/form.text_name')}}</th>
-                    <th class="desktop"></th>
+
+                    <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     @if($AppPluginConfig['deleteData'])
                         <x-admin.table.action-but po="top" type="delete"/>
@@ -46,15 +51,11 @@
                 responsive: true,
                 pageLength: 10,
                 order: [0, 'desc'],
-                columnDefs: [
-                    {"targets": 4, "className": "text-center"},
-                    {"targets": 5, "className": "text-center"},
-                ],
                 @include('datatable.lang')
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
 
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'id', name: 'id', orderable: false, searchable: false},
                     {data: 'country_name', name: 'data_country_translations.name', orderable: true},
                     {data: 'city_name', name: 'data_city_translations.name', orderable: true},
                     {data: 'name', name: 'data_area_translations.name', orderable: true},
