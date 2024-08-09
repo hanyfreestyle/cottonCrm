@@ -8,7 +8,6 @@ use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\City\Models\CityTranslation;
 use App\AppPlugin\Data\City\Request\CityRequest;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
-use App\AppPlugin\Data\Country\Country;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
@@ -16,7 +15,6 @@ use App\Http\Traits\DbFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
 class CityController extends AdminMainController {
@@ -41,36 +39,40 @@ class CityController extends AdminMainController {
         $this->AppPluginConfig = config('AppPlugin.City');
         View::share('AppPluginConfig', $this->AppPluginConfig);
 
-
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'configArr' => ["filterid" => 0, 'selectfilterid' => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
             'formName' => "CityFilter",
         ];
 
         self::loadConstructData($sendArr);
 
-        if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
-            $CashCountryList = self::CashCountryList();
-            View::share('CashCountryList', $CashCountryList);
-        }
+        $Per_View = ['index'];
+        $Per_Add = ['create'];
+        $Per_Edit = ['edit'];
+        $Per_Delete = ['ForceDeleteException'];
+        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $Per_ViewAll]);
+        $this->middleware('permission:city_view', ['only' => $Per_ViewAll]);
+
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashCityList');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -84,7 +86,7 @@ class CityController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function indexQuery() {
         $table = "data_city";
         $table_trans = "data_city_translations";
@@ -102,7 +104,7 @@ class CityController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
@@ -112,7 +114,7 @@ class CityController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
@@ -123,8 +125,9 @@ class CityController extends AdminMainController {
             'rowData' => $rowData,
         ]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -135,8 +138,9 @@ class CityController extends AdminMainController {
             'rowData' => $rowData,
         ]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(CityRequest $request, $id = 0) {
         $saveData = $this->model::findOrNew($id);
 
@@ -170,7 +174,7 @@ class CityController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ForceDeleteException($id) {
         $deleteRow = $this->model::where('id', $id)->firstOrFail();
         try {
@@ -184,48 +188,6 @@ class CityController extends AdminMainController {
 
         self::ClearCash();
         return back()->with('confirmDelete', "");
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Sort
-    public function Sort() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $rowData = $this->model->orderBy('postion')->get();
-        return view('AppPlugin.DataCity.sort')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     sortByCountry
-    public function sortByCountry($country_id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $country = Country::where('id', $country_id)->firstOrFail();
-        $rowData = $this->model->where('country_id', $country_id)->orderBy('postion')->get();
-        return view('AppPlugin.DataCity.sort')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'country' => $country,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SaveSort
-    public function SaveSort(Request $request) {
-        $positions = $request->positions;
-        foreach ($positions as $position) {
-            $id = $position[0];
-            $newPosition = $position[1];
-            $saveData = $this->model->findOrFail($id);
-            $saveData->postion = $newPosition;
-            $saveData->save();
-        }
-        self::ClearCash();
-        return response()->json(['success' => $positions]);
     }
 
 }

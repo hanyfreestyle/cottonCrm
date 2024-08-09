@@ -84,6 +84,9 @@ trait ConfigDataTraits {
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
             ->editColumn('is_active', function ($row) {
                 return is_active($row->is_active);
             })

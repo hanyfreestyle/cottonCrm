@@ -42,8 +42,7 @@ class CountryController extends AdminMainController {
         $Per_Add = ['create'];
         $Per_Edit = ['edit', 'updateStatus'];
         $Per_Delete = ['ForceDeleteException'];
-        $Per_Restore = ['SoftDeletes'];
-        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete, $Per_Restore);
+        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete);
 
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
