@@ -108,6 +108,7 @@ class AppPuzzleTreeConfig {
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['configApp.php'],
             'photoFolder' => ['app-photo'],
+            'ClientFolder' => config('adminConfig.app_folder'),
 
         ];
     }

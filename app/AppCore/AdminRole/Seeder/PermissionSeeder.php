@@ -92,16 +92,7 @@ class PermissionSeeder extends Seeder {
 //        }
 
 
-//        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-//            $newPer = [
-//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-//            ];
-//            $data = array_merge($data, $newPer);
-//        }
+
 
 //        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
 //            $newPer = [

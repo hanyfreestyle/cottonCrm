@@ -60,9 +60,7 @@ class DatabaseSeeder extends Seeder {
         }
 
 
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            $this->call(AppSettingSeeder::class);
-        }
+
 
 
         if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {

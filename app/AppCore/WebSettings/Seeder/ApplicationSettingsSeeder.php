@@ -7,6 +7,10 @@ use App\AppCore\UploadFilter\Models\UploadFilter;
 use App\AppCore\UploadFilter\Models\UploadFilterSize;
 use App\AppCore\WebSettings\Models\Setting;
 use App\AppCore\WebSettings\Models\SettingTranslation;
+use App\AppPlugin\Config\Apps\Models\AppMenu;
+use App\AppPlugin\Config\Apps\Models\AppMenuTranslation;
+use App\AppPlugin\Config\Apps\Models\AppSetting;
+use App\AppPlugin\Config\Apps\Models\AppSettingTranslation;
 use App\AppPlugin\Config\Branche\Branch;
 use App\AppPlugin\Config\Branche\BranchTranslation;
 use App\AppPlugin\Config\Meta\MetaTag;
@@ -43,6 +47,14 @@ class ApplicationSettingsSeeder extends Seeder {
         if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
             SeedDbFile(Branch::class, 'config_branch.sql');
             SeedDbFile(BranchTranslation::class, 'config_branch_translations.sql');
+        }
+
+
+        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
+            SeedDbFile(AppSetting::class, 'config_app_settings.sql');
+            SeedDbFile(AppSettingTranslation::class, 'config_app_setting_translations.sql');
+            SeedDbFile(AppMenu::class, 'config_app_menus.sql');
+            SeedDbFile(AppMenuTranslation::class, 'config_app_menu_translations.sql');
         }
 
     }
