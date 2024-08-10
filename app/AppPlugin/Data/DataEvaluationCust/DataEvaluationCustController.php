@@ -36,19 +36,15 @@ class DataEvaluationCustController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
-            'configArr' => ["filterid" => 0,'selectfilterid'=>0],
-            'yajraTable' => true,
-            'formName' => $this->controllerName."Filter",
+            'formName' => $this->controllerName . "Filter",
         ];
 
         self::loadConstructData($sendArr);
 
+        $permission = ['sub' => 'EvaluationCust_view'];
+        self::loadPagePermission($permission);
+
     }
-
-
-
-
-
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes

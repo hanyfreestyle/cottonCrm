@@ -38,17 +38,8 @@ class CountryController extends AdminMainController {
         self::loadConstructData($sendArr);
 
 
-        $Per_View = ['index'];
-        $Per_Add = ['create'];
-        $Per_Edit = ['edit', 'updateStatus'];
-        $Per_Delete = ['ForceDeleteException'];
-        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete);
-
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $Per_ViewAll]);
-        $this->middleware('permission:country_view', ['only' => $Per_ViewAll]);
+        $permission = ['sub'=> 'country_view'];
+        self::loadPagePermission($permission);
 
     }
 

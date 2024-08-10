@@ -6,7 +6,6 @@ use App\AppCore\Menu\AdminMenuController;
 use App\AppCore\UploadFilter\Models\UploadFilter;
 
 
-
 use App\Helpers\AdminHelper;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
 
@@ -80,21 +79,46 @@ class AdminMainController extends DefaultMainController {
         View::share('CashConfigDataList', $this->CashConfigDataList);
 
         $this->CashCountryList = self::CashCountryList();
-        View::share('CashCountryList',  $this->CashCountryList);
+        View::share('CashCountryList', $this->CashCountryList);
 
         $this->CashCityList = self::CashCityList();
-        View::share('CashCityList',  $this->CashCityList);
+        View::share('CashCityList', $this->CashCityList);
 
         $this->CashAreaList = self::CashAreaList();
         View::share('CashAreaList', $this->CashAreaList);
 
         $this->CashUsersList = self::CashUsersList();
-        View::share('CashUsersList',  $this->CashUsersList);
+        View::share('CashUsersList', $this->CashUsersList);
 
         $this->adminMenu = AdminMenuController::CashAdminMenu();
-        View::share('adminMenu',  $this->adminMenu);
+        View::share('adminMenu', $this->adminMenu);
 
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function loadPagePermission($arr) {
+        $defview = ['index','indexData'];
+        $defcreate = ['create','createData'];
+        $defedit = ['edit','editData'];
+        $defdelete = ['ForceDeleteException'];
+
+        $view = array_merge($defview, issetArr($arr, 'view', []));
+        $create = array_merge($defcreate, issetArr($arr, 'create', []));
+        $edit = array_merge($defedit, issetArr($arr, 'edit', []));
+        $delete = array_merge($defdelete, issetArr($arr, 'delete', []));
+        $sub = issetArr($arr, 'sub', null);
+
+        $allPermission = array_merge($view, $create, $edit, $delete);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
+        if ($sub) {
+            $this->middleware('permission:' . $sub, ['only' => $allPermission]);
+        }
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadConstructData($sendArr) {
@@ -478,8 +502,6 @@ class AdminMainController extends DefaultMainController {
 //        }
 //        return $saveTranslation;
 //    }
-
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

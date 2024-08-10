@@ -29,7 +29,7 @@ class CityController extends AdminMainController {
         $this->selMenu = "admin.data.";
         $this->PrefixCatRoute = "";
         $this->defLang = "admin/dataCity";
-        $this->PageTitle = __($this->defLang.'.app_menu');
+        $this->PageTitle = __($this->defLang . '.app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
         $this->UploadDirIs = "city";
         $this->model = $model;
@@ -50,17 +50,8 @@ class CityController extends AdminMainController {
 
         self::loadConstructData($sendArr);
 
-        $Per_View = ['index'];
-        $Per_Add = ['create'];
-        $Per_Edit = ['edit'];
-        $Per_Delete = ['ForceDeleteException'];
-        $Per_ViewAll = array_merge($Per_View, $Per_Add, $Per_Edit, $Per_Delete);
-
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $Per_ViewAll]);
-        $this->middleware('permission:city_view', ['only' => $Per_ViewAll]);
+        $permission = ['sub' => 'city_view'];
+        self::loadPagePermission($permission);
 
     }
 
@@ -76,7 +67,7 @@ class CityController extends AdminMainController {
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __($this->defLang.'.app_menu_list');
+        $pageData['BoxH1'] = __($this->defLang . '.app_menu_list');
 
 
         $session = self::getSessionData($request);
@@ -94,8 +85,8 @@ class CityController extends AdminMainController {
         $data = DB::table($table)
             ->Join($table_trans, $table . '.id', '=', $table_trans . '.city_id')
             ->where($table_trans . '.locale', '=', self::defLang())
-            ->Join($country_table, $table.'.country_id', '=', $country_table.'.country_id')
-            ->where($country_table.'.locale', '=', self::defLang())
+            ->Join($country_table, $table . '.country_id', '=', $country_table . '.country_id')
+            ->where($country_table . '.locale', '=', self::defLang())
             ->select("$table.id as id",
                 "$table.is_active as is_active",
                 "$table_trans.name",
@@ -118,7 +109,7 @@ class CityController extends AdminMainController {
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
-        $pageData['BoxH1'] = __($this->defLang.'.app_menu_add');
+        $pageData['BoxH1'] = __($this->defLang . '.app_menu_add');
         $rowData = $this->model::findOrNew(0);
         return view('AppPlugin.DataCity.form')->with([
             'pageData' => $pageData,
@@ -131,7 +122,7 @@ class CityController extends AdminMainController {
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        $pageData['BoxH1'] = __($this->defLang.'.app_menu_edit');
+        $pageData['BoxH1'] = __($this->defLang . '.app_menu_edit');
         $rowData = $this->model::where('id', $id)->firstOrFail();
         return view('AppPlugin.DataCity.form')->with([
             'pageData' => $pageData,

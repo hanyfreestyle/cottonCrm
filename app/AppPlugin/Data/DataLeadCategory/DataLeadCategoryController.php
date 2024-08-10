@@ -32,20 +32,17 @@ class DataLeadCategoryController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0,'selectfilterid'=>0],
-            'yajraTable' => true,
+            'AddConfig' => false,
             'formName' => $this->controllerName."Filter",
         ];
 
         self::loadConstructData($sendArr);
 
+        $permission = ['sub' => 'LeadCategory_view'];
+        self::loadPagePermission($permission);
+
+
     }
-
-
-
-
-
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes

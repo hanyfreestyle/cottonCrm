@@ -17,9 +17,8 @@ use Yajra\DataTables\Facades\DataTables;
 trait ConfigDataTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexData
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function indexData() {
-
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         if (Route::currentRouteName() == $this->PrefixRoute . '.archived') {
@@ -27,13 +26,11 @@ trait ConfigDataTraits {
         } else {
             $route = '.DataTable';
         }
-
         return view('AppPlugin.ConfigData.index', compact('pageData', 'route'));
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function indexQuery() {
         $table = "config_data";
         $table_trans = "config_data_translations";
@@ -50,7 +47,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     function defLang() {
         if (count(config('app.web_lang')) > 1) {
             $lang = LaravelLocalization::getCurrentLocale();
@@ -59,8 +56,9 @@ trait ConfigDataTraits {
         }
         return $lang;
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
             $data = self::indexQuery()->where('is_active', true);
@@ -69,7 +67,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTableArchived(Request $request) {
         if ($request->ajax()) {
             $data = self::indexQuery()->where('is_active', false);
@@ -77,10 +75,8 @@ trait ConfigDataTraits {
         }
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTableColumns($data, $arr = array()) {
         return DataTables::query($data)
             ->addIndexColumn()
@@ -100,7 +96,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     createData
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function createData() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
@@ -112,7 +108,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     editData
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function editData($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -124,7 +120,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdateData(ConfigDataRequest $request, $id = 0) {
         $saveData = $this->model::findOrNew($id);
         try {
@@ -149,8 +145,9 @@ trait ConfigDataTraits {
         self::ClearDataCash();
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function ManageDataFilterQ($query, $session, $order = null) {
         $formName = issetArr($session, "formName", null);
 
@@ -186,10 +183,8 @@ trait ConfigDataTraits {
     }
 
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   saveTranslation
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function saveTranslation($saveData, $request) {
         $fildeName = $this->translation_Filde;
 
@@ -217,7 +212,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     config
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function configData() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -229,14 +224,14 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearDataCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearDataCash() {
         Cache::forget('CashConfigDataList');
         Cache::forget('CashConfigData');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   LoadLangFiles
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadLangFiles($LangMenu) {
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
@@ -295,9 +290,8 @@ trait ConfigDataTraits {
         return $LangMenu;
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   LoadPermission
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadPermission($manageData) {
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
@@ -347,9 +341,8 @@ trait ConfigDataTraits {
         return $manageData;
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {
 
         $mainMenu = new AdminMenu();
@@ -473,7 +466,7 @@ trait ConfigDataTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function selRouteList($Route) {
         return $Route . ".index|" . $Route . ".filter|" . $Route . ".create|" . $Route . ".edit|" . $Route . ".archived|" . $Route . ".config";
     }
