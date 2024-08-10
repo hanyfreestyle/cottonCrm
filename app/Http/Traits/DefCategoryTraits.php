@@ -63,14 +63,6 @@ trait DefCategoryTraits {
             (object)['id' => '5', 'name' => __('admin/config/upFilter.filter_action_5')],
         ];
 
-//        $Cat['FilterTypeArr'] = [
-//            ['id' => '1', 'name' => __('admin/config/upFilter.filter_action_1')],
-//            ['id' => '2', 'name' => __('admin/config/upFilter.filter_action_2')],
-//            ['id' => '3', 'name' => __('admin/config/upFilter.filter_action_3')],
-//            ['id' => '4', 'name' => __('admin/config/upFilter.filter_action_4')],
-//            ['id' => '5', 'name' => __('admin/config/upFilter.filter_action_5')],
-//        ];
-//
 
         $Cat['PrintPhotoPosition'] = [
             ['id' => '1', 'name' => "Top"],

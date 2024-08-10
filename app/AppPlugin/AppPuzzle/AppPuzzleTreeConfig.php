@@ -55,6 +55,7 @@ class AppPuzzleTreeConfig {
             ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['configMeta.php'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 

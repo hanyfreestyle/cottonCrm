@@ -80,8 +80,6 @@ div.dataTables_wrapper div.dataTables_filter input {
         float: right;
         width: 60% !important;
         max-width: 250px !important;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         overflow: hidden;
         text-align: right !important;
         display: block;
@@ -92,6 +90,12 @@ div.dataTables_wrapper div.dataTables_filter input {
         text-align: center !important;
     }
 
+}
+
+
+#YajraDatatable .tableImg{
+    max-width: 40px;
+    max-height: 40px;
 }
 
 

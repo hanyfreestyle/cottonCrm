@@ -8,6 +8,7 @@ use App\Http\Requests\admin\MorePhotosEditRequest;
 use App\Http\Requests\admin\MorePhotosRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 trait CrudTraits {
 
@@ -223,4 +224,14 @@ trait CrudTraits {
         return redirect()->back()->with('Edit.Done', "");
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    function DataTableDefLang() {
+        if (count(config('app.web_lang')) > 1) {
+            $lang = LaravelLocalization::getCurrentLocale();
+        } else {
+            $lang = config('app.def_dataTableLang');
+        }
+        return $lang;
+    }
 }

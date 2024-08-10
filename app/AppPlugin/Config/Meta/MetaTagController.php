@@ -5,8 +5,10 @@ namespace App\AppPlugin\Config\Meta;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class MetaTagController extends AdminMainController {
 
@@ -27,63 +29,116 @@ class MetaTagController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'restore' => 1,
+            'AddConfig' => false,
         ];
+
         self::loadConstructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_meta_view', ['only' => ['index']]);
+        $permission = [
+            'sub' => 'config_meta_view',
+        ];
+        self::loadPagePermission($permission);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('WebMeta_Cash');
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['Trashed'] = MetaTag::onlyTrashed()->count();
-
-        $rowData = self::getSelectQuery(MetaTag::where('id', '!=', 0));
-        return view('AppPlugin.ConfigMeta.index', compact('pageData', 'rowData'));
+//        $rowData = self::indexQuery();
+//        dd($rowData->get());
+        return view('AppPlugin.ConfigMeta.index')->with([
+            'pageData' => $pageData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(MetaTag::onlyTrashed());
-        return view('AppPlugin.ConfigMeta.index', compact('pageData', 'rowData'));
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $data = self::indexQuery();
+            return self::DataTableColumns($data)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->addColumn('photo', function ($row) {
+                return TablePhoto($row, 'photo');
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo']);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function indexQuery() {
+        $table = "config_meta_tags";
+        $table_trans = "config_meta_tag_translations";
+        $data = DB::table($table)
+            ->Join($table_trans, $table . '.id', '=', $table_trans . '.meta_tag_id')
+            ->where($table_trans . '.locale', '=', self::DataTableDefLang())
+            ->select(
+                "$table.id as id",
+                "$table.cat_id as cat_id",
+                "$table.photo_thum_1 as photo",
+                "$table_trans.name as name",
+                "$table_trans.g_title as  title",
+                "$table_trans.g_des as des",
+            );
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
-        $oldData = new MetaTag();
-        return view('AppPlugin.ConfigMeta.form', compact('oldData', 'pageData'));
+        $rowData = new MetaTag();
+        return view('AppPlugin.ConfigMeta.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        $oldData = MetaTag::findOrFail($id);
-        return view('AppPlugin.ConfigMeta.form', compact('oldData', 'pageData'));
+        $rowData = MetaTag::findOrFail($id);
+        return view('AppPlugin.ConfigMeta.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
     public function storeUpdate(MetaTagRequest $request, $id = '0') {
         try {
             DB::transaction(function () use ($request, $id) {
 
                 $saveData = MetaTag::findOrNew($id);
-                $saveData->cat_id = AdminHelper::Url_Slug($request->input('cat_id'),['delimiter'=>'_']);
+                $saveData->cat_id = AdminHelper::Url_Slug($request->input('cat_id'), ['delimiter' => '_']);
                 $saveData->save();
                 self::SaveAndUpdateDefPhoto($saveData, $request, 'meta', 'cat_id');
 
@@ -93,7 +148,7 @@ class MetaTagController extends AdminMainController {
                     $saveTranslation->locale = $key;
                     $saveTranslation->g_title = $request->input($key . '.g_title');
                     $saveTranslation->g_des = $request->input($key . '.g_des');
-                    if(config('AppPlugin.Meta.name')){
+                    if (config('AppPlugin.Meta.name')) {
                         $saveTranslation->name = $request->input($key . '.name');
                         $saveTranslation->des = $request->input($key . '.des');
                     }
