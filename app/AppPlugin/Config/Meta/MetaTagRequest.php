@@ -14,9 +14,9 @@ class MetaTagRequest extends FormRequest {
         $id = $this->route('id');
 
         if ($id == '0') {
-            $rules = ['cat_id' => "required|alpha_dash:ascii|min:4|max:50|unique:config_meta_tags"];
+            $rules = ['cat_id' => "required|alpha_dash:ascii|min:4|max:50|unique:config_meta_tag"];
         } else {
-            $rules = ['cat_id' => "required|alpha_dash:ascii|min:4|max:50|unique:config_meta_tags,cat_id,$id"];
+            $rules = ['cat_id' => "required|alpha_dash:ascii|min:4|max:50|unique:config_meta_tag,cat_id,$id"];
         }
 
         foreach (config('app.web_lang') as $key => $lang) {

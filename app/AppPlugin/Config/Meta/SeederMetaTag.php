@@ -13,7 +13,7 @@ class SeederMetaTag extends Seeder {
         if (File::isFile(public_path('db/' . $folder . '/data_city.sql'))) {
 
             MetaTag::unguard();
-            $tablePath = public_path('db/' . $folder . '/config_meta_tags.sql');
+            $tablePath = public_path('db/' . $folder . '/config_meta_tag.sql');
             DB::unprepared(file_get_contents($tablePath));
 
             MetaTagTranslation::unguard();

@@ -50,7 +50,7 @@ class AppPuzzleTreeConfig {
                 '2019_12_14_000003_create_meta_tags_table.php',
             ],
             'seeder' => [
-                'config_meta_tags.sql',
+                'config_meta_tag.sql',
                 'config_meta_tag_translations.sql',
             ],
             'adminLangFolder' => "admin/",

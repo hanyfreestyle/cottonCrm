@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `config_meta_tags`
+-- Dumping data for table `config_meta_tag`
 --
 
-INSERT INTO `config_meta_tags` (`id`, `cat_id`, `photo`, `photo_thum_1`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `config_meta_tag` (`id`, `cat_id`, `photo`, `photo_thum_1`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'home', NULL, NULL, '2023-08-16 09:18:40', '2023-08-16 09:18:40', NULL),
 (2, 'about', NULL, NULL, '2023-08-16 11:16:16', '2024-04-10 23:29:43', NULL),
 (3, 'blog', NULL, NULL, '2023-08-16 11:30:42', '2023-08-16 11:30:42', NULL),

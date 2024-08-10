@@ -89,7 +89,7 @@ class MetaTagController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function indexQuery() {
-        $table = "config_meta_tags";
+        $table = "config_meta_tag";
         $table_trans = "config_meta_tag_translations";
         $data = DB::table($table)
             ->Join($table_trans, $table . '.id', '=', $table_trans . '.meta_tag_id')
