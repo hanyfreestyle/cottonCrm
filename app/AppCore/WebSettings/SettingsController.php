@@ -165,7 +165,7 @@ class SettingsController extends AdminMainController {
         $subMenu->sel_routs = "web.index";
         $subMenu->url = "admin.config.web.index";
         $subMenu->name = "admin/config/webConfig.app_menu";
-        $subMenu->roleView = "config_website";
+        $subMenu->roleView = "config_app";
         $subMenu->icon = "fas fa-cog";
         $subMenu->save();
 
