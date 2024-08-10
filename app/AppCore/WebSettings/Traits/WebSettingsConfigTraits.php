@@ -119,7 +119,7 @@ trait WebSettingsConfigTraits {
         if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
-            $subMenu->sel_routs = "WebPrivacy.index|WebPrivacy.create|WebPrivacy.edit|WebPrivacy.config";
+            $subMenu->sel_routs = "WebPrivacy.index|WebPrivacy.create|WebPrivacy.edit|WebPrivacy.config|WebPrivacy.Sort";
             $subMenu->url = "admin.config.WebPrivacy.index";
             $subMenu->name = "admin/configPrivacy.app_menu";
             $subMenu->roleView = "config_web_privacy";
