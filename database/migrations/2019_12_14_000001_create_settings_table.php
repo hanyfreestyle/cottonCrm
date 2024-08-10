@@ -8,7 +8,7 @@ return new class extends Migration {
 
     public function up(): void {
 
-        Schema::create('config_settings', function (Blueprint $table) {
+        Schema::create('config_setting', function (Blueprint $table) {
             $table->increments('id');
             $table->string('web_url')->nullable();
             $table->integer('web_status')->nullable()->default('1');
@@ -68,15 +68,14 @@ return new class extends Migration {
             $table->text('whatsapp_des')->nullable();
             $table->text('schema_address')->nullable();
             $table->text('schema_city')->nullable();
-            $table->unique(['setting_id','locale']);
-            $table->foreign('setting_id')->references('id')->on('config_settings')->onDelete('cascade');
+            $table->unique(['setting_id', 'locale']);
+            $table->foreign('setting_id')->references('id')->on('config_setting')->onDelete('cascade');
         });
-
     }
 
 
     public function down(): void {
         Schema::dropIfExists('config_setting_translations');
-        Schema::dropIfExists('config_settings');
+        Schema::dropIfExists('config_setting');
     }
 };

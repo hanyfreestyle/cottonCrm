@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\File;
 class ApplicationSettingsSeeder extends Seeder {
     public function run(): void {
 
-        SeedDbFile(Setting::class, 'config_settings.sql');
+        SeedDbFile(Setting::class, 'config_setting.sql');
         SeedDbFile(SettingTranslation::class, 'config_setting_translations.sql');
         SeedDbFile(DefPhoto::class, 'config_def_photos.sql');
         SeedDbFile(UploadFilter::class, 'config_upload_filters.sql');

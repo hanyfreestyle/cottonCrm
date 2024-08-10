@@ -221,8 +221,8 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             ['database/migrations/' => '2019_12_14_000007_create_upload_filter_sizes_table.php'],
             ['database/seeders/' => 'DatabaseSeeder.php'],
             ['public/db/' => 'config_def_photos.sql'],
+            ['public/db/' => 'config_setting.sql'],
             ['public/db/' => 'config_setting_translations.sql'],
-            ['public/db/' => 'config_settings.sql'],
             ['public/db/' => 'config_upload_filter_sizes.sql'],
             ['public/db/' => 'config_upload_filters.sql'],
         ];
