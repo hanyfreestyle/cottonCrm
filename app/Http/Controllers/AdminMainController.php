@@ -100,7 +100,7 @@ class AdminMainController extends DefaultMainController {
         $defview = ['index','indexData'];
         $defcreate = ['create','createData'];
         $defedit = ['edit','editData'];
-        $defdelete = ['ForceDeleteException'];
+        $defdelete = ['destroy','ForceDeleteException'];
 
         $view = array_merge($defview, issetArr($arr, 'view', []));
         $create = array_merge($defcreate, issetArr($arr, 'create', []));

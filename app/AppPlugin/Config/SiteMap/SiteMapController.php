@@ -37,7 +37,13 @@ class SiteMapController extends AdminMainController {
         ];
         View::share('Config', $this->config);
         self::loadConstructData($sendArr);
-        $this->middleware('permission:sitemap_view', ['only' => ['index','Robots','GoogleCode','UpdateSiteMap']]);
+
+        $permission = [
+            'sub' => 'sitemap_view',
+            'view' => ['index', 'Robots', 'GoogleCode'],
+            'edit' => ['UpdateSiteMap','RobotsUpdate','GoogleCodeUpdate'],
+        ];
+        self::loadPagePermission($permission);
     }
 
 

@@ -21,7 +21,7 @@
                         </div>
                     </x-admin.card.normal>
                 </div>
-                <button type="submit" class="btn float-left btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
+                <button type="submit" class="btn float-left mb-5 btn-primary">{{__('admin/configSitemap.f_but_update')}}</button>
             </form>
         </div>
     </x-admin.hmtl.section>

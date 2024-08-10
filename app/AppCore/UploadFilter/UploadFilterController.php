@@ -36,22 +36,35 @@ class UploadFilterController extends AdminMainController {
             'restore' => 1,
         ];
         self::loadConstructData($sendArr);
+
+        $permission = [
+            'sub' => 'config_upFilter_view',
+            'view' => ['index', 'Robots', 'GoogleCode'],
+            'edit' => ['UpdateSiteMap','RobotsUpdate','GoogleCodeUpdate'],
+        ];
+        self::loadPagePermission($permission);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('upload_filter_list_cash');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['Trashed'] = UploadFilter::onlyTrashed()->count();
         $rowData = self::getSelectQuery(UploadFilter::where('id', '!=', 0));
-        return view('admin.appCore.photo_filter.index', compact('pageData', 'rowData'));
+
+        return view('admin.appCore.photo_filter.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

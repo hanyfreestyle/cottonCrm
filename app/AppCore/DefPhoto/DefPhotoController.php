@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminMainController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use function NunoMaduro\Collision\Exceptions\getCode;
 
 class DefPhotoController extends AdminMainController {
     function __construct(DefPhoto $model) {
@@ -28,46 +29,63 @@ class DefPhotoController extends AdminMainController {
         ];
 
         self::loadConstructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_defPhoto_view', ['only' => ['index']]);
+
+        $permission = [
+            'sub' => 'config_defPhoto_view',
+            'edit' => ['sortDefPhotoList'],
+        ];
+        self::loadPagePermission($permission);
+
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('DefPhotoList_Cash');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
 
         $defPhoto = glob("Def/*");
-        $rowData = DefPhoto::orderBy('postion')->paginate(16);
-        return view('admin.appCore.photo_def.index', compact('pageData', 'rowData', 'defPhoto'));
+        $rowData = DefPhoto::orderBy('postion')->get();
+        return view('admin.appCore.photo_def.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'defPhoto' => $defPhoto,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $rowData = DefPhoto::findOrNew(0);
-        return view('admin.appCore.photo_def.form', compact('pageData', 'rowData'));
+        return view('admin.appCore.photo_def.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = DefPhoto::findOrFail($id);
-        return view('admin.appCore.photo_def.form', compact('rowData', 'pageData'));
+        return view('admin.appCore.photo_def.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(DefPhotoRequest $request, $id = '0') {
 
         $saveImgData = new PuzzleUploadProcess();
@@ -87,9 +105,8 @@ class DefPhotoController extends AdminMainController {
 
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroy
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroy($id) {
         $deleteRow = DefPhoto::findOrFail($id);
         $deleteRow = AdminHelper::onlyDeletePhotos($deleteRow, 3);
@@ -99,15 +116,16 @@ class DefPhotoController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     sortDefPhotoList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function sortDefPhotoList() {
         $pageData = $this->pageData;
         $rowData = DefPhoto::orderBy('postion')->paginate(50);
         $pageData['ViewType'] = "List";
         return view('admin.appCore.photo_def.indexSort', compact('pageData', 'rowData'));
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     sortDefPhotoList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function sortDefPhotoSave(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
