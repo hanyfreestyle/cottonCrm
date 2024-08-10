@@ -117,17 +117,8 @@ class PermissionSeeder extends Seeder {
 
 
         $data = WebSettingsConfigTraits::LoadPermission($data);
+        $data = ConfigDataTraits::LoadPermission($data);
 
-//        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-//            $manageData = [
-//                ['cat_id' => 'data', 'name' => 'data_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-//                ['cat_id' => 'data', 'name' => 'data_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-//                ['cat_id' => 'data', 'name' => 'data_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-//                ['cat_id' => 'data', 'name' => 'data_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-//            ];
-//            $manageData = ConfigDataTraits::LoadPermission($manageData);
-//            $data = array_merge($data, $manageData);
-//        }
 
 //        if (File::isFile(base_path('routes/AppPlugin/leads/contactUs.php'))) {
 //            $newPer = [

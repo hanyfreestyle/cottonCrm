@@ -3,47 +3,39 @@
 namespace App\AppPlugin\Data\ConfigData\Seeder;
 
 
-use App\AppPlugin\Data\Area\Seeder\AreaSeeder;
-use App\AppPlugin\Data\City\Seeder\CitySeeder;
+use App\AppPlugin\Data\Area\Models\Area;
+use App\AppPlugin\Data\Area\Models\AreaTranslation;
+use App\AppPlugin\Data\City\Models\City;
+use App\AppPlugin\Data\City\Models\CityTranslation;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
-use App\AppPlugin\Data\Country\SeederCountry;
+use App\AppPlugin\Data\Country\Country;
+use App\AppPlugin\Data\Country\CountryTranslation;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class ConfigDataSeeder extends Seeder {
 
     public function run(): void {
 
-        $folder = config('adminConfig.app_folder');
 
-
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            if (File::isFile(public_path('db/' . $folder . '/config_data.sql'))) {
-
-                ConfigData::unguard();
-                $tablePath = public_path('db/' . $folder . '/config_data.sql');
-                DB::unprepared(file_get_contents($tablePath));
-
-                ConfigDataTranslation::unguard();
-                $tablePath = public_path('db/' . $folder . '/config_data_translations.sql');
-                DB::unprepared(file_get_contents($tablePath));
-
-            }
-        }
-
+        SeedDbFile(ConfigData::class, 'config_data.sql');
+        SeedDbFile(ConfigDataTranslation::class, 'config_data_translations.sql');
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
-            $this->call(SeederCountry::class);
+            SeedDbFile(Country::class, 'data_countries.sql', false);
+            SeedDbFile(CountryTranslation::class, 'data_country_translations.sql', false);
         }
 
         if (File::isFile(base_path('routes/AppPlugin/data/city.php'))) {
-            $this->call(CitySeeder::class);
+            SeedDbFile(City::class, 'data_city.sql');
+            SeedDbFile(CityTranslation::class, 'data_city_translations.sql');
         }
 
+
         if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
-            $this->call(AreaSeeder::class);
+            SeedDbFile(Area::class, 'data_area.sql');
+            SeedDbFile(AreaTranslation::class, 'data_area_translations.sql');
         }
 
 
