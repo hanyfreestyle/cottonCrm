@@ -9,7 +9,7 @@ class SeederWebPrivacy extends Seeder {
 
     public function run(): void {
         WebPrivacy::unguard();
-        $tablePath = public_path('db/config_web_privacies.sql');
+        $tablePath = public_path('db/config_web_privacy.sql');
         DB::unprepared(file_get_contents($tablePath));
 
         WebPrivacyTranslation::unguard();

@@ -74,7 +74,7 @@ class AppPuzzleTreeConfig {
                 '2019_12_14_000008_create_web_privacies_table.php',
             ],
             'seeder' => [
-                'config_web_privacies.sql',
+                'config_web_privacy.sql',
                 'config_web_privacy_translations.sql'
             ],
             'adminLangFolder' => "admin/",

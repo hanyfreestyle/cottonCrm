@@ -8,7 +8,7 @@ return new class extends Migration {
 
     public function up(): void {
 
-        Schema::create('config_web_privacies', function (Blueprint $table) {
+        Schema::create('config_web_privacy', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("name");
             $table->integer("postion")->default(0);
@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->text('lists')->nullable();
 
             $table->unique(['privacy_id', 'locale']);
-            $table->foreign('privacy_id')->references('id')->on('config_web_privacies')->onDelete('cascade');
+            $table->foreign('privacy_id')->references('id')->on('config_web_privacy')->onDelete('cascade');
         });
 
     }
@@ -36,6 +36,6 @@ return new class extends Migration {
 
     public function down(): void {
         Schema::dropIfExists('config_web_privacy_translations');
-        Schema::dropIfExists('config_web_privacies');
+        Schema::dropIfExists('config_web_privacy');
     }
 };

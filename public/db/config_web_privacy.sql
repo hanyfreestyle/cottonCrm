@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `config_web_privacies`
+-- Dumping data for table `config_web_privacy`
 --
 
-INSERT INTO `config_web_privacies` (`id`, `name`, `postion`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `config_web_privacy` (`id`, `name`, `postion`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (2, 'شروط وسياسة الخصوصية', 2, 1, '2023-08-24 12:42:57', '2023-08-24 12:42:57', NULL),
 (3, 'جمع المعلومات واستخدامها', 3, 1, '2023-08-24 12:42:57', '2023-08-24 12:42:57', NULL),
 (4, 'أنواع البيانات المجمعة', 4, 1, '2023-08-24 12:42:57', '2023-08-24 12:42:57', NULL),

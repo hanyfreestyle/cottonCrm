@@ -26,10 +26,15 @@ class WebPrivacyController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'configArr' => ["filterid" => 0],
-            'restore' => 1,
         ];
         self::loadConstructData($sendArr);
-        $this->middleware('permission:config_web_privacy', ['only' => ['index']]);
+
+        $permission = [
+            'sub' => 'config_web_privacy',
+            'edit' => ['Sort'],
+        ];
+        self::loadPagePermission($permission);
+
     }
 
 
@@ -40,37 +45,44 @@ class WebPrivacyController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['Trashed'] = WebPrivacy::onlyTrashed()->count();
-
         $rowData = self::getSelectQuery(WebPrivacy::defquery());
-        return view('AppPlugin.ConfigPrivacy.index', compact('pageData', 'rowData'));
+        return view('AppPlugin.ConfigPrivacy.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $rowData = new WebPrivacy();
-        return view('AppPlugin.ConfigPrivacy.form', compact('rowData', 'pageData'));
+        return view('AppPlugin.ConfigPrivacy.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = WebPrivacy::findOrFail($id);
-        return view('AppPlugin.ConfigPrivacy.form', compact('rowData', 'pageData'));
+        return view('AppPlugin.ConfigPrivacy.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(WebPrivacyRequest $request, $id = '0') {
 
         $saveData = WebPrivacy::findOrNew($id);
@@ -93,27 +105,21 @@ class WebPrivacyController extends AdminMainController {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(WebPrivacy::onlyTrashed());
-        return view('AppPlugin.ConfigPrivacy.index', compact('pageData', 'rowData'));
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Sort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Sort() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $WebPrivacy = WebPrivacy::with('translation')
             ->orderBy('postion', 'asc')
             ->get();
-        return view('AppPlugin.ConfigPrivacy.sort', compact('WebPrivacy', 'pageData'));
+        return view('AppPlugin.ConfigPrivacy.sort')->with([
+            'pageData' => $pageData,
+            'WebPrivacy' => $WebPrivacy,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SaveSort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function SaveSort(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
