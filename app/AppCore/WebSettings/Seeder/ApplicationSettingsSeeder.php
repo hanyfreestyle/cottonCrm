@@ -51,9 +51,9 @@ class ApplicationSettingsSeeder extends Seeder {
 
 
         if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            SeedDbFile(AppSetting::class, 'config_app_settings.sql');
+            SeedDbFile(AppSetting::class, 'config_app_setting.sql');
             SeedDbFile(AppSettingTranslation::class, 'config_app_setting_translations.sql');
-            SeedDbFile(AppMenu::class, 'config_app_menus.sql');
+            SeedDbFile(AppMenu::class, 'config_app_menu.sql');
             SeedDbFile(AppMenuTranslation::class, 'config_app_menu_translations.sql');
         }
 

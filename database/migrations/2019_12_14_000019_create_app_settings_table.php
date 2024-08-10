@@ -8,7 +8,7 @@ return new class extends Migration {
 
     public function up(): void {
 
-        Schema::create('config_app_settings', function (Blueprint $table) {
+        Schema::create('config_app_setting', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('status')->default('1');
 
@@ -63,13 +63,13 @@ return new class extends Migration {
             $table->string('whatsAppMessage')->nullable();
 
             $table->unique(['setting_id', 'locale']);
-            $table->foreign('setting_id')->references('id')->on('config_app_settings')->onDelete('cascade');
+            $table->foreign('setting_id')->references('id')->on('config_app_setting')->onDelete('cascade');
 
         });
     }
 
     public function down(): void {
         Schema::dropIfExists('config_app_setting_translations');
-        Schema::dropIfExists('config_app_settings');
+        Schema::dropIfExists('config_app_setting');
     }
 };

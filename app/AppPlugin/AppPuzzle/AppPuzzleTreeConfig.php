@@ -99,10 +99,11 @@ class AppPuzzleTreeConfig {
             ],
 
             'seeder' => [
-                'config_app_menus.sql',
+                'config_app_menu.sql',
                 'config_app_menu_translations.sql',
+                'config_app_setting.sql',
                 'config_app_setting_translations.sql',
-                'config_app_settings.sql',
+
             ],
 
             'adminLangFolder' => "admin/",

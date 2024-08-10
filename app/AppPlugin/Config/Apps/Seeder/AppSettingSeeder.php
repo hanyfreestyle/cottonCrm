@@ -14,7 +14,7 @@ class AppSettingSeeder extends Seeder {
     public function run(): void {
 
         AppSetting::unguard();
-        $tablePath = public_path('db/config_app_settings.sql');
+        $tablePath = public_path('db/config_app_setting.sql');
         DB::unprepared(file_get_contents($tablePath));
 
         AppSettingTranslation::unguard();
@@ -22,7 +22,7 @@ class AppSettingSeeder extends Seeder {
         DB::unprepared(file_get_contents($tablePath));
 
         AppMenu::unguard();
-        $tablePath = public_path('db/config_app_menus.sql');
+        $tablePath = public_path('db/config_app_menu.sql');
         DB::unprepared(file_get_contents($tablePath));
 
         AppMenuTranslation::unguard();

@@ -13,7 +13,7 @@ class AppMenu extends Model implements TranslatableContract {
     use Translatable;
     use SoftDeletes;
 
-    protected $table = "config_app_menus";
+    protected $table = "config_app_menu";
     public $translatedAttributes = ['url', 'label', 'icon', 'title'];
     protected $fillable = ['id', 'type'];
     protected $primaryKey = 'id';

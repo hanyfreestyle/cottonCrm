@@ -11,7 +11,7 @@ class AppSetting extends Model implements TranslatableContract {
 
     use Translatable;
 
-    protected $table = "config_app_settings";
+    protected $table = "config_app_setting";
     public $timestamps = false;
     protected $primaryKey = 'id';
     public $translatedAttributes = ['AppName', 'whatsAppMessage'];
