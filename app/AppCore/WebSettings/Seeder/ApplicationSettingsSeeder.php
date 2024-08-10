@@ -23,7 +23,7 @@ class ApplicationSettingsSeeder extends Seeder {
         SeedDbFile(Setting::class, 'config_setting.sql');
         SeedDbFile(SettingTranslation::class, 'config_setting_translations.sql');
         SeedDbFile(DefPhoto::class, 'config_def_photos.sql');
-        SeedDbFile(UploadFilter::class, 'config_upload_filters.sql');
+        SeedDbFile(UploadFilter::class, 'config_upload_filter.sql');
         SeedDbFile(UploadFilterSize::class, 'config_upload_filter_sizes.sql');
 
         if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {

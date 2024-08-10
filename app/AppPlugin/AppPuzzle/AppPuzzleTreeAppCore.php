@@ -205,6 +205,14 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function ExportFolderDatabase($CopyFolder) {
+
+        $clientfolder = config('adminConfig.app_folder');
+        if ($clientfolder) {
+            $clientfolder = config('adminConfig.app_folder') . "/";
+        } else {
+            $clientfolder = null;
+        }
+
         $fileNames = [
             ['database/migrations/' => '2014_10_12_000000_create_users_table.php'],
             ['database/migrations/' => '2014_10_12_100000_create_password_reset_tokens_table.php'],
@@ -218,13 +226,12 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             ['database/migrations/' => '2019_12_14_000002_create_menu_table.php'],
             ['database/migrations/' => '2019_12_14_000005_create_def_photos_table.php'],
             ['database/migrations/' => '2019_12_14_000006_create_upload_filters_table.php'],
-            ['database/migrations/' => '2019_12_14_000007_create_upload_filter_sizes_table.php'],
             ['database/seeders/' => 'DatabaseSeeder.php'],
-            ['public/db/' => 'config_def_photos.sql'],
-            ['public/db/' => 'config_setting.sql'],
-            ['public/db/' => 'config_setting_translations.sql'],
-            ['public/db/' => 'config_upload_filter_sizes.sql'],
-            ['public/db/' => 'config_upload_filters.sql'],
+            ['public/db/' . $clientfolder => 'config_def_photos.sql'],
+            ['public/db/' . $clientfolder => 'config_setting.sql'],
+            ['public/db/' . $clientfolder => 'config_setting_translations.sql'],
+            ['public/db/' . $clientfolder => 'config_upload_filter.sql'],
+            ['public/db/' . $clientfolder => 'config_upload_filter_sizes.sql'],
         ];
 
         foreach ($fileNames as $fileName) {

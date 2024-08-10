@@ -4,12 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration{
+return new class extends Migration {
 
-    public function up(): void
-    {
+    public function up(): void {
 
-        Schema::create('config_upload_filters', function (Blueprint $table) {
+        Schema::create('config_upload_filter', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('type')->default('1');
@@ -41,17 +40,34 @@ return new class extends Migration{
 
             $table->integer('state')->default('0');
 
-            foreach (config('app.admin_lang') as $key=>$lang){
-                $table->string('notes_'.$key)->nullable();
+            foreach (config('app.admin_lang') as $key => $lang) {
+                $table->string('notes_' . $key)->nullable();
             }
 
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('config_upload_filter_sizes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('filter_id')->unsigned();
+            $table->integer('type')->default('1');
+            $table->integer('new_w');
+            $table->integer('new_h');
+            $table->string('canvas_back')->nullable();
+
+            $table->integer('get_more_option')->default('0');
+            $table->integer('get_add_text')->default('0');
+            $table->integer('get_watermark')->default('0');
+
+            $table->foreign('filter_id')->references('id')->on('config_upload_filter')->onDelete('cascade');
+        });
+
     }
 
-    public function down(): void
-    {
-        Schema::dropIfExists('config_upload_filters');
+
+    public function down(): void {
+        Schema::dropIfExists('config_upload_filter_sizes');
+        Schema::dropIfExists('config_upload_filter');
     }
 };

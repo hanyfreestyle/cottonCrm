@@ -14,10 +14,10 @@ class UploadFilterSeeder extends Seeder {
     public function run(): void {
 
         $folder = config('adminConfig.app_folder');
-        if (File::isFile(public_path('db/' . $folder . '/config_upload_filters.sql'))) {
+        if (File::isFile(public_path('db/' . $folder . '/config_upload_filter.sql'))) {
 
             UploadFilter::unguard();
-            $tablePath = public_path('db/' . $folder . '/config_upload_filters.sql');
+            $tablePath = public_path('db/' . $folder . '/config_upload_filter.sql');
             DB::unprepared(file_get_contents($tablePath));
 
             UploadFilterSize::unguard();

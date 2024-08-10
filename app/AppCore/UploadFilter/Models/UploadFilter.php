@@ -10,7 +10,7 @@ class UploadFilter extends Model {
 
     use SoftDeletes;
 
-    protected $table = "config_upload_filters";
+    protected $table = "config_upload_filter";
 
     public function FiltersSize() {
         return $this->hasMany(UploadFilterSize::class, 'filter_id', 'id');
