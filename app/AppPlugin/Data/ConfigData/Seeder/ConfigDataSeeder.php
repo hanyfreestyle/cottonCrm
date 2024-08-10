@@ -3,8 +3,11 @@
 namespace App\AppPlugin\Data\ConfigData\Seeder;
 
 
+use App\AppPlugin\Data\Area\Seeder\AreaSeeder;
+use App\AppPlugin\Data\City\Seeder\CitySeeder;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
+use App\AppPlugin\Data\Country\SeederCountry;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -14,8 +17,10 @@ class ConfigDataSeeder extends Seeder {
     public function run(): void {
 
         $folder = config('adminConfig.app_folder');
-        if (File::isFile(public_path('db/' . $folder . '/config_data.sql'))) {
-            if ($folder) {
+
+
+        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+            if (File::isFile(public_path('db/' . $folder . '/config_data.sql'))) {
 
                 ConfigData::unguard();
                 $tablePath = public_path('db/' . $folder . '/config_data.sql');
@@ -24,35 +29,22 @@ class ConfigDataSeeder extends Seeder {
                 ConfigDataTranslation::unguard();
                 $tablePath = public_path('db/' . $folder . '/config_data_translations.sql');
                 DB::unprepared(file_get_contents($tablePath));
+
             }
         }
 
 
-//        ConfigData::query()->whereNotIn('cat_id',['EvaluationCust'])->delete();
+        if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
+            $this->call(SeederCountry::class);
+        }
 
+        if (File::isFile(base_path('routes/AppPlugin/data/city.php'))) {
+            $this->call(CitySeeder::class);
+        }
 
-//        $oldData = ConfigData::query()->orderBy('cat_id')->get();
-//        $newId = 1;
-//        foreach ($oldData as $data) {
-//            $oldId = $data->id;
-//            $data->id = $newId;
-//            $data->old_id = $oldId;
-//            $data->save();
-//            $ConfigDataTranslation = ConfigDataTranslation::query()->where('data_id',$oldId)->get();
-//            foreach ($ConfigDataTranslation as $trans){
-//                $trans->data_id = $newId ;
-//                $trans->save() ;
-//            }
-//            $newId = $newId + 1;
-//        }
-//
-//        $ConfigDataTranslation = ConfigDataTranslation::query()->orderBy('data_id')->get();
-//        $newId = 1;
-//        foreach ($ConfigDataTranslation as $trans){
-//            $trans->id = $newId ;
-//            $trans->save() ;
-//            $newId = $newId + 1;
-//        }
+        if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
+            $this->call(AreaSeeder::class);
+        }
 
 
     }

@@ -12,15 +12,13 @@ class CitySeeder extends Seeder {
     public function run(): void {
         $folder = config('adminConfig.app_folder');
         if (File::isFile(public_path('db/' . $folder . '/data_city.sql'))) {
-            if ($folder) {
-                City::unguard();
-                $tablePath = public_path('db/' . $folder . '/data_city.sql');
-                DB::unprepared(file_get_contents($tablePath));
+            City::unguard();
+            $tablePath = public_path('db/' . $folder . '/data_city.sql');
+            DB::unprepared(file_get_contents($tablePath));
 
-                CityTranslation::unguard();
-                $tablePath = public_path('db/' . $folder . '/data_city_translations.sql');
-                DB::unprepared(file_get_contents($tablePath));
-            }
+            CityTranslation::unguard();
+            $tablePath = public_path('db/' . $folder . '/data_city_translations.sql');
+            DB::unprepared(file_get_contents($tablePath));
         }
     }
 
