@@ -127,11 +127,12 @@ class AppPuzzleTreeConfig {
                 '2019_12_14_000017_create_branches_table.php',
             ],
             'seeder' => [
-                'config_branches.sql',
+                'config_branch.sql',
                 'config_branch_translations.sql',
             ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['configBranch.php'],
+            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 

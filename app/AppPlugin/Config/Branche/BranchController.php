@@ -28,57 +28,59 @@ class BranchController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'configArr' => ["orderbyPostion" => 1, "filterid" => 0,],
-            'restore' => 1,
         ];
 
         self::loadConstructData($sendArr);
-        $this->middleware('permission:config_branch', ['only' => ['index']]);
+        $permission = [
+            'sub' => 'config_branch',
+            'edit' => ['Sort'],
+        ];
+        self::loadPagePermission($permission);
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['Trashed'] = Branch::onlyTrashed()->count();
 
         $rowData = self::getSelectQuery(Branch::where('id', '!=', 0));
-        return view('AppPlugin.ConfigBranch.index', compact('pageData', 'rowData'));
+        return view('AppPlugin.ConfigBranch.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(Branch::onlyTrashed());
-        return view('AppPlugin.ConfigBranch.index', compact('pageData', 'rowData'));
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $rowData = new Branch();
-        return view('AppPlugin.ConfigBranch.form', compact('rowData', 'pageData'));
+        return view('AppPlugin.ConfigBranch.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = Branch::findOrFail($id);
-        return view('AppPlugin.ConfigBranch.form', compact('rowData', 'pageData'));
+        return view('AppPlugin.ConfigBranch.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(BranchRequest $request, $id = '0') {
         try {
+
             DB::transaction(function () use ($request, $id) {
 
                 $branch = Branch::findOrNew($id);
@@ -110,16 +112,20 @@ class BranchController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Sort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Sort() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $branches = Branch::query()->orderBy('postion')->get();
-        return view('AppPlugin.ConfigBranch.sort', compact('pageData', 'branches'));
+        return view('AppPlugin.ConfigBranch.sort')->with([
+            'pageData' => $pageData,
+            'branches' => $branches,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SaveSort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
     public function SaveSort(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {

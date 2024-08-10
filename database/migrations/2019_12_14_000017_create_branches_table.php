@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
 
     public function up(): void {
-        Schema::create('config_branches', function (Blueprint $table) {
+        Schema::create('config_branch', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('whatsapp')->nullable();
             $table->string('lat')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->text('work_hours')->nullable();
 
             $table->unique(['branch_id', 'locale']);
-            $table->foreign('branch_id')->references('id')->on('config_branches')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('config_branch')->onDelete('cascade');
         });
 
     }
@@ -38,6 +38,6 @@ return new class extends Migration {
 
     public function down(): void {
         Schema::dropIfExists('config_branch_translations');
-        Schema::dropIfExists('config_branches');
+        Schema::dropIfExists('config_branch');
     }
 };
