@@ -7,10 +7,9 @@ use App\AppCore\AdminRole\Seeder\PermissionSeeder;
 use App\AppCore\AdminRole\Seeder\AdminUserSeeder;
 use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
-use App\AppCore\WebSettings\Seeder\SettingsTableSeeder;
-use App\AppCore\DefPhoto\DefPhotoSeeder;
-use App\AppCore\UploadFilter\Seeder\UploadFilterSeeder;
+use App\AppCore\WebSettings\Seeder\ApplicationSettingsSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
+
 use App\AppPlugin\Config\Apps\Seeder\AppSettingSeeder;
 use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
@@ -40,12 +39,10 @@ class DatabaseSeeder extends Seeder {
         $this->call(RoleSeeder::class);
         $this->call(UsersTableSeeder::class);
 
-        $this->call(SettingsTableSeeder::class);
-        $this->call(DefPhotoSeeder::class);
-        $this->call(UploadFilterSeeder::class);
+        $this->call(ApplicationSettingsSeeder::class);
+        $this->call(ConfigDataSeeder::class);
         $this->call(AdminMenuSeeder::class);
 
-        $this->call(ConfigDataSeeder::class);
 
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {

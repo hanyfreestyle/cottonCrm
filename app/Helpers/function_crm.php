@@ -1,7 +1,10 @@
 <?php
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+use App\AppPlugin\Config\Meta\MetaTag;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 if (!function_exists('IsConfig')) {
     function IsConfig($Arr, $Name, $DefVall = false) {
@@ -86,23 +89,44 @@ if (!function_exists('getColMobile')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnTableRes')) {
     function returnTableRes($agent) {
-        if($agent->isDesktop()){
+        if ($agent->isDesktop()) {
             $res = 'not-desktop';
-        }else{
+        } else {
             $res = 'desktop';
         }
 
-        return $res ;
+        return $res;
     }
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnTableId')) {
-    function returnTableId($agent,$row) {
+    function returnTableId($agent, $row) {
         if ($agent->isDesktop()) {
             return $row->id;
         } else {
             return null;
+        }
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('SeedDbFile')) {
+    function SeedDbFile($model, $file, $hasFolder = true) {
+        if ($hasFolder) {
+            $folder = config('adminConfig.app_folder');
+            if (File::isFile(public_path('db/' . $folder . '/' . $file))) {
+                $model::unguard();
+                $tablePath = public_path('db/' . $folder . '/' . $file);
+                DB::unprepared(file_get_contents($tablePath));
+            }
+        } else {
+            if (File::isFile(public_path('db/' . $file))) {
+                $model::unguard();
+                $tablePath = public_path('db/' . $file);
+                DB::unprepared(file_get_contents($tablePath));
+            }
         }
     }
 }
