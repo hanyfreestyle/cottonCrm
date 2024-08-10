@@ -2,6 +2,7 @@
 
 namespace App\AppCore\AdminRole\Seeder;
 
+use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
 use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Http\Traits\CrmFunTraits;
@@ -27,161 +28,127 @@ class PermissionSeeder extends Seeder {
             ['cat_id' => 'roles', 'name' => 'roles_update_permissions', 'name_ar' => 'تعديل صلاحيات المجموعة', 'name_en' => 'Roles Update Permissions'],
         ];
 
-        $data = CrmFunTraits::LoadPermission($data);
+//        $data = CrmFunTraits::LoadPermission($data);
 
-        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
-            $newPer = [
-                ['cat_id' => 'Product', 'name' => 'Product_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'Product', 'name' => 'Product_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'Product', 'name' => 'Product_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'Product', 'name' => 'Product_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'Product', 'name' => 'Product_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
-                ['cat_id' => 'Product', 'name' => 'Product_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'Product', 'name' => 'Product_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'Product', 'name' => 'Product_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'Product', 'name' => 'Product_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'Product', 'name' => 'Product_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'Product', 'name' => 'Product_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
+//                ['cat_id' => 'Product', 'name' => 'Product_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
+//
+//        if (File::isFile(base_path('routes/AppPlugin/orders.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'orders', 'name' => 'orders_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'orders', 'name' => 'orders_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'orders', 'name' => 'orders_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'orders', 'name' => 'orders_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
+//
+//        if (File::isFile(base_path('routes/AppPlugin/customer_admin.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'customer', 'name' => 'customer_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'customer', 'name' => 'customer_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'customer', 'name' => 'customer_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'customer', 'name' => 'customer_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'customer', 'name' => 'customer_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
+//
+//        if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
+//            $data = MainPostPermissionTraits::LoadPermission($data);
+//        }
 
-        if (File::isFile(base_path('routes/AppPlugin/orders.php'))) {
-            $newPer = [
-                ['cat_id' => 'orders', 'name' => 'orders_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'orders', 'name' => 'orders_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'orders', 'name' => 'orders_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'orders', 'name' => 'orders_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'Blog', 'name' => 'Blog_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'Blog', 'name' => 'Blog_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'Blog', 'name' => 'Blog_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'Blog', 'name' => 'Blog_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'Blog', 'name' => 'Blog_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
+//                ['cat_id' => 'Blog', 'name' => 'Blog_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
-        if (File::isFile(base_path('routes/AppPlugin/customer_admin.php'))) {
-            $newPer = [
-                ['cat_id' => 'customer', 'name' => 'customer_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'customer', 'name' => 'customer_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'customer', 'name' => 'customer_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'customer', 'name' => 'customer_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'customer', 'name' => 'customer_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
-            $data = MainPostPermissionTraits::LoadPermission($data);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-            $newPer = [
-                ['cat_id' => 'Blog', 'name' => 'Blog_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'Blog', 'name' => 'Blog_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'Blog', 'name' => 'Blog_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'Blog', 'name' => 'Blog_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'Blog', 'name' => 'Blog_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
-                ['cat_id' => 'Blog', 'name' => 'Blog_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-            $newPer = [
-                ['cat_id' => 'Pages', 'name' => 'Pages_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'Pages', 'name' => 'Pages_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'Pages', 'name' => 'Pages_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'Pages', 'name' => 'Pages_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'Pages', 'name' => 'Pages_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
-                ['cat_id' => 'Pages', 'name' => 'Pages_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'Pages', 'name' => 'Pages_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'Pages', 'name' => 'Pages_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'Pages', 'name' => 'Pages_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'Pages', 'name' => 'Pages_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'Pages', 'name' => 'Pages_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
+//                ['cat_id' => 'Pages', 'name' => 'Pages_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
 
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            $newPer = [
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'app_setting', 'name' => 'AppSetting_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
-        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
-            $newPer = [
-                ['cat_id' => 'Faq', 'name' => 'Faq_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'Faq', 'name' => 'Faq_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'Faq', 'name' => 'Faq_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'Faq', 'name' => 'Faq_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'Faq', 'name' => 'Faq_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
-                ['cat_id' => 'Faq', 'name' => 'Faq_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'Faq', 'name' => 'Faq_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'Faq', 'name' => 'Faq_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'Faq', 'name' => 'Faq_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'Faq', 'name' => 'Faq_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//                ['cat_id' => 'Faq', 'name' => 'Faq_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug'],
+//                ['cat_id' => 'Faq', 'name' => 'Faq_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
-        $configPer = [
-            ['cat_id' => 'config', 'name' => 'config_view', 'name_ar' => 'عرض الاعدادات', 'name_en' => 'Setting View'],
-            ['cat_id' => 'config', 'name' => 'config_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-            ['cat_id' => 'config', 'name' => 'config_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-            ['cat_id' => 'config', 'name' => 'config_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ['cat_id' => 'config', 'name' => 'config_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ['cat_id' => 'config', 'name' => 'config_website', 'name_ar' => 'اعدادات الموقع', 'name_en' => 'Web Site Setting'],
-            ['cat_id' => 'config', 'name' => 'config_defPhoto_view', 'name_ar' => 'الصور الافتراضية', 'name_en' => 'View'],
-            ['cat_id' => 'config', 'name' => 'config_upFilter_view', 'name_ar' => 'فلاتر الصور', 'name_en' => 'View'],
-            ['cat_id' => 'config', 'name' => 'adminlang_view', 'name_ar' => 'ملفات لغة التحكم', 'name_en' => 'Admin Lang File'],
-            ['cat_id' => 'config', 'name' => 'weblang_view', 'name_ar' => 'ملفات لغة الموقع', 'name_en' => 'Web Lang File'],
-        ];
 
-        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_newsletter', 'name_ar' => 'القائمة البريدية', 'name_en' => 'News Letter']];
-            $configPer = array_merge($configPer, $newPer);
-        }
+        $data = WebSettingsConfigTraits::LoadPermission($data);
 
-        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'sitemap_view', 'name_ar' => 'SiteMap', 'name_en' => 'SiteMap']];
-            $configPer = array_merge($configPer, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+//            $manageData = [
+//                ['cat_id' => 'data', 'name' => 'data_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'data', 'name' => 'data_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'data', 'name' => 'data_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'data', 'name' => 'data_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//            ];
+//            $manageData = ConfigDataTraits::LoadPermission($manageData);
+//            $data = array_merge($data, $manageData);
+//        }
 
-        if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_meta_view', 'name_ar' => 'ميتا تاج', 'name_en' => 'Meta']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_web_privacy', 'name_ar' => 'سياسية الاستخدام', 'name_en' => 'Web Privacy']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_branch', 'name_ar' => 'الفروع', 'name_en' => 'Branch']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-        $data = array_merge($data, $configPer);
+//        if (File::isFile(base_path('routes/AppPlugin/leads/contactUs.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'leads', 'name' => 'leads_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'leads', 'name' => 'leads_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'leads', 'name' => 'leads_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'leads', 'name' => 'leads_export', 'name_ar' => 'تصدير', 'name_en' => 'Export'],
+//                ['cat_id' => 'leads', 'name' => 'leads_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            $manageData = [
-                ['cat_id' => 'data', 'name' => 'data_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'data', 'name' => 'data_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'data', 'name' => 'data_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'data', 'name' => 'data_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ];
-            $manageData = ConfigDataTraits::LoadPermission($manageData);
-            $data = array_merge($data, $manageData);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/leads/contactUs.php'))) {
-            $newPer = [
-                ['cat_id' => 'leads', 'name' => 'leads_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'leads', 'name' => 'leads_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'leads', 'name' => 'leads_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'leads', 'name' => 'leads_export', 'name_ar' => 'تصدير', 'name_en' => 'Export'],
-                ['cat_id' => 'leads', 'name' => 'leads_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
-            $newPer = [
-                ['cat_id' => 'FileManager', 'name' => 'FileManager_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'FileManager', 'name' => 'FileManager_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'FileManager', 'name' => 'FileManager_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'FileManager', 'name' => 'FileManager_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+//        if (File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
+//            $newPer = [
+//                ['cat_id' => 'FileManager', 'name' => 'FileManager_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+//                ['cat_id' => 'FileManager', 'name' => 'FileManager_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
+//                ['cat_id' => 'FileManager', 'name' => 'FileManager_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
+//                ['cat_id' => 'FileManager', 'name' => 'FileManager_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+//            ];
+//            $data = array_merge($data, $newPer);
+//        }
 
 
         $countData = Permission::all()->count();

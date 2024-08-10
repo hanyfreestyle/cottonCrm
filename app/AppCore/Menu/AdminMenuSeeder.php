@@ -6,6 +6,7 @@ use App\AppCore\AdminRole\PermissionController;
 use App\AppCore\LangFile\LangFileController;
 use App\AppCore\WebSettings\SettingsController;
 
+use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
 use App\AppPlugin\BlogPost\BlogCategoryController;
 use App\AppPlugin\Config\Apps\AppSettingController;
 use App\AppPlugin\Config\WebLangFile\LangFileWebController;
@@ -29,17 +30,14 @@ class AdminMenuSeeder extends Seeder {
 
     public function run(): void {
 
-        SettingsController::AdminMenu();
+        WebSettingsConfigTraits::LoadMenu();
+        WebSettingsConfigTraits::LoadWebLangMenu();
         PermissionController::AdminMenu();
         LangFileController::AdminMenu();
         CrmFunTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
             ConfigDataTraits::AdminMenu();
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/WebLangFile.php'))) {
-            LangFileWebController::AdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
