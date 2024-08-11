@@ -8,8 +8,13 @@ use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
+use App\Http\Traits\Files\DataFileTraits;
+use App\Http\Traits\Files\HooverTicketsFileTraits;
+use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
+use App\Http\Traits\Files\ProductFileTraits;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
@@ -70,83 +75,16 @@ class LangFileController extends AdminMainController {
     public function getLangMenu() {
         $LangMenu = config('adminLangFile.adminFile');
 
+        $LangMenu = AppSettingFileTraits::LoadLangFiles($LangMenu);
+        $LangMenu = DataFileTraits::LoadLangFiles($LangMenu);
+
         $LangMenu = PeriodicalsFileTraits::LoadLangFiles($LangMenu);
         $LangMenu = CustomersFileTraits::LoadLangFiles($LangMenu);
 
-        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
-            $addLang = ['faq' => ['id' => 'faq', 'group' => 'admin', 'file_name' => 'faq', 'name' => 'Faq', 'name_ar' => 'الاسئلة المتكررة'],];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            $addLang = ['Apps' => ['id' => 'Apps', 'group' => 'admin', 'file_name' => 'configApp', 'name' => 'AppSetting', 'name_ar' => 'اعدادات التطبيق'],];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
+        $LangMenu = HooverTicketsFileTraits::LoadLangFiles($LangMenu);
+        $LangMenu = ProductFileTraits::LoadLangFiles($LangMenu);
 
-        if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
-            $addLang = ['Privacy' => ['id' => 'Privacy', 'group' => 'admin', 'file_name' => 'configPrivacy', 'name' => 'Privacy', 'name_ar' => 'سياسية الاستخدام']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
-            $addLang = ['Branch' => ['id' => 'Branch', 'group' => 'admin', 'file_name' => 'configBranch', 'name' => 'Branch', 'name_ar' => 'الفروع']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
-            $addLang = ['newsletter' => ['id' => 'newsletter', 'group' => 'admin', 'file_name' => 'leadsNewsLetter', 'name' => 'Newsletter', 'name_ar' => 'القائمة البريدية']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
-            $addLang = ['Meta' => ['id' => 'Meta', 'group' => 'admin', 'file_name' => 'configMeta', 'name' => 'Meta Tage', 'name_ar' => 'ميتا تاج']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
-            $addLang = ['SiteMap' => ['id' => 'SiteMap', 'group' => 'admin', 'file_name' => 'siteMap', 'name' => 'SiteMap', 'name_ar' => 'SiteMap']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            $LangMenu = ConfigDataTraits::LoadLangFiles($LangMenu);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
-            $LangMenu = MainPostPermissionTraits::LoadLangFiles($LangMenu);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/leads/contactUs.php'))) {
-            $addLang = ['leadForm' => ['id' => 'leadForm', 'group' => 'admin', 'file_name' => 'leadsContactUs', 'name' => 'Lead Form', 'name_ar' => 'الاتصاللات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-            $addLang = ['blogPost' => ['id' => 'blogPost', 'group' => 'admin', 'file_name' => 'blogPost', 'name' => 'Blog Post', 'name_ar' => 'المقالات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
-            $addLang = ['product' => ['id' => 'product', 'group' => 'admin', 'file_name' => 'proProduct', 'name' => 'Product', 'name_ar' => 'المنتجات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-            $addLang = ['pages' => ['id' => 'pages', 'group' => 'admin', 'file_name' => 'pages', 'name' => 'pages', 'name_ar' => 'الصفحات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
-            $addLang = ['fileManager' => ['id' => 'fileManager', 'group' => 'admin', 'file_name' => 'fileManager', 'name' => 'fileManager', 'name_ar' => 'ميديا فايل']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/orders.php'))) {
-            $addLang = ['orders' => ['id' => 'orders', 'group' => 'admin', 'file_name' => 'orders', 'name' => 'Orders', 'name_ar' => 'ادارة الطلبات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/customer_admin.php'))) {
-            $addLang = ['customer' => ['id' => 'customer', 'group' => 'admin', 'file_name' => 'customer', 'name' => 'Customer', 'name_ar' => 'ادارة العملاء']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
-
-        $LangMenu = CrmFunTraits::LoadLangFiles($LangMenu);
+        $LangMenu = MainModelFileTraits::LoadLangFiles($LangMenu);
 
         return $LangMenu;
     }
@@ -334,8 +272,8 @@ class LangFileController extends AdminMainController {
         $mainMenu->name = "admin.app_menu_lang_admin";
         $mainMenu->icon = "fas fa-language";
         $mainMenu->roleView = "adminlang_view";
-        $mainMenu->is_active =  true;
-        $mainMenu->postion =  100;
+        $mainMenu->is_active = true;
+        $mainMenu->postion = 100;
         $mainMenu->save();
     }
 

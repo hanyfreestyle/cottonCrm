@@ -24,38 +24,7 @@ use Illuminate\Support\Facades\File;
 class ApplicationSettingsSeeder extends Seeder {
     public function run(): void {
 
-        SeedDbFile(Setting::class, 'config_setting.sql');
-        SeedDbFile(SettingTranslation::class, 'config_setting_translations.sql');
-        SeedDbFile(DefPhoto::class, 'config_def_photos.sql');
-        SeedDbFile(UploadFilter::class, 'config_upload_filter.sql');
-        SeedDbFile(UploadFilterSize::class, 'config_upload_filter_sizes.sql');
 
-        if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
-            SeedDbFile(MetaTag::class, 'config_meta_tag.sql');
-            SeedDbFile(MetaTagTranslation::class, 'config_meta_tag_translations.sql');
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
-            SeedDbFile(WebPrivacy::class, 'config_web_privacy.sql', false);
-            SeedDbFile(WebPrivacyTranslation::class, 'config_web_privacy_translations.sql', false);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
-            SeedDbFile(GoogleCode::class, 'config_site_robots.sql');
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
-            SeedDbFile(Branch::class, 'config_branch.sql');
-            SeedDbFile(BranchTranslation::class, 'config_branch_translations.sql');
-        }
-
-
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            SeedDbFile(AppSetting::class, 'config_app_setting.sql');
-            SeedDbFile(AppSettingTranslation::class, 'config_app_setting_translations.sql');
-            SeedDbFile(AppMenu::class, 'config_app_menu.sql');
-            SeedDbFile(AppMenuTranslation::class, 'config_app_menu_translations.sql');
-        }
 
     }
 }

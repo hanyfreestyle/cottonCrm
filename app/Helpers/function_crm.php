@@ -135,7 +135,11 @@ if (!function_exists('SeedDbFile')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getDefPermission')) {
-    function getDefPermission($cat_id, $report = false, $restore = false) {
+    function getDefPermission($cat_id, $sendArr = array()) {
+        $report = issetArr($sendArr, 'report', false);
+        $filter = issetArr($sendArr, 'filter', false);
+        $restore = issetArr($sendArr, 'restore', false);
+
         $newPer = [
             ['cat_id' => $cat_id, 'name' => $cat_id . '_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
             ['cat_id' => $cat_id, 'name' => $cat_id . '_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
@@ -143,15 +147,21 @@ if (!function_exists('getDefPermission')) {
             ['cat_id' => $cat_id, 'name' => $cat_id . '_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
         ];
 
+        if ($report) {
+            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_report', 'name_ar' => 'التقارير', 'name_en' => 'Report']];
+            $newPer = array_merge($newPer, $add_new);
+        }
+
+        if ($filter) {
+            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_filter', 'name_ar' => 'تصفية النتائج', 'name_en' => 'Filter']];
+            $newPer = array_merge($newPer, $add_new);
+        }
+
         if ($restore) {
             $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore']];
             $newPer = array_merge($newPer, $add_new);
         }
 
-        if ($report) {
-            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_report', 'name_ar' => 'التقارير', 'name_en' => 'Report']];
-            $newPer = array_merge($newPer, $add_new);
-        }
         return $newPer;
     }
 }

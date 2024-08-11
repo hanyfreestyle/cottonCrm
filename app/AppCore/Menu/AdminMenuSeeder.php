@@ -22,7 +22,10 @@ use App\AppPlugin\Product\ProductController;
 
 
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
+use App\Http\Traits\Files\DataFileTraits;
+use App\Http\Traits\Files\HooverTicketsFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
@@ -32,24 +35,25 @@ class AdminMenuSeeder extends Seeder {
 
     public function run(): void {
 
+        AppSettingFileTraits::LoadMenu();
+
         WebSettingsConfigTraits::LoadMenu();
         WebSettingsConfigTraits::LoadWebLangMenu();
+
         PermissionController::AdminMenu();
         LangFileController::AdminMenu();
 
         PeriodicalsFileTraits::LoadMenu();
         CustomersFileTraits::LoadMenu();
-        CrmFunTraits::LoadMenu();
+        HooverTicketsFileTraits::LoadMenu();
+
+
+        DataFileTraits::LoadMenu();
 
 
 
-        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
-            ConfigDataTraits::AdminMenu();
-        }
 
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            AppSettingController::AdminMenu();
-        }
+
 
 
 

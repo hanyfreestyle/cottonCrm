@@ -8,72 +8,7 @@ use Illuminate\Support\Facades\File;
 
 trait WebSettingsConfigTraits {
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function LoadPermission($data) {
 
-        $configPer = [
-            ['cat_id' => 'config', 'name' => 'config_view', 'name_ar' => 'عرض الاعدادات', 'name_en' => 'Setting View'],
-            ['cat_id' => 'config', 'name' => 'config_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-            ['cat_id' => 'config', 'name' => 'config_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-            ['cat_id' => 'config', 'name' => 'config_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ['cat_id' => 'config', 'name' => 'config_app', 'name_ar' => 'الإعدادات العامة', 'name_en' => 'General Settings'],
-            ['cat_id' => 'config', 'name' => 'config_defPhoto_view', 'name_ar' => 'الصور الافتراضية', 'name_en' => 'View'],
-            ['cat_id' => 'config', 'name' => 'config_upFilter_view', 'name_ar' => 'فلاتر الصور', 'name_en' => 'View'],
-            ['cat_id' => 'config', 'name' => 'adminlang_view', 'name_ar' => 'ملفات لغة التحكم', 'name_en' => 'Admin Lang File'],
-        ];
-
-        if (File::isFile(base_path('routes/AppPlugin/config/WebLangFile.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'weblang_view', 'name_ar' => 'ملفات لغة الموقع', 'name_en' => 'Web Lang File']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_newsletter', 'name_ar' => 'القائمة البريدية', 'name_en' => 'News Letter']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'sitemap_view', 'name_ar' => 'SiteMap', 'name_en' => 'SiteMap']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_meta_view', 'name_ar' => 'ميتا تاج', 'name_en' => 'Meta']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_web_privacy', 'name_ar' => 'سياسية الاستخدام', 'name_en' => 'Web Privacy']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-        if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
-            $newPer = [['cat_id' => 'config', 'name' => 'config_branch', 'name_ar' => 'الفروع', 'name_en' => 'Branch']];
-            $configPer = array_merge($configPer, $newPer);
-        }
-
-        $data = array_merge($data, $configPer);
-
-
-        if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
-            $newPer = [
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'app_setting', 'name' => 'AppSetting_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
-
-        return $data;
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function LoadLangFiles($LangMenu) {
-
-
-        return $LangMenu;
-    }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
