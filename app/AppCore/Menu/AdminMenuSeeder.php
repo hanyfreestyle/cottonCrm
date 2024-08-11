@@ -34,6 +34,7 @@ class AdminMenuSeeder extends Seeder {
         WebSettingsConfigTraits::LoadWebLangMenu();
         PermissionController::AdminMenu();
         LangFileController::AdminMenu();
+
         CrmFunTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
