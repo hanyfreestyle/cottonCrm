@@ -274,16 +274,7 @@ trait ConfigDataTraits {
                 $LangMenu = array_merge($LangMenu, $addLang);
             }
 
-            if (File::isFile(base_path('routes/AppPlugin/data/data_BookRelease.php'))) {
-                $addLang = ['BookRelease' => ['id' => 'BookRelease', 'group' => 'admin', 'sub_dir' => 'data', 'file_name' => 'BookRelease', 'name_en' => 'BookRelease', 'name_ar' => 'نوع الاصدار']];
-                $LangMenu = array_merge($LangMenu, $addLang);
-            }
 
-            if (File::isFile(base_path('routes/AppPlugin/data/data_BookLang.php'))) {
-                $addLang = ['BookLang' => ['id' => 'BookLang', 'group' => 'admin', 'sub_dir' => 'data', 'file_name'
-                => 'BookLang', 'name_en' => 'BookLang', 'name_ar' => 'اللغات']];
-                $LangMenu = array_merge($LangMenu, $addLang);
-            }
 
         }
 

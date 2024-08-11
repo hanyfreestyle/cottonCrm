@@ -8,6 +8,7 @@ use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
@@ -64,16 +65,11 @@ class LangFileController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   getLangMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function getLangMenu() {
         $LangMenu = config('adminLangFile.adminFile');
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
-            $addLang = ['Periodicals' => ['id' => 'Periodicals', 'group' => 'admin', 'file_name' => 'Periodicals', 'name' => 'book', 'name_ar'
-            => 'الكتب والدوريات'],];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
-
+        $LangMenu = PeriodicalsFileTraits::LoadLangFiles($LangMenu);
 
         if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
             $addLang = ['faq' => ['id' => 'faq', 'group' => 'admin', 'file_name' => 'faq', 'name' => 'Faq', 'name_ar' => 'الاسئلة المتكررة'],];

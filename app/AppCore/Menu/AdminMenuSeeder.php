@@ -22,6 +22,7 @@ use App\AppPlugin\Product\ProductController;
 
 
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -35,6 +36,7 @@ class AdminMenuSeeder extends Seeder {
         PermissionController::AdminMenu();
         LangFileController::AdminMenu();
 
+        PeriodicalsFileTraits::LoadMenu();
         CrmFunTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {

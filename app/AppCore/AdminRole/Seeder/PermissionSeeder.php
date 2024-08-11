@@ -6,6 +6,7 @@ use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
 use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Spatie\Permission\Models\Permission;
@@ -28,7 +29,10 @@ class PermissionSeeder extends Seeder {
             ['cat_id' => 'roles', 'name' => 'roles_update_permissions', 'name_ar' => 'تعديل صلاحيات المجموعة', 'name_en' => 'Roles Update Permissions'],
         ];
 
-//        $data = CrmFunTraits::LoadPermission($data);
+
+        $data = PeriodicalsFileTraits::LoadPermission($data);
+
+        //        $data = CrmFunTraits::LoadPermission($data);
 
 //        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
 //            $newPer = [
