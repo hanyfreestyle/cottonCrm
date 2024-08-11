@@ -3,10 +3,23 @@
 namespace App\Http\Traits\Files;
 
 use App\AppCore\DefPhoto\DefPhoto;
+use App\AppCore\Menu\AdminMenu;
 use App\AppCore\UploadFilter\Models\UploadFilter;
 use App\AppCore\UploadFilter\Models\UploadFilterSize;
 use App\AppCore\WebSettings\Models\Setting;
 use App\AppCore\WebSettings\Models\SettingTranslation;
+use App\AppPlugin\Config\Apps\AppSettingController;
+use App\AppPlugin\Config\Apps\Models\AppMenu;
+use App\AppPlugin\Config\Apps\Models\AppMenuTranslation;
+use App\AppPlugin\Config\Apps\Models\AppSetting;
+use App\AppPlugin\Config\Apps\Models\AppSettingTranslation;
+use App\AppPlugin\Config\Branche\Branch;
+use App\AppPlugin\Config\Branche\BranchTranslation;
+use App\AppPlugin\Config\Meta\MetaTag;
+use App\AppPlugin\Config\Meta\MetaTagTranslation;
+use App\AppPlugin\Config\Privacy\WebPrivacy;
+use App\AppPlugin\Config\Privacy\WebPrivacyTranslation;
+use App\AppPlugin\Config\SiteMap\GoogleCode;
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
@@ -94,6 +107,112 @@ trait AppSettingFileTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadMenu() {
+
+        $mainMenu = new AdminMenu();
+        $mainMenu->type = "Many";
+        $mainMenu->sel_routs = "admin.config";
+        $mainMenu->name = "admin.app_menu_setting";
+        $mainMenu->icon = "fas fa-cogs";
+        $mainMenu->roleView = "config_view";
+        $mainMenu->postion = 80;
+        $mainMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "web.index";
+        $subMenu->url = "admin.config.web.index";
+        $subMenu->name = "admin/config/webConfig.app_menu";
+        $subMenu->roleView = "config_app";
+        $subMenu->icon = "fas fa-cog";
+        $subMenu->save();
+
+        if (File::isFile(base_path('routes/AppPlugin/config/configMeta.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "Meta.index|Meta.create|Meta.edit|Meta.config";
+            $subMenu->url = "admin.config.Meta.index";
+            $subMenu->name = "admin/configMeta.app_menu";
+            $subMenu->roleView = "config_meta_view";
+            $subMenu->icon = "fab fa-html5";
+            $subMenu->save();
+        }
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "defPhoto.index|defPhoto.create|defPhoto.edit|defPhoto.config|defPhoto.sortDefPhotoList";
+        $subMenu->url = "admin.config.defPhoto.index";
+        $subMenu->name = "admin/config/upFilter.app_menu_def_photo";
+        $subMenu->roleView = "config_defPhoto_view";
+        $subMenu->icon = "fas fa-image";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "upFilter.index|upFilter.create|upFilter.edit|upFilter.config|upFilter.size.create|upFilter.size.edit";
+        $subMenu->url = "admin.config.upFilter.index";
+        $subMenu->name = "admin/config/upFilter.app_menu";
+        $subMenu->roleView = "config_upFilter_view";
+        $subMenu->icon = "fas fa-filter";
+        $subMenu->save();
+
+        if (File::isFile(base_path('routes/AppPlugin/config/webPrivacy.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "WebPrivacy.index|WebPrivacy.create|WebPrivacy.edit|WebPrivacy.config|WebPrivacy.Sort";
+            $subMenu->url = "admin.config.WebPrivacy.index";
+            $subMenu->name = "admin/configPrivacy.app_menu";
+            $subMenu->roleView = "config_web_privacy";
+            $subMenu->icon = "fas fa-file-alt";
+            $subMenu->save();
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "NewsLetter.index";
+            $subMenu->url = "admin.config.NewsLetter.index";
+            $subMenu->name = "admin/leadsNewsLetter.app_menu";
+            $subMenu->roleView = "config_newsletter";
+            $subMenu->icon = "fas fa-mail-bulk";
+            $subMenu->save();
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/config/siteMaps.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "SiteMap.index|SiteMap.Robots|SiteMap.GoogleCode";
+            $subMenu->url = "admin.config.SiteMap.index";
+            $subMenu->name = "Site Maps";
+            $subMenu->roleView = "sitemap_view";
+            $subMenu->icon = "fas fa-sitemap";
+            $subMenu->save();
+        }
+
+
+        if (File::isFile(base_path('routes/AppPlugin/config/Branch.php'))) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = "Branch.index|Branch.create|Branch.edit|Branch.config";
+            $subMenu->url = "admin.config.Branch.index";
+            $subMenu->name = "admin/configBranch.app_menu";
+            $subMenu->roleView = "config_branch";
+            $subMenu->icon = "fas fa-map-signs";
+            $subMenu->save();
+        }
+
+
+        if (File::isFile(base_path('routes/AppPlugin/config/WebLangFile.php'))) {
+            $mainMenu = new AdminMenu();
+            $mainMenu->type = "One";
+            $mainMenu->sel_routs = "admin.weblang";
+            $mainMenu->url = "admin.weblang.index";
+            $mainMenu->name = "admin.app_menu_lang_web";
+            $mainMenu->icon = "fas fa-language";
+            $mainMenu->roleView = "weblang_view";
+            $mainMenu->is_active =  true;
+            $mainMenu->postion =  101;
+            $mainMenu->save();
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/config/appSetting.php'))) {
             AppSettingController::AdminMenu();

@@ -35,27 +35,14 @@ class AdminMenuSeeder extends Seeder {
 
     public function run(): void {
 
-        AppSettingFileTraits::LoadMenu();
-
-        WebSettingsConfigTraits::LoadMenu();
-        WebSettingsConfigTraits::LoadWebLangMenu();
-
         PermissionController::AdminMenu();
+        AppSettingFileTraits::LoadMenu();
+        DataFileTraits::LoadMenu();
         LangFileController::AdminMenu();
 
         PeriodicalsFileTraits::LoadMenu();
         CustomersFileTraits::LoadMenu();
         HooverTicketsFileTraits::LoadMenu();
-
-
-        DataFileTraits::LoadMenu();
-
-
-
-
-
-
-
 
         if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
             if (File::isFile(base_path('routes/AppPlugin/model/blogPost.php'))) {
