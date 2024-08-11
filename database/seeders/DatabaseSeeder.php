@@ -11,7 +11,7 @@ use App\AppCore\WebSettings\Seeder\ApplicationSettingsSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
 
 
-use App\AppPlugin\Crm\Customers\Seeder\CrmCustomersSeeder;
+
 use App\AppPlugin\Crm\ImportData\ImportDataSeeder;
 use App\AppPlugin\Crm\Tickets\Seeder\CrmTicketsSeeder;
 use App\AppPlugin\Data\ConfigData\Seeder\ConfigDataSeeder;
@@ -26,6 +26,7 @@ use App\AppPlugin\Product\Seeder\ProductSeeder;
 use App\AppPlugin\Customers\Seeder\UsersCustomersSeeder;
 use App\AppPlugin\Orders\Seeder\OrdersSeeder;
 
+use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -44,14 +45,13 @@ class DatabaseSeeder extends Seeder {
         $this->call(AdminMenuSeeder::class);
 
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            $this->call(CrmCustomersSeeder::class);
-        }
 
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
             $this->call(CrmTicketsSeeder::class);
         }
 
+
+        CustomersFileTraits::LoadSeeder();
         PeriodicalsFileTraits::LoadSeeder();
 
         if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {

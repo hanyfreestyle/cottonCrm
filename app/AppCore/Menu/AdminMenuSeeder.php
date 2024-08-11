@@ -4,7 +4,7 @@ namespace App\AppCore\Menu;
 
 use App\AppCore\AdminRole\PermissionController;
 use App\AppCore\LangFile\LangFileController;
-use App\AppCore\WebSettings\SettingsController;
+
 
 use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
 use App\AppPlugin\BlogPost\BlogCategoryController;
@@ -22,6 +22,7 @@ use App\AppPlugin\Product\ProductController;
 
 
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
@@ -37,7 +38,10 @@ class AdminMenuSeeder extends Seeder {
         LangFileController::AdminMenu();
 
         PeriodicalsFileTraits::LoadMenu();
+        CustomersFileTraits::LoadMenu();
         CrmFunTraits::LoadMenu();
+
+
 
         if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
             ConfigDataTraits::AdminMenu();

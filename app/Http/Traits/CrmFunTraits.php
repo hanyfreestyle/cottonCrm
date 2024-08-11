@@ -18,17 +18,7 @@ trait CrmFunTraits {
     static function LoadPermission($data) {
 
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            $newPer = [
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
-                ['cat_id' => 'crm_customer', 'name' => 'crm_customer_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore'],
-            ];
-            $data = array_merge($data, $newPer);
-        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/crm/leads.php'))) {
             $newPer = [
@@ -78,11 +68,6 @@ trait CrmFunTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadMenu() {
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            CrmCustomersController::AdminMenu();
-        }
-
-
         if (File::isFile(base_path('routes/AppPlugin/crm/leads.php'))) {
             CrmLeadsController::AdminMenu();
         }
@@ -100,10 +85,7 @@ trait CrmFunTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadLangFiles($LangMenu) {
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            $addLang = ['CrmCustomers' => ['id' => 'CrmCustomers', 'group' => 'admin', 'sub_dir' => 'crm', 'file_name' => 'customers', 'name_en' => 'Customers', 'name_ar' => 'العملاء']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
+
 
         if (File::isFile(base_path('routes/AppPlugin/crm/leads.php'))) {
             $addLang = ['CrmLeads' => ['id' => 'CrmLeads', 'group' => 'admin', 'sub_dir' => 'crm',

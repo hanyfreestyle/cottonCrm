@@ -6,6 +6,7 @@ use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
 use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Http\Traits\CrmFunTraits;
+use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -31,8 +32,10 @@ class PermissionSeeder extends Seeder {
 
 
         $data = PeriodicalsFileTraits::LoadPermission($data);
+        $data = CustomersFileTraits::LoadPermission($data);
 
-        //        $data = CrmFunTraits::LoadPermission($data);
+
+//        $data = CrmFunTraits::LoadPermission($data);
 
 //        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
 //            $newPer = [
@@ -94,8 +97,6 @@ class PermissionSeeder extends Seeder {
 //            ];
 //            $data = array_merge($data, $newPer);
 //        }
-
-
 
 
 //        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
