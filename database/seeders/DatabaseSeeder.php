@@ -6,7 +6,6 @@ use App\AppCore\AdminRole\Seeder\PermissionSeeder;
 use App\AppCore\AdminRole\Seeder\AdminUserSeeder;
 use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
-use App\AppCore\WebSettings\Seeder\ApplicationSettingsSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
@@ -27,26 +26,15 @@ class DatabaseSeeder extends Seeder {
         $this->call(UsersTableSeeder::class);
         $this->call(AdminMenuSeeder::class);
 
-
         AppSettingFileTraits::LoadSeeder();
         DataFileTraits::LoadSeeder();
-
 
         CustomersFileTraits::LoadSeeder();
         PeriodicalsFileTraits::LoadSeeder();
         HooverTicketsFileTraits::LoadSeeder();
 
-
         ProductFileTraits::LoadSeeder();
         MainModelFileTraits::LoadSeeder();
-
-
-
-//        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
-//            $this->call(SeederNewsLetter::class);
-//        }
-
-
 
     }
 }

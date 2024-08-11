@@ -2,19 +2,15 @@
 
 namespace App\AppPlugin\AppPuzzle;
 
-
-use App\AppCore\Menu\AdminMenu;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
-use Jenssegers\Agent\Agent;
 
 
 class AppPuzzleController extends AppPuzzleFun {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   IndexModel
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function IndexPuzzle() {
         $selRoute = null;
 
@@ -23,27 +19,30 @@ class AppPuzzleController extends AppPuzzleFun {
         }
 
         if (Route::currentRouteName() == 'admin.AppPuzzle.Config.IndexModel') {
-            $rowData = AppPuzzleTreeConfig::ConfigTree();
+            $rowData = AppPuzzleTreeConfig::tree();
             $selRoute = "Config";
-        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Model.IndexModel') {
-            $rowData = AppPuzzleTreeModel::ModelTree();
-            $selRoute = "Model";
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Data.IndexModel') {
-            $rowData = AppPuzzleTreeData::DataTree();
+            $rowData = AppPuzzleTreeData::tree();
             $selRoute = "Data";
-        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Leads.IndexModel') {
-            $rowData = AppPuzzleTreeLeads::LeadsTree();
-            $selRoute = "Leads";
+
+        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Model.IndexModel') {
+            $rowData = AppPuzzleTreeModel::tree();
+            $selRoute = "Model";
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Product.IndexModel') {
-            $rowData = AppPuzzleTreeProduct::ProductTree();
+            $rowData = AppPuzzleTreeProduct::tree();
             $selRoute = "Product";
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Crm.IndexModel') {
-            $rowData = AppPuzzleTreeCrm::CrmTree();
+            $rowData = AppPuzzleTreeCrm::tree();
             $selRoute = "Crm";
+        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.CrmHoover.IndexModel') {
+            $rowData = AppPuzzleTreeCrmHoover::tree();
+            $selRoute = "CrmHoover";
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Periodicals.IndexModel') {
-            $rowData = AppPuzzleTreePeriodicals::CrmTree();
+            $rowData = AppPuzzleTreePeriodicals::tree();
             $selRoute = "Periodicals";
-
+        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Tools.IndexModel') {
+            $rowData = AppPuzzleTreeTools::tree();
+            $selRoute = "Tools";
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.AppCore.IndexModel') {
             $rowData = AppPuzzleTreeAppCore::AppCore();
             $selRoute = "AppCore";
@@ -60,23 +59,26 @@ class AppPuzzleController extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   LoadTreeData
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function LoadTreeData() {
-        $Config = AppPuzzleTreeConfig::ConfigTree();
-        $Model = AppPuzzleTreeModel::ModelTree();
-        $Data = AppPuzzleTreeData::DataTree();
-        $Leads = AppPuzzleTreeLeads::LeadsTree();
-        $Product = AppPuzzleTreeProduct::ProductTree();
-        $Crm = AppPuzzleTreeCrm::CrmTree();
-        $Periodicals = AppPuzzleTreePeriodicals::CrmTree();
+        $Config = AppPuzzleTreeConfig::tree();
+        $Model = AppPuzzleTreeModel::tree();
+        $Data = AppPuzzleTreeData::tree();
+
+        $Product = AppPuzzleTreeProduct::tree();
+        $Crm = AppPuzzleTreeCrm::tree();
+        $CrmHoover = AppPuzzleTreeCrmHoover::tree();
+        $Periodicals = AppPuzzleTreePeriodicals::tree();
         $AppCore = AppPuzzleTreeAppCore::AppCore();
-        $treeData = $Config + $Model + $Data + $Leads + $Product + $Crm + $AppCore + $Periodicals;
+        $Tools = AppPuzzleTreeTools::tree();
+
+        $treeData = $Config + $Model + $Data + $Product + $Crm + $AppCore + $Periodicals + $Tools + $CrmHoover;
 
         return $treeData;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # CopyModel
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CopyModel($model) {
 
         $modelTree = self::LoadTreeData();
@@ -103,7 +105,7 @@ class AppPuzzleController extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # RemoveModel
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function RemoveModel($model) {
 
         $modelTree = self::LoadTreeData();
@@ -129,10 +131,8 @@ class AppPuzzleController extends AppPuzzleFun {
         }
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ImportModel
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ImportModel($model) {
 
         $modelTree = self::LoadTreeData();
@@ -150,73 +150,4 @@ class AppPuzzleController extends AppPuzzleFun {
         }
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
-    static function AdminMenu() {
-
-        $role = 'adminlang_view';
-        $PrefixRoute = "admin.AppPuzzle.";
-
-        $mainMenu = new AdminMenu();
-        $mainMenu->type = "Many";
-        $mainMenu->sel_routs = "admin.AppPuzzle";
-        $mainMenu->name = "App Puzzle";
-        $mainMenu->icon = "fas fa-puzzle-piece";
-        $mainMenu->roleView = $role;
-        $mainMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Config.IndexModel";
-        $subMenu->url = $PrefixRoute . "Config.IndexModel";
-        $subMenu->name = "Config";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Model.IndexModel";
-        $subMenu->url = $PrefixRoute . "Model.IndexModel";
-        $subMenu->name = "Model";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Product.IndexModel";
-        $subMenu->url = $PrefixRoute . "Product.IndexModel";
-        $subMenu->name = "Product";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Data.IndexModel";
-        $subMenu->url = $PrefixRoute . "Data.IndexModel";
-        $subMenu->name = "Data";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Leads.IndexModel";
-        $subMenu->url = $PrefixRoute . "Leads.IndexModel";
-        $subMenu->name = "Leads";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Crm.IndexModel";
-        $subMenu->url = $PrefixRoute . "Crm.IndexModel";
-        $subMenu->name = "Crm";
-        $subMenu->roleView = $role;
-        $subMenu->icon = "fas fa-list";
-        $subMenu->save();
-    }
 }

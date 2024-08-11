@@ -4,24 +4,16 @@ namespace App\AppPlugin\AppPuzzle;
 
 class AppPuzzleTreeCrm {
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  ProductTree
-    static function CrmTree() {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function tree() {
         $modelTree = [
-            'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
-            'CrmLeads' => self::treeCrmLeads(),
-            'CrmTickets' => self::treeCrmTickets(),
-            'CrmTechFollow' => self::treeCrmTechFollow(),
+            'LeadCategory' => self::treeLeadCategory(),
+            'LeadSours' => self::treeLeadSours(),
         ];
-
         return $modelTree;
     }
-
-
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -49,90 +41,31 @@ class AppPuzzleTreeCrm {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmTickets() {
+    static function treeLeadCategory() {
         return [
             'view' => true,
-            'id' => "CrmTickets",
-            'CopyFolder' => "Crm_Tickets",
-            'appFolder' => 'Crm/Tickets',
-            'viewFolder' => 'CrmTickets',
-            'routeFolder' => "crm/",
-            'routeFile' => 'ticket.php',
-            'migrations' => [
-                '2021_01_01_000002_create_crm_tickets_table.php',
-            ],
-            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
-            'adminLangFolder' => "admin/crm/",
-            'adminLangFiles' => ['ticket.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Ticket'],
-            'ComponentFolderView' => ['app-plugin/crm/ticket'],
-            'ClientFolder' => config('adminConfig.app_folder'),
-
+            'id' => "LeadCategory",
+            'CopyFolder' => "DataLeadCategory",
+            'appFolder' => 'Data/DataLeadCategory',
+            'routeFolder' => "data/",
+            'routeFile' => 'data_LeadCategory.php',
+            'adminLangFolder' => "admin/data/",
+            'adminLangFiles' => ['LeadCategory.php'],
         ];
     }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmTechFollow() {
-        return [
-            'view' => true,
-            'id' => "CrmTechFollow",
-            'CopyFolder' => "Crm_TechFollow",
-            'appFolder' => 'Crm/TicketsTechFollow',
-            'viewFolder' => 'CrmTechFollow',
-            'routeFolder' => "crm/",
-            'routeFile' => 'ticket_tech_follow.php',
-        ];
-    }
-
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmLeads() {
-        return [
-            'view' => true,
-            'id' => "CrmLeads",
-            'CopyFolder' => "Crm_Leads",
-            'appFolder' => 'Crm/Leads',
-            'viewFolder' => 'CrmLeads',
-            'routeFolder' => "crm/",
-            'routeFile' => 'leads.php',
-//            'migrations' => [
-//                '2021_01_01_000002_create_crm_tickets_table.php',
-//            ],
-//            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
-            'adminLangFolder' => "admin/crm/",
-            'adminLangFiles' => ['leads.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
-            'ComponentFolderView' => ['app-plugin/crm/leads'],
-            'ClientFolder' => config('adminConfig.app_folder'),
-        ];
-    }
-
-
-
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    static function treeImportData() {
+    static function treeLeadSours() {
         return [
             'view' => true,
-            'id' => "ImportData",
-            'CopyFolder' => "Crm_ImportData",
-            'appFolder' => 'Crm/ImportData',
-            'viewFolder' => 'DataImport',
-            'routeFolder' => "crm/",
-            'routeFile' => 'ImportData.php',
-            'migrations' => [
-                '2020_01_01_000001_create_import_data_table.php',
-            ],
-            'seeder' => ['config_data_import.sql'],
-            'adminLangFolder' => "admin/crm/",
-            'adminLangFiles' => ['ImportData.php'],
+            'id' => "LeadSours",
+            'CopyFolder' => "DataLeadSours",
+            'appFolder' => 'Data/DataLeadSours',
+            'routeFolder' => "data/",
+            'routeFile' => 'data_LeadSours.php',
+            'adminLangFolder' => "admin/data/",
+            'adminLangFiles' => ['LeadSours.php'],
         ];
     }
 

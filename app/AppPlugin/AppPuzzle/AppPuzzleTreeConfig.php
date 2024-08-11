@@ -6,23 +6,23 @@ class AppPuzzleTreeConfig {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  ModelTree
-    static function ConfigTree() {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function tree() {
         $modelTree = [
-
             'WebLangFile' => self::treeWebLangFile(),
             'ConfigMeta' => self::treeConfigMeta(),
             'ConfigPrivacy' => self::treeConfigPrivacy(),
             'ConfigApps' => self::treeConfigApps(),
             'ConfigBranch' => self::treeConfigBranch(),
             'SiteMaps' => self::treeSiteMaps(),
+            'LeadsNewsLetter' => self::treeLeadsNewsLetter(),
+            'LeadsContactUs' => self::treeLeadsContactUs(),
         ];
-
         return $modelTree;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeWebLangFile() {
         return [
             'view' => true,
@@ -36,7 +36,7 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeConfigMeta() {
         return [
             'view' => true,
@@ -60,7 +60,7 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeConfigPrivacy() {
         return [
             'view' => true,
@@ -83,7 +83,7 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeConfigApps() {
         return [
             'view' => true,
@@ -115,7 +115,7 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeConfigBranch() {
         return [
             'view' => true,
@@ -139,7 +139,7 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeSiteMaps() {
         return [
             'view' => true,
@@ -164,11 +164,44 @@ class AppPuzzleTreeConfig {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeLeadsNewsLetter() {
+        return [
+            'view' => true,
+            'id' => "LeadsNewsLetter",
+            'CopyFolder' => "LeadsNewsLetter",
+            'appFolder' => 'Leads/NewsLetter',
+            'viewFolder' => 'LeadsNewsLetter',
+            'routeFolder' => "leads/",
+            'routeFile' => 'newsLetter.php',
+            'migrations' => ['2019_12_14_000010_create_news_letters_table.php'],
+            'seeder' => ['leads_news_letters.sql'],
+            'adminLangFolder' => "admin/",
+            'adminLangFiles' => ['leadsNewsLetter.php'],
+            'webLangFolder' => "web/",
+            'webLangFiles' => ['newsletter.php'],
+            'livewireClass' => ['Site' => 'NewsLetterForm.php'],
+            'livewireView' => ['site' => 'news-letter-form.blade.php'],
+        ];
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeLeadsContactUs() {
+        return [
+            'view' => true,
+            'id' => "LeadsContactUs",
+            'CopyFolder' => "LeadsContactUs",
+            'infoFile' => "LeadsContactUs.txt",
+            'appFolder' => 'Leads/ContactUs',
+            'viewFolder' => 'LeadsContactUs',
+            'routeFolder' => "leads/",
+            'routeFile' => 'contactUs.php',
+            'migrations' => ['2019_12_14_000013_create_contact_us_forms_table.php'],
+            'seeder' => ['leads_contact_us.sql'],
+            'adminLangFolder' => "admin/",
+            'adminLangFiles' => ['leadsContactUs.php'],
+        ];
+    }
 
 }

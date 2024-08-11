@@ -8,7 +8,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  AppCore
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AppCore() {
         $modelTree = [
             'AppPuzzle' => self::treeAppPuzzle(),
@@ -17,7 +17,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   treeAppPuzzle
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeAppPuzzle() {
         return [
             'view' => true,
@@ -31,7 +31,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportAssetsCssFiles() {
         $copy = new AppPuzzleFunCopy();
         $CopyFolder = self::creatCopyFolder("_CoreAssets");
@@ -51,7 +51,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportAssetsFiles() {
         $copy = new AppPuzzleFunCopy();
         $CopyFolder = self::creatCopyFolder("_CoreAssets");
@@ -72,8 +72,9 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
         }
         return redirect()->back();
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportCoreFiles() {
         $copy = new AppPuzzleFunCopy();
         $CopyFolder = self::creatCopyFolder("_Core");
@@ -107,7 +108,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderApp($CopyFolder) {
         $fileNames = [
             ['Http/' => 'Kernel.php'],
@@ -155,7 +156,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderConfig($CopyFolder) {
         $ConfigFolder = base_path('config');
         if (File::isDirectory($ConfigFolder)) {
@@ -165,7 +166,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderResources($CopyFolder) {
         $folderNames = [
             "views/admin",
@@ -203,7 +204,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderDatabase($CopyFolder) {
 
         $clientfolder = config('adminConfig.app_folder');
@@ -248,7 +249,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderRoutes($CopyFolder) {
         $folderNames = [
             "routes/adminCore/",
@@ -263,7 +264,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ExportFolderLangFiles($CopyFolder) {
 
         $langs = ['ar', 'en'];
@@ -302,7 +303,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function creatCopyFolder($folderName) {
         $CopyFolder = $this->mainFolder . $folderName . '/';
         self::folderMakeDirectory($CopyFolder);

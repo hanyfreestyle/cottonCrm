@@ -5,8 +5,8 @@
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Data.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
                                 print-lable="Data" :bg="puzzleMenu('Data',$selRoute)"/>
 
-    <x-admin.form.action-button url="{{route('admin.AppPuzzle.Leads.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
-                                print-lable="Leads" :bg="puzzleMenu('Leads',$selRoute)"/>
+    {{--    <x-admin.form.action-button url="{{route('admin.AppPuzzle.Leads.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"--}}
+    {{--                                print-lable="Leads" :bg="puzzleMenu('Leads',$selRoute)"/>--}}
 
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Model.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
                                 print-lable="Model" :bg="puzzleMenu('Model',$selRoute)"/>
@@ -17,12 +17,19 @@
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Crm.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
                                 print-lable="Crm" :bg="puzzleMenu('Crm',$selRoute)"/>
 
+    <x-admin.form.action-button url="{{route('admin.AppPuzzle.CrmHoover.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
+                                print-lable="CrmHoover" :bg="puzzleMenu('CrmHoover',$selRoute)"/>
+
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Periodicals.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
                                 print-lable="Periodicals" :bg="puzzleMenu('Periodicals',$selRoute)"/>
 
 
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.AppCore.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
                                 print-lable="App Core" :bg="puzzleMenu('AppCore',$selRoute)"/>
+
+    <x-admin.form.action-button url="{{route('admin.AppPuzzle.Tools.IndexModel')}}" :tip="false" icon="fas fa-puzzle-piece"
+                                print-lable="Tools" :bg="puzzleMenu('Tools',$selRoute)"/>
+
 
 </div>
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 class AppPuzzleFunCopy extends AppPuzzleFun {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyAppFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyAppFolder($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
         $folderName = issetArr($thisModel, 'appFolder', null);
@@ -22,7 +22,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyViewFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyViewFolder($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
         $folderName = issetArr($thisModel, 'viewFolder', null);
@@ -36,7 +36,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyRouteFile
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyRouteFile($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
         $fileName = issetArr($thisModel, 'routeFile', null);
@@ -52,7 +52,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyMigrations
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyMigrations($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
 
@@ -71,15 +71,15 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
         $seeders = issetArr($thisModel, 'seeder', null);
         if ($seeders != null and is_array($seeders)) {
             $ClientFolder = issetArr($thisModel, 'ClientFolder', null);
-            if ($ClientFolder){
-                $ClientFolder = $ClientFolder."/";
+            if ($ClientFolder) {
+                $ClientFolder = $ClientFolder . "/";
             }
 
             foreach ($seeders as $file) {
-                $filePath = public_path('db/' .$ClientFolder. $file);
+                $filePath = public_path('db/' . $ClientFolder . $file);
 
                 if (File::isFile($filePath)) {
-                    $destinationFolder = $CopyFolder . 'public/db/'.$ClientFolder;
+                    $destinationFolder = $CopyFolder . 'public/db/' . $ClientFolder;
                     self::folderMakeDirectory($destinationFolder);
                     File::copy($filePath, $destinationFolder . $file);
                 }
@@ -89,10 +89,9 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyLangFile
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyLangFile($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
-
 
 
         $adminLangFiles = issetArr($thisModel, 'adminLangFiles', null);
@@ -129,7 +128,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyPhotoFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyPhotoFolder($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
 
@@ -146,7 +145,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyAssetsFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyAssetsFolder($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
         $assetsFolder = issetArr($thisModel, 'assetsFolder', null);
@@ -162,7 +161,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyComponentFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyComponentFolder($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
 
@@ -191,7 +190,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyComponentFile
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyComponentFile($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
 
@@ -223,7 +222,7 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     copyLivewireFile
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function copyLivewireFile($thisModel) {
         $CopyFolder = self::creatCopyFolder($thisModel);
 
@@ -248,24 +247,6 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
             }
         }
     }
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     copyxx
-//    public function  copyxx($thisModel){
-//        $CopyFolder = self::creatCopyFolder($thisModel);
-//    }
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     copyxx
-//    public function  copyxx($thisModel){
-//        $CopyFolder = self::creatCopyFolder($thisModel);
-//    }
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     copyxx
-//    public function  copyxx($thisModel){
-//        $CopyFolder = self::creatCopyFolder($thisModel);
-//    }
 
 
 }

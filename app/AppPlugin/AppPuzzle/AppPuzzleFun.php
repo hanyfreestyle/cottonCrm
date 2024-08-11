@@ -29,7 +29,7 @@ class AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function creatCopyFolder($thisModel) {
         $CopyFolder = $this->mainFolder . $thisModel['CopyFolder'] . '/';
         self::folderMakeDirectory($CopyFolder);
@@ -37,7 +37,7 @@ class AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   recursive_files_copy
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function recursive_files_copy($source_dir, $destination_dir) {
         // Open the source folder / directory
         $dir = opendir($source_dir);
@@ -65,17 +65,15 @@ class AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   folderMakeDirectory
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function folderMakeDirectory($destinationFolder) {
         if (!File::isDirectory($destinationFolder)) {
             File::makeDirectory($destinationFolder, 0777, true, true);
         }
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     checkSoursFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function checkSoursFolder($row) {
         if (isset($row['appFolder'])) {
             $thisDir = app_path("AppPlugin/" . $row['appFolder']);
@@ -90,7 +88,7 @@ class AppPuzzleFun {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   checkBackupFolder
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function checkBackupFolder($row) {
         if (isset($row['CopyFolder'])) {
             $xx = new AppPuzzleController();
@@ -104,4 +102,5 @@ class AppPuzzleFun {
             return false;
         }
     }
+
 }

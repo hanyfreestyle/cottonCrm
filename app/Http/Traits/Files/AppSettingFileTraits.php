@@ -20,9 +20,8 @@ use App\AppPlugin\Config\Meta\MetaTagTranslation;
 use App\AppPlugin\Config\Privacy\WebPrivacy;
 use App\AppPlugin\Config\Privacy\WebPrivacyTranslation;
 use App\AppPlugin\Config\SiteMap\GoogleCode;
-use App\AppPlugin\Crm\Customers\CrmCustomersController;
-use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
-use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
+use App\AppPlugin\Leads\NewsLetter\NewsLetter;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 trait AppSettingFileTraits {
@@ -209,8 +208,8 @@ trait AppSettingFileTraits {
             $mainMenu->name = "admin.app_menu_lang_web";
             $mainMenu->icon = "fas fa-language";
             $mainMenu->roleView = "weblang_view";
-            $mainMenu->is_active =  true;
-            $mainMenu->postion =  101;
+            $mainMenu->is_active = true;
+            $mainMenu->postion = 101;
             $mainMenu->save();
         }
 
@@ -291,6 +290,10 @@ trait AppSettingFileTraits {
             SeedDbFile(AppMenuTranslation::class, 'config_app_menu_translations.sql');
         }
 
+
+        if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
+            SeedDbFile(NewsLetter::class, 'leads_news_letters.sql', false);
+        }
 
     }
 

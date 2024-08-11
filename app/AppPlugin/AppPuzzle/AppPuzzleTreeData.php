@@ -5,26 +5,19 @@ namespace App\AppPlugin\AppPuzzle;
 class AppPuzzleTreeData {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  ModelTree
-    static function DataTree() {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function tree() {
         $modelTree = [
-
             'ConfigData' => self::treeConfigData(),
             'DataCountry' => self::treeDataCountry(),
             'DataCity' => self::treeDataCity(),
             'DataArea' => self::treeDataArea(),
-            'LeadCategory' => self::treeLeadCategory(),
-            'LeadSours' => self::treeLeadSours(),
-            'BrandName' => self::treeBrandName(),
-            'DeviceType' => self::treeDeviceType(),
-            'Evaluation' => self::treeEvaluation(),
-
         ];
-
         return $modelTree;
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeConfigData() {
         return [
             'view' => true,
@@ -41,7 +34,7 @@ class AppPuzzleTreeData {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeDataCountry() {
         return [
             'view' => true,
@@ -60,7 +53,7 @@ class AppPuzzleTreeData {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeDataCity() {
 
         return [
@@ -80,7 +73,7 @@ class AppPuzzleTreeData {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeDataArea() {
         return [
             'view' => true,
@@ -95,81 +88,6 @@ class AppPuzzleTreeData {
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['dataArea.php'],
             'ClientFolder' => config('adminConfig.app_folder'),
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treeLeadCategory() {
-        return [
-            'view' => true,
-            'id' => "LeadCategory",
-            'CopyFolder' => "DataLeadCategory",
-            'appFolder' => 'Data/DataLeadCategory',
-            'routeFolder' => "data/",
-            'routeFile' => 'data_LeadCategory.php',
-            'adminLangFolder' => "admin/data/",
-            'adminLangFiles' => ['LeadCategory.php'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treeLeadSours() {
-        return [
-            'view' => true,
-            'id' => "LeadSours",
-            'CopyFolder' => "DataLeadSours",
-            'appFolder' => 'Data/DataLeadSours',
-            'routeFolder' => "data/",
-            'routeFile' => 'data_LeadSours.php',
-            'adminLangFolder' => "admin/data/",
-            'adminLangFiles' => ['LeadSours.php'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treeBrandName() {
-        return [
-            'view' => true,
-            'id' => "BrandName",
-            'CopyFolder' => "DataBrandName",
-            'appFolder' => 'Data/DataBrandName',
-            'routeFolder' => "data/",
-            'routeFile' => 'data_BrandName.php',
-            'adminLangFolder' => "admin/data/",
-            'adminLangFiles' => ['BrandName.php'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treeDeviceType() {
-        return [
-            'view' => true,
-            'id' => "DeviceType",
-            'CopyFolder' => "DataDeviceType",
-            'appFolder' => 'Data/DataDeviceType',
-            'routeFolder' => "data/",
-            'routeFile' => 'data_DeviceType.php',
-            'adminLangFolder' => "admin/data/",
-            'adminLangFiles' => ['DeviceType.php'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treeEvaluation() {
-        return [
-            'view' => true,
-            'id' => "Evaluation",
-            'CopyFolder' => "DataEvaluationCust",
-            'appFolder' => 'Data/DataEvaluationCust',
-            'routeFolder' => "data/",
-            'routeFile' => 'data_EvaluationCust.php',
-            'adminLangFolder' => "admin/data/",
-            'adminLangFiles' => ['EvaluationCust.php'],
         ];
     }
 

@@ -11,8 +11,11 @@ Route::get('/puzzle/leads/', [AppPuzzleController::class, 'IndexPuzzle'])->name(
 Route::get('/puzzle/model/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Model.IndexModel');
 Route::get('/puzzle/product/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Product.IndexModel');
 Route::get('/puzzle/Crm/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Crm.IndexModel');
+Route::get('/puzzle/CrmHoover/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.CrmHoover.IndexModel');
 Route::get('/puzzle/AppCore/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.AppCore.IndexModel');
 Route::get('/puzzle/Periodicals/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Periodicals.IndexModel');
+Route::get('/puzzle/Tools/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Tools.IndexModel');
+
 
 
 Route::get('/AppPuzzle/Copy/{model}', [AppPuzzleController::class, 'CopyModel'])->name('AppPuzzle.Export');

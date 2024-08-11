@@ -7,7 +7,7 @@ class AppPuzzleTreePeriodicals {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function CrmTree() {
+    static function tree() {
         $modelTree = [
             'Periodicals' => self::treePeriodicals(),
             'DataBookRelease' => self::DataBookRelease(),
