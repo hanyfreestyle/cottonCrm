@@ -40,6 +40,10 @@ class AppPuzzleController extends AppPuzzleFun {
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Crm.IndexModel') {
             $rowData = AppPuzzleTreeCrm::CrmTree();
             $selRoute = "Crm";
+        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Periodicals.IndexModel') {
+            $rowData = AppPuzzleTreePeriodicals::CrmTree();
+            $selRoute = "Periodicals";
+
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.AppCore.IndexModel') {
             $rowData = AppPuzzleTreeAppCore::AppCore();
             $selRoute = "AppCore";

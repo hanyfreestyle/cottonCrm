@@ -9,45 +9,18 @@ class AppPuzzleTreeCrm {
 #|||||||||||||||||||||||||||||||||||||| #  ProductTree
     static function CrmTree() {
         $modelTree = [
-            'Periodicals' => self::treePeriodicals(),
             'ImportData' => self::treeImportData(),
             'CrmCustomers' => self::treeCrmCustomers(),
             'CrmLeads' => self::treeCrmLeads(),
             'CrmTickets' => self::treeCrmTickets(),
             'CrmTechFollow' => self::treeCrmTechFollow(),
-
         ];
+
         return $modelTree;
     }
 
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    static function treePeriodicals() {
-        return [
-            'view' => true,
-            'id' => "Periodicals",
-            'CopyFolder' => "Crm_Periodicals",
-            'appFolder' => 'Crm/Periodicals',
-            'viewFolder' => 'BookPeriodicals',
-            'routeFolder' => "crm/",
-            'routeFile' => 'Periodicals.php',
-            'migrations' => [
-                '2021_01_01_000002_create_periodicals_table.php',
-            ],
-            'seeder' => [
-                'book_periodicals.sql',
-                'book_periodicals_release.sql',
-                'book_tags.sql',
-                'book_periodicals_notes.sql',
-                'book_tags_notes.sql',
-            ],
-            'adminLangFolder' => "admin/",
-            'adminLangFiles' => ['Periodicals.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Book'],
-            'ComponentFolderView' => ['app-plugin/crm/book'],
-        ];
-    }
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
