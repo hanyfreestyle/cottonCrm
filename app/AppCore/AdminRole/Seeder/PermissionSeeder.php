@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder {
             ['cat_id' => 'roles', 'name' => 'roles_update_permissions', 'name_ar' => 'تعديل صلاحيات المجموعة', 'name_en' => 'Roles Update Permissions'],
         ];
 
-//        $data = CrmFunTraits::LoadPermission($data);
+        $data = CrmFunTraits::LoadPermission($data);
 
 //        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
 //            $newPer = [

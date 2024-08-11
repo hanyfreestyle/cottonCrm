@@ -15,6 +15,7 @@ trait CrmFunTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadMenu() {
+
         if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
             PeriodicalsController::AdminMenu();
         }

@@ -45,9 +45,6 @@ class DatabaseSeeder extends Seeder {
 
 
 
-        if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
-            $this->call(ImportDataSeeder::class);
-        }
         if (File::isFile(base_path('routes/AppPlugin/crm/ticket.php'))) {
             $this->call(CrmTicketsSeeder::class);
         }
@@ -98,6 +95,11 @@ class DatabaseSeeder extends Seeder {
 
         if (File::isFile(base_path('routes/AppPlugin/orders.php'))) {
             $this->call(OrdersSeeder::class);
+        }
+
+
+        if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {
+            $this->call(ImportDataSeeder::class);
         }
 
     }

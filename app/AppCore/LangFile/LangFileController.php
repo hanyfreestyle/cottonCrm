@@ -32,8 +32,8 @@ class LangFileController extends AdminMainController {
             'AddButToCard' => false,
         ];
         self::loadConstructData($sendArr);
-        $this->middleware('permission:weblang_view', ['only' => ['index']]);
-        $this->middleware('permission:config_edit', ['only' => ['EditLang', 'updateFile']]);
+//        $this->middleware('permission:weblang_view', ['only' => ['index']]);
+//        $this->middleware('permission:config_edit', ['only' => ['EditLang', 'updateFile']]);
 
         $selId = AdminHelper::arrIsset($_GET, 'id', '');
         View::share('selId', $selId);
