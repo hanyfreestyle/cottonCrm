@@ -18,7 +18,7 @@ class AppPuzzleController extends AppPuzzleFun {
     public function IndexPuzzle() {
         $selRoute = null;
 
-        if (config('app.puzzle_active') == false){
+        if (config('app.puzzle_active') == false) {
             return abort(403);
         }
 
@@ -68,8 +68,10 @@ class AppPuzzleController extends AppPuzzleFun {
         $Leads = AppPuzzleTreeLeads::LeadsTree();
         $Product = AppPuzzleTreeProduct::ProductTree();
         $Crm = AppPuzzleTreeCrm::CrmTree();
+        $Periodicals = AppPuzzleTreePeriodicals::CrmTree();
         $AppCore = AppPuzzleTreeAppCore::AppCore();
-        $treeData = $Config + $Model + $Data + $Leads + $Product + $Crm + $AppCore;
+        $treeData = $Config + $Model + $Data + $Leads + $Product + $Crm + $AppCore + $Periodicals;
+
         return $treeData;
     }
 
