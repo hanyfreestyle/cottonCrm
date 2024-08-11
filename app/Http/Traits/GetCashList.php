@@ -9,6 +9,7 @@ use App\AppPlugin\Data\Country\Country;
 use App\Models\User;
 use App\AppPlugin\Product\Models\Brand;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 
 trait GetCashList {
 
@@ -28,41 +29,54 @@ trait GetCashList {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashCountryList($stopCash = 0) {
-        if ($stopCash) {
-            $CashCountryList = Country::select('id', 'iso2')->with('translation')->orderByTranslation('name', 'ASC')->get();
+        if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
+            if ($stopCash) {
+                $CashCountryList = Country::select('id', 'iso2')->with('translation')->orderByTranslation('name', 'ASC')->get();
+            } else {
+                $CashCountryList = Cache::remember('CashCountryList', cashDay(7), function () {
+                    return Country::select('id', 'iso2')->with('translation')->orderByTranslation('name', 'ASC')->get();
+                });
+            }
+            return $CashCountryList;
         } else {
-            $CashCountryList = Cache::remember('CashCountryList', cashDay(7), function () {
-                return Country::select('id', 'iso2')->with('translation')->orderByTranslation('name', 'ASC')->get();
-            });
+            return [];
         }
-        return $CashCountryList;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashCityList($stopCash = 0) {
-        if ($stopCash) {
-            $CashCityList = City::with('translation')->orderby('postion')->get();
+        if (File::isFile(base_path('routes/AppPlugin/data/city.php'))) {
+            if ($stopCash) {
+                $CashCityList = City::with('translation')->orderby('postion')->get();
+            } else {
+                $CashCityList = Cache::remember('CashCityList', cashDay(7), function () {
+                    return City::with('translation')->orderby('postion')->get();
+                });
+            }
+            return $CashCityList;
         } else {
-            $CashCityList = Cache::remember('CashCityList', cashDay(7), function () {
-                return City::with('translation')->orderby('postion')->get();
-            });
+            return [];
         }
-        return $CashCityList;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashAreaList($stopCash = 0) {
-        if ($stopCash) {
-            $CashAreaList = Area::with('translation')->get();
+        if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
+            if ($stopCash) {
+                $CashAreaList = Area::with('translation')->get();
+            } else {
+                $CashAreaList = Cache::remember('CashAreaList', cashDay(7), function () {
+                    return Area::with('translation')->get();
+                });
+            }
+            return $CashAreaList;
         } else {
-            $CashAreaList = Cache::remember('CashAreaList', cashDay(7), function () {
-                return Area::with('translation')->get();
-            });
+            return [];
         }
-        return $CashAreaList;
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -80,6 +94,13 @@ trait GetCashList {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashBrandList($stopCash = 0) {
+
+        if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
+
+        } else {
+            return [];
+        }
+
         if ($stopCash) {
             $CashBrandList = Brand::CashBrandList();
         } else {
