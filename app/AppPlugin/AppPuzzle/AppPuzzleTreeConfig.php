@@ -150,7 +150,6 @@ class AppPuzzleTreeConfig {
             'routeFolder' => "leads/",
             'routeFile' => 'newsLetter.php',
             'migrations' => ['2019_12_14_000010_create_news_letters_table.php'],
-            'seeder' => ['leads_news_letters.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['leadsNewsLetter.php'],
             'webLangFolder' => "web/",
@@ -173,7 +172,6 @@ class AppPuzzleTreeConfig {
             'routeFolder' => "leads/",
             'routeFile' => 'contactUs.php',
             'migrations' => ['2019_12_14_000013_create_contact_us_forms_table.php'],
-            'seeder' => ['leads_contact_us.sql'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['leadsContactUs.php'],
         ];
