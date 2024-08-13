@@ -156,7 +156,7 @@ class AppPuzzleTreeModel {
         return [
             'view' => true,
             'id' => "Pages",
-            'CopyFolder' => "Pages",
+            'CopyFolder' => "Model_Pages",
             'appFolder' => 'Pages',
             'viewFolder' => 'Pages',
             'routeFolder' => null,
@@ -165,18 +165,6 @@ class AppPuzzleTreeModel {
                 '2020_01_01_000001_create_page_model_table.php',
             ],
 
-            'seeder' => [
-                'page_categories.sql',
-                'page_category_translations.sql',
-                'page_pages.sql',
-                'page_photo_translations.sql',
-                'page_photos.sql',
-                'page_translations.sql',
-                'pagecategory_page.sql',
-                'page_tags.sql',
-                'page_tags_post.sql',
-                'page_tags_translations.sql',
-            ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['pages.php'],
         ];
