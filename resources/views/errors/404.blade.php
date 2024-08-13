@@ -1,8 +1,6 @@
 @extends('web.layouts.app')
 @section('content')
 
-
-
     <div id="nt_content">
         <x-site.def.breadcrumbs>
             {{ Breadcrumbs::render('page404',$meta) }}

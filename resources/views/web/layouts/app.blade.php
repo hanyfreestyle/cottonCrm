@@ -4,11 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
-    <x-admin.web.google-tags type="web_master_meta" />
+    <x-admin.web.google-tags type="web_master_meta"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEO::generate() !!}
     <x-site.def.fav-icon/>
-    {{--  {!! (new \App\Helpers\MinifyTools)->MinifyCss('temp/css/drift-basic.min.css',$cssMinifyType,$cssReBuild) !!}--}}
 
 
     @yield('AddStyle')
@@ -18,7 +17,7 @@
 
     @endif
 
-{{--    @livewireStyles--}}
+    {{--    @livewireStyles--}}
     <x-admin.web.google-tags type="tag_manager_code_header"/>
 </head>
 
@@ -42,6 +41,5 @@
 </script>
 @yield('AddScript')
 @stack('ScriptCode')
-
 </body>
 </html>

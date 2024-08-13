@@ -14,22 +14,22 @@ class RouteNotFoundController extends Controller {
         if (isset($currentSlug['fallbackPlaceholder']) and mb_substr($currentSlug['fallbackPlaceholder'], 0, strlen($adminDir)) == $adminDir) {
             abort('410');
         } else {
-            abort('404')->with();
+            if(config('app.WEB_VIEW')){
+                $Meta = DefaultMainController::getMeatByCatId('err_404');
+                $w = new WebMainController();
+                $w->printSeoMeta($Meta);
+
+                $pageView = [
+                    'SelMenu' => '',
+                    'show_fix' => true,
+                    'slug' => null,
+                    'go_home' => route('web_index'),
+                ];
+                View::share('pageView', $pageView);
+                abort('404');
+            }else{
+                abort('412');
+            }
         }
-
-//        $Meta = DefaultMainController::getMeatByCatId('err_404');
-//
-//        $w = new WebMainController();
-//        $w->printSeoMeta($Meta);
-//
-//        $pageView = [
-//            'SelMenu' => '',
-//            'show_fix' => true,
-//            'slug' => null,
-//            'go_home' => route('page_index'),
-//        ];
-//        View::share('pageView', $pageView);
-
-
     }
 }
