@@ -157,8 +157,6 @@ class AppPuzzleTreeConfig {
             ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['siteMap.php'],
-            'ComponentFolderClass' => ['AppPlugin/GoogleCode'],
-            'ComponentFolderView' => ['app-plugin/google-code'],
             'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }

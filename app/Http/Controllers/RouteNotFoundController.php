@@ -14,7 +14,7 @@ class RouteNotFoundController extends Controller {
         if (isset($currentSlug['fallbackPlaceholder']) and mb_substr($currentSlug['fallbackPlaceholder'], 0, strlen($adminDir)) == $adminDir) {
             abort('410');
         } else {
-            abort('404');
+            abort('404')->with();
         }
 
 //        $Meta = DefaultMainController::getMeatByCatId('err_404');

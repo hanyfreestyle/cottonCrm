@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
-    {{--    <link rel="stylesheet" href="{{ defAdminAssets('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css') }}">--}}
+
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css','Seo',true) !!}
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/bs-stepper/css/bs-stepper.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/dropzone/min/dropzone.min.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/sweet/sweetalert2.min.css') }}">
+
     @yield('StyleFile')
+
     <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.css') }}">
 
     {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_admin.css','Seo',true) !!}
@@ -128,10 +130,6 @@
         //Money Euro
         $('[data-mask]').inputmask()
 
-        //Date picker
-        // $('#reservationdate').datetimepicker({
-        //     format: 'L'
-        // });
 
         //Date and time picker
         $('#reservationdatetime').datetimepicker({icons: {time: 'far fa-clock'}});
@@ -197,7 +195,6 @@
 @yield('AddScript')
 @stack('JsCode')
 <script>
-
     async function loadarfont() {
         const font_ar = new FontFace('Tajawal', 'url({{ defAdminAssets('fonts/Ar/TajawalRegular.woff2') }}');
         await font_ar.load();
@@ -213,7 +210,6 @@
         document.body.classList.add('Poppins');
     };
     loadarfont_en();
-    // display_c7();
 </script>
 </body>
 </html>
