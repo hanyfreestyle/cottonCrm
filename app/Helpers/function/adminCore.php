@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -108,7 +109,16 @@ if (!function_exists('LoadConfigName')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
+if (!function_exists('getRoleName')) {
+    function getRoleName() {
+        if (thisCurrentLocale() == 'ar') {
+            $sendName = "name_ar";
+        } else {
+            $sendName = "name_en";
+        }
+        return $sendName;
+    }
+}
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 

@@ -14,7 +14,7 @@
             <i class="fa {{$icon}}"></i> @if(!$tip) @endif
         @endif
         @if(!$tip)
-            <span class="tipName">{{$printLable}}</span>
+            <span class="tipName"> {{$printLable}}</span>
         @endif
     </a>
 @endif

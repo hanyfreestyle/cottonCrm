@@ -19,16 +19,7 @@ if (!function_exists('IsMenuView')) {
         return $SendVal;
     }
 }
-if (!function_exists('getRoleName')) {
-    function getRoleName() {
-        if (thisCurrentLocale() == 'ar') {
-            $sendName = "name_ar";
-        } else {
-            $sendName = "name_en";
-        }
-        return $sendName;
-    }
-}
+
 if (!function_exists('printLang')) {
     function printLang($sendLang) {
         $sendLang = str_replace("&amp;lt;br&amp;gt;", "\n", $sendLang);

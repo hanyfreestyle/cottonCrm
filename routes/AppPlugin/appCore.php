@@ -15,6 +15,7 @@ Route::get('/puzzle/CrmHoover/', [AppPuzzleController::class, 'IndexPuzzle'])->n
 Route::get('/puzzle/AppCore/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.AppCore.IndexModel');
 Route::get('/puzzle/Periodicals/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Periodicals.IndexModel');
 Route::get('/puzzle/Tools/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Tools.IndexModel');
+Route::get('/puzzle/Client/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Client.IndexModel');
 
 
 

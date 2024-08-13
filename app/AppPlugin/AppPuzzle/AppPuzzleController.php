@@ -4,6 +4,7 @@ namespace App\AppPlugin\AppPuzzle;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 
 class AppPuzzleController extends AppPuzzleFun {
@@ -13,6 +14,9 @@ class AppPuzzleController extends AppPuzzleFun {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function IndexPuzzle() {
         $selRoute = null;
+
+        $this->appPuzzle = new AppPuzzleController();
+        View::share('appPuzzle', $this->appPuzzle);
 
         if (config('app.puzzle_active') == false) {
             return abort(403);
@@ -40,9 +44,20 @@ class AppPuzzleController extends AppPuzzleFun {
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Periodicals.IndexModel') {
             $rowData = AppPuzzleTreePeriodicals::tree();
             $selRoute = "Periodicals";
+        } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Client.IndexModel') {
+            $selRoute = "Client";
+            $rowData = ClientAppPuzzleTree::tree();
+//            dd($rowData);
+            return view('AppPlugin.AppPuzzle.index_client')->with([
+                'rowData' => $rowData,
+                'selRoute' => $selRoute,
+            ]);
+
+
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.Tools.IndexModel') {
             $rowData = AppPuzzleTreeTools::tree();
             $selRoute = "Tools";
+
         } elseif (Route::currentRouteName() == 'admin.AppPuzzle.AppCore.IndexModel') {
             $rowData = AppPuzzleTreeAppCore::AppCore();
             $selRoute = "AppCore";
@@ -50,6 +65,8 @@ class AppPuzzleController extends AppPuzzleFun {
                 'rowData' => $rowData,
                 'selRoute' => $selRoute,
             ]);
+
+
         }
 
         return view('AppPlugin.AppPuzzle.index_model')->with([

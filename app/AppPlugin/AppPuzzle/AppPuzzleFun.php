@@ -28,8 +28,8 @@ class AppPuzzleFun {
         View::share('agent', $this->agent);
 
         $this->MinifyTools = new MinifyTools();
-        $this->minType  = "Seo";
-        $this->reBuild  = true;
+        $this->minType = "Seo";
+        $this->reBuild = true;
         View::share('MinifyTools', $this->MinifyTools);
         View::share('minType', $this->minType);
         View::share('reBuild', $this->reBuild);
@@ -95,6 +95,20 @@ class AppPuzzleFun {
             return false;
         }
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function checkSoursClientFolder($row) {
+
+        $thisDir = public_path("db/" . $row['folderName']);
+        if (File::isDirectory($thisDir)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
