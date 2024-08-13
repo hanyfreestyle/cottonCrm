@@ -9,12 +9,13 @@ class AppPuzzleTreeModel {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
-            'ModelMainPost' => self::treeModelMainPost(),
-            'BlogPost' => self::treeModelBlogPost(),
-            'FileManager' => self::treeFileManager(),
+//            'ModelMainPost' => self::treeModelMainPost(),
+//            'BlogPost' => self::treeModelBlogPost(),
+
             'BlogPostTable' => self::treeBlogPostTable(),
             'Faq' => self::treeFaq(),
             'Pages' => self::treePages(),
+            'FileManager' => self::treeFileManager(),
         ];
         return $modelTree;
     }
