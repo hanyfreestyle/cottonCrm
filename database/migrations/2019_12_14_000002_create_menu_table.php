@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('type')->nullable();
 
-            $table->string('sel_routs')->nullable();
+            $table->text('sel_routs')->nullable();
             $table->string('url')->nullable();
             $table->string('name')->nullable();
             $table->string('icon')->nullable();

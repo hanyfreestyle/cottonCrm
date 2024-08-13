@@ -61,8 +61,8 @@ trait PeriodicalsFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
         if (File::isFile(base_path('routes/AppPlugin/crm/Periodicals.php'))) {
-            SeedDbFile(Periodicals::class, 'book_periodicals.sql', false);
-            SeedDbFile(PeriodicalsRelease::class, 'book_periodicals_release.sql', false);
+            SeedDbFile(Periodicals::class, 'book_periodicals.sql');
+            SeedDbFile(PeriodicalsRelease::class, 'book_periodicals_release.sql');
         }
     }
 
