@@ -151,9 +151,7 @@ class AppPuzzleController extends AppPuzzleFun {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ImportModel($model) {
-
         $modelTree = self::LoadTreeData();
-
         if (isset($modelTree[$model])) {
             $thisModel = $modelTree[$model];
             $BackFolder = $this->mainFolder . $thisModel['CopyFolder'];
@@ -166,5 +164,78 @@ class AppPuzzleController extends AppPuzzleFun {
             return redirect()->back();
         }
     }
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ImportClientData($model) {
+        $modelTree = ClientAppPuzzleTree::tree();
+        if (isset($modelTree[$model])) {
+            $thisModel = $modelTree[$model];
+            $BackFolder = $this->mainFolder . $thisModel['CopyFolder'];
+            $destinationFolder = base_path();
+            if (File::isDirectory($BackFolder)) {
+                self::recursive_files_copy($BackFolder, $destinationFolder);
+            }
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function RemoveClientData($model) {
+        $modelTree = ClientAppPuzzleTree::tree();
+        if (isset($modelTree[$model])) {
+            $thisModel = $modelTree[$model];
+            $FolderList = $thisModel['FolderList'];
+            foreach ($FolderList as $folder) {
+                if (File::isDirectory($folder)) {
+                    File::deleteDirectory($folder);
+                }
+            }
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ExportClientData($model) {
+        $modelTree = ClientAppPuzzleTree::tree();
+
+
+        if (isset($modelTree[$model])) {
+            $thisModel = $modelTree[$model];
+            $folderName = $thisModel['folderName'];
+            $BackFolder = $this->mainFolder . $thisModel['CopyFolder'];
+
+
+            $FolderList = $thisModel['FolderList'];
+            foreach ($FolderList as $key => $value) {
+
+                if ($key == 'db') {
+                    $destinationFolder = $BackFolder . "/public/db/" . $folderName;
+                } elseif ($key == 'config') {
+                    $destinationFolder = $BackFolder . "/config_" . $folderName;
+                } elseif ($key == 'adminLogo') {
+                    $destinationFolder = $BackFolder . "/public/assets/admin/client/" . $folderName;
+                } else {
+                    $destinationFolder = null;
+                }
+                if (File::isDirectory($value)) {
+                    self::recursive_files_copy($value, $destinationFolder);
+                }
+            }
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
 
 }

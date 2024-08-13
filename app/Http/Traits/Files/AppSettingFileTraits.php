@@ -257,8 +257,12 @@ trait AppSettingFileTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
+
+        $folder = config('adminConfig.app_folder');
         SeedDbFile(Setting::class, 'config_setting.sql');
         SeedDbFile(SettingTranslation::class, 'config_setting_translations.sql');
+
+
         SeedDbFile(DefPhoto::class, 'config_def_photos.sql');
         SeedDbFile(UploadFilter::class, 'config_upload_filter.sql');
         SeedDbFile(UploadFilterSize::class, 'config_upload_filter_sizes.sql');

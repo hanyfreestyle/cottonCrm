@@ -9,10 +9,10 @@ class ClientAppPuzzleTree {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
-            'Hoover' => self::treeClientData('hoover'),
-            'Hoover2' => self::treeClientData('bookcaffe'),
-            'cotton' => self::treeClientData('cotton'),
-            'hany' => self::treeClientData('hany'),
+            'hoover' => self::treeClientData('hoover'),
+            'bookcaffe' => self::treeClientData('bookcaffe'),
+            'vonza' => self::treeClientData('vonza'),
+//            'cotton' => self::treeClientData('cotton'),
         ];
         return $modelTree;
     }
@@ -21,23 +21,18 @@ class ClientAppPuzzleTree {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeClientData($folderName) {
+//        dd(public_path('assets\admin\client/'.$folderName));
         return [
             'view' => true,
             'folderName' => $folderName,
             'id' => $folderName,
-            'CopyFolder' => "_Clients/".$folderName,
-//            'appFolder' => 'Crm/ImportData',
-//            'viewFolder' => 'DataImport',
-//            'routeFolder' => "crm/",
-//            'routeFile' => 'ImportData.php',
-//            'migrations' => [
-//                '2020_01_01_000001_create_import_data_table.php',
-//            ],
-//            'seeder' => ['config_data_import.sql'],
-//            'adminLangFolder' => "admin/crm/",
-//            'adminLangFiles' => ['ImportData.php'],
+            'CopyFolder' => "_Clients/" . $folderName,
+            'FolderList' => [
+                'db' => public_path('db/' . $folderName),
+                'config' => base_path('config_' . $folderName),
+                'adminLogo' => public_path('assets\admin\client/' . $folderName),
+            ],
         ];
     }
-
 
 }

@@ -17,7 +17,7 @@
                     <table {!!Table_Style(false,false) !!} >
                         <thead>
                         <tr>
-                            <th class="TD_100"> Client </th>
+                            <th class="TD_100"> Client</th>
                             <th class="TD_100">Folder Name</th>
                             <th class="TD_100"></th>
                             <th class="TD_100"></th>
@@ -31,22 +31,23 @@
                                 <tr>
                                     <td>{{$row['id']}}</td>
                                     <td>{{$row['folderName']}}</td>
-                                    <td class="td_action">
-                                        @if(\App\AppPlugin\AppPuzzle\AppPuzzleController::checkSoursFolder($row))
-                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.Export',$row['id'])}}" print-lable="Export Files " :tip="false"
-                                                                        bg="dark" icon="fas fa-upload"/>
-                                        @endif
-                                    </td>
-                                    <td class="td_action">
-                                        @if(\App\AppPlugin\AppPuzzle\AppPuzzleController::checkSoursFolder($row))
-                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.Remove',$row['id'])}}" print-lable="Delete Files " :tip="false"
-                                                                        bg="d"
-                                                                        icon="fas fa-trash-alt"/>
-                                        @endif
-                                    </td>
+
+                                    @if($appPuzzle->checkSoursClientFolder($row))
+                                        <td class="td_action">
+                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.ExportClientData',$row['id'])}}"
+                                                                        l="Export Files " :tip="false" bg="dark" icon="fas fa-upload"/>
+                                        </td>
+
+                                        <td class="td_action">
+                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.RemoveClientData',$row['id'])}}"
+                                                                        l="Delete Files " :tip="false" bg="d" icon="fas fa-trash-alt"/>
+                                        </td>
+
+                                    @endif
+
                                     <td class="td_action">
                                         @if( $appPuzzle->checkSoursClientFolder($row) == false and  $appPuzzle->checkBackupFolder($row)  )
-                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.Import',$row['id'])}}"
+                                            <x-admin.form.action-button url="{{route('admin.AppPuzzle.ImportClientData',$row['id'])}}"
                                                                         l="Import Files" :tip="false" bg="p" icon="fas fa-file-import"/>
                                         @endif
                                     </td>

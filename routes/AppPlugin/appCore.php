@@ -17,6 +17,9 @@ Route::get('/puzzle/Periodicals/', [AppPuzzleController::class, 'IndexPuzzle'])-
 Route::get('/puzzle/Tools/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Tools.IndexModel');
 Route::get('/puzzle/Client/', [AppPuzzleController::class, 'IndexPuzzle'])->name('AppPuzzle.Client.IndexModel');
 
+Route::get('/puzzle/Client/Import/{model}', [AppPuzzleController::class, 'ImportClientData'])->name('AppPuzzle.ImportClientData');
+Route::get('/puzzle/Client/Remove/{model}', [AppPuzzleController::class, 'RemoveClientData'])->name('AppPuzzle.RemoveClientData');
+Route::get('/puzzle/Client/Export/{model}', [AppPuzzleController::class, 'ExportClientData'])->name('AppPuzzle.ExportClientData');
 
 
 Route::get('/AppPuzzle/Copy/{model}', [AppPuzzleController::class, 'CopyModel'])->name('AppPuzzle.Export');
