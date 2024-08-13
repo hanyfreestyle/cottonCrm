@@ -9,6 +9,7 @@ class ClientAppPuzzleTree {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
+            'def' => self::treeClientData('def'),
             'hoover' => self::treeClientData('hoover'),
             'bookcaffe' => self::treeClientData('bookcaffe'),
             'vonza' => self::treeClientData('vonza'),

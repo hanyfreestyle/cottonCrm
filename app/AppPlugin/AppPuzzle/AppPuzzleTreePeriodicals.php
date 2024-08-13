@@ -31,18 +31,10 @@ class AppPuzzleTreePeriodicals {
             'migrations' => [
                 '2021_01_01_000002_create_periodicals_table.php',
             ],
-            'seeder' => [
-                'book_periodicals.sql',
-                'book_periodicals_release.sql',
-                'book_tags.sql',
-                'book_periodicals_notes.sql',
-                'book_tags_notes.sql',
-            ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['Periodicals.php'],
             'ComponentFolderClass' => ['AppPlugin/Crm/Book'],
             'ComponentFolderView' => ['app-plugin/crm/book'],
-            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 
