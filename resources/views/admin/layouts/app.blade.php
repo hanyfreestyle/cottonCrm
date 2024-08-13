@@ -6,50 +6,45 @@
     <title>{{config('adminConfig.title')}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
     @if(config('adminConfig.pace_progress') == true and config('adminConfig.preloader') == false)
-        <link rel="stylesheet" href="{{ defAdminAssets('plugins/pace-progress/themes/black/pace-theme-flat-top.css') }}">
+        {!! $MinifyTools->setAdmin()->MinifyCss('plugins/pace-progress/themes/black/pace-theme-flat-top.css',$minType,$reBuild) !!}
     @endif
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/flag-icon-css/css/flag-icon.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
-
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css','Seo',true) !!}
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/bs-stepper/css/bs-stepper.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/dropzone/min/dropzone.min.css') }}">
-    <link rel="stylesheet" href="{{ defAdminAssets('plugins/sweet/sweetalert2.min.css') }}">
-
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/fontawesome-free/css/all.min.css',"Web",$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/flag-icon-css/css/flag-icon.min.css',"Web",$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/daterangepicker/daterangepicker.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/icheck-bootstrap/icheck-bootstrap.min.css',"Web",$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',"Web",$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/select2/css/select2.min.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/bs-stepper/css/bs-stepper.min.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/dropzone/min/dropzone.min.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('plugins/sweet/sweetalert2.min.css',$minType,$reBuild) !!}
     @yield('StyleFile')
-
-    <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.css') }}">
-
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_admin.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/_def.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/card.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/form.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/product.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/chart.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/dataTable.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/table.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/infoDive.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/popupModal.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/user_follow.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/user_profile.css','Seo',true) !!}
-    {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/html/responsive.css','Seo',true) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/adminlte.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/custom_admin.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/_def.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/card.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/form.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/product.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/chart.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/dataTable.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/table.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/infoDive.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/popupModal.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/user_follow.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/user_profile.css',$minType,$reBuild) !!}
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/html/responsive.css',$minType,$reBuild) !!}
 
     @if( thisCurrentLocale() == 'ar')
-        <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/adminlte-rtl.css') }}">
-        <link rel="stylesheet" href="{{ defAdminAssets('rtl/css/custom.css') }}">
-        {!! (new \App\Helpers\MinifyTools)->setWebAssets('assets/admin/')->MinifyCss('css/custom_ar.css','Seo',true) !!}
+        {!! $MinifyTools->setAdmin()->MinifyCss('rtl/css/adminlte-rtl.css',$minType,$reBuild) !!}
+        {!! $MinifyTools->setAdmin()->MinifyCss('rtl/css/custom.css',$minType,$reBuild) !!}
+        {!! $MinifyTools->setAdmin()->MinifyCss('css/custom_ar.css',$minType,$reBuild) !!}
     @elseif( thisCurrentLocale() == 'en')
-        <link rel="stylesheet" href="{{ defAdminAssets('css/custom_en.css') }}">
+        {!! $MinifyTools->setAdmin()->MinifyCss('css/custom_en.css',$minType,$reBuild) !!}
     @endif
+
 </head>
 
 <body class="hold-transition {{ mainBodyStyle() }} {{sidebarCollapse()}} ">
@@ -100,95 +95,8 @@
 
 
 <script src="{{defAdminAssets('js/adminlte.min.js')}}"></script>
-<script src="{{defAdminAssets('js/custom_file.js') }}"></script>
 <script src="{{defAdminAssets('parsley/parsley.js')}}"></script>
-<script>
-    $(function () {
-        $('.DatePickers').daterangepicker({
-            singleDatePicker: true,
-            autoApply: true,
-            //autoUpdateInput: false,
-            // autoUpdateInput:true,
-            showDropdowns: true,
-            minYear: 2022,
-            maxYear: parseInt(moment().format('YYYY'), 10),
-
-        });
-
-        //Initialize Select2 Elements
-        $('.select2').select2()
-
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
-
-        //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
-        //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
-        //Money Euro
-        $('[data-mask]').inputmask()
-
-
-        //Date and time picker
-        $('#reservationdatetime').datetimepicker({icons: {time: 'far fa-clock'}});
-
-        //Date range picker
-        $('#reservation').daterangepicker()
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({
-            timePicker: true,
-            timePickerIncrement: 30,
-            locale: {
-                format: 'MM/DD/YYYY hh:mm A'
-            }
-        })
-        //Date range as a button
-        $('#daterange-btn').daterangepicker(
-            {
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment()
-            },
-            function (start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-            }
-        )
-
-        //Timepicker
-        $('#timepicker').datetimepicker({
-            format: 'LT'
-        })
-
-        //Bootstrap Duallistbox
-        $('.duallistbox').bootstrapDualListbox()
-
-        //Colorpicker
-        $('.my-colorpicker1').colorpicker()
-        //color picker with addon
-        $('.my-colorpicker2').colorpicker()
-
-        $('.my-colorpicker2').on('colorpickerChange', function (event) {
-            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-        })
-
-        $("input[data-bootstrap-switch]").each(function () {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
-
-    })
-
-</script>
-
-
+<script src="{{defAdminAssets('js/custom_file.js') }}"></script>
 @if(config('adminConfig.pace_progress') == '1' and config('adminConfig.preloader') == false)
     <script src="{{ defAdminAssets('plugins/pace-progress/pace.min.js') }}"></script>
 @endif

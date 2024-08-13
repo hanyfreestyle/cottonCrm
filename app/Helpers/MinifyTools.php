@@ -7,94 +7,108 @@ use Illuminate\Support\Facades\Storage;
 
 class MinifyTools {
 
-    public $setWebAssets ;
-    public $reBuild ;
+    public $setWebAssets;
+    public $setAdmin;
+    public $reBuild;
 
     public function __construct(
         $setWebAssets = 'assets/web/',
-
-    )
-    {
-        $this->setWebAssets = $setWebAssets ;
+        $setAdmin = 'assets/admin/',
+    ) {
+        $this->setWebAssets = $setWebAssets;
+        $this->setAdmin = $setAdmin;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     setnewFileName
-    public function setWebAssets($setWebAssets){
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function setWebAssets($setWebAssets) {
         $this->setWebAssets = $setWebAssets;
-        return $this ;
+        return $this;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function setAdmin($setAdmin = null) {
+        if($setAdmin){
+            $this->setWebAssets = $setAdmin;
+        }else{
+            $this->setWebAssets = $this->setAdmin;
+        }
+
+        return $this;
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function MinifyJs($url,$type='Seo',$reBuild=false){
-        $filePath = public_path($this->setWebAssets.$url) ;
-        if(file_exists($filePath)){
-            $fileUrl =  app('url')->asset($this->setWebAssets . $url);
-            $minifName = self::createMinifyJsFile($filePath,$reBuild);
-            $minifUrl = self::createMinifyUrl($filePath,$url) ;
+    public function MinifyJs($url, $type = 'Seo', $reBuild = false) {
+        $filePath = public_path($this->setWebAssets . $url);
+        if (file_exists($filePath)) {
+            $fileUrl = app('url')->asset($this->setWebAssets . $url);
+            $minifName = self::createMinifyJsFile($filePath, $reBuild);
+            $minifUrl = self::createMinifyUrl($filePath, $url);
 
-            if($type == 'Web'){
-                return '<script src="'.$fileUrl .'"></script>';
-            }elseif ($type == 'SeoWeb'){
+            if ($type == 'Web') {
+                return '<script src="' . $fileUrl . '"></script>';
+            } elseif ($type == 'SeoWeb') {
                 $content = file_get_contents($filePath);
-                return  '<script>'.$content.'</script>' ;
-            }elseif($type == 'WebMini'){
-                return '<script src="'.$minifUrl .'"></script>';
-            }elseif ($type == 'Seo'){
+                return '<script>' . $content . '</script>';
+            } elseif ($type == 'WebMini') {
+                return '<script src="' . $minifUrl . '"></script>';
+            } elseif ($type == 'Seo') {
                 $content = file_get_contents($minifName);
                 return '<script>' . $content . '</script>';
             }
-        }else{
+        } else {
             abort(411);
         }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   createMinifyCSS
-    public function createMinifyJsFile($filePath,$reBuild){
+    public function createMinifyJsFile($filePath, $reBuild) {
         $fileDir = File::dirname($filePath);
         $fileName = File::basename($filePath);
 
-        $minifyDir = $fileDir."/min" ;
-        $minifName = $minifyDir."/".$fileName;
+        $minifyDir = $fileDir . "/min";
+        $minifName = $minifyDir . "/" . $fileName;
 
-        if(!File::isDirectory($minifyDir)){
+        if (!File::isDirectory($minifyDir)) {
             File::makeDirectory($minifyDir, 0777, true, true);
-            File::put($minifyDir."/.gitignore","*"."\n"."!.gitignore");
+            File::put($minifyDir . "/.gitignore", "*" . "\n" . "!.gitignore");
         }
 
-        if(!file_exists($minifName) or $reBuild == true ){
+        if (!file_exists($minifName) or $reBuild == true) {
             $content = file_get_contents($filePath);
             $content = self::compress_js($content);
-            File::put($minifName,$content);
+            File::put($minifName, $content);
         }
 
-        return $minifName ;
+        return $minifName;
     }
 
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function MinifyCss($url,$type='Seo',$reBuild=false){
-        $filePath = public_path($this->setWebAssets.$url) ;
+    public function MinifyCss($url, $type = 'Seo', $reBuild = false) {
+        $filePath = public_path($this->setWebAssets . $url);
 //        dd($filePath);
-        if(file_exists($filePath)){
-            $fileUrl =  app('url')->asset($this->setWebAssets . $url);
+        if (file_exists($filePath)) {
+            $fileUrl = app('url')->asset($this->setWebAssets . $url);
 
-            $minifName = self::createMinifyCSSFile($filePath,$reBuild);
-            $minifUrl = self::createMinifyUrl($filePath,$url) ;
+            $minifName = self::createMinifyCSSFile($filePath, $reBuild);
+            $minifUrl = self::createMinifyUrl($filePath, $url);
 
-            if($type == 'Web'){
+            if ($type == 'Web') {
                 return '<link rel="stylesheet" href="' . $fileUrl . '">';
-            }elseif($type == 'WebMini'){
+            } elseif ($type == 'WebMini') {
                 return '<link rel="stylesheet" href="' . $minifUrl . '">';
-            }elseif ($type == 'Seo'){
+            } elseif ($type == 'Seo') {
                 $content = file_get_contents($minifName);
-                return  '<style>'.$content.'</style>' ;
+                return '<style>' . $content . '</style>';
             }
-        }else{
+        } else {
             abort(411);
         }
     }
@@ -103,40 +117,40 @@ class MinifyTools {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   createMinifyCSS
-    public function createMinifyCSSFile($filePath,$reBuild){
+    public function createMinifyCSSFile($filePath, $reBuild) {
         $fileDir = File::dirname($filePath);
         $fileName = File::basename($filePath);
 
-        $minifyDir = $fileDir."/min" ;
-        $minifName = $minifyDir."/".$fileName;
+        $minifyDir = $fileDir . "/min";
+        $minifName = $minifyDir . "/" . $fileName;
 
-        if(!File::isDirectory($minifyDir)){
+        if (!File::isDirectory($minifyDir)) {
             File::makeDirectory($minifyDir, 0777, true, true);
-            File::put($minifyDir."/.gitignore","*"."\n"."!.gitignore");
+            File::put($minifyDir . "/.gitignore", "*" . "\n" . "!.gitignore");
         }
 
-        if(!file_exists($minifName) or $reBuild == true ){
+        if (!file_exists($minifName) or $reBuild == true) {
             $content = file_get_contents($filePath);
             $content = self::replacePath($content);
             $content = self::compress_css($content);
-            File::put($minifName,$content);
+            File::put($minifName, $content);
         }
 
-        return $minifName ;
+        return $minifName;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #    createMinifyUrl
-    public function createMinifyUrl($filePath,$url){
+    public function createMinifyUrl($filePath, $url) {
         $fileName = File::basename($filePath);
-        $newName = str_replace($fileName,'min/'.$fileName,$url);
-        return  app('url')->asset($this->setWebAssets . $newName);
+        $newName = str_replace($fileName, 'min/' . $fileName, $url);
+        return app('url')->asset($this->setWebAssets . $newName);
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    public function replacePath($content){
+    public function replacePath($content) {
         $WebAssets = app('url')->asset($this->setWebAssets);
         $search = [
             "../img/flags.webp?1",
@@ -146,19 +160,19 @@ class MinifyTools {
             "../images/",
         ];
         $replace = [
-            $WebAssets."/intlTelInput/img/flags.webp?1",
-            $WebAssets."/intlTelInput/img/flags@2x.webp?1",
-            $WebAssets."/img/error.svg",
+            $WebAssets . "/intlTelInput/img/flags.webp?1",
+            $WebAssets . "/intlTelInput/img/flags@2x.webp?1",
+            $WebAssets . "/img/error.svg",
 //            $WebAssets."/images/svg/lds-sw.svg",
-             $WebAssets."/images/",
+            $WebAssets . "/images/",
         ];
-        $content =  str_replace($search,$replace,$content);
-        return $content ;
+        $content = str_replace($search, $replace, $content);
+        return $content;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
-    protected function insertSemicolon($value){
+    protected function insertSemicolon($value) {
         return preg_replace([
             '#^[A-Za-z\s\-]+:.+(?<!({|}|;))$#m',
             '#^([A-Za-z\s\-]+):(.+)[;]$(\n+|\s+){#m',
@@ -169,7 +183,7 @@ class MinifyTools {
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  replace
-    public function compress_css($value, $allowInsertSemicolon = true){
+    public function compress_css($value, $allowInsertSemicolon = true) {
         if ($allowInsertSemicolon) {
             $value = $this->insertSemicolon($value);
         }
@@ -214,7 +228,7 @@ class MinifyTools {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # compress_js
     public function compress_js($input) {
-        if(trim($input) === "") return $input;
+        if (trim($input) === "") return $input;
         return preg_replace(
             array(
                 // Remove comment(s)

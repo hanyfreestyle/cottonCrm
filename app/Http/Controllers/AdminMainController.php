@@ -7,6 +7,7 @@ use App\AppCore\UploadFilter\Models\UploadFilter;
 
 
 use App\Helpers\AdminHelper;
+use App\Helpers\MinifyTools;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
 
 use App\Http\Requests\admin\ConfigModelUpdateRequest;
@@ -32,6 +33,14 @@ class AdminMainController extends DefaultMainController {
 
         parent::__construct();
         $this->middleware('auth');
+
+        $this->MinifyTools = new MinifyTools();
+        $this->minType  = "Seo";
+        $this->reBuild  = true;
+        View::share('MinifyTools', $this->MinifyTools);
+        View::share('minType', $this->minType);
+        View::share('reBuild', $this->reBuild);
+
         $this->StopeCash = $StopeCash;
 
         View::share('filterTypes', UploadFilter::cash_UploadFilter());

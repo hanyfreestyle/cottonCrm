@@ -4,6 +4,7 @@ namespace App\AppPlugin\AppPuzzle;
 
 
 use App\AppCore\Menu\AdminMenuController;
+use App\Helpers\MinifyTools;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Jenssegers\Agent\Agent;
@@ -25,6 +26,14 @@ class AppPuzzleFun {
 
         $this->agent = new Agent();
         View::share('agent', $this->agent);
+
+        $this->MinifyTools = new MinifyTools();
+        $this->minType  = "Seo";
+        $this->reBuild  = true;
+        View::share('MinifyTools', $this->MinifyTools);
+        View::share('minType', $this->minType);
+        View::share('reBuild', $this->reBuild);
+
 
     }
 
