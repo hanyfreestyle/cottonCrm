@@ -228,11 +228,6 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             ['database/migrations/' => '2019_12_14_000005_create_def_photos_table.php'],
             ['database/migrations/' => '2019_12_14_000006_create_upload_filters_table.php'],
             ['database/seeders/' => 'DatabaseSeeder.php'],
-            ['public/db/' . $clientfolder => 'config_def_photos.sql'],
-            ['public/db/' . $clientfolder => 'config_setting.sql'],
-            ['public/db/' . $clientfolder => 'config_setting_translations.sql'],
-            ['public/db/' . $clientfolder => 'config_upload_filter.sql'],
-            ['public/db/' . $clientfolder => 'config_upload_filter_sizes.sql'],
         ];
 
         foreach ($fileNames as $fileName) {

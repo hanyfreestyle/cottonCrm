@@ -258,8 +258,10 @@ trait DataFileTraits{
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
 
-        SeedDbFile(ConfigData::class, 'config_data.sql');
-        SeedDbFile(ConfigDataTranslation::class, 'config_data_translations.sql');
+        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+            SeedDbFile(ConfigData::class, 'config_data.sql');
+            SeedDbFile(ConfigDataTranslation::class, 'config_data_translations.sql');
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {
             SeedDbFile(Country::class, 'data_countries.sql', false);
@@ -270,7 +272,6 @@ trait DataFileTraits{
             SeedDbFile(City::class, 'data_city.sql');
             SeedDbFile(CityTranslation::class, 'data_city_translations.sql');
         }
-
 
         if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
             SeedDbFile(Area::class, 'data_area.sql');

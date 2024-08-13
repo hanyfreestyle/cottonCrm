@@ -49,13 +49,8 @@ class AppPuzzleTreeConfig {
             'migrations' => [
                 '2019_12_14_000003_create_meta_tags_table.php',
             ],
-            'seeder' => [
-                'config_meta_tag.sql',
-                'config_meta_tag_translations.sql',
-            ],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['configMeta.php'],
-            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 
@@ -109,7 +104,7 @@ class AppPuzzleTreeConfig {
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['configApp.php'],
             'photoFolder' => ['app-photo'],
-            'ClientFolder' => config('adminConfig.app_folder'),
+
 
         ];
     }
@@ -152,12 +147,10 @@ class AppPuzzleTreeConfig {
             'migrations' => [
                 '2019_12_14_000016_create_site_maps_table.php',
             ],
-            'seeder' => [
-                'config_site_robots.sql',
-            ],
+
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['siteMap.php'],
-            'ClientFolder' => config('adminConfig.app_folder'),
+
         ];
     }
 

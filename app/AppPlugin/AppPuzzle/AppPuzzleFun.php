@@ -17,7 +17,7 @@ class AppPuzzleFun {
 
     function __construct() {
         $this->mainFolder = "D:\_AppPluginTest/";
-        $this->mainFolder = "D:\_AppPlugin/";
+        $this->mainFolder = "D:\_appPlugin202408/";
         $this->folderDate = null;
 
         $adminMenu = AdminMenuController::CashAdminMenu();

@@ -32,13 +32,10 @@ class AppPuzzleTreeCrmHoover {
             'migrations' => [
                 '2021_01_01_000002_create_crm_tickets_table.php',
             ],
-            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['ticket.php'],
             'ComponentFolderClass' => ['AppPlugin/Crm/Ticket'],
             'ComponentFolderView' => ['app-plugin/crm/ticket'],
-            'ClientFolder' => config('adminConfig.app_folder'),
-
         ];
     }
 
@@ -70,12 +67,11 @@ class AppPuzzleTreeCrmHoover {
 //            'migrations' => [
 //                '2021_01_01_000002_create_crm_tickets_table.php',
 //            ],
-//            'seeder' => ['crm_ticket.sql', 'crm_ticket_des.sql'],
+
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['leads.php'],
             'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
             'ComponentFolderView' => ['app-plugin/crm/leads'],
-            'ClientFolder' => config('adminConfig.app_folder'),
         ];
     }
 
