@@ -81,6 +81,104 @@ if (!function_exists('Update_createDirectory')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('LoadConfigName')) {
+    function LoadConfigName($row, $val) {
+        if (is_array($row)) {
+            $row = collect($row);
+        }
+        return $row->where('id', $val)->first()->name ?? '';
+    }
+}
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('printCategoryName')) {
+    function printCategoryName($key, $row, $url) {
+        if ($row->children_count > 0) {
+            if (isset($row->translate($key)->name)) {
+                return '<a href="' . route($url, $row->id) . '">' . $row->translate($key)->name . ' (' . $row->children_count . ')</a>';
+            } else {
+                return null;
+            }
+        } else {
+            return $row->translate($key)->name ?? '';
+        }
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('DefCategoryTextName')) {
+    function DefCategoryTextName($key) {
+        if ($key) {
+            $send = $key;
+        } else {
+            $send = __('admin/def.category_name');
+        }
+        return $send;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getRoleName')) {
+    function getRoleName() {
+        if (thisCurrentLocale() == 'ar') {
+            $sendName = "name_ar";
+        } else {
+            $sendName = "name_en";
+        }
+        return $sendName;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getDefModelConfig')) {
+
+    function getDefModelConfig() {
+        $defPostConfig = [
+            'TableCategory' => true,
+//            'TableTags' => false,
+//            'TableTagsOnFly' => false,
+//            'TableReview' => false,
+//
+//            'TableMorePhotos' => true,
+//            'MorePhotosEdit' => true,
+//
+//            'categoryTree' => false,
+//            'categoryDeep' => 2,
+//            'categoryPhotoAdd' => false,
+//            'categoryPhotoView' => false,
+//            'categoryIcon' => false,
+//            'categoryDelete' => false,
+//            'categorySort' => false,
+//            'categoryEditor' => false,
+//            'categoryDes' => false,
+//            'categorySeo' => false,
+//            'categorySlug' => true,
+//            'categoryShowLang' => true,
+//            'categoryFullRow' => false,
+//
+//
+//            'postPublishedDate' => false,
+//            'postPhotoAdd' => false,
+//            'postPhotoView' => false,
+//            'postFullRow' => false,
+//            'postShowLang' => true,
+//            'postEditor' => true,
+//            'postDes' => true,
+//            'postSeo' => false,
+//            'postSlug' => false,
+//            'postYoutube' => false,
+//            'postWebSlug' => null,
+//            'postAddBrand' => false,
+        ];
+
+        return $defPostConfig;
+    }
+}
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('loadConfigFromJson')) {
     function loadConfigFromJson($catId) {
         $arr = array();
@@ -98,32 +196,33 @@ if (!function_exists('loadConfigFromJson')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('LoadConfigName')) {
-    function LoadConfigName($row, $val) {
-        if (is_array($row)) {
-            $row = collect($row);
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getConfigFromJson')) {
+    function getConfigFromJson($fileName) {
+
+        $folder = config('adminConfig.app_folder');
+        $defConfig = getDefModelConfig();
+        $destinationFolder = base_path('config_' . $folder);
+        $filePath = base_path('config_' . $folder . '/' . $fileName . '.json');
+
+        if (!File::isFile($filePath)) {
+            if (!File::isDirectory($destinationFolder)) {
+                File::makeDirectory($destinationFolder, 0777, true, true);
+            }
+            $fh = fopen($filePath, 'w') or die("can't open file");
+            $defConfigjson = json_encode($defConfig);
+            fwrite($fh, $defConfigjson);
+            fclose($fh);
         }
-        return $row->where('id', $val)->first()->name ?? '';
+
+        $configJson = json_decode(file_get_contents($filePath), true);
+
+
+
+        return $configJson;
     }
 }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('getRoleName')) {
-    function getRoleName() {
-        if (thisCurrentLocale() == 'ar') {
-            $sendName = "name_ar";
-        } else {
-            $sendName = "name_en";
-        }
-        return $sendName;
-    }
-}
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

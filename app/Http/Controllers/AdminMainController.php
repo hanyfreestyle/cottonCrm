@@ -445,9 +445,26 @@ class AdminMainController extends DefaultMainController {
         return $data;
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function saveTranslationMain($saveTranslation, $key, $request) {
+        $saveTranslation->locale = $key;
+        $saveTranslation->name = $request->input($key . '.name');
+        $saveTranslation->des = $request->input($key . '.des');
+
+        if (isset($request[$key]['g_title']) and $request->input($key . '.g_title') == null) {
+            $saveTranslation->g_title = $request->input($key . '.name');
+        } else {
+            $saveTranslation->g_title = $request->input($key . '.g_title');
+        }
+        if (isset($request[$key]['g_des']) and $request->input($key . '.g_des') == null) {
+            $saveTranslation->g_des = AdminHelper::seoDesClean($request->input($key . '.des'));
+        } else {
+            $saveTranslation->g_des = $request->input($key . '.g_des');
+        }
+        return $saveTranslation;
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -494,23 +511,7 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # saveTranslation
-//    public function saveTranslationMain($saveTranslation, $key, $request) {
-//        $saveTranslation->locale = $key;
-//        $saveTranslation->name = $request->input($key . '.name');
-//        $saveTranslation->des = $request->input($key . '.des');
-//
-//        if (isset($request[$key]['g_title']) and $request->input($key . '.g_title') == null) {
-//            $saveTranslation->g_title = $request->input($key . '.name');
-//        } else {
-//            $saveTranslation->g_title = $request->input($key . '.g_title');
-//        }
-//        if (isset($request[$key]['g_des']) and $request->input($key . '.g_des') == null) {
-//            $saveTranslation->g_des = AdminHelper::seoDesClean($request->input($key . '.des'));
-//        } else {
-//            $saveTranslation->g_des = $request->input($key . '.g_des');
-//        }
-//        return $saveTranslation;
-//    }
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

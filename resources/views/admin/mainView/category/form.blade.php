@@ -19,10 +19,11 @@
     <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
             <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="config" value="{{json_encode($Config)}}">
+                <input type="text" name="config" value="{{json_encode($Config)}}">
                 <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">
                 @csrf
-                @if($Config['categoryTree'])
+
+                @if(IsConfig($Config, 'categoryTree'))
                     <div class="row">
                         <x-admin.form.select-category name="parent_id" label="{{__('admin/form.sel_categories')}}"
                                                       :sendvalue="old('parent_id',$rowData->parent_id)" :req="false" col="col-lg-6 "
@@ -34,9 +35,9 @@
 
                     @foreach ( $LangAdd as $key=>$lang )
                         <x-admin.lang.meta-tage-seo :lang-add="$LangAdd" :viewtype="$pageData['ViewType']" :row="$rowData" :key="$key"
-                                                    :full-row="$Config['categoryFullRow']" :slug="$Config['categorySlug']" :seo="$Config['categorySeo']"
-                                                    :des="$Config['categoryDes']" :showlang="$Config['categoryShowLang']"
-                                                    :def-name="$Config['LangCategoryDefName']" :def-des="$Config['LangCategoryDefDes']"/>
+                                                    :full-row="IsConfig($Config, 'categoryFullRow')" :slug="IsConfig($Config, 'categorySlug')" :seo="IsConfig($Config, 'categorySeo')"
+                                                    :des="IsConfig($Config, 'categoryDes')" :showlang="IsConfig($Config, 'categoryShowLang')"
+                                                    :def-name="IsConfig($Config, 'LangCategoryDefName')" :def-des="IsConfig($Config, 'LangCategoryDefDes')"/>
                     @endforeach
                 </div>
 
@@ -47,7 +48,7 @@
 
                 </div>
                 <hr>
-                @if($Config['categoryPhotoAdd'])
+                @if(IsConfig($Config, 'categoryPhotoAdd'))
                     <div class="row">
                         <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="6"/>
                         @if($Config['categoryIcon'])

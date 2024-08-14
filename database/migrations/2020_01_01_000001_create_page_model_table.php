@@ -11,7 +11,7 @@ return new class extends Migration {
 
         $Config = PageConfigTraits::DbConfig();
 
-        if ($Config['TableCategory']) {
+        if (IsConfig($Config, 'TableCategory')) {
             Schema::create('page_categories', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('parent_id')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration {
                 $table->bigIncrements('id');
                 $table->bigInteger('category_id')->unsigned();
                 $table->string('locale')->index();
-                $table->string('slug');
+                $table->string('slug')->nullable();
                 $table->string('name')->nullable();
                 $table->text('des')->nullable();
                 $table->string('g_title')->nullable();
@@ -71,7 +71,7 @@ return new class extends Migration {
             $table->foreign('page_id')->references('id')->on('page_pages')->onDelete('cascade');
         });
 
-        if ($Config['TableReview']) {
+        if (IsConfig($Config, 'TableReview')) {
             Schema::create('page_review', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->bigInteger('user_id')->unsigned();
@@ -82,7 +82,7 @@ return new class extends Migration {
         }
 
 
-        if ($Config['TableCategory']) {
+        if (IsConfig($Config, 'TableCategory')) {
             Schema::create('pagecategory_page', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->unsignedBiginteger('category_id');
@@ -97,7 +97,7 @@ return new class extends Migration {
             });
         }
 
-        if ($Config['TableMorePhotos']) {
+        if (IsConfig($Config, 'TableMorePhotos')) {
             Schema::create('page_photos', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->bigInteger('page_id')->unsigned();
@@ -121,7 +121,7 @@ return new class extends Migration {
         }
 
 
-        if ($Config['TableTags']) {
+        if (IsConfig($Config, 'TableTags')) {
 
             Schema::create('page_tags', function (Blueprint $table) {
                 $table->bigIncrements('id');

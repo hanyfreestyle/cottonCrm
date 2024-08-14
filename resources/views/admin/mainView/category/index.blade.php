@@ -8,7 +8,7 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
     @can($PrefixRole."_edit")
-        @if($Config['categorySort'])
+        @if(IsConfig($Config, 'categorySort'))
             <x-admin.hmtl.section>
                 <div class="row mb-3">
                     <div class="col-12 dir_button">
@@ -20,7 +20,7 @@
     @endcan
 
     <x-admin.hmtl.section>
-        @if($Config['categoryTree'])
+        @if(IsConfig($Config, 'categoryTree'))
             <ol class="breadcrumb breadcrumb_menutree">
                 <li class="breadcrumb-item"><a href="{{route($PrefixRoute.'.index_Main')}}">{{__('admin/def.category_main')}}</a></li>
                 @if($pageData['SubView'])
@@ -39,14 +39,14 @@
                         <thead>
                         <tr>
                             <th class="TD_20">#</th>
-                            @if($Config['categoryPhotoView'])
+                            @if(IsConfig($Config, 'categoryPhotoView'))
                                 <th class="TD_20"></th>
                             @endif
-                            <th>{{DefCategoryTextName($Config['LangCategoryDefName'])}}</th>
+                            <th>{{DefCategoryTextName(IsConfig($Config, 'LangCategoryDefName',null))}}</th>
                             <th class="TD_20"></th>
                             <x-admin.table.action-but po="top" type="addLang"/>
                             <x-admin.table.action-but po="top" type="edit"/>
-                            @if($Config['categoryDelete'])
+                            @if(IsConfig($Config, 'categoryDelete'))
                                 <x-admin.table.action-but po="top" type="delete"/>
                             @endif
                         </tr>
@@ -55,14 +55,14 @@
                         @foreach($rowData as $row)
                             <tr>
                                 <td>{{$row->id}}</td>
-                                @if($Config['categoryPhotoView'])
+                                @if(IsConfig($Config, 'categoryPhotoView'))
                                     <td class="tc">{!! TablePhoto($row,'photo') !!} </td>
                                 @endif
-                                <td>{!! printCategoryName($Config['categoryDefLang'],$row,$PrefixRoute.".SubCategory") !!}</td>
+                                <td>{!! printCategoryName(IsArr($Config,'categoryDefLang',null),$row,$PrefixRoute.".SubCategory") !!}</td>
                                 <td>{!! is_active($row->is_active) !!}</td>
                                 <x-admin.table.action-but type="addLang" :row="$row"/>
                                 <x-admin.table.action-but type="edit" :row="$row"/>
-                                @if($Config['categoryDelete'])
+                                @if(IsConfig($Config, 'categoryDelete'))
                                     <x-admin.table.action-but type="delete" :row="$row"/>
                                 @endif
                             </tr>

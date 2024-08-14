@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\View;
 trait CategoryTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryIndex
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryIndex($id = null) {
-        if (!$this->TableCategory) {
+        if (!IsConfig($this->Config, 'TableCategory')) {
             abort(403);
         }
 
@@ -23,7 +23,7 @@ trait CategoryTraits {
         $pageData['SubView'] = false;
         $trees = [];
 
-        if ($this->categoryTree) {
+        if (IsConfig($this->Config, 'categoryTree')) {
             if (Route::currentRouteName() == $this->PrefixRoute . '.index_Main') {
                 $rowData = self::getSelectQuery($this->model->def()->where('parent_id', null));
             } elseif (Route::currentRouteName() == $this->PrefixRoute . '.SubCategory') {
@@ -45,9 +45,9 @@ trait CategoryTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryCreate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryCreate() {
-        if (!$this->TableCategory) {
+        if (!IsConfig($this->Config, 'TableCategory')) {
             abort(403);
         }
 
@@ -67,7 +67,7 @@ trait CategoryTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     CategoryEdit
     public function CategoryEdit($id) {
-        if (!$this->TableCategory) {
+        if (!IsConfig($this->Config, 'TableCategory')) {
             abort(403);
         }
 
@@ -85,7 +85,7 @@ trait CategoryTraits {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   SetCatTree
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function SetCatTree($categoryTree, $deep) {
         if ($categoryTree) {
             if (Route::currentRouteName() == $this->PrefixRoute . '.edit') {
@@ -109,7 +109,7 @@ trait CategoryTraits {
             $saveData = $this->model->findOrNew($id);
         } else {
             $saveData = $this->model->findOrFail($id);
-            if ($this->categoryTree == true) {
+            if (IsConfig($this->Config, 'categoryTree')) {
                 $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
                 if (in_array($request->input('parent_id'), $trees)) {
                     return back()->with('data_not_save', "");
@@ -117,49 +117,51 @@ trait CategoryTraits {
             }
         }
 
+
+        if (IsConfig($this->Config, 'categoryTree')) {
+            if ($request->input('parent_id') != 0 and $request->input('parent_id') != $saveData->id) {
+                $saveData->parent_id = $request->input('parent_id');
+                $saveData->deep = count($this->model->find($request->input('parent_id'))->ancestorsAndSelf()->pluck('id')->toArray());
+            }
+        }
+        $saveData->is_active = intval((bool)$request->input('is_active'));
+        $saveData->save();
+
+        self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
+
+        if (IsConfig($this->Config, 'categoryIcon')) {
+            $saveImgData_icon = new PuzzleUploadProcess();
+            $saveImgData_icon->setUploadDirIs($this->UploadDirIs . '/' . $saveData->id);
+            $saveImgData_icon->setnewFileName($request->input('en.slug'));
+            $saveImgData_icon->setfileUploadName('icon');
+            $saveImgData_icon->UploadOne($request, "IconFilter");
+            $saveData = AdminHelper::saveAndDeletePhotoByOne($saveData, $saveImgData_icon, 'icon');
+            $saveData->save();
+        }
+
+        $addLang = json_decode($request->add_lang);
+        foreach ($addLang as $key => $lang) {
+            $dbName = $this->translationdb;
+            $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
+            $saveTranslation->$dbName = $saveData->id;
+            $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
+            $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+            $saveTranslation->save();
+        }
+
+        if (IsConfig($this->Config, 'categoryTree')) {
+            if ($saveData->is_active == false) {
+                $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
+                if (count($trees) > 0) {
+                    $this->model->whereIn("id", $trees)->update(['is_active' => 0]);
+                }
+            }
+        }
+
+
         try {
             DB::transaction(function () use ($request, $saveData) {
 
-
-                if ($this->categoryTree == true) {
-                    if ($request->input('parent_id') != 0 and $request->input('parent_id') != $saveData->id) {
-                        $saveData->parent_id = $request->input('parent_id');
-                        $saveData->deep = count($this->model->find($request->input('parent_id'))->ancestorsAndSelf()->pluck('id')->toArray());
-                    }
-                }
-                $saveData->is_active = intval((bool)$request->input('is_active'));
-                $saveData->save();
-
-                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
-
-                if ($this->categoryIcon) {
-                    $saveImgData_icon = new PuzzleUploadProcess();
-                    $saveImgData_icon->setUploadDirIs($this->UploadDirIs . '/' . $saveData->id);
-                    $saveImgData_icon->setnewFileName($request->input('en.slug'));
-                    $saveImgData_icon->setfileUploadName('icon');
-                    $saveImgData_icon->UploadOne($request, "IconFilter");
-                    $saveData = AdminHelper::saveAndDeletePhotoByOne($saveData, $saveImgData_icon, 'icon');
-                    $saveData->save();
-                }
-
-                $addLang = json_decode($request->add_lang);
-                foreach ($addLang as $key => $lang) {
-                    $dbName = $this->translationdb;
-                    $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
-                    $saveTranslation->$dbName = $saveData->id;
-                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
-                    $saveTranslation->save();
-                }
-
-                if ($this->categoryTree) {
-                    if ($saveData->is_active == false) {
-                        $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
-                        if (count($trees) > 0) {
-                            $this->model->whereIn("id", $trees)->update(['is_active' => 0]);
-                        }
-                    }
-                }
 
             });
 
@@ -173,12 +175,12 @@ trait CategoryTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategorySort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategorySort($id) {
-        if (!$this->categorySort) {
+
+        if (!IsConfig($this->Config, 'TableCategory')) {
             abort(403);
         }
-
         $pageData = $this->pageData;
 
         $pageData['ViewType'] = "List";

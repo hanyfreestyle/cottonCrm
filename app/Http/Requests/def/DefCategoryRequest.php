@@ -17,7 +17,8 @@ class DefCategoryRequest extends FormRequest {
         $data = $this->toArray();
         $addLang = json_decode($data['add_lang']);
         $config = json_decode($data['config']);
-        if ($config->categorySlug) {
+
+        if ($config->categorySlug ?? false) {
             foreach ($addLang as $key => $lang) {
                 data_set($data, $key . '.slug', AdminHelper::Url_Slug($data[$key]['slug']));
             }
@@ -30,7 +31,7 @@ class DefCategoryRequest extends FormRequest {
         $addLang = json_decode($request->add_lang);
         $Config = json_decode($request->config);
 
-        if ($Config->categorySlug) {
+        if ($Config->categorySlug ?? false) {
             foreach ($addLang as $key => $lang) {
                 $request->merge([$key . '.slug' => AdminHelper::Url_Slug($request[$key]['slug'])]);
             }
@@ -45,9 +46,9 @@ class DefCategoryRequest extends FormRequest {
         ];
 
         $rulesConfig = [
-            'slug' => $Config->categorySlug,
-            'des' => $Config->categoryDes,
-            'seo' => $Config->categorySeo,
+            'slug' => $Config->categorySlug ?? false,
+            'des' => $Config->categoryDes ?? false,
+            'seo' => $Config->categorySeo ?? false,
         ];
 
         $rules += AdminMainController::FormRequestSeo($id, $addLang, $Config->DbCategoryTrans, $Config->DbCategoryForeign, $rulesConfig);

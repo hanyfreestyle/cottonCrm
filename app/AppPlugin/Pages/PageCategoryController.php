@@ -40,9 +40,10 @@ class PageCategoryController extends AdminMainController {
 
         $this->Config = self::LoadConfig();
 
-        if ($this->TableCategory) {
-            self::SetCatTree($this->Config['categoryTree'], $this->Config['categoryDeep']);
+        if (IsConfig($this->Config, 'TableCategory')) {
+            self::SetCatTree(IsConfig($this->Config, 'categoryTree'), IsConfig($this->Config, 'categoryDeep',1));
         }
+
         View::share('Config', $this->Config);
 
         $sendArr = [
@@ -51,10 +52,9 @@ class PageCategoryController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'configArr' => [
-                "editor" => $this->categoryEditor,
-                'iconfilterid' => $this->categoryIcon,
-                'filterid' => $this->categoryPhotoAdd,
-
+                "editor" => IsConfig($this->Config, 'categoryEditor'),
+                'iconfilterid' => IsConfig($this->Config, 'categoryIcon'),
+                'filterid' => IsConfig($this->Config, 'categoryPhotoAdd'),
             ],
             'yajraTable' => false,
             'AddLang' => true,
@@ -70,7 +70,7 @@ class PageCategoryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryStoreUpdate(DefCategoryRequest $request, $id = 0) {
         return self::TraitsCategoryStoreUpdate($request, $id);
     }
@@ -117,7 +117,7 @@ class PageCategoryController extends AdminMainController {
         $mainMenu->roleView = "Pages_view";
         $mainMenu->save();
 
-        if ($Config['TableCategory']) {
+        if (IsConfig($Config, 'TableCategory')) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
             $subMenu->sel_routs = setActiveRoute("PageCategory");
@@ -148,7 +148,7 @@ class PageCategoryController extends AdminMainController {
         $subMenu->icon = "fas fa-plus-circle";
         $subMenu->save();
 
-        if ($Config['TableTags']) {
+        if (IsConfig($Config, 'TableTags')) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
             $subMenu->sel_routs = "PageTags.index|PageTags.edit|PageTags.create|PageTags.config";

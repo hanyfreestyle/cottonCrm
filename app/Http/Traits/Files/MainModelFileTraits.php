@@ -123,8 +123,8 @@ trait MainModelFileTraits {
 //        }
 //
         if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-            SeedDbFile(CrmCustomers::class, 'crm_customers.sql');
-            SeedDbFile(CrmCustomersAddress::class, 'crm_customers_address.sql');
+//            SeedDbFile(CrmCustomers::class, 'crm_customers.sql');
+//            SeedDbFile(CrmCustomersAddress::class, 'crm_customers_address.sql');
 
 //            $this->call(PageSeeder::class);
         }

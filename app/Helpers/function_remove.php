@@ -36,16 +36,7 @@ if (!function_exists('printLableKey')) {
         return $send;
     }
 }
-if (!function_exists('DefCategoryTextName')) {
-    function DefCategoryTextName($key) {
-        if ($key) {
-            $send = $key;
-        } else {
-            $send = __('admin/def.category_name');
-        }
-        return $send;
-    }
-}
+
 if (!function_exists('isSetKeyForLang')) {
     function isSetKeyForLang($key) {
         if (isset($_GET['key']) and $_GET['key'] == $key) {
@@ -57,20 +48,7 @@ if (!function_exists('isSetKeyForLang')) {
     }
 }
 
-if (!function_exists('printCategoryName')) {
-    function printCategoryName($key, $row, $url) {
 
-        if ($row->children_count > 0) {
-            if (isset($row->translate($key)->name)) {
-                return '<a href="' . route($url, $row->id) . '">' . $row->translate($key)->name . ' (' . $row->children_count . ')</a>';
-            } else {
-                return null;
-            }
-        } else {
-            return $row->translate($key)->name ?? '';
-        }
-    }
-}
 if (!function_exists('ReportBlockPrint')) {
     function ReportBlockPrint($Col, $Titel, $Vall, $Icon = "", $Color = "bg-danger") {
         echo '<div class="' . $Col . ' report_widget">';
