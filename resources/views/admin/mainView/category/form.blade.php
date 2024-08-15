@@ -19,11 +19,11 @@
     <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
             <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="config" value="{{json_encode($Config)}}">
+                <input type="hidden" name="config" value="{{json_encode($config)}}">
                 <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">
                 @csrf
 
-                @if(IsConfig($Config, 'categoryTree'))
+                @if(IsConfig($config, 'categoryTree'))
                     <div class="row">
                         <x-admin.form.select-category name="parent_id" label="{{__('admin/form.sel_categories')}}"
                                                       :sendvalue="old('parent_id',$rowData->parent_id)" :req="false" col="col-lg-6 "
@@ -35,9 +35,9 @@
 
                     @foreach ( $LangAdd as $key=>$lang )
                         <x-admin.lang.meta-tage-seo :lang-add="$LangAdd" :viewtype="$pageData['ViewType']" :row="$rowData" :key="$key"
-                                                    :full-row="IsConfig($Config, 'categoryFullRow')" :slug="IsConfig($Config, 'categorySlug')" :seo="IsConfig($Config, 'categorySeo')"
-                                                    :des="IsConfig($Config, 'categoryDes')" :showlang="IsConfig($Config, 'categoryShowLang')"
-                                                    :def-name="IsConfig($Config, 'LangCategoryDefName')" :def-des="IsConfig($Config, 'LangCategoryDefDes')"/>
+                                                    :full-row="IsConfig($config, 'categoryFullRow')" :slug="IsConfig($config, 'categorySlug')" :seo="IsConfig($config, 'categorySeo')"
+                                                    :des="IsConfig($config, 'categoryDes')" :showlang="IsConfig($config, 'categoryShowLang')"
+                                                    :def-name="IsConfig($config, 'LangCategoryDefName')" :def-des="IsConfig($config, 'LangCategoryDefDes')"/>
                     @endforeach
                 </div>
 
@@ -48,10 +48,10 @@
 
                 </div>
                 <hr>
-                @if(IsConfig($Config, 'categoryPhotoAdd'))
+                @if(IsConfig($config, 'categoryPhotoAdd'))
                     <div class="row">
                         <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="6"/>
-                        @if($Config['categoryIcon'])
+                        @if(IsConfig($config, 'categoryIcon'))
                             <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="6" file-name="icon" db-name="icon"
                                                              filter-input-name="IconFilter" filter-name="_iconfilterid" route=".emptyIcon"/>
                         @endif
@@ -72,7 +72,7 @@
 @push('JsCode')
     <x-admin.java.update-slug :view-type="$pageData['ViewType']"/>
     <x-admin.table.sweet-delete-js/>
-    @if(IsConfig($Config, 'categoryEditor'))
+    @if(IsConfig($config, 'categoryEditor'))
         <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
         @foreach ( config('app.web_lang') as $key=>$lang )
             <x-admin.java.ckeditor4 name="{{$key}}[des]" id="{{$key}}_des" :dir="$key"/>

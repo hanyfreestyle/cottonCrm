@@ -67,6 +67,8 @@
         <x-admin.form.action-button url="{{route($PrefixRoute.'.editEn',$row->id)}}" icon="fa-solid fa-globe" :tip="true"
                                     print-lable="{{__('admin.multiple_lang_menu_en')}}"/>
     @endif
+@elseif($btype == 'addLangQuery')
+
 
 @elseif($btype == 'CatName')
     @if($Config['TableCategory'])

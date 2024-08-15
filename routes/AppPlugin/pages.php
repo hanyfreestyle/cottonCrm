@@ -9,7 +9,11 @@ Route::get('/page-category/',[PageCategoryController::class,'CategoryIndex'])->n
 Route::get('/page-category/main',[PageCategoryController::class,'CategoryIndex'])->name('Pages.PageCategory.index_Main');
 Route::get('/page-category/sub-category/{id}',[PageCategoryController::class,'CategoryIndex'])->name('Pages.PageCategory.SubCategory');
 
-Route::get('/page-category/DataTable',[PageCategoryController::class,'DataTable'])->name('Pages.PageCategory.DataTable');
+Route::get('/page-category/DataTable/all',[PageCategoryController::class,'DataTable'])->name('Pages.PageCategory.DataTable');
+Route::get('/page-category/DataTable/main',[PageCategoryController::class,'DataTableMain'])->name('Pages.PageCategory.DataTableMain');
+Route::get('/page-category/DataTable/sub/{id}',[PageCategoryController::class,'DataTableSub'])->name('Pages.PageCategory.DataTableSub');
+
+
 Route::get('/page-category/create',[PageCategoryController::class,'CategoryCreate'])->name('Pages.PageCategory.create');
 Route::get('/page-category/create/ar',[PageCategoryController::class,'CategoryCreate'])->name('Pages.PageCategory.create_ar');
 Route::get('/page-category/create/en',[PageCategoryController::class,'CategoryCreate'])->name('Pages.PageCategory.create_en');
@@ -20,7 +24,7 @@ Route::get('/page-category/emptyPhoto/{id}', [PageCategoryController::class,'emp
 Route::get('/page-category/DeleteLang/{id}',[PageCategoryController::class,'DeleteLang'])->name('Pages.PageCategory.DeleteLang');
 Route::post('/page-category/update/{id}',[PageCategoryController::class,'CategoryStoreUpdate'])->name('Pages.PageCategory.update');
 Route::get('/page-category/destroy/{id}',[PageCategoryController::class,'destroyException'])->name('Pages.PageCategory.destroy');
-Route::get('/page-category/config', [PageCategoryController::class,'config'])->name('Pages.PageCategory.config');
+Route::get('/page-category/config', [PageCategoryController::class,'CategoryConfig'])->name('Pages.PageCategory.config');
 Route::get('/page-category/emptyIcon/{id}', [PageCategoryController::class,'emptyIcon'])->name('Pages.PageCategory.emptyIcon');
 Route::get('/page-category/sort/{id}',[PageCategoryController::class,'CategorySort'])->name('Pages.PageCategory.CatSort');
 Route::post('/page-category/save-sort',[PageCategoryController::class,'CategorySaveSort'])->name('Pages.PageCategory.SaveSort');

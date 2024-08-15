@@ -33,8 +33,8 @@ class Settings extends Component {
         $this->modelname = $modelname;
         $this->configArr = $configArr;
         $this->pageData = $pageData;
-        $this->datatable = IsArr($configArr, 'datatable');
-        $this->orderby = IsArr($configArr, 'orderby');
+        $this->datatable = IsArr($configArr, 'datatable',false);
+        $this->orderby = IsArr($configArr, 'orderby',false);
         $this->orderbyDef = $orderbyDef;
         $this->orderbyPostion = IsArr($configArr, 'orderbyPostion', false);
         $this->filterid = IsArr($configArr, 'filterid');

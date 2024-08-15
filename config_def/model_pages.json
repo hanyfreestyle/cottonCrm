@@ -7,7 +7,7 @@
     "categoryIcon": false,
     "categoryDelete": true,
     "categorySort": true,
-    "categoryEditor": false,
+    "categoryEditor": true,
     "categoryDes": true,
     "categorySeo": true,
     "categorySlug": true,

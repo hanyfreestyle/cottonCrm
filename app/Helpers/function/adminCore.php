@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -195,8 +196,6 @@ if (!function_exists('loadConfigFromJson')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getConfigFromJson')) {
     function getConfigFromJson($fileName) {
 
@@ -225,6 +224,35 @@ if (!function_exists('getConfigFromJson')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('dataTableDefLang')) {
+    function dataTableDefLang() {
+        if (count(config('app.web_lang')) > 1) {
+            $lang = LaravelLocalization::getCurrentLocale();
+        } else {
+            $lang = config('app.def_dataTableLang');
+        }
+        return $lang;
+    }
+}
+if (!function_exists('returnTableRes')) {
+    function returnTableRes($agent) {
+        if ($agent->isDesktop()) {
+            $res = 'not-desktop';
+        } else {
+            $res = 'desktop';
+        }
+        return $res;
+    }
+}
+if (!function_exists('returnTableId')) {
+    function returnTableId($agent, $row) {
+        if ($agent->isDesktop()) {
+            return $row->id;
+        } else {
+            return null;
+        }
+    }
+}
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

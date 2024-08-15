@@ -13,6 +13,7 @@ class ActionBut extends Component {
     public $po;
     public $modelid;
     public $res;
+    public $viewBut;
 
     public function __construct(
         $row = array(),
@@ -20,6 +21,7 @@ class ActionBut extends Component {
         $po = 'button',
         $modelid = null,
         $res = 'd',
+        $viewBut = true,
 
     ) {
         $this->row = $row;
@@ -27,6 +29,7 @@ class ActionBut extends Component {
         $this->po = $po;
         $this->modelid = $modelid;
         $this->res = getResponsiveType($res);
+        $this->viewBut = $viewBut;
 
     }
 

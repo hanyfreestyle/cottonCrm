@@ -1,5 +1,5 @@
 @can($PrefixRole."_edit")
-    @if(IsConfig($Config, 'categorySort'))
+    @if(IsConfig($config, 'categorySort'))
         <x-admin.hmtl.section>
             <div class="row mb-3">
                 <div class="col-12 dir_button">

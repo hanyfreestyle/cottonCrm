@@ -9,7 +9,6 @@ use App\AppPlugin\Pages\Traits\PageConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefCategoryRequest;
-use App\Http\Traits\CrudTraits;
 use App\Http\Traits\CategoryTraits;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +17,6 @@ use Illuminate\Support\Facades\View;
 
 class PageCategoryController extends AdminMainController {
 
-    use CrudTraits;
     use CategoryTraits;
     use PageConfigTraits;
 
@@ -38,12 +36,12 @@ class PageCategoryController extends AdminMainController {
         $this->translationdb = 'category_id';
 
 
-        $this->Config = self::LoadConfig();
+        $this->config = self::LoadConfig();
 
-        if (IsConfig($this->Config, 'TableCategory')) {
-            self::SetCatTree(IsConfig($this->Config, 'categoryTree'), IsConfig($this->Config, 'categoryDeep', 1));
+        if (IsConfig($this->config, 'TableCategory')) {
+            self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
-        View::share('Config', $this->Config);
+        View::share('config',$this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
@@ -51,9 +49,9 @@ class PageCategoryController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'configArr' => [
-                "editor" => IsConfig($this->Config, 'categoryEditor'),
-                'iconfilterid' => IsConfig($this->Config, 'categoryIcon'),
-                'filterid' => IsConfig($this->Config, 'categoryPhotoAdd'),
+                "editor" => IsConfig($this->config, 'categoryEditor'),
+                'iconfilterid' => IsConfig($this->config, 'categoryIcon'),
+                'filterid' => IsConfig($this->config, 'categoryPhotoAdd'),
             ],
             'yajraTable' => false,
             'AddLang' => true,

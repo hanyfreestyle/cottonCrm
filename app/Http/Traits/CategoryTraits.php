@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use Yajra\DataTables\Facades\DataTables;
 
 trait CategoryTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryIndex($id = null) {
-        if (!IsConfig($this->Config, 'TableCategory')) {
+
+        if (!IsConfig($this->config, 'TableCategory')) {
             abort(403);
         }
 
@@ -23,31 +25,122 @@ trait CategoryTraits {
         $pageData['SubView'] = false;
         $trees = [];
 
-        if (IsConfig($this->Config, 'categoryTree')) {
+        if (IsConfig($this->config, 'categoryTree')) {
             if (Route::currentRouteName() == $this->PrefixRoute . '.index_Main') {
-                $rowData = self::getSelectQuery($this->model->def()->where('parent_id', null));
+                $route = '.DataTableMain';
             } elseif (Route::currentRouteName() == $this->PrefixRoute . '.SubCategory') {
-                $rowData = self::getSelectQuery($this->model->def()->where('parent_id', $id));
                 $trees = $this->model->find($id)->ancestorsAndSelf()->orderBy('depth', 'asc')->get();
                 $pageData['SubView'] = true;
+                $route = '.DataTableSub';
             } else {
-                $rowData = self::getSelectQuery($this->model->def());
+                $route = '.DataTable';
             }
-        } else {
-            $rowData = self::getSelectQuery($this->model->def());
         }
-
         return view('admin.mainView.category.index')->with([
             'pageData' => $pageData,
-            'rowData' => $rowData,
             'trees' => $trees,
+            'route' => $route,
+            'id' => $id,
         ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::categoryIndexQuery($this->config);
+            return self::CategoryColumns($rowData)->make(true);
+        }
+    }
+
+    public function DataTableMain(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::categoryIndexQuery($this->config, 'main');
+            return self::CategoryColumns($rowData)->make(true);
+        }
+    }
+
+    public function DataTableSub(Request $request, $id) {
+        if ($request->ajax()) {
+            $rowData = self::categoryIndexQuery($this->config, 'sub', $id);
+            return self::CategoryColumns($rowData)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function categoryIndexQuery($config, $route = 'all', $id = null) {
+
+        $table = $config['DbCategory'];
+        $table_trans = $config['DbCategoryTrans'];
+
+        $data = DB::table("$table");
+
+        if ($route == 'main') {
+            $data->where("$table.parent_id", null);
+        }
+        if ($route == 'sub') {
+            $data->where("$table.parent_id", $id);
+        }
+
+        $data->leftJoin("$table as childCount", "$table.id", '=', 'childCount.parent_id')
+            ->join("$table_trans", "$table.id", '=', "$table_trans.category_id")
+            ->where("$table_trans.locale", '=', 'ar')
+            ->select(
+                "$table.id as id",
+                "$table.is_active as is_active",
+                "$table.photo_thum_1 as photo",
+                "$table_trans.name as name",
+                DB::raw('COUNT(childCount.id) as child_count')
+            )
+            ->groupBy(
+                "$table.id",
+                "$table.is_active",
+                "$table.photo_thum_1",
+                "$table_trans.name"
+            );
+
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CategoryColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('name', function ($row) {
+                if (IsConfig($this->config, 'categoryTree')) {
+                    if ($row->child_count == 0) {
+                        return $row->name;
+                    } else {
+                        return '<a href="' . route($this->PrefixRoute . ".SubCategory", $row->id) . '">' . $row->name . ' (' . $row->child_count . ')</a>';
+                    }
+                } else {
+                    return $row->name;
+                }
+            })
+            ->editColumn('photo', function ($row) {
+                return TablePhoto($row, 'photo');
+            })
+            ->editColumn('isActive', function ($row) {
+                return is_active($row->is_active);
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryCreate() {
-        if (!IsConfig($this->Config, 'TableCategory')) {
+        if (!IsConfig($this->config, 'TableCategory')) {
             abort(403);
         }
 
@@ -65,9 +158,9 @@ trait CategoryTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryEdit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryEdit($id) {
-        if (!IsConfig($this->Config, 'TableCategory')) {
+        if (!IsConfig($this->config, 'TableCategory')) {
             abort(403);
         }
 
@@ -197,7 +290,7 @@ trait CategoryTraits {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategorySaveSort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategorySaveSort(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
@@ -209,6 +302,18 @@ trait CategoryTraits {
         }
         self::ClearCash();
         return response()->json(['success' => $positions]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CategoryConfig() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        if($this->configView) {
+            return view($this->configView, compact('pageData'));
+        } else {
+            return view("admin.mainView.config", compact('pageData'));
+        }
     }
 
 }
