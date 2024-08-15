@@ -1,15 +1,14 @@
 {
     "TableCategory": true,
-    "categoryTree": false,
+    "categoryTree": true,
     "categoryDeep": 2,
     "categoryPhotoAdd": true,
-    "categoryIcon": false,
-    "categoryDelete": true,
+    "categoryIcon": true,
+    "categoryDelete": false,
     "categorySort": false,
-    "categoryEditor": false,
+    "categoryEditor": true,
     "categoryDes": true,
     "categorySeo": true,
     "categorySlug": true,
-    "categoryShowLang": true,
-    "categoryFullRow": true
+    "categoryAddOnlyLang": true
 }

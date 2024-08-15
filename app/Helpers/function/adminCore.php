@@ -137,7 +137,7 @@ if (!function_exists('getRoleName')) {
 if (!function_exists('getDefModelConfig')) {
     function getDefModelConfig() {
         $defPostConfig = [
-            'TableCategory' => true,
+            'TableCategory' => false,
 //            'TableTags' => false,
 //            'TableTagsOnFly' => false,
 //            'TableReview' => false,
@@ -147,16 +147,16 @@ if (!function_exists('getDefModelConfig')) {
 
             'categoryTree' => false,
             'categoryDeep' => 2,
-            'categoryPhotoAdd' => true,
+            'categoryPhotoAdd' => false,
             'categoryIcon' => false,
-            'categoryDelete' => true,
+            'categoryDelete' => false,
             'categorySort' => false,
             'categoryEditor' => false,
-            'categoryDes' => true,
-            'categorySeo' => true,
-            'categorySlug' => true,
-            'categoryShowLang' => true,
-            'categoryFullRow' => true,
+            'categoryDes' => false,
+            'categorySeo' => false,
+            'categorySlug' => false,
+            'categoryAddOnlyLang' => false,
+
 
 //            'postPublishedDate' => false,
 //            'postPhotoAdd' => false,

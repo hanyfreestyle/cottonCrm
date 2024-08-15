@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ defAdminAssets('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
     @yield('StyleFile')
-    <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.css') }}">
     <link rel="stylesheet" href="{{ defAdminAssets('css/custom_login.css') }}">
     <style>
         body {

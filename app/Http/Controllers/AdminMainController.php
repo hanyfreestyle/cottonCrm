@@ -35,8 +35,8 @@ class AdminMainController extends DefaultMainController {
         $this->middleware('auth');
 
         $this->MinifyTools = new MinifyTools();
-        $this->minType  = "Seo";
-        $this->reBuild  = true;
+        $this->minType = "Seo";
+        $this->reBuild = true;
         View::share('MinifyTools', $this->MinifyTools);
         View::share('minType', $this->minType);
         View::share('reBuild', $this->reBuild);
@@ -106,10 +106,10 @@ class AdminMainController extends DefaultMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadPagePermission($arr) {
-        $defview = ['index','indexData'];
-        $defcreate = ['create','createData'];
-        $defedit = ['edit','editData'];
-        $defdelete = ['destroy','ForceDeleteException'];
+        $defview = ['index', 'indexData'];
+        $defcreate = ['create', 'createData'];
+        $defedit = ['edit', 'editData'];
+        $defdelete = ['destroy', 'ForceDeleteException'];
 
         $view = array_merge($defview, issetArr($arr, 'view', []));
         $create = array_merge($defcreate, issetArr($arr, 'create', []));
@@ -193,12 +193,12 @@ class AdminMainController extends DefaultMainController {
         View::share('controllerName', $this->controllerName);
         View::share('PrefixCatRoute', $this->PrefixCatRoute ?? null);
 
-        $this->formName = IsArr($sendArr,'formName',null);
-        $this->yajraPerPage = IsArr($sendArr,'yajraPerPage',10);
+        $this->formName = IsArr($sendArr, 'formName', null);
         View::share('formName', $this->formName);
+
+        $this->yajraPerPage = IsArr($this->modelSettings, $this->controllerName . '_perpage', 10);
         View::share('yajraPerPage', $this->yajraPerPage);
 
-//        dd($sendArr);
         $this->configView = AdminHelper::arrIsset($sendArr, 'configView', null);
         $this->settings = AdminHelper::arrIsset($sendArr, 'settings', array());
 
@@ -206,6 +206,7 @@ class AdminMainController extends DefaultMainController {
 //        dd($this->settings);
 
         $pageData = AdminHelper::returnPageDate($sendArr);
+
         $this->pageData = $pageData;
 
     }
@@ -429,8 +430,8 @@ class AdminMainController extends DefaultMainController {
                     $rules[$key . ".slug"] = "required|unique:$table,slug,$id,$filedName,locale,$key";
                 }
                 if ($rulesConfig['seo']) {
-                    $rules[$key . ".g_des"] = 'required';
-                    $rules[$key . ".g_title"] = 'required';
+                    $rules[$key . ".g_des"] = 'nullable';
+                    $rules[$key . ".g_title"] = 'nullable';
                 }
             }
         }
@@ -452,8 +453,8 @@ class AdminMainController extends DefaultMainController {
                     $rules[$key . ".slug"] = "required|unique:$table,slug";
                 } else {
                     $rules[$key . ".slug"] = "required|unique:$table,slug,$id,$filedName,locale,$key";
-                    $rules[$key . ".g_des"] = 'required';
-                    $rules[$key . ".g_title"] = 'required';
+                    $rules[$key . ".g_des"] = 'nullable';
+                    $rules[$key . ".g_title"] = 'nullable';
                 }
             }
         }
@@ -538,7 +539,6 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # saveTranslation
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -8,6 +8,7 @@ return
 	'delete_force' => 'Force Delete',
 	'delete_restor' => 'Restore',
 	'delete_restor_view' => 'View Delete',
+	'details' => 'Details',
 	'form_button_add' => 'Add New',
 	'form_button_edit' => 'Edit',
 	'form_button_submit' => 'Submit',
@@ -27,5 +28,5 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'details' => 'Details',
+	'category_status' => '',
 ];

@@ -41,6 +41,44 @@ trait CategoryTraits {
             'id' => $id,
         ]);
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CategoryCreate() {
+        if (!IsConfig($this->config, 'TableCategory')) {
+            abort(403);
+        }
+
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Add";
+        $LangAdd = self::getAddLangForAdd();
+
+        $rowData = $this->model->findOrNew(0);
+
+        return view('admin.mainView.category.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'LangAdd' => $LangAdd,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CategoryEdit($id) {
+        if (!IsConfig($this->config, 'TableCategory')) {
+            abort(403);
+        }
+
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $rowData = $this->model->findOrFail($id);
+        $LangAdd = self::getAddLangForEdit($rowData);
+        return view('admin.mainView.category.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'LangAdd' => $LangAdd,
+        ]);
+
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -135,44 +173,6 @@ trait CategoryTraits {
             ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function CategoryCreate() {
-        if (!IsConfig($this->config, 'TableCategory')) {
-            abort(403);
-        }
-
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Add";
-        $LangAdd = self::getAddLangForAdd();
-
-        $rowData = $this->model->findOrNew(0);
-
-        return view('admin.mainView.category.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'LangAdd' => $LangAdd,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function CategoryEdit($id) {
-        if (!IsConfig($this->config, 'TableCategory')) {
-            abort(403);
-        }
-
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        $rowData = $this->model->findOrFail($id);
-        $LangAdd = self::getAddLangForEdit($rowData);
-        return view('admin.mainView.category.form')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'LangAdd' => $LangAdd,
-        ]);
-
-    }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -193,83 +193,74 @@ trait CategoryTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TraitsCategoryStoreUpdate($request, $id) {
 
         if (intval($id) == 0) {
             $saveData = $this->model->findOrNew($id);
         } else {
             $saveData = $this->model->findOrFail($id);
-            if (IsConfig($this->Config, 'categoryTree')) {
+            if (IsConfig($this->config, 'categoryTree')) {
                 $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
                 if (in_array($request->input('parent_id'), $trees)) {
                     return back()->with('data_not_save', "");
                 }
             }
         }
-
-
-        if (IsConfig($this->Config, 'categoryTree')) {
-            if ($request->input('parent_id') != 0 and $request->input('parent_id') != $saveData->id) {
-                $saveData->parent_id = $request->input('parent_id');
-                $saveData->deep = count($this->model->find($request->input('parent_id'))->ancestorsAndSelf()->pluck('id')->toArray());
-            }
-        }
-        $saveData->is_active = intval((bool)$request->input('is_active'));
-        $saveData->save();
-
-        self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
-
-        if (IsConfig($this->Config, 'categoryIcon')) {
-            $saveImgData_icon = new PuzzleUploadProcess();
-            $saveImgData_icon->setUploadDirIs($this->UploadDirIs . '/' . $saveData->id);
-            $saveImgData_icon->setnewFileName($request->input('en.slug'));
-            $saveImgData_icon->setfileUploadName('icon');
-            $saveImgData_icon->UploadOne($request, "IconFilter");
-            $saveData = AdminHelper::saveAndDeletePhotoByOne($saveData, $saveImgData_icon, 'icon');
-            $saveData->save();
-        }
-
-        $addLang = json_decode($request->add_lang);
-        foreach ($addLang as $key => $lang) {
-            $dbName = $this->translationdb;
-            $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
-            $saveTranslation->$dbName = $saveData->id;
-            $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-            $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
-            $saveTranslation->save();
-        }
-
-        if (IsConfig($this->Config, 'categoryTree')) {
-            if ($saveData->is_active == false) {
-                $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
-                if (count($trees) > 0) {
-                    $this->model->whereIn("id", $trees)->update(['is_active' => 0]);
-                }
-            }
-        }
-
-
         try {
             DB::transaction(function () use ($request, $saveData) {
+                if (IsConfig($this->config, 'categoryTree')) {
+                    if ($request->input('parent_id') != 0 and $request->input('parent_id') != $saveData->id) {
+                        $saveData->parent_id = $request->input('parent_id');
+                        $saveData->deep = count($this->model->find($request->input('parent_id'))->ancestorsAndSelf()->pluck('id')->toArray());
+                    }
+                }
+                $saveData->is_active = intval((bool)$request->input('is_active'));
+                $saveData->save();
 
+                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
 
+                if (IsConfig($this->config, 'categoryIcon')) {
+                    $saveImgData_icon = new PuzzleUploadProcess();
+                    $saveImgData_icon->setUploadDirIs($this->UploadDirIs . '/' . $saveData->id);
+                    $saveImgData_icon->setnewFileName($request->input('en.slug'));
+                    $saveImgData_icon->setfileUploadName('icon');
+                    $saveImgData_icon->UploadOne($request, "IconFilter");
+                    $saveData = AdminHelper::saveAndDeletePhotoByOne($saveData, $saveImgData_icon, 'icon');
+                    $saveData->save();
+                }
+
+                $addLang = json_decode($request->add_lang);
+                foreach ($addLang as $key => $lang) {
+                    $dbName = $this->translationdb;
+                    $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
+                    $saveTranslation->$dbName = $saveData->id;
+                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
+                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+                    $saveTranslation->save();
+                }
+
+                if (IsConfig($this->config, 'categoryTree')) {
+                    if ($saveData->is_active == false) {
+                        $trees = $this->model->find($saveData->id)->descendants()->pluck('id')->toArray();
+                        if (count($trees) > 0) {
+                            $this->model->whereIn("id", $trees)->update(['is_active' => 0]);
+                        }
+                    }
+                }
             });
-
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
         }
-
         self::ClearCash();
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategorySort($id) {
 
-        if (!IsConfig($this->config, 'TableCategory') or !IsConfig($this->config, 'categorySort') ) {
+        if (!IsConfig($this->config, 'TableCategory') or !IsConfig($this->config, 'categorySort')) {
             abort(403);
         }
         $pageData = $this->pageData;
@@ -307,7 +298,7 @@ trait CategoryTraits {
     public function CategoryConfig() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        if($this->configView) {
+        if ($this->configView) {
             return view($this->configView, compact('pageData'));
         } else {
             return view("admin.mainView.config_category", compact('pageData'));

@@ -10,13 +10,14 @@ use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefCategoryRequest;
 use App\Http\Traits\CategoryTraits;
+use App\Http\Traits\CrudTraits;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 
 class PageCategoryController extends AdminMainController {
-
+    use CrudTraits;
     use CategoryTraits;
     use PageConfigTraits;
 
@@ -37,7 +38,6 @@ class PageCategoryController extends AdminMainController {
 
 
         $this->config = self::LoadConfig();
-
         if (IsConfig($this->config, 'TableCategory')) {
             self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
@@ -47,20 +47,26 @@ class PageCategoryController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-
             'AddConfig' => true,
             'settings' => getDefSettings($this->config),
-            'AddLang' => true,
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
-
-
         self::constructData($sendArr);
 
-//        dd($this->modelSettings);
+        $view = ['CategoryIndex'];
+        $create = ['CategoryCreate'];
+        $edit = ['CategoryEdit', 'emptyPhoto', 'CategoryConfig', 'emptyIcon', 'CategorySort'];
+        $delete = ['DeleteLang', 'destroyException'];
+        $allPermission = array_merge($view, $create, $edit, $delete);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
 
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashProductPageInfo');
     }
@@ -72,13 +78,17 @@ class PageCategoryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroyException
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroyException($id) {
+
+        if (!IsConfig($this->config, 'categoryDelete')) {
+            abort(403);
+        }
+
         $deleteRow = PageCategory::where('id', $id)
             ->withCount('del_category')
             ->withCount('del_page')
             ->firstOrFail();
-
 
         if ($deleteRow->del_category_count == 0 and $deleteRow->del_page_count == 0) {
             try {
@@ -100,7 +110,8 @@ class PageCategoryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
     static function AdminMenu() {
 
         $Config = self::DbConfig();

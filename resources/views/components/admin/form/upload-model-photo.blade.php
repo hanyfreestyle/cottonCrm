@@ -2,7 +2,7 @@
   @if($addFilterList)
     @if(intval(issetArr($modelSettings,$controllerName."_select_filter_form",0)) == true)
       <x-admin.form.select-arr
-       :label="__('admin/config/upFilter.form_select_filter_lable')" :send-arr="$filterTypes"
+       :label="__('admin/config/upFilter.form_select_filter_lable')" :send-arr="$filterTypes" :labelview="false"
        :name="$filterInputName" col="12" :sendvalue="intval(issetArr($modelSettings,$controllerName.$filterName,0))"/>
     @else
       @if(intval(issetArr($modelSettings,$controllerName.$filterName,0)) == 0)

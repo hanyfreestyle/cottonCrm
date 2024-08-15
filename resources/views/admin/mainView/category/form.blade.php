@@ -8,63 +8,84 @@
                 <div class="col-9">
                     <h1 class="def_h1_new">{!! print_h1($rowData) !!}</h1>
                 </div>
-                <div class="col-3 dir_button">
-                    <x-admin.lang.delete-button :row="$rowData"/>
-                </div>
+                @if(IsConfig($config,'categoryAddOnlyLang',false))
+                    <div class="col-3 dir_button">
+                        <x-admin.lang.delete-button :row="$rowData"/>
+                        <x-admin.lang.add-new-button :tip="false" :row="$rowData"/>
+                    </div>
+                @endif
             </div>
         @endif
     </x-admin.hmtl.section>
 
 
     <x-admin.hmtl.section>
-        <x-admin.card.def :page-data="$pageData">
-            <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="config" value="{{json_encode($config)}}">
-                <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">
-                @csrf
 
-                @if(IsConfig($config, 'categoryTree'))
+        <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="config" value="{{json_encode($config)}}">
+            <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">
+            @csrf
+            <div class="row">
+                <div class="col-lg-9">
                     <div class="row">
-                        <x-admin.form.select-category name="parent_id" label="{{__('admin/form.sel_categories')}}"
-                                                      :sendvalue="old('parent_id',$rowData->parent_id)" :req="false" col="col-lg-6 "
-                                                      :send-arr="$Categories"/>
+                        <x-admin.card.normal col="col-lg-12">
+                            @foreach ( $LangAdd as $key=>$lang )
+                                <div class="row">
+                                    <x-admin.lang.meta-tage-seo :lang-add="$LangAdd" :viewtype="$pageData['ViewType']" :row="$rowData" :key="$key"
+                                                                :slug="IsConfig($config, 'categorySlug')" :des="IsConfig($config, 'categoryDes')"
+                                                                :def-name="IsConfig($config, 'LangCategoryDefName')" :def-des="IsConfig($config, 'LangCategoryDefDes')"/>
+                                </div>
+                            @endforeach
+                        </x-admin.card.normal>
                     </div>
-                @endif
-
-                <div class="row">
-
-                    @foreach ( $LangAdd as $key=>$lang )
-                        <x-admin.lang.meta-tage-seo :lang-add="$LangAdd" :viewtype="$pageData['ViewType']" :row="$rowData" :key="$key"
-                                                    :full-row="IsConfig($config, 'categoryFullRow')" :slug="IsConfig($config, 'categorySlug')" :seo="IsConfig($config, 'categorySeo')"
-                                                    :des="IsConfig($config, 'categoryDes')" :showlang="IsConfig($config, 'categoryShowLang')"
-                                                    :def-name="IsConfig($config, 'LangCategoryDefName')" :def-des="IsConfig($config, 'LangCategoryDefDes')"/>
-                    @endforeach
                 </div>
 
-                <hr>
-                <div class="row">
-                    <x-admin.form.check-active :row="$rowData" name="is_active" page-view="{{$pageData['ViewType']}}"
-                                               :lable="__('admin/def.status_active')"/>
-
-                </div>
-                <hr>
-                @if(IsConfig($config, 'categoryPhotoAdd'))
+                <div class="col-lg-3">
                     <div class="row">
-                        <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="6"/>
-                        @if(IsConfig($config, 'categoryIcon'))
-                            <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="6" file-name="icon" db-name="icon"
-                                                             filter-input-name="IconFilter" filter-name="_iconfilterid" route=".emptyIcon"/>
-                        @endif
+                        <x-admin.card.normal col="col-lg-12">
+                            @if(IsConfig($config, 'categoryTree'))
+                                <div class="row">
+                                    <x-admin.form.select-category name="parent_id" label="{{__('admin/form.sel_categories')}}"
+                                                                  :sendvalue="old('parent_id',$rowData->parent_id)" :req="false" col="col-lg-12 "
+                                                                  :send-arr="$Categories"/>
+                                </div>
+                            @endif
+                            <div class="row">
+                                <x-admin.form.select-arr :row="$rowData" :label="__('admin/def.category_status')" name="is_active" col="12" type="selActive"/>
+                            </div>
+                            @if(IsConfig($config, 'categoryPhotoAdd'))
+                                <hr>
+                                <div class="row">
+                                    <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="12"/>
+                                    @if(IsConfig($config, 'categoryIcon'))
+                                        <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="12" file-name="icon" db-name="icon"
+                                                                         filter-input-name="IconFilter" filter-name="_iconfilterid" route=".emptyIcon"/>
+                                    @endif
 
+                                </div>
+                            @endif
+                        </x-admin.card.normal>
                     </div>
-                @endif
-                <x-admin.form.submit-role-back :page-data="$pageData"/>
-
-            </form>
-
-        </x-admin.card.def>
+                    @if(IsConfig($config, 'categorySeo'))
+                        <div class="row">
+                            <x-admin.card.normal col="col-lg-12">
+                                @foreach ( $LangAdd as $key=>$lang )
+                                    <div class="row">
+                                        <x-admin.lang.meta-tage-seo print-type="Seo" :lang-add="$LangAdd" :viewtype="$pageData['ViewType']" :row="$rowData" :key="$key"/>
+                                    </div>
+                                @endforeach
+                            </x-admin.card.normal>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 float-left text-left">
+                    <x-admin.form.submit-role-back :page-data="$pageData"/>
+                </div>
+            </div>
+        </form>
     </x-admin.hmtl.section>
-
 
 @endsection
 

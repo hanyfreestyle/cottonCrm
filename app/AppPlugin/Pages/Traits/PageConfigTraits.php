@@ -19,7 +19,6 @@ trait PageConfigTraits {
             'DbPhotoTrans' => 'page_photo_translations',
             'DbTags' => 'page_tags',
             'DbTagsTrans' => 'page_tags_translations',
-
             'LangCategoryDefName' => null,
         ];
         $defConfig = getConfigFromJson('model_pages');
