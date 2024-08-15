@@ -141,25 +141,24 @@ if (!function_exists('getDefModelConfig')) {
 //            'TableTags' => false,
 //            'TableTagsOnFly' => false,
 //            'TableReview' => false,
-//
+
 //            'TableMorePhotos' => true,
 //            'MorePhotosEdit' => true,
-//
-//            'categoryTree' => false,
-//            'categoryDeep' => 2,
-//            'categoryPhotoAdd' => false,
-//            'categoryPhotoView' => false,
-//            'categoryIcon' => false,
-//            'categoryDelete' => false,
-//            'categorySort' => false,
-//            'categoryEditor' => false,
-//            'categoryDes' => false,
-//            'categorySeo' => false,
-//            'categorySlug' => true,
-//            'categoryShowLang' => true,
-//            'categoryFullRow' => false,
-//
-//
+
+            'categoryTree' => false,
+            'categoryDeep' => 2,
+            'categoryPhotoAdd' =>true,
+            'categoryPhotoView' => true,
+            'categoryIcon' => false,
+            'categoryDelete' => true,
+            'categorySort' => false,
+            'categoryEditor' => false,
+            'categoryDes' => true,
+            'categorySeo' => true,
+            'categorySlug' => true,
+            'categoryShowLang' => true,
+            'categoryFullRow' => true,
+
 //            'postPublishedDate' => false,
 //            'postPhotoAdd' => false,
 //            'postPhotoView' => false,

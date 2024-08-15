@@ -41,9 +41,8 @@ class PageCategoryController extends AdminMainController {
         $this->Config = self::LoadConfig();
 
         if (IsConfig($this->Config, 'TableCategory')) {
-            self::SetCatTree(IsConfig($this->Config, 'categoryTree'), IsConfig($this->Config, 'categoryDeep',1));
+            self::SetCatTree(IsConfig($this->Config, 'categoryTree'), IsConfig($this->Config, 'categoryDeep', 1));
         }
-
         View::share('Config', $this->Config);
 
         $sendArr = [

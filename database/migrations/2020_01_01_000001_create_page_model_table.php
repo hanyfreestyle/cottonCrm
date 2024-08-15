@@ -89,11 +89,8 @@ return new class extends Migration {
                 $table->unsignedBiginteger('page_id');
                 $table->integer('postion')->default(0);
 
-                $table->foreign('category_id')->references('id')
-                    ->on('page_categories')->onDelete('cascade');
-
-                $table->foreign('page_id')->references('id')
-                    ->on('page_pages')->onDelete('cascade');
+                $table->foreign('category_id')->references('id')->on('page_categories')->onDelete('cascade');
+                $table->foreign('page_id')->references('id')->on('page_pages')->onDelete('cascade');
             });
         }
 

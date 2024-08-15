@@ -19,7 +19,7 @@
     <x-admin.hmtl.section>
         <x-admin.card.def :page-data="$pageData">
             <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
-                <input type="text" name="config" value="{{json_encode($Config)}}">
+                <input type="hidden" name="config" value="{{json_encode($Config)}}">
                 <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">
                 @csrf
 
@@ -72,7 +72,7 @@
 @push('JsCode')
     <x-admin.java.update-slug :view-type="$pageData['ViewType']"/>
     <x-admin.table.sweet-delete-js/>
-    @if($viewEditor and $Config['categoryEditor'])
+    @if(IsConfig($Config, 'categoryEditor'))
         <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
         @foreach ( config('app.web_lang') as $key=>$lang )
             <x-admin.java.ckeditor4 name="{{$key}}[des]" id="{{$key}}_des" :dir="$key"/>

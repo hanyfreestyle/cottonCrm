@@ -6,31 +6,10 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
-
-    @can($PrefixRole."_edit")
-        @if(IsConfig($Config, 'categorySort'))
-            <x-admin.hmtl.section>
-                <div class="row mb-3">
-                    <div class="col-12 dir_button">
-                        <x-admin.form.action-button url="{{route($PrefixRoute.'.CatSort',0)}}" type="sort" :tip="false" bg="dark"/>
-                    </div>
-                </div>
-            </x-admin.hmtl.section>
-        @endif
-    @endcan
+    @include('admin.mainView.category.inc_but_sort')
 
     <x-admin.hmtl.section>
-        @if(IsConfig($Config, 'categoryTree'))
-            <ol class="breadcrumb breadcrumb_menutree">
-                <li class="breadcrumb-item"><a href="{{route($PrefixRoute.'.index_Main')}}">{{__('admin/def.category_main')}}</a></li>
-                @if($pageData['SubView'])
-                    @foreach($trees as $tree)
-                        <li class="breadcrumb-item"><a href="{{route($PrefixRoute.'.SubCategory',$tree->id)}}">{{ $tree->name }}</a></li>
-                    @endforeach
-                @endif
-            </ol>
-        @endif
-
+        @include('admin.mainView.category.inc_but_breadcrumb')
 
         <x-admin.card.def :page-data="$pageData">
             @if(count($rowData)>0)

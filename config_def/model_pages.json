@@ -1,1 +1,16 @@
-{"TableCategory":true}
+{
+    "TableCategory": true,
+    "categoryTree": true,
+    "categoryDeep": 2,
+    "categoryPhotoAdd": true,
+    "categoryPhotoView": true,
+    "categoryIcon": false,
+    "categoryDelete": true,
+    "categorySort": true,
+    "categoryEditor": false,
+    "categoryDes": true,
+    "categorySeo": true,
+    "categorySlug": true,
+    "categoryShowLang": true,
+    "categoryFullRow": true
+}

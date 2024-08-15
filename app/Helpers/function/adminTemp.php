@@ -296,11 +296,11 @@ if (!function_exists('print_h1')) {
 }
 if (!function_exists('printUploadNotes')) {
     function printUploadNotes($thisfilterid) {
-        if (config('app.upload_photo_notes') == true and intval($thisfilterid) != 0) {
-            $notesSend = UploadFilter::where('id', $thisfilterid)->first();
-            $printName = "notes_" . thisCurrentLocale();
-            return $notesSend->$printName;
-        }
+//        if (config('app.upload_photo_notes') == true and intval($thisfilterid) != 0) {
+//            $notesSend = UploadFilter::where('id', $thisfilterid)->first();
+//            $printName = "notes_" . thisCurrentLocale();
+//            return $notesSend->$printName ?? '';
+//        }
     }
 }
 
