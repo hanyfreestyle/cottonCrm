@@ -186,6 +186,33 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function constructData($sendArr) {
+
+        View::share('PrefixRoute', $this->PrefixRoute);
+        View::share('PrefixRole', $this->PrefixRole);
+        View::share('controllerName', $this->controllerName);
+        View::share('PrefixCatRoute', $this->PrefixCatRoute ?? null);
+
+        $this->formName = IsArr($sendArr,'formName',null);
+        $this->yajraPerPage = IsArr($sendArr,'yajraPerPage',10);
+        View::share('formName', $this->formName);
+        View::share('yajraPerPage', $this->yajraPerPage);
+
+//        dd($sendArr);
+        $this->configView = AdminHelper::arrIsset($sendArr, 'configView', null);
+        $this->settings = AdminHelper::arrIsset($sendArr, 'settings', array());
+
+        View::share('settings', $this->settings);
+//        dd($this->settings);
+
+        $pageData = AdminHelper::returnPageDate($sendArr);
+        $this->pageData = $pageData;
+
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ForgetSession(Request $request) {
         Session::forget($request->input('formName'));
         return redirect()->back();

@@ -37,16 +37,7 @@ if (!function_exists('printLableKey')) {
     }
 }
 
-if (!function_exists('isSetKeyForLang')) {
-    function isSetKeyForLang($key) {
-        if (isset($_GET['key']) and $_GET['key'] == $key) {
-            return "ThisSelectLang";
-        } else {
-            return '';
-        }
 
-    }
-}
 
 
 if (!function_exists('ReportBlockPrint')) {

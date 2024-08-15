@@ -24,7 +24,7 @@ trait CategoryTraits {
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         $trees = [];
-
+        $route = '.DataTable';
         if (IsConfig($this->config, 'categoryTree')) {
             if (Route::currentRouteName() == $this->PrefixRoute . '.index_Main') {
                 $route = '.DataTableMain';
@@ -32,8 +32,6 @@ trait CategoryTraits {
                 $trees = $this->model->find($id)->ancestorsAndSelf()->orderBy('depth', 'asc')->get();
                 $pageData['SubView'] = true;
                 $route = '.DataTableSub';
-            } else {
-                $route = '.DataTable';
             }
         }
         return view('admin.mainView.category.index')->with([
@@ -271,7 +269,7 @@ trait CategoryTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategorySort($id) {
 
-        if (!IsConfig($this->Config, 'TableCategory')) {
+        if (!IsConfig($this->config, 'TableCategory') or !IsConfig($this->config, 'categorySort') ) {
             abort(403);
         }
         $pageData = $this->pageData;
@@ -312,7 +310,7 @@ trait CategoryTraits {
         if($this->configView) {
             return view($this->configView, compact('pageData'));
         } else {
-            return view("admin.mainView.config", compact('pageData'));
+            return view("admin.mainView.config_category", compact('pageData'));
         }
     }
 

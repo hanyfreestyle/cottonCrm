@@ -101,6 +101,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => ':attribute must be present.',
     'regex' => ':attribute format is invalid.',
+    'req' => 'required.',
     'required' => ':attribute required.',
     'required_if' => ':attribute is required when :other is :value.',
     'required_unless' => ':attribute is required unless :other is in :values.',

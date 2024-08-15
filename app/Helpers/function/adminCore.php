@@ -135,7 +135,6 @@ if (!function_exists('getRoleName')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getDefModelConfig')) {
-
     function getDefModelConfig() {
         $defPostConfig = [
             'TableCategory' => true,
@@ -148,8 +147,7 @@ if (!function_exists('getDefModelConfig')) {
 
             'categoryTree' => false,
             'categoryDeep' => 2,
-            'categoryPhotoAdd' =>true,
-            'categoryPhotoView' => true,
+            'categoryPhotoAdd' => true,
             'categoryIcon' => false,
             'categoryDelete' => true,
             'categorySort' => false,
@@ -177,6 +175,23 @@ if (!function_exists('getDefModelConfig')) {
         return $defPostConfig;
     }
 }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getDefSettings')) {
+    function getDefSettings($conig) {
+//       dd($conig);
+        $settings = [
+            'addPhoto' => IsConfig($conig, 'categoryPhotoAdd'),
+            'addIcon' => IsConfig($conig, 'categoryIcon'),
+            'addMorePhoto' => IsConfig($conig, 'categoryIcon'),
+        ];
+        return $settings;
+
+    }
+
+}
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('loadConfigFromJson')) {
@@ -215,7 +230,6 @@ if (!function_exists('getConfigFromJson')) {
         }
 
         $configJson = json_decode(file_get_contents($filePath), true);
-
 
 
         return $configJson;

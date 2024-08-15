@@ -18,4 +18,5 @@ return
 	'sort_name_asc' => 'order By name is descending',
 	'sort_name_desc' => 'order By name is ascending',
 	'sort_postion' => 'Postions',
+	'set_view_photo' => '',
 ];

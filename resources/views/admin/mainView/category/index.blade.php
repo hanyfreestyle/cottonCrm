@@ -15,7 +15,7 @@
                 <thead>
                 <tr>
                     <th class="TD_20">#</th>
-                    <x-admin.table.action-but po="top" type="photo" res="all" :view-but="IsConfig($config, 'categoryPhotoView')"/>
+                    <x-admin.table.action-but po="top" type="photo" res="all" :view-but="IsConfig($config, 'categoryPhotoAdd')"/>
                     <th>{{DefCategoryTextName(IsConfig($config, 'LangCategoryDefName',null))}}</th>
                     <x-admin.table.action-but po="top" type="isActive"/>
                     <x-admin.table.action-but po="top" type="edit"/>
@@ -45,7 +45,7 @@
                 ajax: "{{ route( $PrefixRoute.$route , $id) }}",
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
-                        @include('datatable.index_action_but',['type'=> 'photo','view'=> IsConfig($config, 'categoryPhotoView')])
+                        @include('datatable.index_action_but',['type'=> 'photo','view'=> IsConfig($config, 'categoryPhotoAdd')])
                     {
                         data: 'name', name: '{{$config['DbCategoryTrans']}}.name', orderable: true, searchable: true
                     },

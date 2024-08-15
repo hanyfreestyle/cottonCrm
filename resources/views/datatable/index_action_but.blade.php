@@ -10,7 +10,10 @@
     @endif
 @elseif($type == 'photo')
     @if($view)
-        {data: 'photo', name: 'photo', orderable: false, searchable: false, className: "text-center"},
+
+        @if(IsArr($modelSettings,$controllerName."_view_photo",0))
+            {data: 'photo', name: 'photo', orderable: false, searchable: false, className: "text-center"},
+        @endif
     @endif
 @elseif($type == 'isActive')
     {data: 'isActive', name: 'isActive', orderable: false, searchable: false, className: "text-center"},

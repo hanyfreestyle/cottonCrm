@@ -41,23 +41,22 @@ class PageCategoryController extends AdminMainController {
         if (IsConfig($this->config, 'TableCategory')) {
             self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
-        View::share('config',$this->config);
+        View::share('config', $this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
+
             'AddConfig' => true,
-            'configArr' => [
-                "editor" => IsConfig($this->config, 'categoryEditor'),
-                'iconfilterid' => IsConfig($this->config, 'categoryIcon'),
-                'filterid' => IsConfig($this->config, 'categoryPhotoAdd'),
-            ],
-            'yajraTable' => false,
+            'settings' => getDefSettings($this->config),
             'AddLang' => true,
         ];
 
-        self::loadConstructData($sendArr);
+
+        self::constructData($sendArr);
+
+//        dd($this->modelSettings);
 
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

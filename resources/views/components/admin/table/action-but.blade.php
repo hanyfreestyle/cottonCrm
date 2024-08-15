@@ -4,7 +4,9 @@
     @elseif($type == 'isActive')
         <th class="td_action {{$res}}"></th>
     @elseif($type == 'photo')
-        <th class="td_action {{$res}}"></th>
+         @if(IsArr($modelSettings,$controllerName."_view_photo",0))
+            <th class="td_action {{$res}}"></th>
+        @endif
     @elseif($type == 'edit')
         @can($PrefixRole.'_edit')
             <th class="td_action {{$res}}"></th>

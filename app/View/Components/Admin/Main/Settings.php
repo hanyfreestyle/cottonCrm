@@ -12,10 +12,10 @@ class Settings extends Component {
     public $pageData;
     public $datatable;
     public $orderby;
-    public $filterid;
+    public $addPhoto;
     public $selectfilterid;
-    public $iconfilterid;
-    public $morePhotoFilterid;
+    public $addIcon;
+    public $addMorePhoto;
     public $orderbyDef;
     public $orderbyPostion;
     public $orderbyDate;
@@ -32,15 +32,19 @@ class Settings extends Component {
     ) {
         $this->modelname = $modelname;
         $this->configArr = $configArr;
+
         $this->pageData = $pageData;
         $this->datatable = IsArr($configArr, 'datatable',false);
         $this->orderby = IsArr($configArr, 'orderby',false);
         $this->orderbyDef = $orderbyDef;
         $this->orderbyPostion = IsArr($configArr, 'orderbyPostion', false);
-        $this->filterid = IsArr($configArr, 'filterid');
+        $this->addPhoto = IsArr($configArr, 'addPhoto',false);
+
+
+
         $this->selectfilterid = IsArr($configArr, 'selectfilterid');
-        $this->iconfilterid = IsArr($configArr, 'iconfilterid', false);
-        $this->morePhotoFilterid = IsArr($configArr, 'morePhotoFilterid', false);
+        $this->addIcon = IsArr($configArr, 'addIcon', false);
+        $this->addMorePhoto = IsArr($configArr, 'addMorePhoto', false);
         $this->orderbyDate = IsArr($configArr, 'orderbyDate', false);
         $this->orderbyName = IsArr($configArr, 'orderbyName', true);
         $this->editor = IsArr($configArr, 'editor', false);
