@@ -46,7 +46,7 @@ class UploadModelPhoto extends Component {
         $col = '6',
         $label = null,
         $labelview = true,
-        $req = true,
+        $req = false,
 
 
         $fileName = 'image',
@@ -71,7 +71,7 @@ class UploadModelPhoto extends Component {
 
         $this->col = $col;
         $this->label = $label;
-        if($this->label == null) {
+        if ($this->label == null) {
             $this->label = __('admin/def.form_photo_upload');
         }
         $this->labelview = $labelview;
@@ -83,14 +83,14 @@ class UploadModelPhoto extends Component {
         $this->acceptFile = $acceptFile;
 
         $this->page = $page;
-        if(isset($this->page['ViewType']) and $this->page['ViewType'] == 'Edit') {
+        if (isset($this->page['ViewType']) and $this->page['ViewType'] == 'Edit') {
             $this->viewType = true;
         }
         $this->dbName = $dbName;
         $this->row = $row;
 
         $this->labelPhoto = $labelPhoto;
-        if($this->labelPhoto == null) {
+        if ($this->labelPhoto == null) {
             $this->labelPhoto = __('admin/def.form_current_photo');
         }
 

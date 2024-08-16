@@ -141,4 +141,15 @@ textarea.parsley-error {
 
 }
 
+.form_current_photo img{
+    display: block;
+    margin: auto;
+    max-width: 95%;
+    height: auto;
+    margin-bottom: 10px;
+
+
+
+}
+
 

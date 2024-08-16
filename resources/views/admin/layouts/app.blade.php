@@ -22,7 +22,12 @@
     {!! $MinifyTools->setAdmin()->MinifyCss('plugins/dropzone/min/dropzone.min.css',$minType,$reBuild) !!}
     {!! $MinifyTools->setAdmin()->MinifyCss('plugins/sweet/sweetalert2.min.css',$minType,$reBuild) !!}
     @yield('StyleFile')
-    {!! $MinifyTools->setAdmin()->MinifyCss('css/adminlte.css',$minType,$reBuild) !!}
+    @if( thisCurrentLocale() == 'ar')
+        {!! $MinifyTools->setAdmin()->MinifyCss('css/adminlte.css',$minType,$reBuild) !!}
+    @elseif( thisCurrentLocale() == 'en')
+        <link rel="stylesheet" href="{{ defAdminAssets('css/adminlte.css') }}">
+    @endif
+{{--    {!! $MinifyTools->setAdmin()->MinifyCss('css/adminlte.css',$minType,$reBuild) !!}--}}
     {!! $MinifyTools->setAdmin()->MinifyCss('css/custom_admin.css',$minType,$reBuild) !!}
     {!! $MinifyTools->setAdmin()->MinifyCss('css/html/_def.css',$minType,$reBuild) !!}
     {!! $MinifyTools->setAdmin()->MinifyCss('css/html/card.css',$minType,$reBuild) !!}

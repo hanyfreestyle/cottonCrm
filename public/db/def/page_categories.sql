@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 07:53 AM
+-- Generation Time: Aug 16, 2024 at 11:01 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart`
+-- Database: `cottton_crm`
 --
 
 --
@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `page_categories` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-04-11 03:06:18', '2024-04-11 03:06:18'),
-(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-04-16 03:19:19', '2024-04-16 03:19:19');
+(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 07:59:19', '2024-08-16 08:59:19'),
+(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:09', '2024-08-16 09:00:09'),
+(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:44', '2024-08-16 09:00:44');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

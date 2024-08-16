@@ -3,24 +3,10 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
-        @if($pageData['ViewType'] == 'Edit')
-            <div class="row mb-2">
-                <div class="col-6">
-                    <h1 class="def_h1_new">{!! print_h1($rowData) !!}</h1>
-                </div>
-                @if(IsConfig($config,'categoryAddOnlyLang',false))
-                    <div class="col-6 dir_button">
-                        <x-admin.lang.delete-button :row="$rowData"/>
-                        <x-admin.lang.add-new-button :tip="false" :row="$rowData"/>
-                    </div>
-                @endif
-            </div>
-        @endif
+        @include('admin.mainView.category.inc_but_edit_form')
     </x-admin.hmtl.section>
 
-
     <x-admin.hmtl.section>
-
         <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="config" value="{{json_encode($config)}}">
             <input type="hidden" name="add_lang" value="{{json_encode($LangAdd)}}">

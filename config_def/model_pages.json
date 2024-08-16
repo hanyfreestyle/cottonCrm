@@ -10,5 +10,6 @@
     "categoryDes": true,
     "categorySeo": true,
     "categorySlug": true,
-    "categoryAddOnlyLang": true
+    "categoryWebSlug": null,
+    "categoryAddOnlyLang": false
 }

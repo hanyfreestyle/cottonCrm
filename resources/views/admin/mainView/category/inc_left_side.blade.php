@@ -27,6 +27,7 @@
             @if(IsConfig($config, 'categoryIcon'))
                 <hr>
                 <x-admin.form.upload-model-photo :page="$pageData" :row="$rowData" col="12" file-name="icon" db-name="icon"
+                                                 :label="__('admin/def.form_photo_icon_upload')"
                                                  filter-input-name="IconFilter" filter-name="_iconfilterid" route=".emptyIcon"/>
             @endif
 

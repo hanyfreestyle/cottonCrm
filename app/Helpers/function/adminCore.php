@@ -155,6 +155,7 @@ if (!function_exists('getDefModelConfig')) {
             'categoryDes' => true,
             'categorySeo' => true,
             'categorySlug' => true,
+            "categoryWebSlug" => null,
             'categoryAddOnlyLang' => false,
 
 

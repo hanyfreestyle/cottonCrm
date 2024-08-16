@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 07:53 AM
+-- Generation Time: Aug 16, 2024 at 11:01 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart`
+-- Database: `cottton_crm`
 --
 
 --
@@ -26,10 +26,12 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `page_category_translations` (`id`, `category_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`) VALUES
-(1, 1, 'ar', 'الصفحات-الرئيسية', 'الصفحات الرئيسية', 'الصفحات الرئيسية', 'الصفحات الرئيسية', 'الصفحات الرئيسية'),
-(2, 1, 'en', 'main-cat', 'Main Cat', 'Main Cat', 'Main Cat', 'Main Cat'),
-(3, 2, 'ar', 'محتوى-المنتجات', 'محتوى المنتجات', 'محتوى المنتجات', 'محتوى المنتجات', 'محتوى المنتجات'),
-(4, 2, 'en', 'محتوى-المنتجات', 'محتوى المنتجات', 'محتوى المنتجات', 'محتوى المنتجات', 'محتوى المنتجات');
+(1, 1, 'ar', 'الصفحات-الرئيسية', 'الصفحات الرئيسية', 'الصفحات الرئيسية', NULL, NULL),
+(2, 1, 'en', 'main-page', 'Main Page', 'Main Page', NULL, NULL),
+(3, 2, 'ar', 'الخدمات', 'الخدمات', 'الخدمات', NULL, NULL),
+(4, 2, 'en', 'services', 'Services', 'Services', NULL, NULL),
+(5, 3, 'ar', 'قائمة-العملاء', 'قائمة العملاء', 'قائمة العملاء', NULL, NULL),
+(6, 3, 'en', 'our-client', 'Our Client', 'Our Client', NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

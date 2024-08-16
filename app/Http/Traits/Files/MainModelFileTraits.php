@@ -2,6 +2,9 @@
 
 namespace App\Http\Traits\Files;
 
+use App\AppPlugin\Pages\Models\PageCategory;
+use App\AppPlugin\Pages\Models\PageCategoryTranslation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 trait MainModelFileTraits {
@@ -103,6 +106,14 @@ trait MainModelFileTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
+        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+            SeedDbFile(PageCategory::class, 'page_categories.sql');
+            SeedDbFile(PageCategoryTranslation::class, 'page_category_translations.sql');
+
+
+//           $this->call(PageSeeder::class);
+        }
+
 
 //        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
 //            SeedDbFile(CrmCustomers::class, 'crm_customers.sql');
@@ -122,12 +133,7 @@ trait MainModelFileTraits {
 //            $this->call(FaqSeeder::class);
 //        }
 //
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-//            SeedDbFile(CrmCustomers::class, 'crm_customers.sql');
-//            SeedDbFile(CrmCustomersAddress::class, 'crm_customers_address.sql');
 
-//            $this->call(PageSeeder::class);
-        }
 
 
 //        if (File::isFile(base_path('routes/AppPlugin/crm/ImportData.php'))) {

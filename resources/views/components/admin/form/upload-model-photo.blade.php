@@ -36,13 +36,12 @@
 
             @if($viewType == true)
                 @if(isset($row->$dbName) and $row->$dbName != '')
-                    <label class="col-md-12 col-form-label fileUploadCurrent_label "> {{ $labelPhoto }}</label>
-                    <div class="col-md-12 fileUploadCurrent mt-3">
-                        <img class="img-thumbnail rounded" src="{{defImagesDir($row->$dbName)}}">
+                    <div class="col-md-12 form_current_photo mt-3">
+                        <img class="rounded" src="{{defImagesDir($row->$dbName)}}">
                     </div>
                     @if($remove)
                         @if(!isset($row->old_id))
-                            <div class="row mt-3 mr-2 ml-2">
+                            <div class="row mb-3 mr-2 ml-2 {{printFloatDir()}}">
                                 <x-admin.form.action-button url="{{route($PrefixRoute.$route,$row->id)}}" type="delete" :tip="false"/>
                             </div>
                         @endif

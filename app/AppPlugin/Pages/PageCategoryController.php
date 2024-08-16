@@ -13,6 +13,7 @@ use App\Http\Traits\CategoryTraits;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
@@ -69,7 +70,6 @@ class PageCategoryController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroyException($id) {
-
         if (!IsConfig($this->config, 'categoryDelete')) {
             abort(403);
         }
@@ -93,9 +93,13 @@ class PageCategoryController extends AdminMainController {
         } else {
             return back()->with(['confirmException' => '', 'fromModel' => 'CategoryPages', 'deleteRow' => $deleteRow]);
         }
-
         self::ClearCash();
-        return back()->with('confirmDelete', "");
+        if (Route::currentRouteName() == $this->PrefixRoute . '.destroyEdit') {
+            return redirect()->route($this->PrefixRoute . '.index')->with('confirmDelete', "");
+        } else {
+            return back()->with('confirmDelete', "");
+        }
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

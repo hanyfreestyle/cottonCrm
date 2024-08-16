@@ -24,6 +24,8 @@ Route::get('/page-category/emptyPhoto/{id}', [PageCategoryController::class,'emp
 Route::get('/page-category/DeleteLang/{id}',[PageCategoryController::class,'DeleteLang'])->name('Pages.PageCategory.DeleteLang');
 Route::post('/page-category/update/{id}',[PageCategoryController::class,'CategoryStoreUpdate'])->name('Pages.PageCategory.update');
 Route::get('/page-category/destroy/{id}',[PageCategoryController::class,'destroyException'])->name('Pages.PageCategory.destroy');
+Route::get('/page-category/destroyEdit/{id}',[PageCategoryController::class,'destroyException'])->name('Pages.PageCategory.destroyEdit');
+
 Route::get('/page-category/config', [PageCategoryController::class,'CategoryConfig'])->name('Pages.PageCategory.config');
 Route::get('/page-category/emptyIcon/{id}', [PageCategoryController::class,'emptyIcon'])->name('Pages.PageCategory.emptyIcon');
 Route::get('/page-category/sort/{id}',[PageCategoryController::class,'CategorySort'])->name('Pages.PageCategory.CatSort');
