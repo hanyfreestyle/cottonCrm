@@ -46,34 +46,30 @@ class PageController extends AdminMainController {
         $this->PrefixTags = "admin.PageTags";
         View::share('PrefixTags', $this->PrefixTags);
 
-        $Config = self::LoadConfig();
-        View::share('Config', $Config);
+
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
+
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => [
-                'filterid' => $Config['postPhotoAdd'],
-                "editor" => $Config['postEditor'],
-                'morePhotoFilterid' => $Config['TableMorePhotos']
-            ],
-            'yajraTable' => true,
-            'AddLang' => true,
-            'AddMorePhoto' => true,
-            'restore' => 1,
+            'settings' => getDefSettings($this->config),
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
+        self::constructData($sendArr);
 
-        self::loadConstructData($sendArr);
+
 
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
-        Cache::forget('CashProductPageInfo');
+        Cache::forget('XXXXXXXXXXXXXXXXXXXX');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -86,13 +82,13 @@ class PageController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostStoreUpdate(DefPostRequest $request, $id = 0) {
         return self::TraitsPostStoreUpdate($request, $id);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostForceDeleteException($id) {
         $deleteRow = $this->model::onlyTrashed()->where('id', $id)->with('more_photos')->firstOrFail();
         if (count($deleteRow->more_photos) > 0) {

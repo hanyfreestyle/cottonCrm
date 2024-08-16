@@ -38,7 +38,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-12 float-left text-left">
                     <x-admin.form.submit-role-back :page-data="$pageData"/>
                 </div>

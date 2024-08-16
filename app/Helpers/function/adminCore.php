@@ -138,7 +138,7 @@ if (!function_exists('getDefModelConfig')) {
     function getDefModelConfig() {
         $defPostConfig = [
             'TableCategory' => true,
-//            'TableTags' => false,
+            'TableTags' => true,
 //            'TableTagsOnFly' => false,
 //            'TableReview' => false,
 
@@ -158,19 +158,15 @@ if (!function_exists('getDefModelConfig')) {
             "categoryWebSlug" => null,
             'categoryAddOnlyLang' => false,
 
-
-//            'postPublishedDate' => false,
-//            'postPhotoAdd' => false,
-//            'postPhotoView' => false,
-//            'postFullRow' => false,
+            'postPublishedDate' => true,
+            'postPhotoAdd' => true,
+            'postEditor' => true,
+            'postDes' => true,
+            'postSeo' => true,
+            'postSlug' => false,
+            'postYoutube' => false,
+            'postWebSlug' => null,
 //            'postShowLang' => true,
-//            'postEditor' => true,
-//            'postDes' => true,
-//            'postSeo' => false,
-//            'postSlug' => false,
-//            'postYoutube' => false,
-//            'postWebSlug' => null,
-//            'postAddBrand' => false,
         ];
 
         return $defPostConfig;

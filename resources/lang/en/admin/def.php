@@ -2,6 +2,7 @@
 
 return
 [
+	'but_slug_view' => '',
 	'category_des' => '',
 	'category_main' => 'Main Category',
 	'category_name' => 'Category Name',
@@ -33,5 +34,5 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'but_slug_view' => '',
+	'form_tags' => '',
 ];

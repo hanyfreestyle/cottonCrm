@@ -2,6 +2,7 @@
 
 return
 [
+	'but_slug_view' => 'عرض المحتوى',
 	'category_des' => 'وصف المجموعة',
 	'category_main' => 'المجموعات الرئيسية',
 	'category_name' => 'اسم المجموعة',
@@ -33,5 +34,5 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'but_slug_view' => 'عرض المحتوى',
+	'form_tags' => 'الكلمات البحثية',
 ];

@@ -5,9 +5,7 @@
                 <div class="info">{{__('admin/def.lable_date_add')}} : <span> {{ PrintDate($rowData->created_at) }}</span></div>
                 <div class="info">{{__('admin/def.lable_date_update')}} : <span>{{ PrintDate($rowData->updated_at , "Y-m-d H:i:s") }}</span></div>
             </div>
-
         </div>
-
     @endif
 
     @if(IsConfig($config, 'categoryTree'))

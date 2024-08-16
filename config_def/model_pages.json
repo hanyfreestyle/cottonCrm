@@ -1,5 +1,6 @@
 {
     "TableCategory": true,
+    "TableTags": true,
     "categoryTree": false,
     "categoryDeep": 2,
     "categoryPhotoAdd": true,
@@ -11,5 +12,14 @@
     "categorySeo": true,
     "categorySlug": true,
     "categoryWebSlug": null,
-    "categoryAddOnlyLang": false
+    "categoryAddOnlyLang": false,
+
+    "postPublishedDate": true,
+    "postPhotoAdd": true,
+    "postEditor": true,
+    "postDes": true,
+    "postSeo": true,
+    "postSlug": true,
+    "postYoutube": true,
+    "postWebSlug": null
 }

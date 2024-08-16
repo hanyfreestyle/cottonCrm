@@ -21,6 +21,8 @@ trait PageConfigTraits {
             'DbTagsTrans' => 'page_tags_translations',
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/def.category_des'),
+            'LangPostDefName' => __('admin/pages.form_name'),
+            'LangPostDefDes' => __('admin/pages.form_des'),
         ];
         $defConfig = getConfigFromJson('model_pages');
 

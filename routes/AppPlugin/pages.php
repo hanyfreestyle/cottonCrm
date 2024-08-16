@@ -33,10 +33,10 @@ Route::post('/page-category/save-sort',[PageCategoryController::class,'CategoryS
 
 
 
-Route::get('/pages',[PageController::class,'PostIndex'])->name('Pages.PageList.index');
+Route::get('/pages/',[PageController::class,'PostIndex'])->name('Pages.PageList.index');
 Route::get('/pages/DataTable',[PageController::class,'PostDataTable'])->name('Pages.PageList.DataTable');
-Route::get('/pages/Category/{Categoryid}',[PageController::class,'PostListCategory'])->name('Pages.PageList.ListCategory');
-Route::get('/pages/SoftDelete/',[PageController::class,'PostSoftDeletes'])->name('Pages.PageList.SoftDelete');
+Route::get('/pages/category/{Categoryid}',[PageController::class,'PostListCategory'])->name('Pages.PageList.ListCategory');
+Route::get('/pages/soft-delete/',[PageController::class,'PostSoftDeletes'])->name('Pages.PageList.SoftDelete');
 
 Route::get('/pages/create',[PageController::class,'PostCreate'])->name('Pages.PageList.create');
 Route::get('/pages/create/ar',[PageController::class,'PostCreate'])->name('Pages.PageList.create_ar');
