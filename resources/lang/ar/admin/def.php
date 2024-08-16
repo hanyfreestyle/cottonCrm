@@ -19,6 +19,7 @@ return
 	'form_current_photo' => 'الصورة الحالية',
 	'form_photo_icon_upload' => 'تحميل ايكون',
 	'form_photo_upload' => 'تحميل صورة',
+	'form_tags' => 'الكلمات البحثية',
 	'icon' => 'Icon',
 	'lable_date_add' => 'تاريخ الانشاء',
 	'lable_date_update' => 'اخر تحديد بتاريخ',
@@ -34,5 +35,5 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'form_tags' => 'الكلمات البحثية',
+	'category_list' => 'المجموعات',
 ];

@@ -34,7 +34,7 @@ Route::post('/page-category/save-sort',[PageCategoryController::class,'CategoryS
 
 
 Route::get('/pages/',[PageController::class,'PostIndex'])->name('Pages.PageList.index');
-Route::get('/pages/DataTable',[PageController::class,'PostDataTable'])->name('Pages.PageList.DataTable');
+Route::get('/pages/DataTable/',[PageController::class,'PostDataTable'])->name('Pages.PageList.DataTable');
 Route::get('/pages/category/{Categoryid}',[PageController::class,'PostListCategory'])->name('Pages.PageList.ListCategory');
 Route::get('/pages/soft-delete/',[PageController::class,'PostSoftDeletes'])->name('Pages.PageList.SoftDelete');
 

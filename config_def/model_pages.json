@@ -14,6 +14,7 @@
     "categoryWebSlug": null,
     "categoryAddOnlyLang": false,
 
+    "postDelete": true,
     "postPublishedDate": true,
     "postPhotoAdd": true,
     "postEditor": true,

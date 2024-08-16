@@ -17,4 +17,6 @@
     @endif
 @elseif($type == 'isActive')
     {data: 'isActive', name: 'isActive', orderable: false, searchable: false, className: "text-center"},
+
 @endif
+

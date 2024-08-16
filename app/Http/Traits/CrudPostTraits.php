@@ -4,9 +4,11 @@ namespace App\Http\Traits;
 
 
 use App\Helpers\AdminHelper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Yajra\DataTables\Facades\DataTables;
 
 trait CrudPostTraits {
 
@@ -17,6 +19,9 @@ trait CrudPostTraits {
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
+
+        $data = self::postIndexQuery($this->config);
+//        dd($data->first());
 
 //        if ($this->viewDataTable and $this->yajraTable) {
 //            return view('admin.mainView.post.index_DataTable', compact('pageData'));
@@ -32,6 +37,88 @@ trait CrudPostTraits {
 //            'id' => $id,
         ]);
 
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostDataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::postIndexQuery($this->config);
+            return self::PostColumns($rowData)->make(true);
+        }
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function postIndexQuery($config) {
+
+
+        $table = $config['DbPost'];
+        $table_trans = $config['DbPostTrans'];
+        $table_trans_foreign = $config['DbPostCatId'];
+//         dd($config);
+
+        $data = DB::table("$table")
+            ->where("$table.deleted_at", null)
+            ->leftJoin("$table_trans", function ($join) use ($table, $table_trans, $table_trans_foreign) {
+                $join->on("$table.id", '=', "$table_trans.$table_trans_foreign");
+                $join->where("$table_trans.locale", '=', 'ar');
+            })
+            ->leftJoin("users", function ($join) use ($table) {
+                $join->on("$table.user_id", '=', 'users.id');
+            })
+            ->select("$table.id as id",
+                "$table.published_at as published_at",
+                "$table.is_active as isActive",
+                "$table.photo_thum_1 as photo",
+                "$table_trans.name as name",
+                "$table_trans.slug as slug",
+                "users.name as user_name",
+            );
+
+//        $data->where('blog_post.is_active', $isActive);
+//        $teamleader = Auth::user()->can('Blog_teamleader');
+//        if (!$teamleader) {
+//            $data->where('blog_post.user_id', Auth::user()->id);
+//        }
+
+        return $data;
+    }
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+
+            })
+            ->editColumn('published_at', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->published_at)),
+                    'timestamp' => strtotime($row->published_at)
+                ];
+            })
+
+
+            ->editColumn('photo', function ($row) {
+                return TablePhoto($row, 'photo');
+            })
+            ->editColumn('isActive', function ($row) {
+                return is_active($row->isActive);
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

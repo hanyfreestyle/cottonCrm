@@ -7,6 +7,13 @@
          @if(IsArr($modelSettings,$controllerName."_view_photo",0))
             <th class="td_action {{$res}}"></th>
         @endif
+    @elseif($type == 'PublishedDate')
+        <th class="td_action {{$res}}">{{__('admin/form.text_published_at')}}</th>
+    @elseif($type == 'CategoryList')
+        <th class="td_action {{$res}}">{{__('admin/def.category_list')}}</th>
+
+
+
     @elseif($type == 'edit')
         @can($PrefixRole.'_edit')
             <th class="td_action {{$res}}"></th>

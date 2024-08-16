@@ -19,6 +19,7 @@ return
 	'form_current_photo' => 'Current Photo',
 	'form_photo_icon_upload' => '',
 	'form_photo_upload' => 'Upload Photo',
+	'form_tags' => '',
 	'icon' => 'Icon',
 	'lable_date_add' => '',
 	'lable_date_update' => '',
@@ -34,5 +35,5 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'form_tags' => '',
+	'category_list' => '',
 ];

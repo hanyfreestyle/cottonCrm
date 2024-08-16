@@ -61,6 +61,7 @@ class PageController extends AdminMainController {
         ];
         self::constructData($sendArr);
 
+//        dd($this->config);
 
 
     }
@@ -72,16 +73,7 @@ class PageController extends AdminMainController {
         Cache::forget('XXXXXXXXXXXXXXXXXXXX');
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   PostDataTable
-    public function PostDataTable(Request $request) {
-        if ($request->ajax()) {
-            $data = $this->model::select(['page_pages.id', 'photo_thum_1', 'is_active', 'published_at'])->with('tablename');
-            return self::DataTableAddColumns($data)->make(true);
-        }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostStoreUpdate(DefPostRequest $request, $id = 0) {
         return self::TraitsPostStoreUpdate($request, $id);
