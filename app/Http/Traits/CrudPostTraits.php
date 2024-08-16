@@ -21,14 +21,6 @@ trait CrudPostTraits {
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
 
         $data = self::postIndexQuery($this->config);
-//        dd($data->first());
-
-//        if ($this->viewDataTable and $this->yajraTable) {
-//            return view('admin.mainView.post.index_DataTable', compact('pageData'));
-//        } else {
-//            $rowData = self::getSelectQuery($this->model::def());
-//            return view('admin.mainView.post.index', compact('pageData', 'rowData'));
-//        }
 
         return view('admin.mainView.post.index')->with([
             'pageData' => $pageData,
@@ -96,8 +88,8 @@ trait CrudPostTraits {
             ->addIndexColumn()
             ->editColumn('id', function ($row) {
                 return returnTableId($this->agent, $row);
-
             })
+
             ->editColumn('published_at', function ($row) {
                 return [
                     'display' => date("Y-m-d", strtotime($row->published_at)),
@@ -138,12 +130,13 @@ trait CrudPostTraits {
         $selCat = [];
 
         if (IsConfig($this->config, 'TableTags')) {
-            $tags = $this->modelTags::where('id', '!=', 0)->take(100)->get();
+            $tags = $this->modelTags::where('id', '!=', 0)->get();
             $selTags = [];
         } else {
             $tags = [];
             $selTags = [];
         }
+
 
         return view('admin.mainView.post.form')->with([
             'pageData' => $pageData,
@@ -176,7 +169,7 @@ trait CrudPostTraits {
 
         if (IsConfig($this->config, 'TableTags')) {
             $selTags = $rowData->tags()->pluck('tag_id')->toArray();
-            $tags = $this->modelTags::whereIn('id', $selTags)->take(50)->get();
+            $tags = $this->modelTags::query()->get();
         } else {
             $tags = [];
             $selTags = [];

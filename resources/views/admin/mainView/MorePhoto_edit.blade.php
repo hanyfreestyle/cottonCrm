@@ -53,7 +53,7 @@
 @endsection
 
 @push('JsCode')
-  @if($viewEditor)
+
     <x-admin.form.ckeditor-jave height="350"/>
-  @endif
+
 @endpush

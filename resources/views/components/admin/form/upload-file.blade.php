@@ -1,11 +1,12 @@
 @if($addFilterList)
   @if(intval($thisfilterid) == 0)
-    <x-admin.form.select-arr label="{{__('admin/config/upFilter.form_select_filter_lable')}}" name="{{$filterName}}" colrow="col-lg-6"
+    <x-admin.form.select-arr label="{{__('admin/config/upFilter.form_select_filter_lable')}}" name="{{$filterName}}" col="12"
                              sendvalue="{{old('filter_id')}}" :send-arr="$filterTypes"/>
   @else
     <input type="hidden" name="{{$filterName}}" value="{{ $thisfilterid }}">
   @endif
 @endif
+
 <div class="{{$rowCol}}">
   <div class="form-group">
     <label class="col-md-12 col-form-label">{{$label}}
@@ -13,9 +14,9 @@
         <span class="required_Span">*</span>
       @endif
     </label>
-    <div class="uploadNotes">
-      {{$notes}}
-    </div>
+{{--    <div class="uploadNotes">--}}
+{{--      {{$notes}}--}}
+{{--    </div>--}}
 
     <div class="col-md-12">
       <input class="form-control @error($fileName) is-invalid @enderror" type="file" name="{{$fileName}}@if($multiple)[]@endif"

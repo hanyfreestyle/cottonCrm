@@ -16,16 +16,19 @@ trait TagsTraits {
         Cache::forget('ss');
     }
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsIndex
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsIndex() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         return view('admin.mainView.tags.index', compact('pageData'));
     }
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   DataTable
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsDataTable(Request $request) {
         if ($request->ajax()) {
             $data = self::TagsindexQuery($this->DbTags, $this->DbTagsTrans);
@@ -33,36 +36,62 @@ trait TagsTraits {
         }
     }
 
+    public function TagsindexQuery($table, $table_trans) {
+
+        $data = DB::table($table)
+            ->Join($table_trans, $table . '.id', '=', $table_trans . '.tag_id')
+            ->where($table_trans . '.locale', '=', DefModelConfigTraits::defLangStatic())
+            ->select("$table.id as id",
+                "$table.is_active as is_active",
+                "$table_trans.name",
+            );
+        return $data;
+    }
+
+    public function TagsDataTableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('is_active', function ($row) {
+                return is_active($row->is_active);
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'is_active']);
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsCreate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsCreate() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $rowData = $this->tags::findOrNew(0);
-        return view('admin.mainView.tags.form')->with(
-            [
-                'pageData' => $pageData,
-                'rowData' => $rowData,
-            ]
-        );
+        return view('admin.mainView.tags.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsEdit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsEdit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = $this->tags::where('id', $id)->firstOrFail();
-        return view('admin.mainView.tags.form')->with(
-            [
-                'pageData' => $pageData,
-                'rowData' => $rowData,
-            ]
-        );
+        return view('admin.mainView.tags.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TraitsTagsStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TraitsTagsStoreUpdate($request, $id) {
         $saveData = $this->tags::findOrNew($id);
         try {
@@ -87,7 +116,7 @@ trait TagsTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsDelete
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsDelete($id) {
         $deleteRow = $this->tags::where('id', $id)->firstOrFail();
         try {
@@ -110,7 +139,7 @@ trait TagsTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   TagsSearch
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsSearch(Request $request) {
         if (!empty($_GET['type']) && $_GET['type'] == 'TagsSearch') {
             $search = $request->search;
@@ -128,7 +157,7 @@ trait TagsTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # TagsOnFly
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsOnFly(Request $request) {
         $response = array('addDone' => false);
         if ($request->newTagData['newTag'] == true) {
@@ -149,38 +178,6 @@ trait TagsTraits {
             }
         }
         return response()->json($response);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     indexQuery
-    public function TagsindexQuery($table, $table_trans) {
-
-        $data = DB::table($table)
-            ->Join($table_trans, $table . '.id', '=', $table_trans . '.tag_id')
-            ->where($table_trans . '.locale', '=', DefModelConfigTraits::defLangStatic())
-            ->select("$table.id as id",
-                "$table.is_active as is_active",
-                "$table_trans.name",
-            );
-        return $data;
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  DataTableAddColumns
-    public function TagsDataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
-            ->addIndexColumn()
-            ->editColumn('is_active', function ($row) {
-                return is_active($row->is_active);
-            })
-            ->editColumn('Edit', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-            })
-            ->editColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->rawColumns(['Edit', "Delete", 'is_active']);
     }
 
 }

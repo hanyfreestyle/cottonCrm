@@ -1,6 +1,11 @@
 {
     "TableCategory": true,
     "TableTags": true,
+    "TableTagsOnFly": true,
+    "TableReview": false,
+    "TableMorePhotos": true,
+    "MorePhotosEdit": true,
+
     "categoryTree": false,
     "categoryDeep": 2,
     "categoryPhotoAdd": true,
@@ -13,14 +18,12 @@
     "categorySlug": true,
     "categoryWebSlug": null,
     "categoryAddOnlyLang": false,
-
-    "postDelete": true,
     "postPublishedDate": true,
     "postPhotoAdd": true,
     "postEditor": true,
     "postDes": true,
     "postSeo": true,
-    "postSlug": true,
-    "postYoutube": true,
+    "postSlug": false,
+    "postYoutube": false,
     "postWebSlug": null
 }

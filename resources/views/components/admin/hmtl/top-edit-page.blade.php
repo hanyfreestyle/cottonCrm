@@ -10,7 +10,7 @@
           <x-admin.lang.delete-button :row="$row"/>
         @endif
 
-        @if($Config['TableMorePhotos'])
+        @if($config['TableMorePhotos'])
           <x-admin.form.action-button url="{{route($PrefixRoute.'.More_Photos',$row->id)}}" type="morePhoto" :tip="false"/>
         @endif
 

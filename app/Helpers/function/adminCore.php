@@ -139,11 +139,10 @@ if (!function_exists('getDefModelConfig')) {
         $defPostConfig = [
             'TableCategory' => true,
             'TableTags' => true,
-//            'TableTagsOnFly' => false,
-//            'TableReview' => false,
-
-//            'TableMorePhotos' => true,
-//            'MorePhotosEdit' => true,
+            'TableTagsOnFly' => true,
+            'TableReview' => false,
+            'TableMorePhotos' => true,
+            'MorePhotosEdit' => true,
 
             'categoryTree' => false,
             'categoryDeep' => 2,

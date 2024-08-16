@@ -40,8 +40,10 @@ class PageController extends AdminMainController {
         $this->modelPhoto = new PagePhoto();
         $this->photoTranslation = new PagePhotoTranslation();
         $this->modelTags = new PageTags();
+
         $this->UploadDirIs = 'pages';
         $this->translationdb = 'page_id';
+        $this->modelPhotoColumn = 'page_id';
 
         $this->PrefixTags = "admin.PageTags";
         View::share('PrefixTags', $this->PrefixTags);

@@ -6,7 +6,7 @@
     <x-admin.card.def :page-data="$pageData">
       <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
         @csrf
-          <input type="hidden" name="config" value="{{json_encode($Config)}}">
+          <input type="hidden" name="config" value="{{json_encode($config)}}">
 
         <div class="row">
           @foreach ( config('app.web_lang') as $key=>$lang )
@@ -37,7 +37,4 @@
 @push('JsCode')
   <x-admin.table.sweet-delete-js/>
   <x-admin.java.update-slug :view-type="$pageData['ViewType']"/>
-  @if($viewEditor)
-    <x-admin.form.ckeditor-jave height="350"/>
-  @endif
 @endpush

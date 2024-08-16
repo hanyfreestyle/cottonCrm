@@ -15,7 +15,7 @@
 /public/ckfinder
 /public/images/product
 /public/images/category
-#/public/images
+/public/images
 /storage/*.key
 /database/snapshots
 /vendor

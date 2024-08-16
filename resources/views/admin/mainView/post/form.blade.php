@@ -3,7 +3,7 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
-{{--    <x-admin.hmtl.top-edit-page :page-data="$pageData" :row="$rowData" web-slug="BlogView"/>--}}
+    <x-admin.hmtl.top-edit-page :page-data="$pageData" :row="$rowData" web-slug="BlogView"/>
     <x-admin.hmtl.section>
         <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="form_type" value="{{$pageData['ViewType']}}">
@@ -69,9 +69,9 @@
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
     <x-admin.java.update-slug :view-type="$pageData['ViewType']"/>
-    {{--    @if($Config['TableTags'] and $Config['TableTagsOnFly'] )--}}
-    {{--        <x-admin.ajax.tag-serach/>--}}
-    {{--    @endif--}}
+    @if(IsConfig($config,'TableTags') and IsConfig($config,'TableTagsOnFly') )
+        <x-admin.ajax.tag-serach/>
+    @endif
     @if(IsConfig($config, 'postEditor'))
         <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
         @foreach ( config('app.web_lang') as $key=>$lang )
