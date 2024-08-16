@@ -2,8 +2,10 @@
 
 return
 [
+	'category_des' => '',
 	'category_main' => 'Main Category',
 	'category_name' => 'Category Name',
+	'category_status' => '',
 	'delete_date' => 'Delete Date',
 	'delete_force' => 'Force Delete',
 	'delete_restor' => 'Restore',
@@ -28,5 +30,6 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'category_status' => '',
+	'lable_date_add' => '',
+	'lable_date_update' => '',
 ];

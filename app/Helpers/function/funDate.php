@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -37,9 +38,30 @@ if (!function_exists('PrintDate')) {
         return $dateValue;
     }
 }
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getCurrentTime')) {
+    function getCurrentTime() {
+        if (config('app.timezone') == "Africa/Cairo") {
+            $now = Carbon::now(config('app.timezone'));
+            // الجمعة الأخيرة من شهر أبريل
+            $summerStart = Carbon::createFromDate(null, 4, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
+            // الجمعة الأخيرة من شهر أكتوبر
+            $summerEnd = Carbon::createFromDate(null, 10, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
+
+//            $summerEnd = Carbon::createFromDate($now->year, 8, 16, 'Africa/Cairo');
+
+            if ($now->between($summerStart, $summerEnd)) {
+                // تعديل التوقيت الصيفي
+                $now->addHour();
+            }
+        } else {
+            $now = Carbon::now(config('app.timezone'));
+        }
+        return $now;
+    }
+}
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

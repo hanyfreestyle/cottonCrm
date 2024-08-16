@@ -121,7 +121,7 @@ trait CategoryTraits {
 
         $data->leftJoin("$table as childCount", "$table.id", '=', 'childCount.parent_id')
             ->join("$table_trans", "$table.id", '=', "$table_trans.category_id")
-            ->where("$table_trans.locale", '=', 'ar')
+            ->where("$table_trans.locale", '=', dataTableDefLang())
             ->select(
                 "$table.id as id",
                 "$table.is_active as is_active",
@@ -196,6 +196,8 @@ trait CategoryTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TraitsCategoryStoreUpdate($request, $id) {
 
+
+
         if (intval($id) == 0) {
             $saveData = $this->model->findOrNew($id);
         } else {
@@ -207,6 +209,7 @@ trait CategoryTraits {
                 }
             }
         }
+
         try {
             DB::transaction(function () use ($request, $saveData) {
                 if (IsConfig($this->config, 'categoryTree')) {
@@ -216,7 +219,9 @@ trait CategoryTraits {
                     }
                 }
                 $saveData->is_active = intval((bool)$request->input('is_active'));
+                $saveData->updated_at = getCurrentTime();
                 $saveData->save();
+
 
                 self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
 
@@ -232,7 +237,7 @@ trait CategoryTraits {
 
                 $addLang = json_decode($request->add_lang);
                 foreach ($addLang as $key => $lang) {
-                    $dbName = $this->translationdb;
+                    $dbName = $this->DbCategoryForeign;
                     $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
                     $saveTranslation->$dbName = $saveData->id;
                     $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
@@ -248,6 +253,7 @@ trait CategoryTraits {
                         }
                     }
                 }
+
             });
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");

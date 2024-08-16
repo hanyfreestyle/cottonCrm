@@ -11,25 +11,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
-class PageCategory extends Model implements TranslatableContract  {
+class PageCategory extends Model implements TranslatableContract {
 
     use Translatable;
     use HasRecursiveRelationships;
 
     public $translatedAttributes = ['slug', 'name', 'des', 'g_title', 'g_des'];
-    protected $fillable = [''];
+    protected $fillable = ['updated_at'];
     protected $table = "page_categories";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'category_id';
+    public $timestamps = true;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     scopeDef
     public function scopeDef(Builder $query): Builder {
         return $query->with('translations')->withCount('children');
     }
-
-
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

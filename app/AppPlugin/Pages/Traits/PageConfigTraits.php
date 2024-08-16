@@ -8,7 +8,7 @@ trait PageConfigTraits {
 
     public function LoadConfig() {
 
-        $Config = [
+        $config = [
             'DbCategory' => 'page_categories',
             'DbCategoryTrans' => 'page_category_translations',
             'DbCategoryForeign' => 'category_id',
@@ -19,11 +19,12 @@ trait PageConfigTraits {
             'DbPhotoTrans' => 'page_photo_translations',
             'DbTags' => 'page_tags',
             'DbTagsTrans' => 'page_tags_translations',
-            'LangCategoryDefName' => null,
+            'LangCategoryDefName' => __('admin/def.category_name'),
+            'LangCategoryDefDes' => __('admin/def.category_des'),
         ];
         $defConfig = getConfigFromJson('model_pages');
 
-        $Config = array_merge($defConfig, $Config);
+        $Config = array_merge($defConfig, $config);
         foreach ($Config as $key => $value) {
             $this->$key = $value;
         }
@@ -36,6 +37,5 @@ trait PageConfigTraits {
         };
         return $Config->LoadConfig();
     }
-
 
 }

@@ -130,6 +130,34 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function loadCategoryPermission($arr) {
+
+        $defview = ['CategoryIndex'];
+        $defcreate = ['CategoryCreate'];
+        $defedit = ['CategoryEdit', 'emptyPhoto', 'CategoryConfig', 'emptyIcon', 'CategorySort'];
+        $defdelete = ['DeleteLang', 'destroyException'];
+
+
+        $view = array_merge($defview, issetArr($arr, 'view', []));
+        $create = array_merge($defcreate, issetArr($arr, 'create', []));
+        $edit = array_merge($defedit, issetArr($arr, 'edit', []));
+        $delete = array_merge($defdelete, issetArr($arr, 'delete', []));
+        $sub = issetArr($arr, 'sub', null);
+
+        $allPermission = array_merge($view, $create, $edit, $delete);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
+        if ($sub) {
+            $this->middleware('permission:' . $sub, ['only' => $allPermission]);
+        }
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadConstructData($sendArr) {
         $this->configView = AdminHelper::arrIsset($sendArr, 'configView', null);
 //        'configArr'=> ["datatable"=>1,"orderby"=>1,"orderbyPostion"=>1,"filterid"=>1,"morePhotoFilterid"=>1,"orderbyDate"=>1,"editor"=>1,"icon"=>1,]

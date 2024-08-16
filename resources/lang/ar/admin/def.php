@@ -2,8 +2,10 @@
 
 return
 [
+	'category_des' => 'وصف المجموعة',
 	'category_main' => 'المجموعات الرئيسية',
 	'category_name' => 'اسم المجموعة',
+	'category_status' => 'حالة المجموعة',
 	'delete_date' => 'تاريخ الحذف',
 	'delete_force' => 'حذف نهائى',
 	'delete_restor' => 'استعادة',
@@ -28,5 +30,6 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'category_status' => 'حالة المجموعة',
+	'lable_date_add' => 'تاريخ الانشاء',
+	'lable_date_update' => 'اخر تحديد بتاريخ',
 ];

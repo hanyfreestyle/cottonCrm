@@ -40,6 +40,7 @@ class DefCategoryRequest extends FormRequest {
         $id = $this->route('id');
 
         $rules = [
+            'is_active' => "required",
             'parent_id' => "nullable",
             'image' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
             'icon' => "nullable|mimes:jpg,jpeg,png,webp|max:1000",

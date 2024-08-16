@@ -31,13 +31,12 @@ class PageCategoryController extends AdminMainController {
         $this->PageTitle = __('admin/pages.app_menu_category');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
         $this->model = $model;
-
-        $this->UploadDirIs = 'pages-cat';
         $this->translation = $translation;
+        $this->UploadDirIs = 'pages-cat';
         $this->translationdb = 'category_id';
 
-
         $this->config = self::LoadConfig();
+
         if (IsConfig($this->config, 'TableCategory')) {
             self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
@@ -52,19 +51,9 @@ class PageCategoryController extends AdminMainController {
             'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
         self::constructData($sendArr);
-
-        $view = ['CategoryIndex'];
-        $create = ['CategoryCreate'];
-        $edit = ['CategoryEdit', 'emptyPhoto', 'CategoryConfig', 'emptyIcon', 'CategorySort'];
-        $delete = ['DeleteLang', 'destroyException'];
-        $allPermission = array_merge($view, $create, $edit, $delete);
-
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
-
+        self::loadCategoryPermission(array());
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
@@ -151,7 +140,7 @@ class PageCategoryController extends AdminMainController {
         $subMenu->sel_routs = "PageList.createNew";
         $subMenu->url = "admin.Pages.PageList.create";
         $subMenu->name = "admin/pages.app_menu_add_page";
-        $subMenu->roleView = "Pages_view";
+        $subMenu->roleView = "Pages_add";
         $subMenu->icon = "fas fa-plus-circle";
         $subMenu->save();
 
