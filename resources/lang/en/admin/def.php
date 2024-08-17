@@ -4,6 +4,7 @@ return
 [
 	'but_slug_view' => '',
 	'category_des' => '',
+	'category_list' => '',
 	'category_main' => 'Main Category',
 	'category_name' => 'Category Name',
 	'category_status' => '',
@@ -21,8 +22,10 @@ return
 	'form_photo_upload' => 'Upload Photo',
 	'form_tags' => '',
 	'icon' => 'Icon',
-	'lable_date_add' => '',
-	'lable_date_update' => '',
+	'label_date_add' => '',
+	'label_date_update' => '',
+	'label_published_at' => '',
+	'label_published_user' => '',
 	'new_new' => 'New Page',
 	'page_add' => 'Add New Data',
 	'page_config' => 'section settings',
@@ -35,5 +38,5 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'category_list' => '',
+	'label_deleted_at' => '',
 ];

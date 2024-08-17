@@ -211,7 +211,12 @@ if (!function_exists('AdminActiveMenu')) {
 }
 if (!function_exists('setActiveRoute')) {
     function setActiveRoute($main, $arrs = array()) {
-        $defArr = ['index', 'create', 'edit', 'config', 'index_Main', 'SubCategory', 'CatSort', 'editEn', 'editAr', 'create_ar', 'create_en', 'filter'];
+        $defArr = [
+            'index', 'create', 'edit', 'config', 'index_Main', 'SubCategory', 'CatSort',
+            'editEn', 'editAr', 'create_ar', 'create_en', 'filter','SoftDelete','FilterCategory',
+            'More_Photos', 'More_PhotosAdd', 'More_PhotosDestroyAll', 'More_PhotosEdit', 'More_PhotosEditAll',
+        ];
+
         $arrs = array_merge($defArr, $arrs);
         $line = "";
         foreach ($arrs as $arr) {

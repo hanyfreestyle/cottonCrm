@@ -142,7 +142,7 @@ class PageCategoryController extends AdminMainController {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "PageList.createNew";
-        $subMenu->url = "admin.Pages.PageList.create";
+        $subMenu->url = "admin.Pages.PageList.createNew";
         $subMenu->name = "admin/pages.app_menu_add_page";
         $subMenu->roleView = "Pages_add";
         $subMenu->icon = "fas fa-plus-circle";

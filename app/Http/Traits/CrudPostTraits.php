@@ -20,66 +20,94 @@ trait CrudPostTraits {
         $pageData['SubView'] = false;
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
 
-        $data = self::postIndexQuery($this->config);
-
+//        $data = self::postIndexQuery($this->config);
         return view('admin.mainView.post.index')->with([
             'pageData' => $pageData,
-//            'trees' => $trees,
-//            'route' => $route,
-//            'id' => $id,
+            'categoryId' => 0,
         ]);
 
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostListCategory($categoryId) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
 
+        return view('admin.mainView.post.index')->with([
+            'pageData' => $pageData,
+            'categoryId' => $categoryId,
+        ]);
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostDataTable(Request $request) {
         if ($request->ajax()) {
-            $rowData = self::postIndexQuery($this->config);
+            $rowData = self::postIndexQuery($this->config, 0);
             return self::PostColumns($rowData)->make(true);
         }
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostDataTableCategory(Request $request, $categoryId) {
+        if ($request->ajax()) {
+            $rowData = self::postIndexQuery($this->config, $categoryId);
+            return self::PostColumns($rowData)->make(true);
+        }
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function postIndexQuery($config) {
-
+    public function postIndexQuery($config, $categoryId) {
 
         $table = $config['DbPost'];
         $table_trans = $config['DbPostTrans'];
         $table_trans_foreign = $config['DbPostCatId'];
-//         dd($config);
+        $locale = dataTableDefLang();
+        $groups_table = $config['DbCategory'];
+        $group_trans_table = $config['DbCategoryTrans'];
+        $group_pivot_table = $config['DbCategoryPivot'];
+        $PrefixRole = $config['PrefixRole'];
 
-        $data = DB::table("$table")
-            ->where("$table.deleted_at", null)
-            ->leftJoin("$table_trans", function ($join) use ($table, $table_trans, $table_trans_foreign) {
-                $join->on("$table.id", '=', "$table_trans.$table_trans_foreign");
-                $join->where("$table_trans.locale", '=', 'ar');
-            })
-            ->leftJoin("users", function ($join) use ($table) {
-                $join->on("$table.user_id", '=', 'users.id');
-            })
-            ->select("$table.id as id",
-                "$table.published_at as published_at",
-                "$table.is_active as isActive",
-                "$table.photo_thum_1 as photo",
-                "$table_trans.name as name",
-                "$table_trans.slug as slug",
-                "users.name as user_name",
-            );
+        $data = DB::table($table)->whereNull("$table.deleted_at");
 
-//        $data->where('blog_post.is_active', $isActive);
-//        $teamleader = Auth::user()->can('Blog_teamleader');
-//        if (!$teamleader) {
-//            $data->where('blog_post.user_id', Auth::user()->id);
-//        }
+        if ($categoryId != 0) {
+            $data->where("$groups_table.id", '=', $categoryId);
+        }
+
+        $teamleader = Auth::user()->can($PrefixRole . '_teamleader');
+        if (!$teamleader) {
+            $data->where("$table.user_id", Auth::user()->id);
+        }
+
+        $data->leftJoin($table_trans, function ($join) use ($table, $table_trans, $table_trans_foreign, $locale) {
+            $join->on("$table.id", '=', "$table_trans.$table_trans_foreign")
+                ->where("$table_trans.locale", '=', $locale);
+        })
+            ->leftJoin("users", "$table.user_id", '=', 'users.id')
+            ->leftJoin($group_pivot_table, "$table.id", '=', "$group_pivot_table.$table_trans_foreign")
+            ->leftJoin($groups_table, "$group_pivot_table.category_id", '=', "$groups_table.id")
+            ->leftJoin($group_trans_table, function ($join) use ($groups_table, $group_trans_table, $locale) {
+                $join->on("$groups_table.id", '=', "$group_trans_table.category_id")
+                    ->where("$group_trans_table.locale", '=', $locale);
+            })
+            ->select(
+                "$table.id as id",
+                DB::raw("MAX($table.published_at) as published_at"),
+                DB::raw("MAX($table.is_active) as isActive"),
+                DB::raw("MAX($table.photo_thum_1) as photo"),
+                DB::raw("MAX($table_trans.name) as name"),
+                DB::raw("MAX($table_trans.slug) as slug"),
+                DB::raw("MAX(users.name) as user_name"),
+//                DB::raw("GROUP_CONCAT($group_trans_table.name) as category_names") // جمع أسماء المجموعات المترجمة
+                DB::raw("GROUP_CONCAT(CONCAT($groups_table.id, ':', $group_trans_table.name)) as category_names")
+            )
+            ->groupBy("$table.id");
+
 
         return $data;
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -89,15 +117,18 @@ trait CrudPostTraits {
             ->editColumn('id', function ($row) {
                 return returnTableId($this->agent, $row);
             })
-
             ->editColumn('published_at', function ($row) {
                 return [
                     'display' => date("Y-m-d", strtotime($row->published_at)),
                     'timestamp' => strtotime($row->published_at)
                 ];
             })
-
-
+            ->editColumn('CategoryName', function ($row) {
+                return view('datatable.but')->with(['btype' => 'CategoryName', 'row' => $row])->render();
+            })
+            ->editColumn('UserName', function ($row) {
+                return $row->user_name;
+            })
             ->editColumn('photo', function ($row) {
                 return TablePhoto($row, 'photo');
             })
@@ -110,7 +141,7 @@ trait CrudPostTraits {
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name', 'CategoryName']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -156,7 +187,7 @@ trait CrudPostTraits {
         $pageData['ViewType'] = "Edit";
 
         if (IsConfig($this->config, 'TableCategory')) {
-            $rowData = $this->model::where('id', $id)->with('categories')->firstOrFail();
+            $rowData = $this->model::defAdmin()->where('id', $id)->firstOrFail();
             $Categories = $this->modelCategory::all();
             $selCat = $rowData->categories()->pluck('category_id')->toArray();
         } else {
@@ -248,26 +279,70 @@ trait CrudPostTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostSoftDeletes() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "deleteList";
-        $pageData['SubView'] = false;
-        View::share('yajraTable', false);
-        $rowData = self::getSelectQuery($this->model::onlyTrashed());
-        return view('admin.mainView.post.index', compact('pageData', 'rowData'));
+
+        return view('admin.mainView.post.index_soft_deletes')->with([
+            'pageData' => $pageData,
+        ]);
     }
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SubCategory
-    public function PostListCategory($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $pageData['SubView'] = true;
-        $Category = $this->modelCategory::findOrFail($id);
-        $rowData = self::getSelectQuery($this->model::def()->whereHas('categories', function ($query) use ($id) {
-            $query->where('category_id', $id);
-        }));
-        return view('admin.mainView.post.index', compact('pageData', 'rowData'));
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostDataTableSoftDeletes(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::postIndexSoftDeletesQuery($this->config);
+            return self::PostSoftDeletesColumns($rowData)->make(true);
+        }
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function postIndexSoftDeletesQuery($config) {
+        $table = $config['DbPost'];
+        $table_trans = $config['DbPostTrans'];
+        $table_trans_foreign = $config['DbPostCatId'];
+        $locale = dataTableDefLang();
+        $data = DB::table($table)
+            ->where("$table.deleted_at", '!=', null)
+            ->leftJoin($table_trans, function ($join) use ($table, $table_trans, $table_trans_foreign, $locale) {
+                $join->on("$table.id", '=', "$table_trans.$table_trans_foreign")
+                    ->where("$table_trans.locale", '=', $locale);
+            })
+            ->select(
+                "$table.id as id",
+                DB::raw("MAX($table.deleted_at) as deleted_at"),
+                DB::raw("MAX($table_trans.name) as name"),
+            )->groupBy("$table.id");
+
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function PostSoftDeletesColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('deleted_at', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->deleted_at)),
+                    'timestamp' => strtotime($row->deleted_at)
+                ];
+            })
+            ->editColumn('Restore', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Restore', 'row' => $row])->render();
+            })
+            ->editColumn('ForceDelete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'ForceDelete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Restore', "ForceDelete"]);
     }
 
 }

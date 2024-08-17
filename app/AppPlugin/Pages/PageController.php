@@ -15,6 +15,7 @@ use App\Http\Requests\def\DefPostRequest;
 use App\Http\Traits\CrudPostTraits;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
@@ -25,6 +26,7 @@ class PageController extends AdminMainController {
     use CrudPostTraits;
     use PageConfigTraits;
 
+    protected $userId;
 
     function __construct() {
         parent::__construct();
@@ -49,6 +51,7 @@ class PageController extends AdminMainController {
         View::share('PrefixTags', $this->PrefixTags);
 
 
+
         $this->config = self::LoadConfig();
         View::share('config', $this->config);
 
@@ -58,15 +61,23 @@ class PageController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'settings' => getDefSettings($this->config,'post'),
+            'settings' => getDefSettings($this->config, 'post'),
             'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
+            'restore' => 1,
         ];
         self::constructData($sendArr);
 
 //        dd($this->config);
 
-
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+public function ModelConfig(Request $request){
+
+    $this->userId = $request->attributes->get('userId');
+    dd($this->userId);
+}
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -75,7 +86,7 @@ class PageController extends AdminMainController {
         Cache::forget('XXXXXXXXXXXXXXXXXXXX');
     }
 
-    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostStoreUpdate(DefPostRequest $request, $id = 0) {
         return self::TraitsPostStoreUpdate($request, $id);
@@ -84,6 +95,7 @@ class PageController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostForceDeleteException($id) {
+        dd('hi');
         $deleteRow = $this->model::onlyTrashed()->where('id', $id)->with('more_photos')->firstOrFail();
         if (count($deleteRow->more_photos) > 0) {
             foreach ($deleteRow->more_photos as $del_photo) {

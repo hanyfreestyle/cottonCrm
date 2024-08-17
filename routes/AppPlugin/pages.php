@@ -35,9 +35,13 @@ Route::post('/page-category/save-sort',[PageCategoryController::class,'CategoryS
 
 Route::get('/pages/',[PageController::class,'PostIndex'])->name('Pages.PageList.index');
 Route::get('/pages/DataTable/',[PageController::class,'PostDataTable'])->name('Pages.PageList.DataTable');
-Route::get('/pages/category/{Categoryid}',[PageController::class,'PostListCategory'])->name('Pages.PageList.ListCategory');
-Route::get('/pages/soft-delete/',[PageController::class,'PostSoftDeletes'])->name('Pages.PageList.SoftDelete');
+Route::get('/pages/category/{categoryId}',[PageController::class,'PostListCategory'])->name('Pages.PageList.FilterCategory');
+Route::get('/pages/category/DataTable/{categoryId}',[PageController::class,'PostDataTableCategory'])->name('Pages.PageList.DataTableCategory');
 
+Route::get('/pages/soft-delete/',[PageController::class,'PostSoftDeletes'])->name('Pages.PageList.SoftDelete');
+Route::get('/pages/soft-delete/DataTable/',[PageController::class,'PostDataTableSoftDeletes'])->name('Pages.PageList.DataTableSoftDeletes');
+
+Route::get('/pages/create/new',[PageController::class,'PostCreate'])->name('Pages.PageList.createNew');
 Route::get('/pages/create',[PageController::class,'PostCreate'])->name('Pages.PageList.create');
 Route::get('/pages/create/ar',[PageController::class,'PostCreate'])->name('Pages.PageList.create_ar');
 Route::get('/pages/create/en',[PageController::class,'PostCreate'])->name('Pages.PageList.create_en');
@@ -47,6 +51,7 @@ Route::get('/pages/editEn/{id}',[PageController::class,'PostEdit'])->name('Pages
 Route::post('/pages/update/{id}',[PageController::class,'PostStoreUpdate'])->name('Pages.PageList.update');
 
 Route::get('/pages/destroy/{id}',[PageController::class,'destroy'])->name('Pages.PageList.destroy');
+Route::get('/pages/destroy-edit/{id}',[PageController::class,'destroyEdit'])->name('Pages.PageList.destroyEdit');
 Route::get('/pages/restore/{id}',[PageController::class,'Restore'])->name('Pages.PageList.restore');
 Route::get('/pages/force/{id}',[PageController::class,'PostForceDeleteException'])->name('Pages.PageList.force');
 Route::get('/pages/DeleteLang/{id}',[PageController::class,'DeleteLang'])->name('Pages.PageList.DeleteLang');

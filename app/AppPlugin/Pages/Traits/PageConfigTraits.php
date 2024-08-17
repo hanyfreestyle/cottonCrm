@@ -4,13 +4,17 @@
 namespace App\AppPlugin\Pages\Traits;
 
 
+use Illuminate\Support\Facades\Auth;
+
 trait PageConfigTraits {
 
     public function LoadConfig() {
 
         $config = [
+            'PrefixRole' => $this->PrefixRole,
             'DbCategory' => 'page_categories',
             'DbCategoryTrans' => 'page_category_translations',
+            'DbCategoryPivot' => 'pagecategory_page',
             'DbCategoryForeign' => 'category_id',
             'DbPost' => 'page_pages',
             'DbPostTrans' => 'page_translations',
@@ -24,9 +28,11 @@ trait PageConfigTraits {
             'LangPostDefName' => __('admin/pages.form_name'),
             'LangPostDefDes' => __('admin/pages.form_des'),
         ];
+
+
         $defConfig = getConfigFromJson('model_pages');
 
-        $Config = array_merge($defConfig, $config);
+        $Config = array_merge($config, $defConfig);
         foreach ($Config as $key => $value) {
             $this->$key = $value;
         }

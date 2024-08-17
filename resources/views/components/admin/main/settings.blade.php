@@ -45,6 +45,17 @@
                                      :send-arr="$filterTypes"/>
         @endif
 
+
+        @if($dataTableUserName)
+            <x-admin.form.select-arr :label="__('admin/def.label_published_user')" name="{{$modelname}}_dataTableUserName" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_dataTableUserName',IsArr($modelSettings,$modelname.'_dataTableUserName',0))}}"/>
+       @endif
+
+        @if($dataTableDate)
+            <x-admin.form.select-arr :label="__('admin/def.label_published_at')" name="{{$modelname}}_dataTableDate" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_dataTableDate',IsArr($modelSettings,$modelname.'_dataTableDate',0))}}"/>
+        @endif
+
         {{--    @if($orderby)--}}
         {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_orderby')}}" name="{{$modelname}}_orderby" col="3"--}}
         {{--                               :send-arr="$OrderByArr"--}}

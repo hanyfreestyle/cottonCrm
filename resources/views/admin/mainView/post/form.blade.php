@@ -3,7 +3,10 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
-    <x-admin.hmtl.top-edit-page :page-data="$pageData" :row="$rowData" web-slug="BlogView"/>
+    <x-admin.hmtl.section>
+        @include('admin.mainView.post.inc_but_edit_form')
+    </x-admin.hmtl.section>
+
     <x-admin.hmtl.section>
         <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="form_type" value="{{$pageData['ViewType']}}">

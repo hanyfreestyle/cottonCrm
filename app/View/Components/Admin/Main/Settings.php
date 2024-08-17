@@ -22,6 +22,8 @@ class Settings extends Component {
     public $orderbyName;
 
     public $icon;
+    public $dataTableUserName;
+    public $dataTableDate;
 
 
     public function __construct(
@@ -49,6 +51,8 @@ class Settings extends Component {
         $this->orderbyName = IsArr($configArr, 'orderbyName', true);
 
         $this->icon = IsArr($configArr, 'icon', false);
+        $this->dataTableUserName = IsArr($configArr, 'dataTableUserName', false);
+        $this->dataTableDate = IsArr($configArr, 'dataTableDate', false);
 
 
         $OrderByArr = [

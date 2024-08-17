@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -154,7 +155,6 @@ if (!function_exists('getDefModelConfig')) {
             'categoryDes' => true,
             'categorySeo' => true,
             'categorySlug' => true,
-            "categoryWebSlug" => null,
             'categoryAddOnlyLang' => false,
 
             'postPublishedDate' => true,
@@ -162,10 +162,12 @@ if (!function_exists('getDefModelConfig')) {
             'postEditor' => true,
             'postDes' => true,
             'postSeo' => true,
-            'postSlug' => false,
-            'postYoutube' => false,
+            'postSlug' => true,
+            'postYoutube' => true,
+            'postAddOnlyLang' => true,
+
             'postWebSlug' => null,
-//            'postShowLang' => true,
+            "categoryWebSlug" => null,
         ];
 
         return $defPostConfig;
@@ -185,6 +187,8 @@ if (!function_exists('getDefSettings')) {
             $settings = [
                 'addPhoto' => IsConfig($conig, 'postPhotoAdd'),
                 'addMorePhoto' => IsConfig($conig, 'TableMorePhotos'),
+                'dataTableUserName' => true,
+                'dataTableDate' => true,
             ];
         }
         return $settings;
@@ -212,6 +216,8 @@ if (!function_exists('loadConfigFromJson')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getConfigFromJson')) {
     function getConfigFromJson($fileName) {
+
+//        dd(Auth::user());
 
         $folder = config('adminConfig.app_folder');
         $defConfig = getDefModelConfig();
@@ -266,6 +272,23 @@ if (!function_exists('returnTableId')) {
         }
     }
 }
+if (!function_exists('getDataTableCategoryName')) {
+    function getDataTableCategoryName($row, $PrefixRoute) {
+        $names = '';
+        foreach (explode(',', $row->category_names) as $name) {
+            $getId = explode(':', $name);
+            $printName = $getId['1'] ?? null;
+            $printId = $getId['0'] ?? 0;
+            if (intval($printId) > 0) {
+                $names .= '<a href="' . route($PrefixRoute . '.FilterCategory', $printId) . '"><span class="cat_table_name">' . $printName . '</span></a> ';
+            } else {
+                $names .= '<span class="cat_table_name">' . $printName . '</span> ';
+            }
+        };
+        return $names;
+    }
+}
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

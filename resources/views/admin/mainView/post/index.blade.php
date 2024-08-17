@@ -13,65 +13,24 @@
                 <thead>
                 <tr>
                     <th class="TD_20">#</th>
-                    <x-admin.table.action-but po="top" type="PublishedDate" res="all" :view-but="IsConfig($config, 'postPublishedDate')"/>
-                    <x-admin.table.action-but po="top" type="photo" res="all" :view-but="IsConfig($config, 'postPhotoAdd')"/>
+                    <x-admin.table.action-but res="d" po="top" type="photo" :view-but="IsConfig($config, 'postPhotoAdd')"/>
+                    <x-admin.table.action-but res="d" po="top" type="PublishedDate" :view-but="IsConfig($config, 'postPublishedDate')"/>
+                    <x-admin.table.action-but res="d" po="top" type="UserName" :view-but="true"/>
                     <th>{{DefCategoryTextName(IsConfig($config, 'LangPostDefName',null))}}</th>
-
-                    <x-admin.table.action-but po="top" type="isActive"/>
+                    <x-admin.table.action-but res="d" po="top" type="CategoryName" :view-but="IsConfig($config, 'TableCategory')"/>
+                    <x-admin.table.action-but res="d" po="top" type="isActive"/>
                     <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="delete" :view-but="IsConfig($config, 'postDelete')"/>
-
-
-
-                    {{--                    @if($pageData['ViewType'] == 'deleteList')--}}
-                    {{--                        <x-admin.table.soft-delete/>--}}
-                    {{--                    @else--}}
-
-                    {{--                        @if($Config['TableCategory'])--}}
-                    {{--                            <th class="TD_250">{{__('admin/blogPost.cat_text_name')}}</th>--}}
-                    {{--                        @endif--}}
-
-                    {{--                        <th class="TD_20"></th>--}}
-                    {{--                        <x-admin.table.action-but po="top" type="edit"/>--}}
-                    {{--                        <x-admin.table.action-but po="top" type="delete"/>--}}
-                    {{--                    @endif--}}
+                    <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
                 </tr>
                 </thead>
                 <tbody>
-                {{--                @foreach($rowData as $row)--}}
-                {{--                    <tr>--}}
-                {{--                        <td>{{$row->id}}</td>--}}
-                {{--                        @if($Config['postPhotoView'])--}}
-                {{--                            <td class="tc">{!! TablePhoto($row,'photo') !!} </td>--}}
-                {{--                        @endif--}}
-
-
-
-                {{--                        @if($pageData['ViewType'] == 'deleteList')--}}
-                {{--                            <x-admin.table.soft-delete type="b" :row="$row"/>--}}
-                {{--                        @else--}}
-
-                {{--                            @if($Config['TableCategory'])--}}
-                {{--                                <td>--}}
-                {{--                                    @foreach($row->categories as $Category )--}}
-                {{--                                        <a href="{{route($PrefixRoute.'.ListCategory',$Category->id)}}">--}}
-                {{--                                            <span class="cat_table_name">{{ print_h1($Category)}}</span>--}}
-                {{--                                        </a>--}}
-                {{--                                    @endforeach--}}
-                {{--                                </td>--}}
-                {{--                            @endif--}}
-
-
-                {{--                        @endif--}}
-                {{--                    </tr>--}}
-                {{--                @endforeach--}}
                 </tbody>
             </table>
-
         </x-admin.card.def>
 
 
     </x-admin.hmtl.section>
+
 @endsection
 
 @push('JsCode')
@@ -85,25 +44,25 @@
                 responsive: true,
                 pageLength: {{$yajraPerPage}},
                 @include('datatable.lang')
-                {{--ajax: "{{ route( $PrefixRoute.$route , $id) }}",--}}
+                    {{--ajax: "{{ route( $PrefixRoute.$route , $id) }}",--}}
+                @if($categoryId == '0')
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
+                @else
+                ajax: "{{ route( $PrefixRoute.".DataTableCategory",$categoryId) }}",
+                @endif
+
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
-                    {
-                        'name': 'published_at',
-                        'data': {
-                            '_': 'published_at.display',
-                            'sort': 'published_at.timestamp'
-                        }
-                    },
                         @include('datatable.index_action_but',['type'=> 'photo','view'=> IsConfig($config, 'postPhotoAdd')])
+                        @include('datatable.index_action_but',['type'=> 'PublishedDate','view'=> IsConfig($config, 'postPublishedDate')])
+                        @include('datatable.index_action_but',['type'=> 'UserName','view'=> true ])
                     {
                         data: 'name', name: '{{$config['DbCategoryTrans']}}.name', orderable: true, searchable: true
                     },
-
+                    @include('datatable.index_action_but',['type'=> 'CategoryName','view'=> IsConfig($config, 'TableCategory')])
                     @include('datatable.index_action_but',['type'=> 'isActive'])
                     @include('datatable.index_action_but',['type'=> 'edit'])
-                    @include('datatable.index_action_but',['type'=> 'delete','view'=> IsConfig($config, 'postDelete')])
+                    @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
                 ],
             });
         });

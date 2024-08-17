@@ -78,4 +78,4 @@
             <x-admin.java.ckeditor4 name="des_{{$key}}_{{$photo['id']}}" id="des_{{$key}}_{{$photo['id']}}" :dir="$key" :soft="true"/>
         @endforeach
     @endforeach
-@endpus
+@endpush

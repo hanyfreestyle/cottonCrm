@@ -23,6 +23,15 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function destroyEdit($id) {
+        $deleteRow = $this->model->where('id', $id)->firstOrFail();
+        $deleteRow->delete();
+        self::ClearCash();
+        return redirect()->route($this->PrefixRoute . '.index')->with('confirmDelete', "");
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Restore($id) {
         $restore = $this->model->onlyTrashed()->where('id', $id)->firstOrFail();
         $restore->restore();

@@ -4,6 +4,7 @@ return
 [
 	'but_slug_view' => 'عرض المحتوى',
 	'category_des' => 'وصف المجموعة',
+	'category_list' => 'المجموعات',
 	'category_main' => 'المجموعات الرئيسية',
 	'category_name' => 'اسم المجموعة',
 	'category_status' => 'حالة المجموعة',
@@ -21,8 +22,10 @@ return
 	'form_photo_upload' => 'تحميل صورة',
 	'form_tags' => 'الكلمات البحثية',
 	'icon' => 'Icon',
-	'lable_date_add' => 'تاريخ الانشاء',
-	'lable_date_update' => 'اخر تحديد بتاريخ',
+	'label_date_add' => 'تاريخ الانشاء',
+	'label_date_update' => 'اخر تحديد بتاريخ',
+	'label_published_at' => 'تاريخ النشر',
+	'label_published_user' => 'الناشر',
 	'new_new' => 'صفحة جديدة',
 	'page_add' => 'اضافة محتوى',
 	'page_config' => 'اعدادات قسم',
@@ -35,5 +38,5 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'category_list' => 'المجموعات',
+	'label_deleted_at' => 'تاريخ الحذف',
 ];

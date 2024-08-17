@@ -4,16 +4,21 @@
     @elseif($type == 'isActive')
         <th class="td_action {{$res}}"></th>
     @elseif($type == 'photo')
-         @if(IsArr($modelSettings,$controllerName."_view_photo",0))
+        @if(IsArr($modelSettings,$controllerName."_view_photo",0))
             <th class="td_action {{$res}}"></th>
         @endif
     @elseif($type == 'PublishedDate')
-        <th class="td_action {{$res}}">{{__('admin/form.text_published_at')}}</th>
-    @elseif($type == 'CategoryList')
-        <th class="td_action {{$res}}">{{__('admin/def.category_list')}}</th>
-
-
-
+        @if(IsArr($modelSettings,$controllerName."_dataTableDate",0))
+            <th class="TD_100 {{$res}}">{{__('admin/def.label_published_at')}}</th>
+        @endif
+    @elseif($type == 'deleted_at')
+        <th class="TD_100 {{$res}}">{{__('admin/def.label_deleted_at')}}</th>
+    @elseif($type == 'UserName')
+        @if(IsArr($modelSettings,$controllerName."_dataTableUserName",0))
+            <th class="TD_100 {{$res}}">{{__('admin/def.label_published_user')}}</th>
+        @endif
+    @elseif($type == 'CategoryName')
+        <th class="TD_250 {{$res}}">{{__('admin/def.category_list')}}</th>
     @elseif($type == 'edit')
         @can($PrefixRole.'_edit')
             <th class="td_action {{$res}}"></th>
