@@ -72,9 +72,10 @@
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
     <x-admin.java.update-slug :view-type="$pageData['ViewType']"/>
-    @if(IsConfig($config,'TableTags') and IsConfig($config,'TableTagsOnFly') )
-        <x-admin.ajax.tag-serach/>
+    @if(IsConfig($config,'TableTags'))
+        <x-admin.ajax.tag-serach :tags-on-fly="IsConfig($config,'TableTagsOnFly')"/>
     @endif
+
     @if(IsConfig($config, 'postEditor'))
         <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
         @foreach ( config('app.web_lang') as $key=>$lang )

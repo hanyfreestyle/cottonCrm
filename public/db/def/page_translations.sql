@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 10:31 PM
+-- Generation Time: Aug 17, 2024 at 06:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -26,7 +26,9 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `page_translations` (`id`, `page_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`, `youtube_title`) VALUES
-(1, 1, 'ar', NULL, 'عنوان الصفحة', '<p>محتوى الصفحة</p>', NULL, NULL, NULL);
+(1, 1, 'ar', 'الصفحة-الرئيسية', 'الصفحة الرئيسية', '<p>الصفحة الرئيسية</p>', 'عنوان الصفحة الصفحة الرئيسية', 'الصفحة الرئيسية وصف الصفحة', NULL),
+(2, 2, 'ar', 'من-نحن', 'من نحن', '<p>من نحن</p>', NULL, NULL, NULL),
+(3, 3, 'ar', 'عملاء-الاستثمار-العقارى', 'عملاء الاستثمار العقارى', '<p>عملاء الاستثمار العقارى</p>', NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

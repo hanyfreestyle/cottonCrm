@@ -140,7 +140,7 @@ if (!function_exists('getDefModelConfig')) {
         $defPostConfig = [
             'TableCategory' => true,
             'TableTags' => true,
-            'TableTagsOnFly' => true,
+            'TableTagsOnFly' => false,
             'TableReview' => false,
             'TableMorePhotos' => true,
             'MorePhotosEdit' => true,
@@ -151,7 +151,7 @@ if (!function_exists('getDefModelConfig')) {
             'categoryIcon' => false,
             'categoryDelete' => false,
             'categorySort' => false,
-            'categoryEditor' => false,
+            'categoryEditor' => true,
             'categoryDes' => true,
             'categorySeo' => true,
             'categorySlug' => true,
@@ -164,7 +164,7 @@ if (!function_exists('getDefModelConfig')) {
             'postSeo' => true,
             'postSlug' => true,
             'postYoutube' => true,
-            'postAddOnlyLang' => true,
+            'postAddOnlyLang' => false,
 
             'postWebSlug' => null,
             "categoryWebSlug" => null,

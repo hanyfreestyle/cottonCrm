@@ -2,12 +2,10 @@
 
 namespace App\Http\Traits;
 
-
 use App\Helpers\AdminHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 trait CrudPostTraits {
@@ -19,8 +17,6 @@ trait CrudPostTraits {
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
-
-
 
 
         return view('admin.mainView.post.index')->with([
@@ -152,24 +148,17 @@ trait CrudPostTraits {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
+        $Categories = [];
+        $selCat = [];
+        $tags = [];
+        $selTags = [];
+
         if (IsConfig($this->config, 'TableCategory')) {
             $Categories = $this->modelCategory::all();
-        } else {
-            $Categories = [];
         }
 
         $rowData = $this->model::findOrNew(0);
         $LangAdd = self::getAddLangForAdd();
-        $selCat = [];
-
-        if (IsConfig($this->config, 'TableTags')) {
-            $tags = $this->modelTags::where('id', '!=', 0)->get();
-            $selTags = [];
-        } else {
-            $tags = [];
-            $selTags = [];
-        }
-
 
         return view('admin.mainView.post.form')->with([
             'pageData' => $pageData,
@@ -187,25 +176,31 @@ trait CrudPostTraits {
     public function PostEdit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
+        $tags = [];
+        $Categories = [];
+        $selCat = [];
+
+        $teamleader = Auth::user()->can($this->config['PrefixRole'] . '_teamleader');
+
+        try {
+            if (!$teamleader) {
+                $rowData = $this->model::defAdmin()->where('id', $id)->where('user_id', Auth::user()->id)->with('categories')->firstOrFail();
+            } else {
+                $rowData = $this->model::defAdmin()->where('id', $id)->firstOrFail();
+            }
+        } catch (\Exception $e) {
+           abort(410);
+        }
 
         if (IsConfig($this->config, 'TableCategory')) {
-            $rowData = $this->model::defAdmin()->where('id', $id)->firstOrFail();
             $Categories = $this->modelCategory::all();
             $selCat = $rowData->categories()->pluck('category_id')->toArray();
-        } else {
-            $rowData = $this->model::where('id', $id)->firstOrFail();
-            $Categories = [];
-            $selCat = [];
         }
 
         $LangAdd = self::getAddLangForEdit($rowData);
-
         if (IsConfig($this->config, 'TableTags')) {
             $selTags = $rowData->tags()->pluck('tag_id')->toArray();
-            $tags = $this->modelTags::query()->get();
-        } else {
-            $tags = [];
-            $selTags = [];
+            $tags = $this->modelTags::query()->whereIn('id', $selTags)->get();
         }
 
         return view('admin.mainView.post.form')->with([
@@ -243,13 +238,13 @@ trait CrudPostTraits {
 
                 $saveData->save();
 
-                if (IsConfig($this->config, 'TableReview') and $request->input('form_type') == 'Edit') {
-                    $blogReview = $this->modelReview;
-                    $blogReview->user_id = $user_id;
-                    $blogReview->blog_id = $saveData->id;
-                    $blogReview->updated_at = now();
-                    $blogReview->save();
-                }
+//        if (IsConfig($this->config, 'TableReview') and $request->input('form_type') == 'Edit') {
+//            $blogReview = $this->modelReview;
+//            $blogReview->user_id = $user_id;
+//            $blogReview->blog_id = $saveData->id;
+//            $blogReview->updated_at = now();
+//            $blogReview->save();
+//        }
 
                 if (IsConfig($this->config, 'TableCategory')) {
                     $saveData->categories()->sync($categories);

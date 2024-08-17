@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 10:19 PM
+-- Generation Time: Aug 17, 2024 at 06:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -27,7 +27,9 @@ SET time_zone = "+00:00";
 
 INSERT INTO `pagecategory_page` (`id`, `category_id`, `page_id`, `postion`) VALUES
 (1, 1, 1, 0),
-(2, 2, 1, 0);
+(2, 2, 1, 0),
+(3, 2, 2, 0),
+(4, 3, 3, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

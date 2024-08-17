@@ -156,6 +156,36 @@ class AdminMainController extends DefaultMainController {
         }
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function loadPostPermission($arr) {
+
+        $defview = ['PostIndex','PostListCategory','ListMorePhoto','TagsIndex'];
+        $defcreate = ['PostCreate','AddMorePhotos','TagsCreate'];
+        $defedit = ['PostEdit', 'emptyPhoto', 'sortPhotoSave', 'emptyIcon', 'MorePhotosEdit', 'MorePhotosEditAll', 'TagsEdit', 'config'];
+        $defdelete = ['destroy', 'DeleteLang', 'MorePhotosDestroy', 'MorePhotosDestroyAll', 'DeleteLang', 'TagsDelete'];
+        $restore = ['PostSoftDeletes','Restore', 'PostForceDeleteException'];
+
+
+        $view = array_merge($defview, issetArr($arr, 'view', []));
+        $create = array_merge($defcreate, issetArr($arr, 'create', []));
+        $edit = array_merge($defedit, issetArr($arr, 'edit', []));
+        $delete = array_merge($defdelete, issetArr($arr, 'delete', []));
+
+        $sub = issetArr($arr, 'sub', null);
+
+        $allPermission = array_merge($view, $create, $edit, $delete,$restore);
+
+        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
+        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
+        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
+        $this->middleware('permission:' . $this->PrefixRole . '_restore', ['only' => $restore]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
+        if ($sub) {
+            $this->middleware('permission:' . $sub, ['only' => $allPermission]);
+        }
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -233,11 +263,8 @@ class AdminMainController extends DefaultMainController {
 
         View::share('settings', $this->settings);
 //        dd($this->settings);
-
         $pageData = AdminHelper::returnPageDate($sendArr);
-
         $this->pageData = $pageData;
-
     }
 
 

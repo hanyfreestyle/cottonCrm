@@ -60,6 +60,8 @@ class PageController extends AdminMainController {
         ];
 
         self::constructData($sendArr);
+        self::loadPostPermission(array());
+
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

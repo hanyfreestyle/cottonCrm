@@ -1,17 +1,12 @@
 <?php
 
-
 namespace App\AppPlugin\Pages\Traits;
-
-
-
 
 trait PageConfigTraits {
 
     public function LoadConfig() {
-
         $config = [
-            'PrefixRole' => $this->PrefixRole,
+            'PrefixRole' => "Pages",
             'DbCategory' => 'page_categories',
             'DbCategoryTrans' => 'page_category_translations',
             'DbCategoryPivot' => 'pagecategory_page',
@@ -28,7 +23,6 @@ trait PageConfigTraits {
             'LangPostDefName' => __('admin/pages.form_name'),
             'LangPostDefDes' => __('admin/pages.form_des'),
         ];
-
 
         $defConfig = getConfigFromJson('model_pages');
 

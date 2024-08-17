@@ -35,16 +35,15 @@ class PageTagsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0, "orderbyPostion" => 1],
-
+            'AddConfig' => false,
         ];
+
 
         $this->config = self::LoadConfig();
         View::share('config', $this->config);
         self::ConstructData($sendArr);
+        self::loadPostPermission(array());
 
-        
         if (!$this->TableTags) {
             abort(403);
         }

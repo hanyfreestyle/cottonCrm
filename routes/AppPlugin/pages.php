@@ -68,14 +68,12 @@ Route::get('/pages/photos-edit/{id}',[PageController::class,'MorePhotosEditAll']
 Route::post('/pages/photo-update-all/{id}',[PageController::class,'MorePhotosUpdateAll'])->name('Pages.PageList.More_PhotosUpdateAll');
 Route::get('/pages/config', [PageController::class,'config'])->name('Pages.PageList.config');
 
-
 Route::get('/pages/tags', [PageTagsController::class, 'TagsIndex'])->name('Pages.PageTags.index');
 Route::get('/pages/tags/DataTable', [PageTagsController::class, 'TagsDataTable'])->name('Pages.PageTags.DataTable');
 Route::get('/pages/tags/create', [PageTagsController::class, 'TagsCreate'])->name('Pages.PageTags.create');
 Route::get('/pages/tags/edit/{id}', [PageTagsController::class, 'TagsEdit'])->name('Pages.PageTags.edit');
 Route::post('/pages/tags/update/{id}', [PageTagsController::class, 'TagsStoreUpdate'])->name('Pages.PageTags.update');
 Route::get('/pages/tags/destroy/{id}', [PageTagsController::class, 'TagsDelete'])->name('Pages.PageTags.destroy');
-Route::get('/pages/tags/config', [PageTagsController::class, 'TagsConfig'])->name('Pages.PageTags.config');
 Route::get('/pages/tags/TagsSearch', [PageTagsController::class, 'TagsSearch'])->name('PageTags.TagsSearch');
 Route::get('/pages/tags/TagsOnFly', [PageTagsController::class, 'TagsOnFly'])->name('PageTags.TagsOnFly');
 
