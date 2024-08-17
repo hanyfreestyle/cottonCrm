@@ -164,10 +164,8 @@ class AppPuzzleTreeModel {
             'migrations' => [
                 '2020_01_01_000001_create_page_model_table.php',
             ],
-
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['pages.php'],
         ];
     }
-
 }

@@ -23,7 +23,8 @@ return
 	'form_tags' => 'الكلمات البحثية',
 	'icon' => 'Icon',
 	'label_date_add' => 'تاريخ الانشاء',
-	'label_date_update' => 'اخر تحديد بتاريخ',
+	'label_date_update' => 'اخر تحديث بتاريخ',
+	'label_deleted_at' => 'تاريخ الحذف',
 	'label_published_at' => 'تاريخ النشر',
 	'label_published_user' => 'الناشر',
 	'new_new' => 'صفحة جديدة',
@@ -38,5 +39,4 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'label_deleted_at' => 'تاريخ الحذف',
 ];

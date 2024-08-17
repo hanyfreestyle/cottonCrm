@@ -2,12 +2,12 @@
 
 return
 [
-	'crm_crm' => '',
-	'crm_sales' => '',
-	'crm_team' => '',
-	'crm_tech' => '',
-	'exception_user_name' => '',
-	'exception_user_post' => '',
+	'crm_crm' => 'Customer Service',
+	'crm_sales' => 'Sales',
+	'crm_team' => 'Team Work',
+	'crm_tech' => 'Technical',
+	'exception_user_name' => 'User',
+	'exception_user_post' => 'Related Article',
 	'menu_roles' => 'Users &amp; Permissions',
 	'menu_roles_permissions' => 'Permissions',
 	'menu_roles_role' => 'Roles',
@@ -19,7 +19,7 @@ return
 	'role_frname' => 'Group Name',
 	'role_title' => 'Roles',
 	'roles_model_leads' => 'Manage Leads',
-	't_post_count' => '',
+	't_post_count' => 'Articles',
 	'users_des' => 'About User',
 	'users_fr_email' => 'Email Address',
 	'users_fr_name' => 'User Name',
