@@ -10,7 +10,7 @@ class Settings extends Component {
     public $modelname;
     public $configArr;
     public $pageData;
-    public $datatable;
+
     public $orderby;
     public $addPhoto;
     public $selectfilterid;
@@ -20,9 +20,9 @@ class Settings extends Component {
     public $orderbyPostion;
     public $orderbyDate;
     public $orderbyName;
-    public $editor;
+
     public $icon;
-    public $labelView;
+
 
     public function __construct(
         $modelname = "",
@@ -34,22 +34,22 @@ class Settings extends Component {
         $this->configArr = $configArr;
 
         $this->pageData = $pageData;
-        $this->datatable = IsArr($configArr, 'datatable',false);
+
         $this->orderby = IsArr($configArr, 'orderby',false);
         $this->orderbyDef = $orderbyDef;
         $this->orderbyPostion = IsArr($configArr, 'orderbyPostion', false);
+
         $this->addPhoto = IsArr($configArr, 'addPhoto',false);
-
-
-
-        $this->selectfilterid = IsArr($configArr, 'selectfilterid');
         $this->addIcon = IsArr($configArr, 'addIcon', false);
         $this->addMorePhoto = IsArr($configArr, 'addMorePhoto', false);
+        $this->selectfilterid = IsArr($configArr, 'selectfilterid');
+
+
         $this->orderbyDate = IsArr($configArr, 'orderbyDate', false);
         $this->orderbyName = IsArr($configArr, 'orderbyName', true);
-        $this->editor = IsArr($configArr, 'editor', false);
+
         $this->icon = IsArr($configArr, 'icon', false);
-        $this->labelView = IsArr($configArr, 'labelView', false);
+
 
         $OrderByArr = [
             "1" => ['id' => '1', 'name' => __('admin/config/settings.sort_id_desc')],

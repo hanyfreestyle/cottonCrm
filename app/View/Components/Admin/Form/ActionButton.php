@@ -120,6 +120,14 @@ class ActionButton extends Component {
                     $this->sweetDelClass = ' sweet_daleteBtn_noForm ';
                     break;
 
+                case 'deleteSweetAll':
+                    $this->icon = 'fas fa-trash ';
+                    $this->bg = getBgColor('d');
+                    $this->printLable = __('admin/form.button_delete_all');
+                    $this->sweetDelClass = ' sweet_daleteBtn_noForm ';
+                    break;
+
+
                 case 'deleteContent':
                     $this->icon = 'fas fa-trash ';
                     $this->bg = getBgColor('d');

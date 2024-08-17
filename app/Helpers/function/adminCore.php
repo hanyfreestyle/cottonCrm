@@ -175,17 +175,20 @@ if (!function_exists('getDefModelConfig')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getDefSettings')) {
-    function getDefSettings($conig) {
-//       dd($conig);
-        $settings = [
-            'addPhoto' => IsConfig($conig, 'categoryPhotoAdd'),
-            'addIcon' => IsConfig($conig, 'categoryIcon'),
-            'addMorePhoto' => IsConfig($conig, 'categoryIcon'),
-        ];
+    function getDefSettings($conig, $type = 'category') {
+        if ($type == 'category') {
+            $settings = [
+                'addPhoto' => IsConfig($conig, 'categoryPhotoAdd'),
+                'addIcon' => IsConfig($conig, 'categoryIcon'),
+            ];
+        } elseif ($type == 'post') {
+            $settings = [
+                'addPhoto' => IsConfig($conig, 'postPhotoAdd'),
+                'addMorePhoto' => IsConfig($conig, 'TableMorePhotos'),
+            ];
+        }
         return $settings;
-
     }
-
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

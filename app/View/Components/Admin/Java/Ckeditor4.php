@@ -7,8 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\Component;
 
-class Ckeditor4 extends Component
-{
+class Ckeditor4 extends Component {
 
     public $name;
     public $dir;
@@ -16,7 +15,7 @@ class Ckeditor4 extends Component
     public $uploadPhoto;
     public $filebrowser;
     public $id;
-    public $option_5;
+    public $soft;
     public $option_6;
     public $option_7;
 
@@ -27,32 +26,36 @@ class Ckeditor4 extends Component
         $uploadPhoto = true,
         $filebrowser = true,
         $id = null,
-        $option_5 = null,
+        $soft = false,
         $option_6 = null,
         $option_7 = null,
-    )
-    {
+    ) {
+        $this->id = $id;
+        $this->soft = $soft;
         $this->name = $name;
         $this->dir = $dir;
         $this->height = $height;
 
-        if(File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
-            $this->uploadPhoto = $uploadPhoto;
-            $this->filebrowser = $filebrowser;
-        }else{
+        if ($this->soft) {
             $this->uploadPhoto = false;
             $this->filebrowser = false;
+        } else {
+            if (File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
+                $this->uploadPhoto = $uploadPhoto;
+                $this->filebrowser = $filebrowser;
+            } else {
+                $this->uploadPhoto = false;
+                $this->filebrowser = false;
+            }
         }
 
-        $this->id = $id;
-        $this->option_5 = $option_5;
+
         $this->option_6 = $option_6;
         $this->option_7 = $option_7;
     }
 
 
-    public function render(): View|Closure|string
-    {
+    public function render(): View|Closure|string {
         return view('components.admin.java.ckeditor4');
     }
 }

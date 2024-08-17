@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2024 at 11:28 AM
+-- Generation Time: Aug 16, 2024 at 10:18 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,8 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_test`
+-- Database: `cottton_crm`
 --
+
+--
+-- Dumping data for table `page_tags_post`
+--
+
+INSERT INTO `page_tags_post` (`id`, `tag_id`, `post_id`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

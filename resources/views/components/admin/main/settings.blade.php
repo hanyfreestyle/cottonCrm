@@ -45,26 +45,6 @@
                                      :send-arr="$filterTypes"/>
         @endif
 
-
-
-
-        {{--    @if($datatable)--}}
-        {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_datatable')}}" name="{{$modelname}}_datatable" col="3"--}}
-        {{--                               sendvalue="{{old($modelname.'_datatable',IsArr($modelSettings,$modelname.'_datatable',1))}}"--}}
-        {{--                               select-type="selActive"/>--}}
-        {{--    @else--}}
-        {{--      <input type="hidden" value="0" name="{{$modelname}}_datatable">--}}
-        {{--    @endif--}}
-
-        {{--    @if($editor)--}}
-        {{--      <x-admin.form.select-arr label="{{ __('admin/config/settings.set_editor') }}" name="{{$modelname}}_editor" col="3"--}}
-        {{--                               sendvalue="{{old($modelname.'_editor',IsArr($modelSettings,$modelname.'_editor',0))}}"--}}
-        {{--                               select-type="selActive"/>--}}
-        {{--    @else--}}
-        {{--      <input type="hidden" value="0" name="{{$modelname}}_editor">--}}
-        {{--    @endif--}}
-
-
         {{--    @if($orderby)--}}
         {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_orderby')}}" name="{{$modelname}}_orderby" col="3"--}}
         {{--                               :send-arr="$OrderByArr"--}}
@@ -73,10 +53,6 @@
         {{--    @else--}}
         {{--      <input type="hidden" value="{{$orderbyDef}}" name="{{$modelname}}_orderby">--}}
         {{--    @endif--}}
-
-
-
-
         {{$slot}}
     </div>
     @if(isset($pageData['ModelId']))

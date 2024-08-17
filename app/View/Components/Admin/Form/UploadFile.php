@@ -24,7 +24,7 @@ class UploadFile extends Component {
     public $filterName;
 
     public function __construct(
-        $rowCol = 'col-12',
+        $rowCol = 'col-lg-12',
         $fileName = 'image',
         $label = '',
         $labelPhoto = null,

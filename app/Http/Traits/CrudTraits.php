@@ -13,7 +13,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroy
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroy($id) {
         $deleteRow = $this->model->where('id', $id)->firstOrFail();
         $deleteRow->delete();
@@ -22,7 +22,7 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Restore
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Restore($id) {
         $restore = $this->model->onlyTrashed()->where('id', $id)->firstOrFail();
         $restore->restore();
@@ -31,7 +31,7 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDelete
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ForceDelete($id) {
         $deleteRow = $this->model->onlyTrashed()->where('id', $id)->firstOrFail();
         $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
@@ -41,7 +41,7 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     emptyPhoto
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function emptyPhoto($id) {
         $rowData = $this->model->where('id', $id)->firstOrFail();
         $rowData = AdminHelper::DeleteAllPhotos($rowData, true);
@@ -51,10 +51,10 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     emptyPhoto
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function emptyIcon($id) {
         $rowData = $this->model->where('id', $id)->firstOrFail();
-        if(File::exists($rowData->icon)) {
+        if (File::exists($rowData->icon)) {
             File::delete($rowData->icon);
         }
         $rowData->icon = null;
@@ -64,11 +64,11 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     config
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function config() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        if($this->configView) {
+        if ($this->configView) {
             return view($this->configView, compact('pageData'));
         } else {
             return view("admin.mainView.config", compact('pageData'));
@@ -76,57 +76,57 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ListMorePhoto
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    function DataTableDefLang() {
+        if (count(config('app.web_lang')) > 1) {
+            $lang = LaravelLocalization::getCurrentLocale();
+        } else {
+            $lang = config('app.def_dataTableLang');
+        }
+        return $lang;
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DeleteLang($id) {
+        $dbName = $this->translationdb;
+        $deleteRow = $this->translation->where('id', $id)->firstOrFail();
+        $countLang = $this->translation->where($dbName, $deleteRow->$dbName)->count();
+        if ($countLang > 1) {
+            $deleteRow->delete();
+        } else {
+            abort(404);
+        }
+        self::ClearCash();
+        return redirect(route($this->PrefixRoute . '.edit', $deleteRow->$dbName))->with('confirmDelete', "");
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClearCash() {
+
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ListMorePhoto(Request $request) {
-        if(!$this->TableMorePhotos){
+        if (!IsConfig($this->config, 'TableMorePhotos')) {
             abort(403);
         }
-
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $id = $request->route()->parameter('id');
         $Model = $this->model->where('id', $id)->firstOrFail();
         $ListPhotos = $this->modelPhoto->where($this->modelPhotoColumn, $id)->orderBy('position')->get();
-        return view('admin.mainView.MorePhoto_add', compact('ListPhotos', 'pageData', 'Model'));
+        return view('admin.mainView.MorePhoto_add')->with([
+            'pageData' => $pageData,
+            'ListPhotos' => $ListPhotos,
+            'Model' => $Model,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AddMorePhotos
-    public function AddMorePhotos(MorePhotosRequest $request) {
-        $saveImgData = new PuzzleUploadProcess();
-        $saveImgData->setCountOfUpload('2');
-        $saveImgData->setUploadDirIs($this->UploadDirIs . '/' . $request->input('model_id'));
-        $saveImgData->setnewFileName($request->input('name'));
-        $saveImgData->UploadMultiple($request);
-        $modelPhotoColumn = $this->modelPhotoColumn;
-
-        foreach ($saveImgData->sendSaveData as $newPhoto) {
-            $saveData = $this->modelPhoto->findOrNew('0');
-            $saveData->$modelPhotoColumn = $request->model_id;
-            if(isset($newPhoto['photo']['file_name'])) {
-                $saveData->photo = $newPhoto['photo']['file_name'];
-            }
-            if(isset($newPhoto['photo_thum_1']['file_name'])) {
-                $saveData->photo_thum_1 = $newPhoto['photo_thum_1']['file_name'];
-            }
-            $saveData->save();
-        }
-        self::ClearCash();
-        return back()->with('Add.Done', "");
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     More_PhotosDestroy
-    public function More_PhotosDestroy($id) {
-        $deleteRow = $this->modelPhoto->findOrFail($id);
-        $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
-        $deleteRow->delete();
-        self::ClearCash();
-        return back()->with('confirmDelete', "");
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     sortDefPhotoList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function sortPhotoSave(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
@@ -140,43 +140,73 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     DeleteLang
-    public function DeleteLang($id) {
-        $dbName = $this->translationdb;
-        $deleteRow = $this->translation->where('id', $id)->firstOrFail();
-        $countLang = $this->translation->where($dbName, $deleteRow->$dbName)->count();
-        if($countLang > 1) {
-            $deleteRow->delete();
-        } else {
-            abort(404);
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddMorePhotos(MorePhotosRequest $request) {
+        $saveImgData = new PuzzleUploadProcess();
+        $saveImgData->setCountOfUpload('2');
+        $saveImgData->setUploadDirIs($this->UploadDirIs . '/' . $request->input('model_id'));
+        $saveImgData->setnewFileName($request->input('name'));
+        $saveImgData->UploadMultiple($request);
+        $modelPhotoColumn = $this->modelPhotoColumn;
+
+        foreach ($saveImgData->sendSaveData as $newPhoto) {
+            $saveData = $this->modelPhoto->findOrNew('0');
+            $saveData->$modelPhotoColumn = $request->model_id;
+            if (isset($newPhoto['photo']['file_name'])) {
+                $saveData->photo = $newPhoto['photo']['file_name'];
+            }
+            if (isset($newPhoto['photo_thum_1']['file_name'])) {
+                $saveData->photo_thum_1 = $newPhoto['photo_thum_1']['file_name'];
+            }
+            $saveData->save();
         }
         self::ClearCash();
-        return redirect(route($this->PrefixRoute . '.edit', $deleteRow->$dbName))->with('confirmDelete', "");
-    }
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
-    public function ClearCash() {
-
+        return back()->with('Add.Done', "");
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosDestroy($id) {
+        $deleteRow = $this->modelPhoto->findOrFail($id);
+        $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
+        $deleteRow->delete();
+        self::ClearCash();
+        return back()->with('confirmDelete', "");
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosDestroyAll($postid) {
+        $model = $this->model->findOrFail($postid);
+        $catId = $this->config['DbPostCatId'];
+        $allPhotos = $this->modelPhoto->where($catId, $postid)->get();
+        foreach ($allPhotos as $photo) {
+            $deleteRow = $this->modelPhoto->findOrFail($photo->id);
+            $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
+            $deleteRow->delete();
+        }
+        self::ClearCash();
+        return back()->with('confirmDelete', "");
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     More_PhotosEdit
-    public function More_PhotosEdit($id) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosEdit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = $this->modelPhoto::where('id', $id)->with('modelName')->firstOrFail();
-        return view('admin.mainView.MorePhoto_edit', compact('rowData', 'pageData'));
+        return view('admin.mainView.MorePhoto_edit')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     More_PhotosUpdate
-    public function More_PhotosUpdate(MorePhotosEditRequest $request, $id) {
-
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosUpdate(MorePhotosEditRequest $request, $id) {
         $saveData = $this->modelPhoto::findOrNew($id);
         $saveImgData = new PuzzleUploadProcess();
         $saveImgData->setCountOfUpload('2');
-        $saveImgData->setUploadDirIs($this->UploadDirIs ."/". $request->input('model_id'));
+        $saveImgData->setUploadDirIs($this->UploadDirIs . "/" . $request->input('model_id'));
         $saveImgData->setnewFileName($request->input('name'));
         $saveImgData->UploadOne($request);
         $saveData = AdminHelper::saveAndDeletePhoto($saveData, $saveImgData);
@@ -195,28 +225,32 @@ trait CrudTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     More_PhotosEditAll
-    public function More_PhotosEditAll($id) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosEditAll($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        $thisModel = $this->model::findOrFail($id) ;
-        $rowData = $this->modelPhoto::where($this->modelPhotoColumn,'=',$id)->with('translations')->orderBy('position')->get();
-        return view('admin.mainView.MorePhoto_editAll', compact('rowData', 'pageData','thisModel'));
+        $thisModel = $this->model::findOrFail($id);
+        $rowData = $this->modelPhoto::where($this->modelPhotoColumn, '=', $id)->with('translations')->orderBy('position')->get();
+        return view('admin.mainView.MorePhoto_editAll')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'thisModel' => $thisModel,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   More_PhotosUpdateAll
-    public function More_PhotosUpdateAll(Request $request, $id){
-        foreach ($request->input('id') as $id){
-            $UpdatePhoto = $this->modelPhoto::findOrFail($id) ;
-            $UpdatePhoto->print_photo = $request->input('print_photo_'.$id) ?? 2;
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function MorePhotosUpdateAll(Request $request, $id) {
+        foreach ($request->input('id') as $id) {
+            $UpdatePhoto = $this->modelPhoto::findOrFail($id);
+            $UpdatePhoto->print_photo = $request->input('print_photo_' . $id) ?? 2;
             $UpdatePhoto->save();
 
             foreach (config('app.web_lang') as $key => $lang) {
                 $saveTranslation = $this->photoTranslation::where('photo_id', $UpdatePhoto->id)->where('locale', $key)->firstOrNew();
                 $saveTranslation->photo_id = $UpdatePhoto->id;
                 $saveTranslation->locale = $key;
-                $saveTranslation->des = $request->input('des_'.$key.'_'.$id);
+                $saveTranslation->des = $request->input('des_' . $key . '_' . $id);
                 $saveTranslation->save();
             }
         }
@@ -224,14 +258,4 @@ trait CrudTraits {
         return redirect()->back()->with('Edit.Done', "");
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    function DataTableDefLang() {
-        if (count(config('app.web_lang')) > 1) {
-            $lang = LaravelLocalization::getCurrentLocale();
-        } else {
-            $lang = config('app.def_dataTableLang');
-        }
-        return $lang;
-    }
 }

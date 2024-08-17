@@ -53,13 +53,14 @@ Route::get('/pages/DeleteLang/{id}',[PageController::class,'DeleteLang'])->name(
 Route::get('/pages/emptyPhoto/{id}', [PageController::class,'emptyPhoto'])->name('Pages.PageList.emptyPhoto');
 
 Route::get('/pages/photos/{id}',[PageController::class,'ListMorePhoto'])->name('Pages.PageList.More_Photos');
-Route::post('/pages/AddMore',[PageController::class,'AddMorePhotos'])->name('Pages.PageList.More_PhotosAdd');
+Route::post('/pages/add-more',[PageController::class,'AddMorePhotos'])->name('Pages.PageList.More_PhotosAdd');
 Route::post('/pages/saveSort', [PageController::class,'sortPhotoSave'])->name('Pages.PageList.sortPhotoSave');
-Route::get('/pages/PhotoDel/{id}',[PageController::class,'More_PhotosDestroy'])->name('Pages.PageList.More_PhotosDestroy');
-Route::get('/pages/PhotoEdit/{id}',[PageController::class,'More_PhotosEdit'])->name('Pages.PageList.More_PhotosEdit');
-Route::post('/pages/PhotoUpdate/{id}',[PageController::class,'More_PhotosUpdate'])->name('Pages.PageList.More_PhotosUpdate');
-Route::get('/pages/PhotosEdit/{id}',[PageController::class,'More_PhotosEditAll'])->name('Pages.PageList.More_PhotosEditAll');
-Route::post('/pages/PhotoUpdateAll/{id}',[PageController::class,'More_PhotosUpdateAll'])->name('Pages.PageList.More_PhotosUpdateAll');
+Route::get('/pages/photo/delete/{id}',[PageController::class,'MorePhotosDestroy'])->name('Pages.PageList.More_PhotosDestroy');
+Route::get('/pages/photo/delete-all/{postid}',[PageController::class,'MorePhotosDestroyAll'])->name('Pages.PageList.More_PhotosDestroyAll');
+Route::get('/pages/photo-edit/{id}',[PageController::class,'MorePhotosEdit'])->name('Pages.PageList.More_PhotosEdit');
+Route::post('/pages/photo-update/{id}',[PageController::class,'MorePhotosUpdate'])->name('Pages.PageList.More_PhotosUpdate');
+Route::get('/pages/photos-edit/{id}',[PageController::class,'MorePhotosEditAll'])->name('Pages.PageList.More_PhotosEditAll');
+Route::post('/pages/photo-update-all/{id}',[PageController::class,'MorePhotosUpdateAll'])->name('Pages.PageList.More_PhotosUpdateAll');
 Route::get('/pages/config', [PageController::class,'config'])->name('Pages.PageList.config');
 
 

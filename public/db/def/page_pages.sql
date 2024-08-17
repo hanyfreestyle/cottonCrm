@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 07:52 AM
+-- Generation Time: Aug 16, 2024 at 10:30 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,17 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `a_cart`
+-- Database: `cottton_crm`
 --
 
 --
 -- Dumping data for table `page_pages`
 --
 
-INSERT INTO `page_pages` (`id`, `is_active`, `photo`, `photo_thum_1`, `url_type`, `youtube`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, NULL, NULL, 0, NULL, NULL, '2024-04-11 03:07:08', '2024-04-11 03:07:08'),
-(2, 1, NULL, NULL, 0, NULL, NULL, '2024-04-16 03:04:07', '2024-04-16 03:04:07'),
-(3, 1, NULL, NULL, 0, NULL, NULL, '2024-04-16 03:41:20', '2024-04-16 03:41:20');
+INSERT INTO `page_pages` (`id`, `user_id`, `is_active`, `photo`, `photo_thum_1`, `url_type`, `youtube`, `published_at`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, 0, NULL, '2024-08-16', NULL, '2024-08-16 19:30:18', '2024-08-16 20:30:18');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

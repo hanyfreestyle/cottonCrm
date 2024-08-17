@@ -58,7 +58,7 @@ class PageController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'settings' => getDefSettings($this->config),
+            'settings' => getDefSettings($this->config,'post'),
             'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
         self::constructData($sendArr);
