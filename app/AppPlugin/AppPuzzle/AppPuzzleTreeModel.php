@@ -121,7 +121,7 @@ class AppPuzzleTreeModel {
         return [
             'view' => true,
             'id' => "Faq",
-            'CopyFolder' => "Faq",
+            'CopyFolder' => "Model_Faq",
             'appFolder' => 'Faq',
             'viewFolder' => 'Faq',
             'routeFolder' => null,
@@ -130,24 +130,9 @@ class AppPuzzleTreeModel {
                 '2021_01_01_000001_create_faq_model_table.php',
             ],
 
-            'seeder' => [
-                'faq_category.sql',
-                'faq_category_faq.sql',
-                'faq_category_translations.sql',
-                'faq_faqs.sql',
-                'faq_faqs_review.sql',
-                'faq_photo.sql',
-                'faq_photo_translations.sql',
-                'faq_tags.sql',
-                'faq_tags_post.sql',
-                'faq_tags_translations.sql',
-                'faq_translations.sql',
-            ],
-
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['faq.php'],
-            'photoFolder' => ['faq', 'faqcategory'],
-        ];
+         ];
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
