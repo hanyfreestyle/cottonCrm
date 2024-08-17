@@ -14,8 +14,6 @@ use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefPostRequest;
 use App\Http\Traits\CrudPostTraits;
 use App\Http\Traits\CrudTraits;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
@@ -25,8 +23,6 @@ class PageController extends AdminMainController {
     use CrudTraits;
     use CrudPostTraits;
     use PageConfigTraits;
-
-    protected $userId;
 
     function __construct() {
         parent::__construct();
@@ -50,11 +46,8 @@ class PageController extends AdminMainController {
         $this->PrefixTags = "admin.PageTags";
         View::share('PrefixTags', $this->PrefixTags);
 
-
-
         $this->config = self::LoadConfig();
         View::share('config', $this->config);
-
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
@@ -62,24 +55,12 @@ class PageController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'settings' => getDefSettings($this->config, 'post'),
-            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
+            'AddLang' => IsConfig($this->config, 'postAddOnlyLang', false),
             'restore' => 1,
         ];
+
         self::constructData($sendArr);
-
-//        dd($this->config);
-
     }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-public function ModelConfig(Request $request){
-
-    $this->userId = $request->attributes->get('userId');
-    dd($this->userId);
-}
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {

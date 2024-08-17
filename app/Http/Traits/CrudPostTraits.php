@@ -20,7 +20,9 @@ trait CrudPostTraits {
         $pageData['SubView'] = false;
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
 
-//        $data = self::postIndexQuery($this->config);
+
+
+
         return view('admin.mainView.post.index')->with([
             'pageData' => $pageData,
             'categoryId' => 0,

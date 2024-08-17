@@ -4,7 +4,7 @@
 namespace App\AppPlugin\Pages\Traits;
 
 
-use Illuminate\Support\Facades\Auth;
+
 
 trait PageConfigTraits {
 

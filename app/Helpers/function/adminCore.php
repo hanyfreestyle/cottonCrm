@@ -216,9 +216,6 @@ if (!function_exists('loadConfigFromJson')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getConfigFromJson')) {
     function getConfigFromJson($fileName) {
-
-//        dd(Auth::user());
-
         $folder = config('adminConfig.app_folder');
         $defConfig = getDefModelConfig();
         $destinationFolder = base_path('config_' . $folder);
@@ -233,10 +230,7 @@ if (!function_exists('getConfigFromJson')) {
             fwrite($fh, $defConfigjson);
             fclose($fh);
         }
-
         $configJson = json_decode(file_get_contents($filePath), true);
-
-
         return $configJson;
     }
 }
