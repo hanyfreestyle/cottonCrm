@@ -8,6 +8,7 @@ use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
 use App\AppPlugin\Faq\Seeder\FaqSeeder;
+use App\AppPlugin\Pages\Seeder\PageSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
@@ -42,6 +43,9 @@ class DatabaseSeeder extends Seeder {
             $this->call(FaqSeeder::class);
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+            $this->call(PageSeeder::class);
+        }
 
     }
 }

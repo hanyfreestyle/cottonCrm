@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 11:01 AM
+-- Generation Time: Aug 17, 2024 at 06:24 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -22,13 +22,14 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `page_categories`
+-- Dumping data for table `page_category_t_pivot`
 --
 
-INSERT INTO `page_categories` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `position`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 07:59:19', '2024-08-16 08:59:19'),
-(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:09', '2024-08-16 09:00:09'),
-(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:44', '2024-08-16 09:00:44');
+INSERT INTO `page_category_t_pivot` (`id`, `category_id`, `page_id`, `position`) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 0),
+(3, 2, 2, 0),
+(4, 3, 3, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

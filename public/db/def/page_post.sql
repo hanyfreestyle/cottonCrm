@@ -22,13 +22,13 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `page_translations`
+-- Dumping data for table `page_post`
 --
 
-INSERT INTO `page_translations` (`id`, `page_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`, `youtube_title`) VALUES
-(1, 1, 'ar', 'الصفحة-الرئيسية', 'الصفحة الرئيسية', '<p>الصفحة الرئيسية</p>', 'عنوان الصفحة الصفحة الرئيسية', 'الصفحة الرئيسية وصف الصفحة', NULL),
-(2, 2, 'ar', 'من-نحن', 'من نحن', '<p>من نحن</p>', NULL, NULL, NULL),
-(3, 3, 'ar', 'عملاء-الاستثمار-العقارى', 'عملاء الاستثمار العقارى', '<p>عملاء الاستثمار العقارى</p>', NULL, NULL, NULL);
+INSERT INTO `page_post` (`id`, `user_id`, `is_active`, `photo`, `photo_thum_1`, `url_type`, `youtube`, `published_at`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL, 0, NULL, '2024-08-16', NULL, '2024-08-16 19:30:18', '2024-08-17 16:20:58'),
+(2, 1, 1, NULL, NULL, 0, NULL, '2024-08-17', NULL, '2024-08-17 15:22:47', '2024-08-17 16:22:47'),
+(3, 1, 1, NULL, NULL, 0, NULL, '2024-08-17', NULL, '2024-08-17 15:23:12', '2024-08-17 16:23:12');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
