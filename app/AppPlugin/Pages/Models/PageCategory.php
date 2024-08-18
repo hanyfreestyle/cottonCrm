@@ -18,48 +18,39 @@ class PageCategory extends Model implements TranslatableContract {
 
     public $translatedAttributes = ['slug', 'name', 'des', 'g_title', 'g_des'];
     protected $fillable = ['updated_at'];
-    protected $table = "page_categories";
+    protected $table = "page_category";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'category_id';
     public $timestamps = true;
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     scopeDef
-    public function scopeDef(Builder $query): Builder {
-        return $query->with('translations')->withCount('children');
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function scopeDefquery(Builder $query): Builder {
-        return $query->with('translations');
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-
-    public function scopeDefWeb(Builder $query): Builder {
-        return $query->where('is_active', true)
-            ->with('translation')
-            ->with('faqs')
-            ->withCount('faqs')
-            ->orderBy('faqs_count', 'desc');
-    }
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function slugs(): HasMany {
-        return $this->hasMany(FaqCategoryTranslation::class, 'category_id', 'id');
-    }
 
 
 
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function getLocalizedRouteKey($locale) {
-        return $this->slugs()->where('locale', $locale)->first()->slug;
-    }
+//    public function scopeDef(Builder $query): Builder {
+//        return $query->with('translations')->withCount('children');
+//    }
+//
+//
+//    public function scopeDefquery(Builder $query): Builder {
+//        return $query->with('translations');
+//    }
+//
+//
+//    public function scopeDefWeb(Builder $query): Builder {
+//        return $query->where('is_active', true)
+//            ->with('translation')
+//            ->with('faqs')
+//            ->withCount('faqs')
+//            ->orderBy('faqs_count', 'desc');
+//    }
+//
+//    public function slugs(): HasMany {
+//        return $this->hasMany(FaqCategoryTranslation::class, 'category_id', 'id');
+//    }
+//
+//    public function getLocalizedRouteKey($locale) {
+//        return $this->slugs()->where('locale', $locale)->first()->slug;
+//    }
 
 
 
@@ -72,7 +63,7 @@ class PageCategory extends Model implements TranslatableContract {
     }
 
     public function del_page() {
-        return $this->belongsToMany(Page::class, 'pagecategory_page', 'category_id', 'page_id')
+        return $this->belongsToMany(Page::class, 'page_category_t_pivot', 'category_id', 'page_id')
             ->withTrashed();
     }
 

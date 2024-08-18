@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PageTranslation extends Model {
 
-    public $timestamps = false;
-    protected $table = "page_translations";
+    protected $table = "page_post_translations";
     protected $fillable = ['name'];
+    public $timestamps = false;
 
 }

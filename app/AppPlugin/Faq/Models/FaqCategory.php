@@ -17,10 +17,11 @@ class FaqCategory extends Model implements TranslatableContract  {
     use HasRecursiveRelationships;
 
     public $translatedAttributes = ['slug', 'name', 'des', 'g_title', 'g_des'];
-    protected $fillable = [''];
+    protected $fillable = ['updated_at'];
     protected $table = "faq_category";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'category_id';
+    public $timestamps = true;
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #     scopeDef

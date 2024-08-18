@@ -19,52 +19,41 @@ class Page extends Model implements TranslatableContract {
 
     public $translatedAttributes = ['name', 'des', 'other', 'slug', 'g_title', 'g_des', 'youtube_title'];
     protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active', 'position', 'text_view', 'url_type'];
-    protected $table = "page_pages";
+    protected $table = "page_post";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'page_id';
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function scopeDefAdmin(Builder $query): Builder {
-        return $query->with('translations')
-            ->with('categories')
-            ->with('user')
-            ->withCount('more_photos');
+    public function categories(): BelongsToMany {
+        return $this->belongsToMany(PageCategory::class, 'page_category_t_pivot', 'page_id', 'category_id');
     }
 
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function categories(): BelongsToMany {
-        return $this->belongsToMany(PageCategory::class, 'pagecategory_page', 'page_id', 'category_id');
+    public function pages() {
+        return $this->belongsToMany(Page::class, 'page_category_t_pivot', 'category_id', 'page_id')
+            ->withPivot('position')->orderBy('position');
     }
 
     public function tags(): BelongsToMany {
-        return $this->belongsToMany(PageTags::class, 'page_tags_post', 'post_id', 'tag_id');
+        return $this->belongsToMany(PageTags::class, 'page_tags_t_pivot', 'page_id', 'tag_id');
     }
 
     public function more_photos(): HasMany {
-        return $this->hasMany(PagePhoto::class, 'page_id', 'id')->with('translation');
+        return $this->hasMany(PagePhoto::class, 'page_id', 'id');
     }
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-//    public function pages() {
-//        return $this->belongsToMany(Page::class, 'pagecategory_page', 'category_id', 'page_id')
-//            ->withPivot('position')->orderBy('position');
-//    }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function scopeDefquery(Builder $query): Builder {
-        return $query->with('translations');
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function scopeDefAdmin(Builder $query): Builder {
+        return $query->with('translations')
+            ->with('categories')
+            ->withCount('more_photos');
     }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # more_photos
 
 
 }

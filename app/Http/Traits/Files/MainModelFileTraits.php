@@ -117,16 +117,16 @@ trait MainModelFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
         if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-            SeedDbFile(PageCategory::class, 'page_categories.sql');
-            SeedDbFile(PageCategoryTranslation::class, 'page_category_translations.sql');
-            SeedDbFile(PageTags::class, 'page_tags.sql');
-            SeedDbFile(PageTagsTranslation::class, 'page_tags_translations.sql');
-            SeedDbFile(Page::class, 'page_pages.sql');
-            SeedDbFile(PageTranslation::class, 'page_translations.sql');
-            SeedDbFile(PagePivot::class, 'pagecategory_page.sql');
-            SeedDbFile(PageTagsPivot::class, 'page_tags_post.sql');
-            SeedDbFile(PagePhoto::class, 'page_photos.sql');
-            SeedDbFile(PagePhotoTranslation::class, 'page_photo_translations.sql');
+//            SeedDbFile(PageCategory::class, 'page_categories.sql');
+//            SeedDbFile(PageCategoryTranslation::class, 'page_category_translations.sql');
+//            SeedDbFile(PageTags::class, 'page_tags.sql');
+//            SeedDbFile(PageTagsTranslation::class, 'page_tags_translations.sql');
+//            SeedDbFile(Page::class, 'page_pages.sql');
+//            SeedDbFile(PageTranslation::class, 'page_translations.sql');
+//            SeedDbFile(PagePivot::class, 'pagecategory_page.sql');
+//            SeedDbFile(PageTagsPivot::class, 'page_tags_post.sql');
+//            SeedDbFile(PagePhoto::class, 'page_photos.sql');
+//            SeedDbFile(PagePhotoTranslation::class, 'page_photo_translations.sql');
         }
 
 

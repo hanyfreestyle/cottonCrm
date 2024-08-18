@@ -51,7 +51,7 @@ class Faq extends Model implements TranslatableContract {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   scopeDef
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function scopeDefAdmin(Builder $query): Builder {
         return $query->with('translations')
             ->with('categories')

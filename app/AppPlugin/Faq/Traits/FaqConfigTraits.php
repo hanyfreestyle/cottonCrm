@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\AppPlugin\Faq\Traits;
-
 
 trait FaqConfigTraits {
 

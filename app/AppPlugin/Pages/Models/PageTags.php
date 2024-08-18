@@ -19,15 +19,15 @@ class PageTags extends Model implements TranslatableContract {
     protected $translationForeignKey = 'tag_id';
     public $timestamps = false;
 
-    public function scopeDef(Builder $query): Builder {
-        return $query->with('translations');
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # tags
-    public function pages(): BelongsToMany {
-        return $this->belongsToMany(Page::class,'page_tags_post','tag_id', 'post_id');
-    }
+//    public function scopeDef(Builder $query): Builder {
+//        return $query->with('translations');
+//    }
+//
+//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//#|||||||||||||||||||||||||||||||||||||| # tags
+//    public function pages(): BelongsToMany {
+//        return $this->belongsToMany(Page::class,'page_tags_post','tag_id', 'post_id');
+//    }
 
 
 }

@@ -7,17 +7,24 @@ trait PageConfigTraits {
     public function LoadConfig() {
         $config = [
             'PrefixRole' => "Pages",
-            'DbCategory' => 'page_categories',
+
+            'DbCategory' => 'page_category',
             'DbCategoryTrans' => 'page_category_translations',
-            'DbCategoryPivot' => 'pagecategory_page',
+            'DbCategoryPivot' => 'page_category_t_pivot',
             'DbCategoryForeign' => 'category_id',
-            'DbPost' => 'page_pages',
-            'DbPostTrans' => 'page_translations',
+
+            'DbPost' => 'page_post',
+            'DbPostTrans' => 'page_post_translations',
+            'DbPostReview' => 'page_post_t_review',
             'DbPostForeignId' => 'page_id',
-            'DbPhoto' => 'page_photos',
+
+            'DbPhoto' => 'page_photo',
             'DbPhotoTrans' => 'page_photo_translations',
+
             'DbTags' => 'page_tags',
             'DbTagsTrans' => 'page_tags_translations',
+            'DbTagsPivot' => 'page_tags_t_pivot',
+
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/def.category_des'),
             'LangPostDefName' => __('admin/pages.form_name'),
