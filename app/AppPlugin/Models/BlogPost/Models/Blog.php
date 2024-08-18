@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\AppPlugin\BlogPost\Models;
+namespace App\AppPlugin\Models\BlogPost\Models;
 
 use App\AppPlugin\BlogPost\Traits\BlogConfigTraits;
 use App\Models\User;

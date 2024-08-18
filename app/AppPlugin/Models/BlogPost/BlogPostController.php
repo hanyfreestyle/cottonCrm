@@ -1,16 +1,16 @@
 <?php
 
-namespace App\AppPlugin\BlogPost;
+namespace App\AppPlugin\Models\BlogPost;
 
-use App\AppPlugin\BlogPost\Models\Blog;
-use App\AppPlugin\BlogPost\Models\BlogCategory;
-use App\AppPlugin\BlogPost\Models\BlogPhoto;
-use App\AppPlugin\BlogPost\Models\BlogPhotoTranslation;
-use App\AppPlugin\BlogPost\Models\BlogReview;
-use App\AppPlugin\BlogPost\Models\BlogTags;
-use App\AppPlugin\BlogPost\Models\BlogTranslation;
+use App\AppPlugin\Models\BlogPost\Models\Blog;
+use App\AppPlugin\Models\BlogPost\Models\BlogCategory;
+use App\AppPlugin\Models\BlogPost\Models\BlogPhoto;
+use App\AppPlugin\Models\BlogPost\Models\BlogPhotoTranslation;
+use App\AppPlugin\Models\BlogPost\Models\BlogReview;
+use App\AppPlugin\Models\BlogPost\Models\BlogTags;
+use App\AppPlugin\Models\BlogPost\Models\BlogTranslation;
 
-use App\AppPlugin\BlogPost\Traits\BlogConfigTraits;
+use App\AppPlugin\Models\BlogPost\Traits\BlogConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 

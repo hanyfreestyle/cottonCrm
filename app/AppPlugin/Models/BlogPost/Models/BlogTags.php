@@ -1,5 +1,5 @@
 <?php
-namespace App\AppPlugin\BlogPost\Models;
+namespace App\AppPlugin\Models\BlogPost\Models;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Builder;

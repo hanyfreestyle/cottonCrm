@@ -1,11 +1,11 @@
 <?php
 
-namespace App\AppPlugin\BlogPost;
+namespace App\AppPlugin\Models\BlogPost;
 
-use App\AppPlugin\BlogPost\Models\BlogCategory;
-use App\AppPlugin\BlogPost\Models\BlogCategoryTranslation;
+use App\AppPlugin\Models\BlogPost\Models\BlogCategory;
+use App\AppPlugin\Models\BlogPost\Models\BlogCategoryTranslation;
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\BlogPost\Traits\BlogConfigTraits;
+use App\AppPlugin\Models\BlogPost\Traits\BlogConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefCategoryRequest;

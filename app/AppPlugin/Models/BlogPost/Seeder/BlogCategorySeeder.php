@@ -1,17 +1,17 @@
 <?php
-namespace App\AppPlugin\BlogPost\Seeder;
+namespace App\AppPlugin\Models\BlogPost\Seeder;
 
-use App\AppPlugin\BlogPost\Models\Blog;
-use App\AppPlugin\BlogPost\Models\BlogCategory;
-use App\AppPlugin\BlogPost\Models\BlogCategoryTranslation;
-use App\AppPlugin\BlogPost\Models\BlogPhoto;
-use App\AppPlugin\BlogPost\Models\BlogPhotoTranslation;
-use App\AppPlugin\BlogPost\Models\BlogPivot;
-use App\AppPlugin\BlogPost\Models\BlogTags;
-use App\AppPlugin\BlogPost\Models\BlogTagsPivot;
-use App\AppPlugin\BlogPost\Models\BlogTagsTranslation;
-use App\AppPlugin\BlogPost\Models\BlogTranslation;
-use App\AppPlugin\BlogPost\Traits\BlogConfigTraits;
+use App\AppPlugin\Models\BlogPost\Models\Blog;
+use App\AppPlugin\Models\BlogPost\Models\BlogCategory;
+use App\AppPlugin\Models\BlogPost\Models\BlogCategoryTranslation;
+use App\AppPlugin\Models\BlogPost\Models\BlogPhoto;
+use App\AppPlugin\Models\BlogPost\Models\BlogPhotoTranslation;
+use App\AppPlugin\Models\BlogPost\Models\BlogPivot;
+use App\AppPlugin\Models\BlogPost\Models\BlogTags;
+use App\AppPlugin\Models\BlogPost\Models\BlogTagsPivot;
+use App\AppPlugin\Models\BlogPost\Models\BlogTagsTranslation;
+use App\AppPlugin\Models\BlogPost\Models\BlogTranslation;
+use App\AppPlugin\Models\BlogPost\Traits\BlogConfigTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

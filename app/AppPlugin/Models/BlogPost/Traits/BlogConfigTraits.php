@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\BlogPost\Traits;
+namespace App\AppPlugin\Models\BlogPost\Traits;
 
 
 trait BlogConfigTraits {
@@ -11,22 +11,22 @@ trait BlogConfigTraits {
             'PrefixRole' => "Blog",
 
             'DbCategory' => 'blog_category',
-            'DbCategoryTrans' => 'blog_category_translations',
-            'DbCategoryPivot' => 'blog_category_t_pivot',
+            'DbCategoryTrans' => 'blog_category_lang',
+            'DbCategoryPivot' => 'blog_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
 
             'DbPost' => 'blog_post',
-            'DbPostTrans' => 'blog_post_translations',
-            'DbPostReview' => 'blog_post_t_review',
+            'DbPostTrans' => 'blog_post_lang',
+            'DbPostReview' => 'blog_post_review',
             'DbPostForeignId' => 'blog_id',
 
             'DbPhoto' => 'blog_photo',
-            'DbPhotoTrans' => 'blog_photo_translations',
+            'DbPhotoTrans' => 'blog_photo_lang',
 
             'DbTags' => 'blog_tags',
-            'DbTagsTrans' => 'blog_tags_translations',
-            'DbTagsPivot' => 'blog_tags_t_pivot',
+            'DbTagsTrans' => 'blog_tags_lang',
+            'DbTagsPivot' => 'blog_tags_pivot',
 
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/form.text_content'),

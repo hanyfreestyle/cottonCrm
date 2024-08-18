@@ -69,17 +69,16 @@ class AppPuzzleTreeModel {
             'view' => true,
             'id' => "Blog",
             'CopyFolder' => "Model_Blog",
-            'appFolder' => 'BlogPost',
-            'viewFolder' => 'BlogPost',
-            'routeFolder' => null,
-            'routeFile' => 'blogPost.php',
+            'appFolder' => 'Models/BlogPost',
+//            'viewFolder' => 'BlogPost',
+            'routeFolder' => "model/",
+            'routeFile' => 'blog.php',
             'migrations' => [
                 '2021_01_02_000001_create_blog_model_table.php',
             ],
-
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['blogPost.php'],
-            'photoFolder' => ['blog-category', 'blog'],
+//            'photoFolder' => ['blog-category', 'blog'],
         ];
 
     }

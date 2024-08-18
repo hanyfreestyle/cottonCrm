@@ -21,9 +21,10 @@ if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/faq.php'));
 }
 
-if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-    Route::middleware('web')->group(base_path('routes/AppPlugin/blogPost.php'));
+if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/model/blog.php'));
 }
+
 
 if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/pages.php'));

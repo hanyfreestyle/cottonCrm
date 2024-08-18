@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\BlogPost\Models;
+namespace App\AppPlugin\Models\BlogPost\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -27,7 +27,7 @@ class BlogCategory extends Model implements TranslatableContract {
     public function scopeDef(Builder $query): Builder {
         return $query->with('translations')->withCount('children');
     }
-    
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  Delete Counts
