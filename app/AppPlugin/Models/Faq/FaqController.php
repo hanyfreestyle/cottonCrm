@@ -1,14 +1,14 @@
 <?php
 
-namespace App\AppPlugin\Faq;
+namespace App\AppPlugin\Models\Faq;
 
-use App\AppPlugin\Faq\Models\Faq;
-use App\AppPlugin\Faq\Models\FaqCategory;
-use App\AppPlugin\Faq\Models\FaqPhoto;
-use App\AppPlugin\Faq\Models\FaqPhotoTranslation;
-use App\AppPlugin\Faq\Models\FaqTags;
-use App\AppPlugin\Faq\Models\FaqTranslation;
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
+use App\AppPlugin\Models\Faq\Models\Faq;
+use App\AppPlugin\Models\Faq\Models\FaqCategory;
+use App\AppPlugin\Models\Faq\Models\FaqPhoto;
+use App\AppPlugin\Models\Faq\Models\FaqPhotoTranslation;
+use App\AppPlugin\Models\Faq\Models\FaqTags;
+use App\AppPlugin\Models\Faq\Models\FaqTranslation;
+use App\AppPlugin\Models\Faq\Traits\FaqConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefPostRequest;

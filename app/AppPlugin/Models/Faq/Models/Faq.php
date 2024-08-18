@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\AppPlugin\Faq\Models;
+namespace App\AppPlugin\Models\Faq\Models;
 
 
 use App\Models\User;
@@ -29,17 +29,17 @@ class Faq extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function categories(): BelongsToMany {
-        return $this->belongsToMany(FaqCategory::class, 'faq_category_t_pivot', 'faq_id', 'category_id');
+        return $this->belongsToMany(FaqCategory::class, 'faq_category_pivot', 'faq_id', 'category_id');
     }
 
     public function faqs() {
-        return $this->belongsToMany(Faq::class, 'faq_category_t_pivot', 'category_id', 'faq_id')
+        return $this->belongsToMany(Faq::class, 'faq_category_pivot', 'category_id', 'faq_id')
             ->withPivot('position')->orderBy('position');
     }
 
 
     public function tags(): BelongsToMany {
-        return $this->belongsToMany(FaqTags::class, 'faq_tags_t_pivot', 'faq_id', 'tag_id');
+        return $this->belongsToMany(FaqTags::class, 'faq_tags_pivot', 'faq_id', 'tag_id');
     }
 
     public function more_photos(): HasMany {

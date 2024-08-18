@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `faq_category_translations`
+-- Dumping data for table `faq_category_lang`
 --
 
-INSERT INTO `faq_category_translations` (`id`, `category_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`) VALUES
+INSERT INTO `faq_category_lang` (`id`, `category_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`) VALUES
 (1, 1, 'ar', 'خدمات-الدعم-الفنى', 'خدمات الدعم الفنى', '<p>خدمات الدعم الفنى</p>', NULL, NULL),
 (2, 2, 'ar', 'خدمات-التجارة-الالكترونية', 'خدمات التجارة الالكترونية', '<p>خدمات التجارة الالكترونية</p>', NULL, NULL),
 (3, 3, 'ar', 'خدمات-الورد-بريس', 'خدمات الورد بريس', '<p>خدمات الورد بريس</p>', NULL, NULL),

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Faq\Traits;
+namespace App\AppPlugin\Models\Faq\Traits;
 
 trait FaqConfigTraits {
 
@@ -9,21 +9,21 @@ trait FaqConfigTraits {
             'PrefixRole' => "Faq",
 
             'DbCategory' => 'faq_category',
-            'DbCategoryTrans' => 'faq_category_translations',
-            'DbCategoryPivot' => 'faq_category_t_pivot',
+            'DbCategoryTrans' => 'faq_category_lang',
+            'DbCategoryPivot' => 'faq_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
             'DbPost' => 'faq_post',
-            'DbPostTrans' => 'faq_post_translations',
-            'DbPostReview' => 'faq_post_t_review',
+            'DbPostTrans' => 'faq_post_lang',
+            'DbPostReview' => 'faq_post_review',
             'DbPostForeignId' => 'faq_id',
 
             'DbPhoto' => 'faq_photo',
-            'DbPhotoTrans' => 'faq_photo_translations',
+            'DbPhotoTrans' => 'faq_photo_lang',
 
             'DbTags' => 'faq_tags',
-            'DbTagsTrans' => 'faq_tags_translations',
-            'DbTagsPivot' => 'faq_tags_t_pivot',
+            'DbTagsTrans' => 'faq_tags_lang',
+            'DbTagsPivot' => 'faq_tags_pivot',
 
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/def.category_des'),

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\AppPlugin\Faq;
+namespace App\AppPlugin\Models\Faq;
 
-use App\AppPlugin\Faq\Models\FaqTags;
-use App\AppPlugin\Faq\Models\FaqTagsTranslation;
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
+use App\AppPlugin\Models\Faq\Models\FaqTags;
+use App\AppPlugin\Models\Faq\Models\FaqTagsTranslation;
+use App\AppPlugin\Models\Faq\Traits\FaqConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefTagsRequest;
 
@@ -16,7 +16,6 @@ class FaqTagsController extends AdminMainController {
 
     use TagsTraits;
     use FaqConfigTraits;
-
 
     function __construct() {
         parent::__construct();

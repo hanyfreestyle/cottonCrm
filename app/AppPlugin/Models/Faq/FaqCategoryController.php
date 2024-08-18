@@ -1,12 +1,12 @@
 <?php
 
-namespace App\AppPlugin\Faq;
+namespace App\AppPlugin\Models\Faq;
 
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Faq\Models\FaqCategory;
-use App\AppPlugin\Faq\Models\FaqCategoryTranslation;
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
+use App\AppPlugin\Models\Faq\Models\FaqCategory;
+use App\AppPlugin\Models\Faq\Models\FaqCategoryTranslation;
+use App\AppPlugin\Models\Faq\Traits\FaqConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefCategoryRequest;

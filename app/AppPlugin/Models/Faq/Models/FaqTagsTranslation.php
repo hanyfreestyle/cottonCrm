@@ -1,13 +1,13 @@
 <?php
 
-namespace App\AppPlugin\Faq\Models;
+namespace App\AppPlugin\Models\Faq\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
 
 class FaqTagsTranslation extends Model {
 
-    protected $table = "faq_tags_translations";
+    protected $table = "faq_tags_lang";
     protected $fillable = ['name'];
     public $timestamps = false;
 }

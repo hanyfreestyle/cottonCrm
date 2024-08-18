@@ -12,7 +12,7 @@ use App\AppPlugin\Config\Apps\AppSettingController;
 use App\AppPlugin\Config\WebLangFile\LangFileWebController;
 use App\AppPlugin\CustomersAdmin\CustomerAdminController;
 use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
-use App\AppPlugin\Faq\FaqCategoryController;
+use  App\AppPlugin\Models\Faq\FaqCategoryController;
 use App\AppPlugin\FileManager\FileBrowserController;
 use App\AppPlugin\Leads\ContactUs\ContactUsFormController;
 
@@ -58,7 +58,7 @@ class AdminMenuSeeder extends Seeder {
             BlogCategoryController::AdminMenu();
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
             FaqCategoryController::AdminMenu();
         }
 

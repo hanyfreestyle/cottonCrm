@@ -22,15 +22,14 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `faq_category_t_pivot`
+-- Dumping data for table `faq_post_lang`
 --
 
-INSERT INTO `faq_category_t_pivot` (`id`, `category_id`, `faq_id`, `position`) VALUES
-(1, 1, 1, 0),
-(2, 2, 1, 0),
-(3, 6, 2, 0),
-(4, 3, 3, 0),
-(5, 3, 4, 0);
+INSERT INTO `faq_post_lang` (`id`, `faq_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`, `youtube_title`) VALUES
+(1, 1, 'ar', 'السؤال-الاول', 'السؤال الاول', '<p>السؤال الاول</p>', NULL, NULL, NULL),
+(2, 2, 'ar', 'السؤال-الثانى', 'السؤال الثانى', '<p>السؤال الثانى</p>', NULL, NULL, NULL),
+(3, 3, 'ar', 'السؤال-الثالث', 'السؤال الثالث', '<p>السؤال الثالث</p>', NULL, NULL, NULL),
+(4, 4, 'ar', 'السؤال-الرابع', 'السؤال الرابع', '<p>السؤال الرابع</p>', NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

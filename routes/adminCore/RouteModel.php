@@ -17,8 +17,8 @@ if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/proProduct.php'));
 }
 
-if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
-    Route::middleware('web')->group(base_path('routes/AppPlugin/faq.php'));
+if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/model/faq.php'));
 }
 
 if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {

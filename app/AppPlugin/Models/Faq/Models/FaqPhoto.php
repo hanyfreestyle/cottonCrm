@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Faq\Models;
+namespace App\AppPlugin\Models\Faq\Models;
 
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;

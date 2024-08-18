@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2024 at 08:02 AM
+-- Generation Time: Aug 18, 2024 at 09:58 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -22,16 +22,14 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `faq_tags_translations`
+-- Dumping data for table `faq_tags_pivot`
 --
 
-INSERT INTO `faq_tags_translations` (`id`, `tag_id`, `locale`, `slug`, `name`) VALUES
-(1, 1, 'ar', 'خدمة-العملاء', 'خدمة العملاء'),
-(2, 2, 'ar', 'الدعم-الفنى', 'الدعم الفنى'),
-(3, 3, 'ar', 'المبيعات', 'المبيعات'),
-(4, 4, 'ar', 'خدمة-حجز-النطاق', 'خدمة حجز النطاق'),
-(5, 5, 'ar', 'خدمة-الاستضافة', 'خدمة الاستضافة'),
-(6, 6, 'ar', 'الاشهار-على-محركات-البحث', 'الاشهار على محركات البحث');
+INSERT INTO `faq_tags_pivot` (`id`, `tag_id`, `faq_id`) VALUES
+(1, 1, 1),
+(2, 6, 1),
+(3, 5, 3),
+(4, 2, 4);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Faq\Models;
+namespace App\AppPlugin\Models\Faq\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FaqPhotoTranslation extends Model {
 
     public $timestamps = false;
-    protected $table = "faq_photo_translations";
+    protected $table = "faq_photo_lang";
     protected $fillable = ['des'];
-    
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Faq\Models;
+namespace App\AppPlugin\Models\Faq\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -81,7 +81,7 @@ class FaqCategory extends Model implements TranslatableContract  {
     }
 
     public function del_faq() {
-        return $this->belongsToMany(Faq::class, 'faq_category_t_pivot', 'category_id', 'faq_id')->withTrashed();
+        return $this->belongsToMany(Faq::class, 'faq_category_pivot', 'category_id', 'faq_id')->withTrashed();
     }
 
 

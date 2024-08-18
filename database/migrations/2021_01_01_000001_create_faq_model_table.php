@@ -1,6 +1,6 @@
 <?php
 
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
+use App\AppPlugin\Models\Faq\Traits\FaqConfigTraits;
 use App\Helpers\BaseMigration;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;

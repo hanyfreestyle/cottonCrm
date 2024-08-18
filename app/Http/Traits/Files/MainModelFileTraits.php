@@ -2,7 +2,7 @@
 
 namespace App\Http\Traits\Files;
 
-use App\AppPlugin\Faq\Seeder\FaqSeeder;
+use  App\AppPlugin\Models\Faq\Seeder\FaqSeeder;
 use App\AppPlugin\Pages\Models\Page;
 use App\AppPlugin\Pages\Models\PageCategory;
 use App\AppPlugin\Pages\Models\PageCategoryTranslation;
@@ -53,7 +53,7 @@ trait MainModelFileTraits {
         }
 
 
-        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
             $newPer = [
                 ['cat_id' => 'Faq', 'name' => 'Faq_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
                 ['cat_id' => 'Faq', 'name' => 'Faq_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
@@ -90,7 +90,7 @@ trait MainModelFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadLangFiles($LangMenu) {
 
-        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
             $addLang = ['faq' => ['id' => 'faq', 'group' => 'admin', 'file_name' => 'faq', 'name' => 'Faq', 'name_ar' => 'الاسئلة المتكررة'],];
             $LangMenu = array_merge($LangMenu, $addLang);
         }

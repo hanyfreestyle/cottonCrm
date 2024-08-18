@@ -1,21 +1,19 @@
 <?php
 
-namespace App\AppPlugin\Faq\Seeder;
+namespace App\AppPlugin\Models\Faq\Seeder;
 
-use App\AppPlugin\Faq\Models\Faq;
-use App\AppPlugin\Faq\Models\FaqCategory;
-use App\AppPlugin\Faq\Models\FaqCategoryTranslation;
-use App\AppPlugin\Faq\Models\FaqPhoto;
-use App\AppPlugin\Faq\Models\FaqPhotoTranslation;
-use App\AppPlugin\Faq\Models\FaqPivot;
-use App\AppPlugin\Faq\Models\FaqTags;
-use App\AppPlugin\Faq\Models\FaqTagsPivot;
-use App\AppPlugin\Faq\Models\FaqTagsTranslation;
-use App\AppPlugin\Faq\Models\FaqTranslation;
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Faq\Models\Faq;
+use App\AppPlugin\Models\Faq\Models\FaqCategory;
+use App\AppPlugin\Models\Faq\Models\FaqCategoryTranslation;
+use App\AppPlugin\Models\Faq\Models\FaqPhoto;
+use App\AppPlugin\Models\Faq\Models\FaqPhotoTranslation;
+use App\AppPlugin\Models\Faq\Models\FaqPivot;
+use App\AppPlugin\Models\Faq\Models\FaqTags;
+use App\AppPlugin\Models\Faq\Models\FaqTagsPivot;
+use App\AppPlugin\Models\Faq\Models\FaqTagsTranslation;
+use App\AppPlugin\Models\Faq\Models\FaqTranslation;
+use App\AppPlugin\Models\Faq\Traits\FaqConfigTraits;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 
 class FaqSeeder extends Seeder {
@@ -33,16 +31,6 @@ class FaqSeeder extends Seeder {
         SeedDbFile(FaqPhoto::class, $config['DbPhoto'] . '.sql');
         SeedDbFile(FaqPhotoTranslation::class, $config['DbPhotoTrans'] . '.sql');
 
-//        SeedDbFile(FaqCategory::class, 'faq_category.sql');
-//        SeedDbFile(FaqCategoryTranslation::class, 'faq_category_translations.sql');
-//        SeedDbFile(FaqTags::class, 'faq_tags.sql');
-//        SeedDbFile(FaqTagsTranslation::class, 'faq_tags_translations.sql');
-//        SeedDbFile(Faq::class, 'faq_post.sql');
-//        SeedDbFile(FaqTranslation::class, 'faq_post_translations.sql');
-//        SeedDbFile(FaqPivot::class, 'faq_category_t_pivot.sql');
-//        SeedDbFile(FaqTagsPivot::class, 'faq_tags_t_pivot.sql');
-//        SeedDbFile(FaqPhoto::class, 'faq_photo.sql');
-//        SeedDbFile(FaqPhotoTranslation::class, 'faq_photo_translations.sql');
     }
 
 }
