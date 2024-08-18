@@ -19,17 +19,16 @@ use Illuminate\Support\Facades\DB;
 class FaqSeeder extends Seeder {
 
     public function run(): void {
-
         SeedDbFile(FaqCategory::class, 'faq_category.sql');
         SeedDbFile(FaqCategoryTranslation::class, 'faq_category_translations.sql');
         SeedDbFile(FaqTags::class, 'faq_tags.sql');
         SeedDbFile(FaqTagsTranslation::class, 'faq_tags_translations.sql');
-//        SeedDbFile(Faq::class, 'faq_faqs.sql');
-//        SeedDbFile(FaqTranslation::class, 'faq_translations.sql');
-//        SeedDbFile(FaqPivot::class, 'faq_category_faq.sql');
-//        SeedDbFile(FaqTagsPivot::class, 'faq_tags_post.sql');
-//        SeedDbFile(FaqPhoto::class, 'faq_photo.sql');
-//        SeedDbFile(FaqPhotoTranslation::class, 'faq_photo_translations.sql');
-
+        SeedDbFile(Faq::class, 'faq_post.sql');
+        SeedDbFile(FaqTranslation::class, 'faq_post_translations.sql');
+        SeedDbFile(FaqPivot::class, 'faq_category_t_pivot.sql');
+        SeedDbFile(FaqTagsPivot::class, 'faq_tags_t_pivot.sql');
+        SeedDbFile(FaqPhoto::class, 'faq_photo.sql');
+        SeedDbFile(FaqPhotoTranslation::class, 'faq_photo_translations.sql');
     }
+
 }

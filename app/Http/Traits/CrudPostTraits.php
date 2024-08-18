@@ -144,7 +144,7 @@ trait CrudPostTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function PostCreate() {
+    public function PostCreate(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
 
@@ -155,6 +155,13 @@ trait CrudPostTraits {
 
         if (IsConfig($this->config, 'TableCategory')) {
             $Categories = $this->modelCategory::all();
+        }
+
+        if (IsConfig($this->config, 'TableTags')) {
+            if(old('tag_id')){
+                $selTags = old('tag_id') ;
+                $tags = $this->modelTags::query()->whereIn('id',$selTags)->get();
+            }
         }
 
         $rowData = $this->model::findOrNew(0);
