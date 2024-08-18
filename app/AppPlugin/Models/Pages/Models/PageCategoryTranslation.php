@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Pages\Models;
+namespace App\AppPlugin\Models\Pages\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PageCategoryTranslation extends Model {
 
     public $timestamps = false;
-    protected $table = "page_category_translations";
+    protected $table = "page_category_lang";
     protected $fillable = ['name'];
 
 }

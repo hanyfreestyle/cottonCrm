@@ -1,13 +1,13 @@
 <?php
 
-namespace App\AppPlugin\Pages\Models;
+namespace App\AppPlugin\Models\Pages\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
 
 class PagePhotoTranslation extends Model {
 
-    protected $table = "page_photo_translations";
+    protected $table = "page_photo_lang";
     protected $fillable = ['des'];
     public $timestamps = false;
 

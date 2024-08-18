@@ -1,11 +1,11 @@
 <?php
 
-namespace App\AppPlugin\Pages\Models;
+namespace App\AppPlugin\Models\Pages\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
 
 class PagePivot extends Model {
-    protected $table = "page_category_t_pivot";
+    protected $table = "page_category_pivot";
 
 }

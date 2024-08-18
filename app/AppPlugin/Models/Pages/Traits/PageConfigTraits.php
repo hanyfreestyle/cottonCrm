@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Pages\Traits;
+namespace App\AppPlugin\Models\Pages\Traits;
 
 trait PageConfigTraits {
 
@@ -9,21 +9,21 @@ trait PageConfigTraits {
             'PrefixRole' => "Pages",
 
             'DbCategory' => 'page_category',
-            'DbCategoryTrans' => 'page_category_translations',
-            'DbCategoryPivot' => 'page_category_t_pivot',
+            'DbCategoryTrans' => 'page_category_lang',
+            'DbCategoryPivot' => 'page_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
             'DbPost' => 'page_post',
-            'DbPostTrans' => 'page_post_translations',
-            'DbPostReview' => 'page_post_t_review',
+            'DbPostTrans' => 'page_post_lang',
+            'DbPostReview' => 'page_post_review',
             'DbPostForeignId' => 'page_id',
 
             'DbPhoto' => 'page_photo',
-            'DbPhotoTrans' => 'page_photo_translations',
+            'DbPhotoTrans' => 'page_photo_lang',
 
             'DbTags' => 'page_tags',
-            'DbTagsTrans' => 'page_tags_translations',
-            'DbTagsPivot' => 'page_tags_t_pivot',
+            'DbTagsTrans' => 'page_tags_lang',
+            'DbTagsPivot' => 'page_tags_pivot',
 
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/def.category_des'),

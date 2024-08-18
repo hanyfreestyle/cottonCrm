@@ -130,7 +130,6 @@ trait CrudPostTraits {
             ->editColumn('photo', function ($row) {
                 return TablePhoto($row, 'photo');
             })
-
             ->editColumn('isActive', function ($row) {
                 return is_active($row->isActive);
             })
@@ -138,7 +137,6 @@ trait CrudPostTraits {
                 return view('datatable.but')->with(['btype' => 'morePhoto', 'row' => $row])->render();
 
             })
-
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
@@ -164,9 +162,9 @@ trait CrudPostTraits {
         }
 
         if (IsConfig($this->config, 'TableTags')) {
-            if(old('tag_id')){
-                $selTags = old('tag_id') ;
-                $tags = $this->modelTags::query()->whereIn('id',$selTags)->get();
+            if (old('tag_id')) {
+                $selTags = old('tag_id');
+                $tags = $this->modelTags::query()->whereIn('id', $selTags)->get();
             }
         }
 
@@ -202,7 +200,7 @@ trait CrudPostTraits {
                 $rowData = $this->model::defAdmin()->where('id', $id)->firstOrFail();
             }
         } catch (\Exception $e) {
-           abort(410);
+            abort(410);
         }
 
         if (IsConfig($this->config, 'TableCategory')) {

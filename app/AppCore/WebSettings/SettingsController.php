@@ -7,7 +7,7 @@ use App\AppCore\WebSettings\Models\SettingTranslation;
 use App\AppCore\WebSettings\Request\SettingFormRequest;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Data\City\Models\City;
-use App\AppPlugin\Pages\Models\Page;
+use App\AppPlugin\Models\Pages\Models\Page;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -49,7 +49,7 @@ class SettingsController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $setting = Setting::findOrFail(1);
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
             $pagesList = Page::all();
         } else {
             $pagesList = [];

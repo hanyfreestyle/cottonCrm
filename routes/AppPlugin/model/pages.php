@@ -1,8 +1,8 @@
 <?php
 
-use App\AppPlugin\Pages\PageCategoryController;
-use App\AppPlugin\Pages\PageController;
-use App\AppPlugin\Pages\PageTagsController;
+use App\AppPlugin\Models\Pages\PageCategoryController;
+use App\AppPlugin\Models\Pages\PageController;
+use App\AppPlugin\Models\Pages\PageTagsController;
 use Illuminate\Support\Facades\Route;
 
 Route::CategoryRoute('page-category/', 'Pages.PageCategory.', PageCategoryController::class);

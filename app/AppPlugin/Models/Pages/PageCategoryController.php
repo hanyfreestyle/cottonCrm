@@ -1,11 +1,11 @@
 <?php
 
-namespace App\AppPlugin\Pages;
+namespace App\AppPlugin\Models\Pages;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Pages\Models\PageCategory;
-use App\AppPlugin\Pages\Models\PageCategoryTranslation;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Pages\Models\PageCategory;
+use App\AppPlugin\Models\Pages\Models\PageCategoryTranslation;
+use App\AppPlugin\Models\Pages\Traits\PageConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefCategoryRequest;

@@ -1,10 +1,8 @@
 <?php
 
-use App\AppPlugin\Faq\Traits\FaqConfigTraits;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Pages\Traits\PageConfigTraits;
 use App\Helpers\BaseMigration;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -12,9 +10,8 @@ return new class extends Migration {
     public function up(): void {
 
 
-
         $config = PageConfigTraits::DbConfig();
-//        dd($config);
+
         BaseMigration::createPostTable($config['DbPost'], $config['DbPostTrans'], $config['DbPostForeignId']);
         BaseMigration::createCategoryTable($config['DbCategory'], $config['DbCategoryTrans'], $config['DbCategoryPivot'], $config['DbPost'], $config['DbPostForeignId']);
         BaseMigration::createMorePhotoTable($config['DbPhoto'], $config['DbPhotoTrans'], $config['DbPost'], $config['DbPostForeignId']);
@@ -33,7 +30,7 @@ return new class extends Migration {
 //            $table->timestamps();
 //        });
 //
-//        Schema::create('page_category_translations', function (Blueprint $table) {
+//        Schema::create('page_category_lang', function (Blueprint $table) {
 //            $table->bigIncrements('id');
 //            $table->bigInteger('category_id')->unsigned();
 //            $table->string('locale')->index();
@@ -120,7 +117,7 @@ return new class extends Migration {
 //            $table->foreign('page_id')->references('id')->on('page_pages')->onDelete('cascade');
 //        });
 //
-//        Schema::create('page_photo_translations', function (Blueprint $table) {
+//        Schema::create('page_photo_lang', function (Blueprint $table) {
 //            $table->bigIncrements('id');
 //            $table->bigInteger('photo_id')->unsigned();
 //            $table->string('locale')->index();
@@ -140,7 +137,7 @@ return new class extends Migration {
 //            $table->boolean("is_active")->default(true);
 //        });
 //
-//        Schema::create('page_tags_translations', function (Blueprint $table) {
+//        Schema::create('page_tags_lang', function (Blueprint $table) {
 //            $table->bigIncrements('id');
 //            $table->bigInteger('tag_id')->unsigned();
 //            $table->string('locale')->index();

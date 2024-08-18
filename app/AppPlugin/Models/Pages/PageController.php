@@ -1,14 +1,14 @@
 <?php
 
-namespace App\AppPlugin\Pages;
+namespace App\AppPlugin\Models\Pages;
 
-use App\AppPlugin\Pages\Models\Page;
-use App\AppPlugin\Pages\Models\PageCategory;
-use App\AppPlugin\Pages\Models\PagePhoto;
-use App\AppPlugin\Pages\Models\PagePhotoTranslation;
-use App\AppPlugin\Pages\Models\PageTags;
-use App\AppPlugin\Pages\Models\PageTranslation;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Pages\Models\Page;
+use App\AppPlugin\Models\Pages\Models\PageCategory;
+use App\AppPlugin\Models\Pages\Models\PagePhoto;
+use App\AppPlugin\Models\Pages\Models\PagePhotoTranslation;
+use App\AppPlugin\Models\Pages\Models\PageTags;
+use App\AppPlugin\Models\Pages\Models\PageTranslation;
+use App\AppPlugin\Models\Pages\Traits\PageConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefPostRequest;

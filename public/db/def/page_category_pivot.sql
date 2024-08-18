@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 03:47 PM
+-- Generation Time: Aug 18, 2024 at 07:20 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,17 +18,19 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_crm`
+-- Database: `app_crm`
 --
 
 --
--- Dumping data for table `page_tags_translations`
+-- Dumping data for table `page_category_pivot`
 --
 
-INSERT INTO `page_tags_translations` (`id`, `tag_id`, `locale`, `slug`, `name`) VALUES
-(1, 1, 'ar', 'ملاحظات-عامة', 'ملاحظات عامة'),
-(2, 2, 'ar', 'افكار-وتلميحات', 'افكار وتلميحات'),
-(3, 3, 'ar', 'هام', 'هام');
+INSERT INTO `page_category_pivot` (`id`, `category_id`, `page_id`, `position`) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 0),
+(3, 2, 2, 0),
+(4, 2, 3, 0),
+(5, 3, 3, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -39,7 +39,7 @@ trait MainModelFileTraits {
             $data = array_merge($data, $newPer);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
             $newPer = [
                 ['cat_id' => 'Pages', 'name' => 'Pages_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
                 ['cat_id' => 'Pages', 'name' => 'Pages_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],

@@ -19,7 +19,7 @@ use App\AppPlugin\Leads\ContactUs\ContactUsFormController;
 use App\AppPlugin\Models\BlogPost\BlogCategoryController;
 use App\AppPlugin\Models\BlogPost\BlogPostCategoryController;
 use App\AppPlugin\Orders\OrderController;
-use App\AppPlugin\Pages\PageCategoryController;
+use App\AppPlugin\Models\Pages\PageCategoryController;
 use App\AppPlugin\Product\ProductController;
 
 
@@ -62,7 +62,7 @@ class AdminMenuSeeder extends Seeder {
             FaqCategoryController::AdminMenu();
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
             PageCategoryController::AdminMenu();
         }
 

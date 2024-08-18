@@ -1,5 +1,5 @@
 <?php
-namespace App\AppPlugin\Pages\Models;
+namespace App\AppPlugin\Models\Pages\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;

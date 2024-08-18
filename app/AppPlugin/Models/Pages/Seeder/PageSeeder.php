@@ -1,19 +1,19 @@
 <?php
 
-namespace App\AppPlugin\Pages\Seeder;
+namespace App\AppPlugin\Models\Pages\Seeder;
 
 
-use App\AppPlugin\Pages\Models\Page;
-use App\AppPlugin\Pages\Models\PageCategory;
-use App\AppPlugin\Pages\Models\PageCategoryTranslation;
-use App\AppPlugin\Pages\Models\PagePhoto;
-use App\AppPlugin\Pages\Models\PagePhotoTranslation;
-use App\AppPlugin\Pages\Models\PagePivot;
-use App\AppPlugin\Pages\Models\PageTags;
-use App\AppPlugin\Pages\Models\PageTagsPivot;
-use App\AppPlugin\Pages\Models\PageTagsTranslation;
-use App\AppPlugin\Pages\Models\PageTranslation;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Pages\Models\Page;
+use App\AppPlugin\Models\Pages\Models\PageCategory;
+use App\AppPlugin\Models\Pages\Models\PageCategoryTranslation;
+use App\AppPlugin\Models\Pages\Models\PagePhoto;
+use App\AppPlugin\Models\Pages\Models\PagePhotoTranslation;
+use App\AppPlugin\Models\Pages\Models\PagePivot;
+use App\AppPlugin\Models\Pages\Models\PageTags;
+use App\AppPlugin\Models\Pages\Models\PageTagsPivot;
+use App\AppPlugin\Models\Pages\Models\PageTagsTranslation;
+use App\AppPlugin\Models\Pages\Models\PageTranslation;
+use App\AppPlugin\Models\Pages\Traits\PageConfigTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -40,7 +40,7 @@ class PageSeeder extends Seeder {
 //            DB::unprepared(file_get_contents($tablePath));
 //
 //            PageCategoryTranslation::unguard();
-//            $tablePath = public_path('db/page_category_translations.sql');
+//            $tablePath = public_path('db/page_category_lang.sql');
 //            DB::unprepared(file_get_contents($tablePath));
 //        }
 //
@@ -50,7 +50,7 @@ class PageSeeder extends Seeder {
 //            DB::unprepared(file_get_contents($tablePath));
 //
 //            PageTagsTranslation::unguard();
-//            $tablePath = public_path('db/page_tags_translations.sql');
+//            $tablePath = public_path('db/page_tags_lang.sql');
 //            DB::unprepared(file_get_contents($tablePath));
 //        }
 //
@@ -81,7 +81,7 @@ class PageSeeder extends Seeder {
 //            DB::unprepared(file_get_contents($tablePath));
 //
 //            PagePhotoTranslation::unguard();
-//            $tablePath = public_path('db/page_photo_translations.sql');
+//            $tablePath = public_path('db/page_photo_lang.sql');
 //            DB::unprepared(file_get_contents($tablePath));
 //        }
 

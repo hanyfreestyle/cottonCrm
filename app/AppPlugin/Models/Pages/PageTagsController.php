@@ -1,11 +1,10 @@
 <?php
 
-namespace App\AppPlugin\Pages;
+namespace App\AppPlugin\Models\Pages;
 
-
-use App\AppPlugin\Pages\Models\PageTags;
-use App\AppPlugin\Pages\Models\PageTagsTranslation;
-use App\AppPlugin\Pages\Traits\PageConfigTraits;
+use App\AppPlugin\Models\Pages\Models\PageTags;
+use App\AppPlugin\Models\Pages\Models\PageTagsTranslation;
+use App\AppPlugin\Models\Pages\Traits\PageConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefTagsRequest;
 

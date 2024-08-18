@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Pages\Models;
+namespace App\AppPlugin\Models\Pages\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -63,7 +63,7 @@ class PageCategory extends Model implements TranslatableContract {
     }
 
     public function del_page() {
-        return $this->belongsToMany(Page::class, 'page_category_t_pivot', 'category_id', 'page_id')
+        return $this->belongsToMany(Page::class, 'page_category_pivot', 'category_id', 'page_id')
             ->withTrashed();
     }
 
