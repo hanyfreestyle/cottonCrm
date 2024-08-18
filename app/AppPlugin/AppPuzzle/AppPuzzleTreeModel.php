@@ -12,7 +12,7 @@ class AppPuzzleTreeModel {
 //            'ModelMainPost' => self::treeModelMainPost(),
 //            'BlogPost' => self::treeModelBlogPost(),
 
-            'BlogPostTable' => self::treeBlogPostTable(),
+            'Blog' => self::treeBlog(),
             'Faq' => self::treeFaq(),
             'Pages' => self::treePages(),
             'FileManager' => self::treeFileManager(),
@@ -64,30 +64,17 @@ class AppPuzzleTreeModel {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeBlogPostTable() {
+    static function treeBlog() {
         return [
             'view' => true,
-            'id' => "BlogPostTable",
-            'CopyFolder' => "BlogPost",
+            'id' => "Blog",
+            'CopyFolder' => "Model_Blog",
             'appFolder' => 'BlogPost',
             'viewFolder' => 'BlogPost',
             'routeFolder' => null,
             'routeFile' => 'blogPost.php',
             'migrations' => [
                 '2021_01_02_000001_create_blog_model_table.php',
-            ],
-
-            'seeder' => [
-                'blog_categories.sql',
-                'blog_category_translations.sql',
-                'blog_photo_translations.sql',
-                'blog_photos.sql',
-                'blog_post.sql',
-                'blog_tags.sql',
-                'blog_tags_post.sql',
-                'blog_tags_translations.sql',
-                'blog_translations.sql',
-                'blogcategory_blog.sql',
             ],
 
             'adminLangFolder' => "admin/",
