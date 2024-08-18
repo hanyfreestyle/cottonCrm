@@ -173,7 +173,7 @@ class UserController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DeleteQuery($query) {
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
             $query->withCount('del_post');
         }
         return $query;
@@ -183,7 +183,7 @@ class UserController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function deleteRowCount($deleteRow) {
         $deleteRowCount = 0;
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
             $deleteRowCount = $deleteRowCount + intval($deleteRow->del_post_count);
         }
         return $deleteRowCount;

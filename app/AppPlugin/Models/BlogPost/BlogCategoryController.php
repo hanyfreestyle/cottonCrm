@@ -22,7 +22,7 @@ class BlogCategoryController extends AdminMainController {
     use CategoryTraits;
     use BlogConfigTraits;
 
-    function __construct(BlogCategory $model, BlogCategoryTranslation $translation) {
+    function __construct() {
         parent::__construct();
         $this->controllerName = "BlogCategory";
         $this->PrefixRole = 'Blog';
@@ -30,43 +30,35 @@ class BlogCategoryController extends AdminMainController {
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/blogPost.app_menu_category');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
-        $this->model = $model;
-
+        $this->model = new BlogCategory();
+        $this->translation = new BlogCategoryTranslation();
         $this->UploadDirIs = 'blog-category';
-        $this->translation = $translation;
         $this->translationdb = 'category_id';
 
-        $Config = $this->LoadConfig();
-        View::share('Config', $Config);
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
-        if ($Config['TableCategory']) {
-            self::SetCatTree($Config['categoryTree'], $Config['categoryDeep']);
+        if (IsConfig($this->config, 'TableCategory')) {
+            self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
-
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => [
-                "editor" => $Config['categoryEditor'],
-                'iconfilterid' => $Config['categoryIcon'],
-                'labelView' => 0,
-                'filterid' => $Config['categoryPhotoAdd'],
-                'selectfilterid' => $Config['categoryPhotoAdd'],
-            ],
-
-            'yajraTable' => false,
-            'AddLang' => true,
+            'settings' => getDefSettings($this->config),
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
 
-        self::loadConstructData($sendArr);
+        self::constructData($sendArr);
+        self::loadCategoryPermission(array());
+
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # ClearCash
     public function ClearCash() {
-        Cache::forget('CashSideBlogCategories');
+//        Cache::forget('CashSideBlogCategories');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -100,15 +92,14 @@ class BlogCategoryController extends AdminMainController {
         } else {
             return back()->with(['confirmException' => '', 'fromModel' => 'CategoryBlog', 'deleteRow' => $deleteRow]);
         }
-
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
-    static function AdminMenu() {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+    static function AdminMenu() {
         $Config = self::DbConfig();
 
         $mainMenu = new AdminMenu();
@@ -132,20 +123,20 @@ class BlogCategoryController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "BlogPost.create";
-        $subMenu->url = "admin.Blog.BlogPost.create";
-        $subMenu->name = "admin/blogPost.app_menu_add_blog";
-        $subMenu->roleView = "Blog_view";
-        $subMenu->icon = "fas fa-plus-circle";
-        $subMenu->save();
-
-        $subMenu = new AdminMenu();
-        $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "BlogPost.index|BlogPost.edit|BlogPost.editEn|BlogPost.editAr";
         $subMenu->url = "admin.Blog.BlogPost.index";
         $subMenu->name = "admin/blogPost.app_menu_blog";
         $subMenu->roleView = "Blog_view";
         $subMenu->icon = "fas fa-rss";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "BlogPost.create";
+        $subMenu->url = "admin.Blog.BlogPost.create";
+        $subMenu->name = "admin/blogPost.app_menu_add_blog";
+        $subMenu->roleView = "Blog_view";
+        $subMenu->icon = "fas fa-plus-circle";
         $subMenu->save();
 
 

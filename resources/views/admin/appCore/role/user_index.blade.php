@@ -23,7 +23,7 @@
                                 <th class="TD_150">{{ __('admin/config/roles.users_fr_status') }}</th>
                                 <th class="TD_300">{{ __('admin/config/roles.users_fr_role') }}</th>
 
-                                @if(File::isFile(base_path('routes/AppPlugin/blogPost.php')))
+                                @if(File::isFile(base_path('routes/AppPlugin/model/blog.php')))
                                     <th class="TD_100">{{ __('admin/config/roles.t_post_count') }}</th>
                                 @endif
 
@@ -56,7 +56,7 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    @if(File::isFile(base_path('routes/AppPlugin/blogPost.php')))
+                                    @if(File::isFile(base_path('routes/AppPlugin/model/blog.php')))
                                         <td class="text-center">{{count($user->del_post)}}</td>
                                     @endif
                                     <x-admin.table.action-but type="edit" :row="$user"/>

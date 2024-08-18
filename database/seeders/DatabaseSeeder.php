@@ -8,6 +8,7 @@ use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
 use App\AppPlugin\Faq\Seeder\FaqSeeder;
+use App\AppPlugin\Models\BlogPost\Seeder\BlogCategorySeeder;
 use App\AppPlugin\Pages\Seeder\PageSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
@@ -38,6 +39,10 @@ class DatabaseSeeder extends Seeder {
 
         ProductFileTraits::LoadSeeder();
         MainModelFileTraits::LoadSeeder();
+
+        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
+            $this->call(BlogCategorySeeder::class);
+        }
 
         if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
             $this->call(FaqSeeder::class);

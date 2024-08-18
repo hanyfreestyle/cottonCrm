@@ -38,11 +38,12 @@ class FaqCategoryController extends AdminMainController {
         $this->translationdb = 'category_id';
 
         $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
         if (IsConfig($this->config, 'TableCategory')) {
             self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
-        View::share('config', $this->config);
+
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,

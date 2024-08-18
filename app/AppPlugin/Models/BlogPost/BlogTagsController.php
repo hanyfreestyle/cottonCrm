@@ -34,30 +34,28 @@ class BlogTagsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0, "orderbyPostion" => 1],
-            'yajraTable' => true,
+            'AddConfig' => false,
         ];
 
-        $Config = self::LoadConfig();
-        View::share('Config',$Config);
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
+        self::ConstructData($sendArr);
+        self::loadPostPermission(array());
 
-        self::loadConstructData($sendArr);
-
-        if(!$this->TableTags){
+        if (!$this->TableTags) {
             abort(403);
         }
 
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
 
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsStoreUpdate(DefTagsRequest $request, $id = 0) {
         return self::TraitsTagsStoreUpdate($request, $id);
     }

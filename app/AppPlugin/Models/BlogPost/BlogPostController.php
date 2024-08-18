@@ -46,34 +46,28 @@ class BlogPostController extends AdminMainController {
         $this->modelTags = new BlogTags();
         $this->modelReview = new BlogReview();
 
-        $this->modelPhotoColumn = 'blog_id';
         $this->UploadDirIs = 'blog';
+        $this->modelPhotoColumn = 'blog_id';
         $this->translationdb = 'blog_id';
 
-        $this->PrefixTags = "admin.BlogPost";
+        $this->PrefixTags = "admin.BlogTags";
         View::share('PrefixTags', $this->PrefixTags);
 
-        $Config = self::LoadConfig();
-        View::share('Config', $Config);
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["editor" => $Config['postEditor'], 'morePhotoFilterid' => $Config['TableMorePhotos']],
-            'yajraTable' => true,
-            'AddLang' => true,
-            'AddMorePhoto' => true,
+            'settings' => getDefSettings($this->config, 'post'),
+            'AddLang' => IsConfig($this->config, 'postAddOnlyLang', false),
             'restore' => 1,
         ];
 
-        self::loadConstructData($sendArr);
-
-        if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
-            $this->CashBrandList = self::CashBrandList($this->StopeCash);
-            View::share('CashBrandList', $this->CashBrandList);
-        }
+        self::constructData($sendArr);
+        self::loadPostPermission(array());
 
     }
 
@@ -86,30 +80,16 @@ class BlogPostController extends AdminMainController {
         Cache::forget('CashBrandMenuList');
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   PostDataTable
-    public function PostDataTable(Request $request) {
-        if ($request->ajax()) {
-            $data = $this->model::select(['blog_post.id', 'photo_thum_1', 'is_active', 'published_at'])->with('tablename');
-            return self::DataTableAddColumns($data)->make(true);
-        }
-    }
-
-
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostStoreUpdate(DefPostRequest $request, $id = 0) {
         return self::TraitsPostStoreUpdate($request, $id);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostForceDeleteException($id) {
+        dd('hi');
         $deleteRow = $this->model::onlyTrashed()->where('id', $id)->with('more_photos')->firstOrFail();
         if (count($deleteRow->more_photos) > 0) {
             foreach ($deleteRow->more_photos as $del_photo) {

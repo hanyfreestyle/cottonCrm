@@ -27,7 +27,7 @@ trait MainModelFileTraits {
 //            $data = array_merge($data, $newPer);
 //        }
 
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
             $newPer = [
                 ['cat_id' => 'Blog', 'name' => 'Blog_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
                 ['cat_id' => 'Blog', 'name' => 'Blog_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
@@ -100,7 +100,7 @@ trait MainModelFileTraits {
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
+        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
             $addLang = ['blogPost' => ['id' => 'blogPost', 'group' => 'admin', 'file_name' => 'blogPost', 'name' => 'Blog Post', 'name_ar' => 'المقالات']];
             $LangMenu = array_merge($LangMenu, $addLang);
         }
@@ -116,18 +116,7 @@ trait MainModelFileTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadSeeder() {
-        if (File::isFile(base_path('routes/AppPlugin/pages.php'))) {
-//            SeedDbFile(PageCategory::class, 'page_categories.sql');
-//            SeedDbFile(PageCategoryTranslation::class, 'page_category_translations.sql');
-//            SeedDbFile(PageTags::class, 'page_tags.sql');
-//            SeedDbFile(PageTagsTranslation::class, 'page_tags_translations.sql');
-//            SeedDbFile(Page::class, 'page_pages.sql');
-//            SeedDbFile(PageTranslation::class, 'page_translations.sql');
-//            SeedDbFile(PagePivot::class, 'pagecategory_page.sql');
-//            SeedDbFile(PageTagsPivot::class, 'page_tags_post.sql');
-//            SeedDbFile(PagePhoto::class, 'page_photos.sql');
-//            SeedDbFile(PagePhotoTranslation::class, 'page_photo_translations.sql');
-        }
+
 
 
 
@@ -141,12 +130,6 @@ trait MainModelFileTraits {
 //        if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
 //            $this->call(MainPostSeeder::class);
 //        }
-//
-//        if (File::isFile(base_path('routes/AppPlugin/blogPost.php'))) {
-//            $this->call(BlogCategorySeeder::class);
-//        }
-//
-
 //
 
 

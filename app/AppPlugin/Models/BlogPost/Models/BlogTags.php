@@ -18,14 +18,9 @@ class BlogTags extends Model implements TranslatableContract {
     protected $translationForeignKey = 'tag_id';
     public $timestamps = false;
 
-    public function scopeDef(Builder $query): Builder {
-        return $query->with('translations');
-    }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # tags
     public function blogs(): BelongsToMany {
-        return $this->belongsToMany(Blog::class,'blog_tags_post','tag_id', 'blog_id');
+        return $this->belongsToMany(Blog::class,'blog_tags_pivot','tag_id', 'blog_id');
     }
 
 

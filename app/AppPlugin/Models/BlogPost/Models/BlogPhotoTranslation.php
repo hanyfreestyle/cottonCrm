@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlogPhotoTranslation extends Model {
 
-
-    public $timestamps = false;
-    protected $table = "blog_photo_translations";
+    protected $table = "blog_photo_lang";
     protected $fillable = ['des'];
+    public $timestamps = false;
 }
