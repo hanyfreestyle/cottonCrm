@@ -95,7 +95,7 @@ class FaqCategoryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {
         $Config = self::DbConfig();
 
@@ -130,8 +130,8 @@ class FaqCategoryController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Question.createX";
-        $subMenu->url = "admin.Faq.Question.create";
+        $subMenu->sel_routs = "Question.createNew";
+        $subMenu->url = "admin.Faq.Question.createNew";
         $subMenu->name = "admin/faq.app_menu_add_faq";
         $subMenu->roleView = "Faq_view";
         $subMenu->icon = "fas fa-plus-circle";

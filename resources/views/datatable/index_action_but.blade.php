@@ -22,6 +22,10 @@
             {data: 'photo', name: 'photo', orderable: false, searchable: false, className: "text-center"},
         @endif
     @endif
+@elseif($type == 'morePhoto')
+    @if(IsArr($modelSettings,$controllerName."_morePhoto",0))
+        {data: 'morePhoto', name: 'morePhoto', orderable: false, searchable: false, className: "text-center actionButView"},
+    @endif
 @elseif($type == 'isActive')
     {data: 'isActive', name: 'isActive', orderable: false, searchable: false, className: "text-center"},
 @elseif($type == 'PublishedDate')

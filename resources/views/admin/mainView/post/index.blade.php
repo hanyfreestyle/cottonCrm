@@ -12,6 +12,7 @@
             <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
+
                     <th class="TD_20">#</th>
                     <x-admin.table.action-but res="d" po="top" type="photo" :view-but="IsConfig($config, 'postPhotoAdd')"/>
                     <x-admin.table.action-but res="d" po="top" type="PublishedDate" :view-but="IsConfig($config, 'postPublishedDate')"/>
@@ -19,6 +20,7 @@
                     <th>{{DefCategoryTextName(IsConfig($config, 'LangPostDefName',null))}}</th>
                     <x-admin.table.action-but res="d" po="top" type="CategoryName" :view-but="IsConfig($config, 'TableCategory')"/>
                     <x-admin.table.action-but res="d" po="top" type="isActive"/>
+                    <x-admin.table.action-but po="top" type="morePhoto"/>
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
                 </tr>
@@ -61,6 +63,7 @@
                     },
                     @include('datatable.index_action_but',['type'=> 'CategoryName','view'=> IsConfig($config, 'TableCategory')])
                     @include('datatable.index_action_but',['type'=> 'isActive'])
+                    @include('datatable.index_action_but',['type'=> 'morePhoto'])
                     @include('datatable.index_action_but',['type'=> 'edit'])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
                 ],

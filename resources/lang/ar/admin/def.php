@@ -26,6 +26,7 @@ return
 	'label_date_update' => 'اخر تحديث بتاريخ',
 	'label_deleted_at' => 'تاريخ الحذف',
 	'label_published_at' => 'تاريخ النشر',
+	'label_more_photo' => 'عرض البوم الصور',
 	'label_published_user' => 'الناشر',
 	'new_new' => 'صفحة جديدة',
 	'page_add' => 'اضافة محتوى',

@@ -46,8 +46,8 @@
     <x-admin.form.action-button url='{{route($PrefixRoute.".ListRelease",$row->id)}}' type='ListRelease' :tip="false"/>
 @elseif($btype == 'is_active_update')
     <x-admin.ajax.update-status-but :row="$row"/>
-@elseif($btype == 'MorePhoto')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto'/>
+@elseif($btype == 'morePhoto')
+    <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto' :tip="false" />
 @elseif($btype == 'Delete')
     <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm adminButMobile">
         <i class="fas fa-trash"></i> <span class="tipName"> {{__('admin/form.button_delete')}}</span></a>

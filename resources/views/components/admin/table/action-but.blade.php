@@ -7,6 +7,12 @@
         @if(IsArr($modelSettings,$controllerName."_view_photo",0))
             <th class="td_action {{$res}}"></th>
         @endif
+    @elseif($type == 'morePhoto')
+        @can($PrefixRole.'_edit')
+            @if(IsArr($modelSettings,$controllerName."_morePhoto",0))
+                <th class="td_action {{$res}}"></th>
+            @endif
+        @endcan
     @elseif($type == 'PublishedDate')
         @if(IsArr($modelSettings,$controllerName."_dataTableDate",0))
             <th class="TD_100 {{$res}}">{{__('admin/def.label_published_at')}}</th>

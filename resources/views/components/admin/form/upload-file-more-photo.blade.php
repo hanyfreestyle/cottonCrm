@@ -1,8 +1,8 @@
 <div class="col-lg-12">
     <div class="form-group">
         @if(intval($filterid) == 0)
-            <x-admin.form.select-arr label="{{__('admin/config/upFilter.form_select_filter_lable')}}" name="{{$filterName}}"
-                                     sendvalue="{{old('filter_id')}}" :send-arr="$filterTypes"/>
+            <x-admin.form.select-arr label="{{__('admin/config/upFilter.form_select_filter_lable')}}" name="filter_id"
+                                     col="12" sendvalue="{{old('filter_id')}}" :send-arr="$filterTypes"/>
         @else
 
             @if(intval(issetArr($modelSettings,$controllerName."_select_filter_form",0)) == true)

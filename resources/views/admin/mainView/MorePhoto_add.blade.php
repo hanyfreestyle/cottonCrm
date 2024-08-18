@@ -25,8 +25,6 @@
 
     <x-admin.hmtl.section>
         <div class="row">
-
-
             <div class="col-lg-9">
                 <x-admin.card.normal>
                     <div class="row">

@@ -39,10 +39,23 @@
 
 
 
-        @if($addMorePhoto)
+        @if(IsConfig($config,'TableMorePhotos'))
             <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_filter_more_photo')" name="{{$modelname}}_morephoto_filterid" col="2"
                                      sendvalue="{{old($modelname.'_morephoto_filterid',IsArr($modelSettings,$modelname.'_morephoto_filterid',0))}}"
                                      :send-arr="$filterTypes"/>
+
+            <x-admin.form.select-arr :label="__('admin/def.label_more_photo')" name="{{$modelname}}_morePhoto" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_morePhoto',IsArr($modelSettings,$modelname.'_morePhoto',0))}}"/>
+        @else
+            <input type="hidden" name="_morePhoto" value="0">
+            <input type="hidden" name="_morephoto_filterid" value="0">
+        @endif
+
+
+        @if(IsConfig($config,'TableMorePhotos'))
+
+
+
         @endif
 
 
@@ -55,6 +68,8 @@
             <x-admin.form.select-arr :label="__('admin/def.label_published_at')" name="{{$modelname}}_dataTableDate" col="2" :req="false" type="selActive"
                                      sendvalue="{{old($modelname.'_dataTableDate',IsArr($modelSettings,$modelname.'_dataTableDate',0))}}"/>
         @endif
+
+
 
         {{--    @if($orderby)--}}
         {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_orderby')}}" name="{{$modelname}}_orderby" col="3"--}}

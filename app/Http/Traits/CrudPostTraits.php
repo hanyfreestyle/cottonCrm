@@ -130,16 +130,22 @@ trait CrudPostTraits {
             ->editColumn('photo', function ($row) {
                 return TablePhoto($row, 'photo');
             })
+
             ->editColumn('isActive', function ($row) {
                 return is_active($row->isActive);
             })
+            ->editColumn('morePhoto', function ($row) {
+                return view('datatable.but')->with(['btype' => 'morePhoto', 'row' => $row])->render();
+
+            })
+
             ->editColumn('Edit', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
             })
             ->editColumn('Delete', function ($row) {
                 return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
             })
-            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name', 'CategoryName']);
+            ->rawColumns(['Edit', "Delete", 'morePhoto', 'photo', 'isActive', 'name', 'CategoryName']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
