@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2024 at 08:09 PM
+-- Generation Time: Aug 18, 2024 at 08:33 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -25,11 +25,13 @@ SET time_zone = "+00:00";
 -- Dumping data for table `faq_category`
 --
 
-INSERT INTO `faq_category` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:10', '2024-08-17 18:07:10'),
-(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:34', '2024-08-17 18:07:34'),
-(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:50', '2024-08-17 18:07:50'),
-(4, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:08:36', '2024-08-17 18:08:36');
+INSERT INTO `faq_category` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `position`, `created_at`, `updated_at`) VALUES
+(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-18 05:25:05', '2024-08-18 06:25:05'),
+(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-18 05:25:37', '2024-08-18 06:25:37'),
+(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-18 05:25:53', '2024-08-18 06:25:53'),
+(4, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-18 05:26:07', '2024-08-18 06:26:07'),
+(5, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-18 05:26:37', '2024-08-18 06:26:37'),
+(6, 1, 1, NULL, NULL, NULL, 1, 0, '2024-08-18 05:30:49', '2024-08-18 06:30:49');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

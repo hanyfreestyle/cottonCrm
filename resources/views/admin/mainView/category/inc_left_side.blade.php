@@ -2,8 +2,8 @@
     @if($pageData['ViewType'] == 'Edit')
         <div class="row LeftSideInfo">
             <div class="col-lg-12">
-                <div class="info">{{__('admin/def.lable_date_add')}} : <span> {{ PrintDate($rowData->created_at) }}</span></div>
-                <div class="info">{{__('admin/def.lable_date_update')}} : <span>{{ PrintDate($rowData->updated_at , "Y-m-d H:i:s") }}</span></div>
+                <div class="info">{{__('admin/def.label_date_add')}} : <span> {{ PrintDate($rowData->created_at) }}</span></div>
+                <div class="info">{{__('admin/def.label_date_update')}} : <span>{{ PrintDate($rowData->updated_at , "Y-m-d H:i:s") }}</span></div>
             </div>
         </div>
     @endif

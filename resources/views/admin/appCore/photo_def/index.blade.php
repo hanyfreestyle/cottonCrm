@@ -19,7 +19,7 @@
         @if(count($rowData)>0)
             <div class="row col-lg-12 hanySort">
                 @foreach($rowData as $row)
-                    <div class="col-lg-3 ListThisItam" data-index="{{$row->id}}" data-position="{{$row->postion}}">
+                    <div class="col-lg-3 ListThisItam" data-index="{{$row->id}}" data-position="{{$row->position}}">
                         <div class="card card-primary card-outline">
                             <div class="card-header"><h5 class="card-title m-0">{{$row->cat_id}}</h5></div>
                             <div class="card-body">

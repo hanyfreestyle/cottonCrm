@@ -13,20 +13,20 @@ class FaqTags extends Model implements TranslatableContract {
 
     public $translatedAttributes = ['name','slug'];
     protected $fillable = [];
-    protected $table = "Faq_tags";
+    protected $table = "faq_tags";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'tag_id';
     public $timestamps = false;
 
-    public function scopeDef(Builder $query): Builder {
-        return $query->with('translations');
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # tags
-    public function blogs(): BelongsToMany {
-        return $this->belongsToMany(Faq::class,'faq_tags_post','tag_id', 'post_id');
-    }
+//    public function scopeDef(Builder $query): Builder {
+//        return $query->with('translations');
+//    }
+//
+//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//#|||||||||||||||||||||||||||||||||||||| # tags
+//    public function blogs(): BelongsToMany {
+//        return $this->belongsToMany(Faq::class,'faq_tags_post','tag_id', 'post_id');
+//    }
 
 
 }

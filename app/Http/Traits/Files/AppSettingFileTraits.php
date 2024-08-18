@@ -113,7 +113,7 @@ trait AppSettingFileTraits {
         $mainMenu->name = "admin.app_menu_setting";
         $mainMenu->icon = "fas fa-cogs";
         $mainMenu->roleView = "config_view";
-        $mainMenu->postion = 80;
+        $mainMenu->position = 80;
         $mainMenu->save();
 
         $subMenu = new AdminMenu();
@@ -209,7 +209,7 @@ trait AppSettingFileTraits {
             $mainMenu->icon = "fas fa-language";
             $mainMenu->roleView = "weblang_view";
             $mainMenu->is_active = true;
-            $mainMenu->postion = 101;
+            $mainMenu->position = 101;
             $mainMenu->save();
         }
 

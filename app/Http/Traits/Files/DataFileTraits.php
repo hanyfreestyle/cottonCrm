@@ -93,7 +93,7 @@ trait DataFileTraits{
         $mainMenu->name = "admin.app_menu_data";
         $mainMenu->icon = "fas fa-server";
         $mainMenu->roleView = "data_view";
-        $mainMenu->postion = 81;
+        $mainMenu->position = 81;
         $mainMenu->save();
 
         if (File::isFile(base_path('routes/AppPlugin/data/country.php'))) {

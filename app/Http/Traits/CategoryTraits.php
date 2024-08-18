@@ -274,10 +274,10 @@ trait CategoryTraits {
         $pageData['ViewType'] = "List";
         $thisRow = null;
         if ($id == 0) {
-            $rowData = $this->model->where('parent_id', null)->orderBy('postion')->get();
+            $rowData = $this->model->where('parent_id', null)->orderBy('position')->get();
         } else {
             $thisRow = $this->model->findOrFail($id);
-            $rowData = $this->model->where('parent_id', $thisRow->id)->orderBy('postion')->get();;
+            $rowData = $this->model->where('parent_id', $thisRow->id)->orderBy('position')->get();;
         }
 
         return view('admin.mainView.category.sort', compact('pageData', 'rowData', 'thisRow'));
@@ -292,7 +292,7 @@ trait CategoryTraits {
             $id = $position[0];
             $newPosition = $position[1];
             $saveData = $this->model->findOrFail($id);
-            $saveData->postion = $newPosition;
+            $saveData->position = $newPosition;
             $saveData->save();
         }
         self::ClearCash();

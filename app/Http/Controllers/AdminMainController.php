@@ -337,7 +337,7 @@ class AdminMainController extends DefaultMainController {
                 $query->orderByTranslation('name', 'ASC');
                 break;
             case 5:
-                $query->orderBy('postion', 'ASC');
+                $query->orderBy('position', 'ASC');
                 break;
             case 6:
                 $query->orderBy('created_at', 'DESC');

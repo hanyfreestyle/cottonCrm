@@ -24,7 +24,7 @@
       @if(count($rowData)>0)
         <div class="col-lg-12 hanySort">
           @foreach($rowData as $row)
-            <div class="col-lg-12" data-index="{{$row->id}}" data-position="{{$row->postion}}">
+            <div class="col-lg-12" data-index="{{$row->id}}" data-position="{{$row->position}}">
               <div class="ListItem-12">
                 {{$row->name}}
                 @if(count($row->children) > 0 )

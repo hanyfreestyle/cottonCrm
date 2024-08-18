@@ -61,7 +61,7 @@ trait CrudPostTraits {
 
         $table = $config['DbPost'];
         $table_trans = $config['DbPostTrans'];
-        $table_trans_foreign = $config['DbPostCatId'];
+        $table_trans_foreign = $config['DbPostForeignId'];
         $locale = dataTableDefLang();
         $groups_table = $config['DbCategory'];
         $group_trans_table = $config['DbCategoryTrans'];
@@ -217,26 +217,23 @@ trait CrudPostTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TraitsPostStoreUpdate($request, $id) {
         $saveData = $this->model::findOrNew($id);
+        $categories = $request->input('categories');
+        $tags = $request->input('tag_id');
+        $user_id = Auth::user()->id;
 
-        try {
-            DB::transaction(function () use ($request, $saveData) {
-                $categories = $request->input('categories');
-                $tags = $request->input('tag_id');
-                $user_id = Auth::user()->id;
+        $saveData->is_active = intval((bool)$request->input('is_active'));
+        $saveData->updated_at = getCurrentTime();
+        $saveData->youtube = $request->input('youtube');
 
-                $saveData->is_active = intval((bool)$request->input('is_active'));
-                $saveData->updated_at = getCurrentTime();
-                $saveData->youtube = $request->input('youtube');
+        if (IsConfig($this->config, 'postPublishedDate')) {
+            $saveData->published_at = SaveDateFormat($request, 'published_at');
+        }
 
-                if (IsConfig($this->config, 'postPublishedDate')) {
-                    $saveData->published_at = SaveDateFormat($request, 'published_at');
-                }
+        if ($request->input('form_type') == 'Add') {
+            $saveData->user_id = $user_id;
+        }
 
-                if ($request->input('form_type') == 'Add') {
-                    $saveData->user_id = $user_id;
-                }
-
-                $saveData->save();
+        $saveData->save();
 
 //        if (IsConfig($this->config, 'TableReview') and $request->input('form_type') == 'Edit') {
 //            $blogReview = $this->modelReview;
@@ -246,26 +243,30 @@ trait CrudPostTraits {
 //            $blogReview->save();
 //        }
 
-                if (IsConfig($this->config, 'TableCategory')) {
-                    $saveData->categories()->sync($categories);
-                }
+        if (IsConfig($this->config, 'TableCategory')) {
+            $saveData->categories()->sync($categories);
+        }
 
-                if (IsConfig($this->config, 'TableTags')) {
-                    $saveData->tags()->sync($tags);
-                }
+        if (IsConfig($this->config, 'TableTags')) {
+            $saveData->tags()->sync($tags);
+        }
 
-                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'ar.name');
+        self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'ar.name');
 
-                $addLang = json_decode($request->add_lang);
-                foreach ($addLang as $key => $lang) {
-                    $CatId = $this->DbPostCatId;
-                    $saveTranslation = $this->translation->where($CatId, $saveData->id)->where('locale', $key)->firstOrNew();
-                    $saveTranslation->$CatId = $saveData->id;
-                    $saveTranslation->youtube_title = $request->input($key . '.youtube_title');
-                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
-                    $saveTranslation->save();
-                }
+        $addLang = json_decode($request->add_lang);
+        foreach ($addLang as $key => $lang) {
+            $ForeignId = $this->DbPostForeignId;
+            $saveTranslation = $this->translation->where($ForeignId, $saveData->id)->where('locale', $key)->firstOrNew();
+            $saveTranslation->$ForeignId = $saveData->id;
+            $saveTranslation->youtube_title = $request->input($key . '.youtube_title');
+            $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
+            $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+            $saveTranslation->save();
+        }
+
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+
 
             });
         } catch (\Exception $exception) {
@@ -302,7 +303,7 @@ trait CrudPostTraits {
     public function postIndexSoftDeletesQuery($config) {
         $table = $config['DbPost'];
         $table_trans = $config['DbPostTrans'];
-        $table_trans_foreign = $config['DbPostCatId'];
+        $table_trans_foreign = $config['DbPostForeignId'];
         $locale = dataTableDefLang();
         $data = DB::table($table)
             ->where("$table.deleted_at", '!=', null)

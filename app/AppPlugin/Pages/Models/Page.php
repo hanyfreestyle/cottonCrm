@@ -18,7 +18,7 @@ class Page extends Model implements TranslatableContract {
     use SoftDeletes;
 
     public $translatedAttributes = ['name', 'des', 'other', 'slug', 'g_title', 'g_des', 'youtube_title'];
-    protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active', 'postion', 'text_view', 'url_type'];
+    protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active', 'position', 'text_view', 'url_type'];
     protected $table = "page_pages";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'page_id';
@@ -53,7 +53,7 @@ class Page extends Model implements TranslatableContract {
 
 //    public function pages() {
 //        return $this->belongsToMany(Page::class, 'pagecategory_page', 'category_id', 'page_id')
-//            ->withPivot('postion')->orderBy('postion');
+//            ->withPivot('position')->orderBy('position');
 //    }
 
 

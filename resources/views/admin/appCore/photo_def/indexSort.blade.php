@@ -21,7 +21,7 @@
                 @if(count($rowData)>0)
                     <div class="row col-lg-12 hanySort">
                         @foreach($rowData as $row)
-                            <div class="col-lg-2 ListThisItam"  data-index="{{$row->id}}" data-position="{{$row->postion}}" >
+                            <div class="col-lg-2 ListThisItam"  data-index="{{$row->id}}" data-position="{{$row->position}}" >
                                 <p class="PhotoImageCard"><img src="{{defImagesDir($row->photo)}}"></p>
                             </div>
                         @endforeach

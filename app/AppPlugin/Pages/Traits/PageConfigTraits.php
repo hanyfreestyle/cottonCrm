@@ -13,7 +13,7 @@ trait PageConfigTraits {
             'DbCategoryForeign' => 'category_id',
             'DbPost' => 'page_pages',
             'DbPostTrans' => 'page_translations',
-            'DbPostCatId' => 'page_id',
+            'DbPostForeignId' => 'page_id',
             'DbPhoto' => 'page_photos',
             'DbPhotoTrans' => 'page_photo_translations',
             'DbTags' => 'page_tags',

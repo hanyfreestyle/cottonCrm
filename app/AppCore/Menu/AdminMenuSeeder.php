@@ -86,7 +86,7 @@ class AdminMenuSeeder extends Seeder {
 
         $updateMenuPostion = AdminMenu::query()->where('parent_id','!=',null)->get();
         foreach ($updateMenuPostion as $menu){
-            $menu->postion = $menu->id;
+            $menu->position = $menu->id;
             $menu->save();
         }
 

@@ -12,19 +12,20 @@ trait FaqConfigTraits {
 
             'DbCategory' => 'faq_category',
             'DbCategoryTrans' => 'faq_category_translations',
-            'DbCategoryPivot' => 'faq_category_faq',
+            'DbCategoryPivot' => 'faq_category_t_pivot',
             'DbCategoryForeign' => 'category_id',
 
-            'DbPost' => 'faq_faqs',
-            'DbPostTrans' => 'faq_translations',
+            'DbPost' => 'faq_post',
+            'DbPostTrans' => 'faq_post_translations',
+            'DbPostReview' => 'faq_post_t_review',
             'DbPostForeignId' => 'faq_id',
 
-            'DbPhoto' => 'faq_photos',
+            'DbPhoto' => 'faq_photo',
             'DbPhotoTrans' => 'faq_photo_translations',
 
             'DbTags' => 'faq_tags',
             'DbTagsTrans' => 'faq_tags_translations',
-            'DbTagsPivot' => 'faq_tags_translations',
+            'DbTagsPivot' => 'faq_tags_t_pivot',
 
             'LangCategoryDefName' => __('admin/def.category_name'),
             'LangCategoryDefDes' => __('admin/def.category_des'),

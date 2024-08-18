@@ -9,7 +9,7 @@ class BaseMigration {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public static function createCategoryTable($DbCategory, $DbCategoryTrans) {
+    public static function createCategoryTable($DbCategory, $DbCategoryTrans, $DbCategoryPivot, $DbPost, $DbPostForeignId) {
 
         Schema::create("$DbCategory", function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -19,7 +19,7 @@ class BaseMigration {
             $table->string("photo")->nullable();
             $table->string("photo_thum_1")->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
 
@@ -36,6 +36,19 @@ class BaseMigration {
             $table->unique(['locale', 'slug']);
             $table->foreign('category_id')->references('id')->on("$DbCategory")->onDelete('cascade');
         });
+
+
+        Schema::create("$DbCategoryPivot", function (Blueprint $table) use ($DbCategory, $DbPost, $DbPostForeignId) {
+            $table->bigIncrements('id');
+            $table->unsignedBiginteger('category_id');
+            $table->unsignedBiginteger("$DbPostForeignId");
+            $table->integer('position')->default(0);
+
+            $table->foreign('category_id')->references('id')->on("$DbCategory")->onDelete('cascade');
+            $table->foreign("$DbPostForeignId")->references('id')->on("$DbPost")->onDelete('cascade');
+        });
+
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -73,29 +86,6 @@ class BaseMigration {
             $table->foreign("$DbPostForeignId")->references('id')->on("$DbPost")->onDelete('cascade');
         });
 
-//
-//        if ($Config['TableReview']) {
-//            Schema::create('faq_faqs_review', function (Blueprint $table) {
-//                $table->bigIncrements('id');
-//                $table->bigInteger('user_id')->unsigned();
-//                $table->bigInteger('post_id')->unsigned();
-//                $table->dateTime('updated_at');
-//                $table->foreign('post_id')->references('id')->on('faq_faqs')->onDelete('cascade');
-//            });
-//        }
-//
-//        if ($Config['TableCategory']) {
-//            Schema::create('faq_category_faq', function (Blueprint $table) {
-//                $table->bigIncrements('id');
-//                $table->unsignedBiginteger('category_id');
-//                $table->unsignedBiginteger('faq_id');
-//                $table->integer('postion')->default(0);
-//
-//                $table->foreign('category_id')->references('id')->on('faq_category')->onDelete('cascade');
-//                $table->foreign('faq_id')->references('id')->on('faq_faqs')->onDelete('cascade');
-//            });
-//        }
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -129,14 +119,14 @@ class BaseMigration {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public static function createTagsTable($DbTags, $DbTagsTrans, $DbTagsPivot,$DbPost ,$DbPostForeignId) {
+    public static function createTagsTable($DbTags, $DbTagsTrans, $DbTagsPivot, $DbPost, $DbPostForeignId) {
 
         Schema::create("$DbTags", function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->boolean("is_active")->default(true);
         });
 
-        Schema::create("$DbTagsTrans", function (Blueprint $table) use ($DbPost) {
+        Schema::create("$DbTagsTrans", function (Blueprint $table) use ($DbTags) {
             $table->bigIncrements('id');
             $table->bigInteger('tag_id')->unsigned();
             $table->string('locale')->index();
@@ -144,20 +134,31 @@ class BaseMigration {
             $table->string('name')->nullable();
             $table->unique(['tag_id', 'locale']);
             $table->unique(['locale', 'slug']);
-            $table->foreign('tag_id')->references('id')->on("$DbPost")->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on("$DbTags")->onDelete('cascade');
         });
 
-        Schema::create("$DbTagsPivot", function (Blueprint $table) use ($DbPost,$DbTags,$DbPostForeignId) {
+        Schema::create("$DbTagsPivot", function (Blueprint $table) use ($DbPost, $DbTags, $DbPostForeignId) {
             $table->bigIncrements('id');
             $table->unsignedBiginteger('tag_id');
-            $table->unsignedBiginteger('post_id');
+            $table->unsignedBiginteger("$DbPostForeignId");
 
             $table->foreign('tag_id')->references('id')->on("$DbTags")->onDelete('cascade');
             $table->foreign("$DbPostForeignId")->references('id')->on("$DbPost")->onDelete('cascade');
         });
-
-
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public static function createPostReviewTable($DbPostReview, $DbPost) {
+        Schema::create("$DbPostReview", function (Blueprint $table) use ($DbPost) {
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('post_id')->unsigned();
+            $table->dateTime('updated_at');
+            $table->foreign('post_id')->references('id')->on("$DbPost")->onDelete('cascade');
+        });
+    }
+
 
 
 }

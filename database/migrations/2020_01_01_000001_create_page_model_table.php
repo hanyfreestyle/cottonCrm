@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string("photo")->nullable();
             $table->string("photo_thum_1")->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
 
@@ -92,7 +92,7 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBiginteger('category_id');
             $table->unsignedBiginteger('page_id');
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
 
             $table->foreign('category_id')->references('id')->on('page_categories')->onDelete('cascade');
             $table->foreign('page_id')->references('id')->on('page_pages')->onDelete('cascade');

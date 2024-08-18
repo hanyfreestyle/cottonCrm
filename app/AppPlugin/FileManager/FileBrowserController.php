@@ -121,7 +121,7 @@ class FileBrowserController extends Controller {
         $mainMenu->name = "admin/fileManager.app_menu";
         $mainMenu->icon = "fas fa-images";
         $mainMenu->roleView = "FileManager_view";
-        $mainMenu->postion =  150;
+        $mainMenu->position =  150;
         $mainMenu->save();
     }
 

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('roleView')->nullable();
 
             $table->integer('is_active')->default('1');
-            $table->integer('postion')->nullable();
+            $table->integer('position')->nullable();
 
         });
 

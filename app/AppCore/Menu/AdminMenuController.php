@@ -47,7 +47,7 @@ class AdminMenuController extends AdminMainController {
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $rowData = AdminMenu::query()->where('parent_id',null)->orderBy('postion')->get();
+        $rowData = AdminMenu::query()->where('parent_id',null)->orderBy('position')->get();
         return view('admin.appCore.menu.index', compact('pageData', 'rowData'));
     }
 
@@ -57,7 +57,7 @@ class AdminMenuController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Sub";
         $mainMenu = AdminMenu::where('id',$id)->where('parent_id',null)->firstOrFail();
-        $rowData = AdminMenu::query()->where('parent_id',$mainMenu->id)->orderBy('postion')->get();
+        $rowData = AdminMenu::query()->where('parent_id',$mainMenu->id)->orderBy('position')->get();
         return view('admin.appCore.menu.index', compact('pageData', 'rowData','mainMenu'));
     }
 
@@ -71,7 +71,7 @@ class AdminMenuController extends AdminMainController {
             $id = $position[0];
             $newPosition = $position[1];
             $saveData = AdminMenu::findOrFail($id);
-            $saveData->postion = $newPosition;
+            $saveData->position = $newPosition;
             $saveData->save();
         }
         self::ClearCash();
@@ -100,14 +100,14 @@ class AdminMenuController extends AdminMainController {
             $CashAdminMenuList = AdminMenu::where('is_active',true)
                 ->where('parent_id',null)
                 ->with('subMenu')
-                ->orderby('postion')
+                ->orderby('position')
                 ->get();
         } else {
             $CashAdminMenuList = Cache::remember('CashAdminMenuList', cashDay(7), function () {
                 return AdminMenu::where('is_active',true)
                     ->where('parent_id',null)
                     ->with('subMenu')
-                    ->orderby('postion')
+                    ->orderby('position')
                     ->get();
             });
         }

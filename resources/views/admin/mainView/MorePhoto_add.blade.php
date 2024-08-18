@@ -39,7 +39,7 @@
 
                             <div class="row col-lg-12 hanySort">
                                 @foreach($ListPhotos as $Photo)
-                                    <div class="col-lg-2 ListThisItam" data-index="{{$Photo->id}}" data-position="{{$Photo->postion}}">
+                                    <div class="col-lg-2 ListThisItam" data-index="{{$Photo->id}}" data-position="{{$Photo->position}}">
                                         <p class="PhotoImageCard"><img src="{{ defImagesDir($Photo->photo) }}"></p>
                                         <div class="buttons mb-3">
                                             @can($PrefixRole.'_delete')

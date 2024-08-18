@@ -10,23 +10,25 @@ return new class extends Migration {
 
     public function up(): void {
         $config = FaqConfigTraits::DbConfig();
-        BaseMigration::createCategoryTable($config['DbCategory'], $config['DbCategoryTrans']);
-        BaseMigration::createPostTable($config['DbPost'], $config['DbPostTrans'], $config['DbPostCatId']);
+        BaseMigration::createPostTable($config['DbPost'], $config['DbPostTrans'], $config['DbPostForeignId']);
+        BaseMigration::createCategoryTable($config['DbCategory'], $config['DbCategoryTrans'], $config['DbCategoryPivot'], $config['DbPost'], $config['DbPostForeignId']);
         BaseMigration::createMorePhotoTable($config['DbPhoto'], $config['DbPhotoTrans'], $config['DbPost'], $config['DbPostForeignId']);
         BaseMigration::createTagsTable($config['DbTags'], $config['DbTagsTrans'], $config['DbTagsPivot'], $config['DbPost'], $config['DbPostForeignId']);
+        BaseMigration::createPostReviewTable($config['DbPostReview'], $config['DbPost']);
     }
 
     public function down(): void {
-        Schema::dropIfExists('faq_tags_post');
-        Schema::dropIfExists('faq_tags_translations');
-        Schema::dropIfExists('faq_tags');
-        Schema::dropIfExists('faq_photo_translations');
-        Schema::dropIfExists('faq_photo');
-        Schema::dropIfExists('faq_category_faq');
-        Schema::dropIfExists('faq_faqs_review');
-        Schema::dropIfExists('faq_translations');
-        Schema::dropIfExists('faq_faqs');
-        Schema::dropIfExists('faq_category_translations');
-        Schema::dropIfExists('faq_category');
+        $config = FaqConfigTraits::DbConfig();
+        Schema::dropIfExists($config['DbPostReview']);
+        Schema::dropIfExists($config['DbTagsPivot']);
+        Schema::dropIfExists($config['DbTagsTrans']);
+        Schema::dropIfExists($config['DbTags']);
+        Schema::dropIfExists($config['DbPhotoTrans']);
+        Schema::dropIfExists($config['DbPhoto']);
+        Schema::dropIfExists($config['DbCategoryPivot']);
+        Schema::dropIfExists($config['DbCategoryTrans']);
+        Schema::dropIfExists($config['DbCategory']);
+        Schema::dropIfExists($config['DbPostTrans']);
+        Schema::dropIfExists($config['DbPost']);
     }
 };

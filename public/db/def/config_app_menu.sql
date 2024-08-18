@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `config_app_menu`
 --
 
-INSERT INTO `config_app_menu` (`id`, `type`, `postion`, `is_active`, `deleted_at`) VALUES
+INSERT INTO `config_app_menu` (`id`, `type`, `position`, `is_active`, `deleted_at`) VALUES
 (1, 'user', 0, 1, NULL),
 (2, 'cart', 0, 1, NULL),
 (3, 'side', 3, 1, NULL),

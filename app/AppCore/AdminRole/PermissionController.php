@@ -105,7 +105,7 @@ class PermissionController extends AdminMainController {
         $mainMenu->name = "admin/config/roles.menu_roles";
         $mainMenu->icon = "fas fa-unlock-alt";
         $mainMenu->roleView = "users_view";
-        $mainMenu->postion = 99;
+        $mainMenu->position = 99;
         $mainMenu->save();
 
         $subMenu = new AdminMenu();

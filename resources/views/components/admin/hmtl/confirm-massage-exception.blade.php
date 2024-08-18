@@ -1,3 +1,21 @@
+@if(Session::has('fromModel') and Session::get('fromModel') == "CategoryFaq")
+    <br> {{__('admin/def.category_name')}} ({{print_h1(Session::get('deleteRow'))}})
+    @if(intval(Session::get('deleteRow')->del_category_count) > 0 )
+        <br> ({{Session::get('deleteRow')->del_category_count}}) {!! __('admin/faq.cat_del_related_cat') !!}
+    @endif
+    @if(intval(Session::get('deleteRow')->del_faq_count) > 0 )
+        <br> ({{Session::get('deleteRow')->del_faq_count}}) {!! __('admin/faq.cat_del_related_faq') !!}
+    @endif
+@endif
+
+
+
+
+
+
+
+
+
 @if(Session::has('fromModel') and Session::get('fromModel') == "Product")
   <br> {{__('admin/proProduct.pro_text_name')}} ({{print_h1(Session::get('deleteRow'))}})
   @if(intval(Session::get('deleteRow')->orders_count) > 0 )
@@ -15,15 +33,7 @@
   @endif
 @endif
 
-@if(Session::has('fromModel') and Session::get('fromModel') == "CategoryFaq")
-  <br> {{__('admin/proProduct.cat_text_name')}} ({{print_h1(Session::get('deleteRow'))}})
-  @if(intval(Session::get('deleteRow')->del_category_count) > 0 )
-    <br> ({{Session::get('deleteRow')->del_category_count}}) {!! __('admin/faq.cat_del_related_cat') !!}
-  @endif
-  @if(intval(Session::get('deleteRow')->del_faq_count) > 0 )
-    <br> ({{Session::get('deleteRow')->del_faq_count}}) {!! __('admin/faq.cat_del_related_faq') !!}
-  @endif
-@endif
+
 
 @if(Session::has('fromModel') and Session::get('fromModel') == "UsersPost")
     <br> {{__('admin/config/roles.exception_user_name')}} ({{ Session::get('deleteRow')->name }})

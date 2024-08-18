@@ -11,11 +11,9 @@ use App\AppPlugin\Faq\Models\FaqTranslation;
 use App\AppPlugin\Faq\Traits\FaqConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
-
 use App\Http\Requests\def\DefPostRequest;
 use App\Http\Traits\CrudPostTraits;
 use App\Http\Traits\CrudTraits;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 

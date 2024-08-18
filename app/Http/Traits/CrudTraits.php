@@ -186,8 +186,8 @@ trait CrudTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function MorePhotosDestroyAll($postid) {
         $model = $this->model->findOrFail($postid);
-        $catId = $this->config['DbPostCatId'];
-        $allPhotos = $this->modelPhoto->where($catId, $postid)->get();
+        $ForeignId = $this->config['DbPostForeignId'];
+        $allPhotos = $this->modelPhoto->where($ForeignId, $postid)->get();
         foreach ($allPhotos as $photo) {
             $deleteRow = $this->modelPhoto->findOrFail($photo->id);
             $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);

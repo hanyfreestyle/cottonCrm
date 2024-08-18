@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `page_categories`
 --
 
-INSERT INTO `page_categories` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
+INSERT INTO `page_categories` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `position`, `created_at`, `updated_at`) VALUES
 (1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 07:59:19', '2024-08-16 08:59:19'),
 (2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:09', '2024-08-16 09:00:09'),
 (3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-16 08:00:44', '2024-08-16 09:00:44');

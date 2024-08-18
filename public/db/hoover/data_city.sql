@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `data_city`
 --
 
-INSERT INTO `data_city` (`id`, `old_id`, `country_id`, `is_active`, `postion`, `photo`, `photo_thum_1`, `rate`, `discount`) VALUES
+INSERT INTO `data_city` (`id`, `old_id`, `country_id`, `is_active`, `position`, `photo`, `photo_thum_1`, `rate`, `discount`) VALUES
 (1, 176, 66, 1, 0, NULL, NULL, 200, 7000),
 (2, NULL, 66, 1, 0, NULL, NULL, 200, 7000),
 (3, NULL, 66, 1, 0, NULL, NULL, 200, 7000),

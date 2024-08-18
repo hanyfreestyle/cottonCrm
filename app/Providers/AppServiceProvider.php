@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider {
                 Route::get('/editAr/{id}', [$controller, 'CategoryEdit'])->name('editAr');
                 Route::get('/editEn/{id}', [$controller, 'CategoryEdit'])->name('editEn');
 
-                Route::get('/update/{id}', [$controller, 'CategoryStoreUpdate'])->name('update');
+                Route::post('/update/{id}', [$controller, 'CategoryStoreUpdate'])->name('update');
 
                 Route::get('/destroy/{id}', [$controller, 'destroyException'])->name('destroy');
                 Route::get('/destroyEdit/{id}', [$controller, 'destroyException'])->name('destroyEdit');

@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `pagecategory_page`
 --
 
-INSERT INTO `pagecategory_page` (`id`, `category_id`, `page_id`, `postion`) VALUES
+INSERT INTO `pagecategory_page` (`id`, `category_id`, `page_id`, `position`) VALUES
 (1, 1, 1, 0),
 (2, 2, 1, 0),
 (3, 2, 2, 0),

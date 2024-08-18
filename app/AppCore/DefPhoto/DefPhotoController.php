@@ -52,7 +52,7 @@ class DefPhotoController extends AdminMainController {
         $pageData['ViewType'] = "List";
 
         $defPhoto = glob("Def/*");
-        $rowData = DefPhoto::orderBy('postion')->get();
+        $rowData = DefPhoto::orderBy('position')->get();
         return view('admin.appCore.photo_def.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -119,7 +119,7 @@ class DefPhotoController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function sortDefPhotoList() {
         $pageData = $this->pageData;
-        $rowData = DefPhoto::orderBy('postion')->paginate(50);
+        $rowData = DefPhoto::orderBy('position')->paginate(50);
         $pageData['ViewType'] = "List";
         return view('admin.appCore.photo_def.indexSort', compact('pageData', 'rowData'));
     }
@@ -132,7 +132,7 @@ class DefPhotoController extends AdminMainController {
             $id = $position[0];
             $newPosition = $position[1];
             $saveData = DefPhoto::findOrFail($id);
-            $saveData->postion = $newPosition;
+            $saveData->position = $newPosition;
             $saveData->save();
         }
         Cache::forget('DefPhoto_Cash');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 03:46 PM
+-- Generation Time: Aug 18, 2024 at 08:01 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -22,13 +22,16 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `page_tags`
+-- Dumping data for table `faq_tags`
 --
 
 INSERT INTO `faq_tags` (`id`, `is_active`) VALUES
 (1, 1),
 (2, 1),
-(3, 1);
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

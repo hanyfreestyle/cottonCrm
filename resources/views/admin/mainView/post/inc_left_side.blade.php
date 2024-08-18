@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="info">{{__('admin/def.label_date_add')}} : <span> {{ PrintDate($rowData->created_at) }}</span></div>
                     <div class="info">{{__('admin/def.label_published_at')}} : <span> {{ PrintDate($rowData->published_at) }}</span></div>
-                    <div class="info">{{__('admin/def.label_published_user')}} : <span> {{ $rowData->user->name }}</span></div>
+                    <div class="info">{{__('admin/def.label_published_user')}} : <span> {{ $rowData->user->name ?? '' }}</span></div>
                     <div class="info">{{__('admin/def.label_date_update')}} : <span>{{ PrintDate($rowData->updated_at , "Y-m-d H:i:s") }}</span></div>
                 </div>
             </div>

@@ -273,7 +273,7 @@ class LangFileController extends AdminMainController {
         $mainMenu->icon = "fas fa-language";
         $mainMenu->roleView = "adminlang_view";
         $mainMenu->is_active = true;
-        $mainMenu->postion = 100;
+        $mainMenu->position = 100;
         $mainMenu->save();
     }
 

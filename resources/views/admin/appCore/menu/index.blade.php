@@ -22,7 +22,7 @@
             @if(count($rowData)>0)
                 <div class="row col-lg-12 hanySort">
                     @foreach($rowData as $row)
-                        <div class="col-lg-12" data-index="{{$row->id}}" data-position="{{$row->postion}}">
+                        <div class="col-lg-12" data-index="{{$row->id}}" data-position="{{$row->position}}">
                             <p class="ListItem-12">
                                 <i class="{{$row->icon}}"></i>
                                 {{__($row->name)}}

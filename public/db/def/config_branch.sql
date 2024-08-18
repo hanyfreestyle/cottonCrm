@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `config_branch`
 --
 
-INSERT INTO `config_branch` (`id`, `whatsapp`, `lat`, `long`, `direction`, `is_active`, `postion`, `deleted_at`) VALUES
+INSERT INTO `config_branch` (`id`, `whatsapp`, `lat`, `long`, `direction`, `is_active`, `position`, `deleted_at`) VALUES
 (1, '01223129660', '24.7778893', '46.629138', 'https://goo.gl/maps/GTWAx3WN26qAXofy7', 1, 0, NULL),
 (2, '01006180117', '24.777903', '43534534', 'https://goo.gl/maps/hjDuzdSQEWuu4tpd8', 1, 0, NULL);
 COMMIT;

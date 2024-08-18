@@ -18,9 +18,9 @@ class FaqPhoto extends Model implements TranslatableContract  {
     public $timestamps = false;
     protected $translationForeignKey = 'photo_id';
 
-    public function modelName(): BelongsTo {
-        return $this->belongsTo(Faq::class, 'faq_id', 'id');
-    }
+//    public function modelName(): BelongsTo {
+//        return $this->belongsTo(Faq::class, 'faq_id', 'id');
+//    }
 
 
 }

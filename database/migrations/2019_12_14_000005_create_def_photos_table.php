@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('photo')->nullable();
             $table->string('photo_thum_1')->nullable();
             $table->string('photo_thum_2')->nullable();
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
     }

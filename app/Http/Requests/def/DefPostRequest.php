@@ -39,6 +39,7 @@ class DefPostRequest extends FormRequest {
 
         $rules = [
             'image' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
+            'is_active' => 'required',
         ];
 
         if ($Config->TableCategory) {
@@ -60,7 +61,7 @@ class DefPostRequest extends FormRequest {
             'seo' => $Config->postSeo,
         ];
 
-        $rules += AdminMainController::FormRequestSeo($id, $addLang, $Config->DbPostTrans, $Config->DbPostCatId, $rulesConfig);
+        $rules += AdminMainController::FormRequestSeo($id, $addLang, $Config->DbPostTrans, $Config->DbPostForeignId, $rulesConfig);
 
         return $rules;
     }

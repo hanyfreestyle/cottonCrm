@@ -35,7 +35,6 @@ class FileManagerController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
-            'configArr' => ["filterid" => 0, "orderbyPostion" => 1],
             'yajraTable' => false,
             'AddLang' => false,
             'restore' => 0,
