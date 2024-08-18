@@ -3,57 +3,39 @@
 
 namespace App\AppPlugin\Faq\Traits;
 
-use App\Http\Traits\DefModelConfigTraits;
 
 trait FaqConfigTraits {
 
     public function LoadConfig() {
+        $config = [
+            'PrefixRole' => "Faq",
 
-        $defConfig = DefModelConfigTraits::defConfig();
+            'DbCategory' => 'faq_category',
+            'DbCategoryTrans' => 'faq_category_translations',
+            'DbCategoryPivot' => 'faq_category_faq',
+            'DbCategoryForeign' => 'category_id',
 
-        $Config = [
-            'DbCategory'=>'faq_category',
-            'DbCategoryTrans'=>'faq_category_translations',
-            'DbPost'=>'faq_faqs',
-            'DbPostTrans'=>'faq_translations',
-            'DbPostCatId'=>'faq_id',
-            'DbPhoto'=>'faq_photos',
-            'DbPhotoTrans'=>'faq_photo_translations',
-            'DbTags'=>'faq_tags',
-            'DbTagsTrans'=>'faq_tags_translations',
+            'DbPost' => 'faq_faqs',
+            'DbPostTrans' => 'faq_translations',
+            'DbPostForeignId' => 'faq_id',
 
+            'DbPhoto' => 'faq_photos',
+            'DbPhotoTrans' => 'faq_photo_translations',
 
-            'TableCategory' => true,
-            'TableTags' => true,
-            'TableTagsOnFly' => false,
-            'TableReview' => false,
+            'DbTags' => 'faq_tags',
+            'DbTagsTrans' => 'faq_tags_translations',
+            'DbTagsPivot' => 'faq_tags_translations',
 
-            'TableMorePhotos' => true,
-            'MorePhotosEdit' => true,
-
-            'categoryTree' => true,
-            'categoryPhotoAdd' => true,
-            'categoryPhotoView' => true,
-            'categoryIcon' => false,
-            'categoryDelete' => true,
-            'categorySort' => false,
-
-            'postPublishedDate' => false,
-            'postPhotoAdd' => true,
-            'postPhotoView' => true,
-
-            'postEditor' => true,
-            'postDes' => true,
-            'postSeo' => true,
-            'postSlug' => true,
-            'postYoutube' => true,
-            'postWebSlug' => null,
-
+            'LangCategoryDefName' => __('admin/def.category_name'),
+            'LangCategoryDefDes' => __('admin/def.category_des'),
             'LangPostDefName' => __('admin/faq.faq_text_name'),
             'LangPostDefDes' => __('admin/faq.faq_text_answer'),
 
         ];
-        $Config = array_merge($defConfig, $Config);
+
+        $defConfig = getConfigFromJson('model_faq');
+
+        $Config = array_merge($config, $defConfig);
 
         foreach ($Config as $key => $value) {
             $this->$key = $value;

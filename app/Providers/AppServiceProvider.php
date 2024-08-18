@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Opcodes\LogViewer\Facades\LogViewer;
@@ -17,7 +18,7 @@ class AppServiceProvider extends ServiceProvider {
 
 
     public function register(): void {
-        foreach (glob(app_path().'/Helpers/function/*.php') as $filename) {
+        foreach (glob(app_path() . '/Helpers/function/*.php') as $filename) {
             require_once($filename);
         }
     }
@@ -33,7 +34,95 @@ class AppServiceProvider extends ServiceProvider {
         $key = $this->databaseEncryptionKey();
         $cipher = config('app.cipher');
         Model::encryptUsing(new Encrypter($key, $cipher));
+
+        Route::macro('CategoryRoute', function ($prefixFolder, $prefixRoute, $controller) {
+            Route::prefix($prefixFolder)->name($prefixRoute)->group(function () use ($controller) {
+                Route::get('/', [$controller, 'CategoryIndex'])->name('index');
+                Route::get('/main', [$controller, 'CategoryIndex'])->name('index_Main');
+                Route::get('/sub-category/{id}', [$controller, 'CategoryIndex'])->name('SubCategory');
+
+                Route::get('/DataTable/all', [$controller, 'DataTable'])->name('DataTable');
+                Route::get('/DataTable/main', [$controller, 'DataTableMain'])->name('DataTableMain');
+                Route::get('/DataTable/sub/{id}', [$controller, 'DataTableSub'])->name('DataTableSub');
+
+                Route::get('/create', [$controller, 'CategoryCreate'])->name('create');
+                Route::get('/create/ar', [$controller, 'CategoryCreate'])->name('create_ar');
+                Route::get('/create/en', [$controller, 'CategoryCreate'])->name('create_en');
+
+                Route::get('/edit/{id}', [$controller, 'CategoryEdit'])->name('edit');
+                Route::get('/editAr/{id}', [$controller, 'CategoryEdit'])->name('editAr');
+                Route::get('/editEn/{id}', [$controller, 'CategoryEdit'])->name('editEn');
+
+                Route::get('/update/{id}', [$controller, 'CategoryStoreUpdate'])->name('update');
+
+                Route::get('/destroy/{id}', [$controller, 'destroyException'])->name('destroy');
+                Route::get('/destroyEdit/{id}', [$controller, 'destroyException'])->name('destroyEdit');
+
+                Route::get('/emptyPhoto/{id}', [$controller, 'emptyPhoto'])->name('emptyPhoto');
+                Route::get('/DeleteLang/{id}', [$controller, 'DeleteLang'])->name('DeleteLang');
+                Route::get('/config/', [$controller, 'CategoryConfig'])->name('config');
+            });
+        });
+
+        Route::macro('PostRoutes', function ($prefixFolder, $prefixRoute, $controller) {
+            Route::prefix($prefixFolder)->name($prefixRoute)->group(function () use ($controller) {
+                Route::get('/', [$controller, 'PostIndex'])->name('index');
+                Route::get('/DataTable', [$controller, 'PostDataTable'])->name('DataTable');
+                Route::get('/category/{categoryId}', [$controller, 'PostListCategory'])->name('FilterCategory');
+                Route::get('/category/DataTable/{categoryId}', [$controller, 'PostDataTableCategory'])->name('DataTableCategory');
+
+                Route::get('/soft-delete', [$controller, 'PostSoftDeletes'])->name('SoftDelete');
+                Route::get('/soft-delete/DataTable', [$controller, 'PostDataTableSoftDeletes'])->name('DataTableSoftDeletes');
+
+                Route::get('/create/new', [$controller, 'PostCreate'])->name('createNew');
+                Route::get('/create', [$controller, 'PostCreate'])->name('create');
+                Route::get('/create/ar', [$controller, 'PostCreate'])->name('create_ar');
+                Route::get('/create/en', [$controller, 'PostCreate'])->name('create_en');
+
+                Route::get('/edit/{id}', [$controller, 'PostEdit'])->name('edit');
+                Route::get('/editAr/{id}', [$controller, 'PostEdit'])->name('editAr');
+                Route::get('/editEn/{id}', [$controller, 'PostEdit'])->name('editEn');
+
+                Route::post('/update/{id}', [$controller, 'PostStoreUpdate'])->name('update');
+
+                Route::get('/destroy/{id}', [$controller, 'destroy'])->name('destroy');
+                Route::get('/destroy-edit/{id}', [$controller, 'destroyEdit'])->name('destroyEdit');
+                Route::get('/restore/{id}', [$controller, 'Restore'])->name('restore');
+                Route::get('/force/{id}', [$controller, 'PostForceDeleteException'])->name('force');
+                Route::get('/DeleteLang/{id}', [$controller, 'DeleteLang'])->name('DeleteLang');
+                Route::get('/emptyPhoto/{id}', [$controller, 'emptyPhoto'])->name('emptyPhoto');
+
+                Route::get('/photos/{id}', [$controller, 'ListMorePhoto'])->name('More_Photos');
+                Route::post('/add-more', [$controller, 'AddMorePhotos'])->name('More_PhotosAdd');
+                Route::post('/saveSort', [$controller, 'sortPhotoSave'])->name('sortPhotoSave');
+                Route::get('/photo/delete/{id}', [$controller, 'MorePhotosDestroy'])->name('More_PhotosDestroy');
+                Route::get('/photo/delete-all/{postid}', [$controller, 'MorePhotosDestroyAll'])->name('More_PhotosDestroyAll');
+                Route::get('/photo-edit/{id}', [$controller, 'MorePhotosEdit'])->name('More_PhotosEdit');
+                Route::post('/photo-update/{id}', [$controller, 'MorePhotosUpdate'])->name('More_PhotosUpdate');
+                Route::get('/photos-edit/{id}', [$controller, 'MorePhotosEditAll'])->name('More_PhotosEditAll');
+                Route::post('/photo-update-all/{id}', [$controller, 'MorePhotosUpdateAll'])->name('More_PhotosUpdateAll');
+
+                Route::get('/config', [$controller, 'config'])->name('config');
+            });
+        });
+
+        Route::macro('TagsRoutes', function ($prefixFolder, $prefixRoute, $prefixTags, $controller) {
+            Route::prefix($prefixFolder)->name($prefixRoute)->group(function () use ($controller) {
+                Route::get('/', [$controller, 'TagsIndex'])->name('index');
+                Route::get('/DataTable', [$controller, 'TagsDataTable'])->name('DataTable');
+                Route::get('/create', [$controller, 'TagsCreate'])->name('create');
+                Route::get('/edit/{id}', [$controller, 'TagsEdit'])->name('edit');
+                Route::post('/update/{id}', [$controller, 'TagsStoreUpdate'])->name('update');
+                Route::get('/destroy/{id}', [$controller, 'TagsDelete'])->name('destroy');
+            });
+
+            Route::prefix($prefixFolder)->name($prefixTags)->group(function () use ($controller) {
+                Route::get('/TagsSearch', [$controller, 'TagsSearch'])->name('TagsSearch');
+                Route::get('/TagsOnFly', [$controller, 'TagsOnFly'])->name('TagsOnFly');
+            });
+        });
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 11:19 PM
+-- Generation Time: Aug 17, 2024 at 08:10 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_test`
+-- Database: `cottton_crm`
 --
 
 --
@@ -26,9 +26,10 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `faq_category_translations` (`id`, `category_id`, `locale`, `slug`, `name`, `des`, `g_title`, `g_des`) VALUES
-(1, 1, 'ar', 'مجموعة-1', 'مجموعة 1', '<p>مجموعة 1</p>', 'مجموعة 1', 'مجموعة 1'),
-(2, 2, 'ar', 'مجموعة-2', 'مجموعة 2', '<p>مجموعة 2</p>', 'مجموعة 2', 'مجموعة 2'),
-(3, 3, 'ar', 'مجموعة-داخل-مجموعة-1', 'مجموعة داخل مجموعة 1', '<p>مجموعة داخل مجموعة 1</p>', 'مجموعة داخل مجموعة 1', 'مجموعة داخل مجموعة 1');
+(1, 1, 'ar', 'لماذا-نحن', 'لماذا نحن', '<p>لماذا نحن</p>', 'لماذا نحن', 'لماذا نحن'),
+(2, 2, 'ar', 'الخدمات', 'الخدمات', '<p>الخدمات</p>', 'الخدمات', 'الخدمات'),
+(3, 3, 'ar', 'تصميم-الشعارات', 'تصميم الشعارات', '<p>تصميم الشعارات</p>', NULL, NULL),
+(4, 4, 'ar', 'تصميم-المواقع', 'تصميم المواقع', '<p>تصميم المواقع</p>', NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

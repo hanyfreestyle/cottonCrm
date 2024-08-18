@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits\Files;
 
+use App\AppPlugin\Faq\Seeder\FaqSeeder;
 use App\AppPlugin\Pages\Models\Page;
 use App\AppPlugin\Pages\Models\PageCategory;
 use App\AppPlugin\Pages\Models\PageCategoryTranslation;
@@ -126,9 +127,9 @@ trait MainModelFileTraits {
             SeedDbFile(PageTagsPivot::class, 'page_tags_post.sql');
             SeedDbFile(PagePhoto::class, 'page_photos.sql');
             SeedDbFile(PagePhotoTranslation::class, 'page_photo_translations.sql');
-
-//           $this->call(PageSeeder::class);
         }
+
+
 
 
 //        if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
@@ -145,9 +146,7 @@ trait MainModelFileTraits {
 //            $this->call(BlogCategorySeeder::class);
 //        }
 //
-//        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
-//            $this->call(FaqSeeder::class);
-//        }
+
 //
 
 

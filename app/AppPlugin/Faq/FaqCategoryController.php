@@ -34,27 +34,26 @@ class FaqCategoryController extends AdminMainController {
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
         $this->model = new FaqCategory();
         $this->translation = new FaqCategoryTranslation();
+        $this->UploadDirIs = 'faq-cat';
         $this->translationdb = 'category_id';
 
-        $this->UploadDirIs = 'faq-cat';
+        $this->config = self::LoadConfig();
 
-        $this->Config = self::LoadConfig();
-
-        if($this->TableCategory){
-            self::SetCatTree($this->Config['categoryTree'],$this->Config['categoryDeep']);
+        if (IsConfig($this->config, 'TableCategory')) {
+            self::SetCatTree(IsConfig($this->config, 'categoryTree'), IsConfig($this->config, 'categoryDeep', 1));
         }
-        View::share('Config', $this->Config);
+        View::share('config', $this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["editor" => 1, 'iconfilterid' => 1, 'labelView' => 1],
-            'yajraTable' => false,
-            'AddLang' => true,
+            'settings' => getDefSettings($this->config),
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
-        self::loadConstructData($sendArr);
+        self::constructData($sendArr);
+        self::loadCategoryPermission(array());
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

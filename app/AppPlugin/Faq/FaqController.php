@@ -41,56 +41,48 @@ class FaqController extends AdminMainController {
         $this->photoTranslation = new FaqPhotoTranslation();
         $this->modelTags = new FaqTags();
 
-
-        $this->modelPhotoColumn = 'faq_id';
         $this->UploadDirIs = 'faq';
+        $this->translationdb = 'faq_id';
+        $this->modelPhotoColumn = 'faq_id';
 
 
         $this->PrefixTags = "admin.FaqTags";
         View::share('PrefixTags', $this->PrefixTags);
 
-        $Config = self::LoadConfig();
-        View::share('Config', $Config);
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["editor" => $Config['postEditor'], 'morePhotoFilterid' => $Config['TableMorePhotos']],
-            'yajraTable' => true,
-            'AddLang' => true,
-            'AddMorePhoto' => true,
+            'settings' => getDefSettings($this->config, 'post'),
+            'AddLang' => IsConfig($this->config, 'postAddOnlyLang', false),
             'restore' => 1,
         ];
-        self::loadConstructData($sendArr);
+
+        self::constructData($sendArr);
+        self::loadPostPermission(array());
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CCCCCCCCCCCC');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   PostDataTable
-    public function PostDataTable(Request $request) {
-        if ($request->ajax()) {
-            $data = $this->model::select(['faq_faqs.id', 'photo_thum_1', 'is_active', 'published_at'])->with('tablename');
-            return self::DataTableAddColumns($data)->make(true);
-        }
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     storeUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostStoreUpdate(DefPostRequest $request, $id = 0) {
         return self::TraitsPostStoreUpdate($request, $id);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostForceDeleteException($id) {
+        dd('hi');
         $deleteRow = $this->model::onlyTrashed()->where('id', $id)->with('more_photos')->firstOrFail();
         if (count($deleteRow->more_photos) > 0) {
             foreach ($deleteRow->more_photos as $del_photo) {

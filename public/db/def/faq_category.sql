@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 11:19 PM
+-- Generation Time: Aug 17, 2024 at 08:09 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_test`
+-- Database: `cottton_crm`
 --
 
 --
@@ -26,9 +26,10 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `faq_category` (`id`, `parent_id`, `deep`, `icon`, `photo`, `photo_thum_1`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-06-15 18:17:47', '2024-06-15 18:17:47'),
-(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-06-15 18:18:02', '2024-06-15 18:18:02'),
-(3, 1, 1, NULL, NULL, NULL, 1, 0, '2024-06-15 18:18:37', '2024-06-15 18:18:37');
+(1, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:10', '2024-08-17 18:07:10'),
+(2, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:34', '2024-08-17 18:07:34'),
+(3, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:07:50', '2024-08-17 18:07:50'),
+(4, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-08-17 17:08:36', '2024-08-17 18:08:36');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

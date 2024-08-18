@@ -11,7 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 trait TagsTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('ss');
     }
@@ -35,12 +35,14 @@ trait TagsTraits {
             return self::TagsDataTableColumns($data)->make(true);
         }
     }
-
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsindexQuery($table, $table_trans) {
+        $locale = dataTableDefLang();
 
         $data = DB::table($table)
             ->Join($table_trans, $table . '.id', '=', $table_trans . '.tag_id')
-            ->where($table_trans . '.locale', '=', DefModelConfigTraits::defLangStatic())
+            ->where($table_trans . '.locale', '=', $locale)
             ->select("$table.id as id",
                 "$table.is_active as is_active",
                 "$table_trans.name",

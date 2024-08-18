@@ -7,7 +7,7 @@ use App\AppPlugin\Faq\Models\FaqTagsTranslation;
 use App\AppPlugin\Faq\Traits\FaqConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefTagsRequest;
-use App\Http\Traits\DbFunTraits;
+
 use App\Http\Traits\TagsTraits;
 use Illuminate\Support\Facades\View;
 
@@ -16,7 +16,7 @@ class FaqTagsController extends AdminMainController {
 
     use TagsTraits;
     use FaqConfigTraits;
-    use DbFunTraits;
+
 
     function __construct() {
         parent::__construct();
@@ -33,20 +33,19 @@ class FaqTagsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0, "orderbyPostion" => 1],
-            'yajraTable' => true,
+            'AddConfig' => false,
         ];
 
-        $Config = self::LoadConfig();
-        View::share('Config', $Config);
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
 
-
-        self::loadConstructData($sendArr);
+        self::ConstructData($sendArr);
+        self::loadPostPermission(array());
 
         if (!$this->TableTags) {
             abort(403);
         }
+
 
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -7,6 +7,7 @@ use App\AppCore\AdminRole\Seeder\AdminUserSeeder;
 use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
+use App\AppPlugin\Faq\Seeder\FaqSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
@@ -15,6 +16,7 @@ use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use App\Http\Traits\Files\ProductFileTraits;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder {
 
@@ -35,6 +37,11 @@ class DatabaseSeeder extends Seeder {
 
         ProductFileTraits::LoadSeeder();
         MainModelFileTraits::LoadSeeder();
+
+        if (File::isFile(base_path('routes/AppPlugin/faq.php'))) {
+            $this->call(FaqSeeder::class);
+        }
+
 
     }
 }

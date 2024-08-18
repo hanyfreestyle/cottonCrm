@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2024 at 11:21 PM
+-- Generation Time: Aug 16, 2024 at 03:46 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,11 +18,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_test`
+-- Database: `cottton_crm`
 --
 
 --
--- Dumping data for table `faq_tags`
+-- Dumping data for table `page_tags`
 --
 
 INSERT INTO `faq_tags` (`id`, `is_active`) VALUES
