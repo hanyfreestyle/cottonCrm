@@ -80,9 +80,9 @@ class AppPuzzleTreeModel {
             'view' => true,
             'id' => "Pages",
             'CopyFolder' => "Model_Pages",
-            'appFolder' => 'Pages',
+            'appFolder' => 'Models/Pages',
             'viewFolder' => 'Pages',
-            'routeFolder' => null,
+            'routeFolder' => "model/",
             'routeFile' => 'pages.php',
             'migrations' => [
                 '2020_01_01_000001_create_page_model_table.php',
