@@ -11,7 +11,7 @@ return new class extends Migration {
         Schema::create('config_web_privacy', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("name");
-            $table->integer("postion")->default(0);
+            $table->integer("position")->default(0);
             $table->boolean("is_active")->default(true);
             $table->timestamps();
             $table->softDeletes();

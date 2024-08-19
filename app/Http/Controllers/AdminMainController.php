@@ -190,57 +190,44 @@ class AdminMainController extends DefaultMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadConstructData($sendArr) {
-        $this->configView = AdminHelper::arrIsset($sendArr, 'configView', null);
-//        'configArr'=> ["datatable"=>1,"orderby"=>1,"orderbyPostion"=>1,"filterid"=>1,"morePhotoFilterid"=>1,"orderbyDate"=>1,"editor"=>1,"icon"=>1,]
-//       'configArr'=> [ "filterid"=>1,"morePhotoFilterid"=>1 ,selectfilterid ]
-        $this->configArr = AdminHelper::arrIsset($sendArr, 'configArr', array());
-
-//        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['index', 'CategoryIndex']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => ['create', 'CategoryCreate']]);
-//
-//        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => [
-//            'edit', 'updateStatus', 'emptyPhoto', 'editRoleToPermission',
-//            'CategoryEdit', 'CategoryStoreUpdate', 'CategorySort', 'CategorySaveSort',
-//            'TagsEdit', 'TagsConfig', 'TagsOnFly',
-//        ]]);
-//
-//        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => ['destroy', 'destroyException']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_restore', ['only' => ['SoftDeletes', 'Restore', 'ForceDelete']]);
-
-        $this->viewDataTable = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_datatable', 0);
-        View::share('viewDataTable', $this->viewDataTable);
-
-        $this->viewEditor = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_editor', 0);
-        View::share('viewEditor', $this->viewEditor);
-
-        $this->viewLabel = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_label_view', 1);
-        View::share('viewLabel', $this->viewLabel);
-
-
-        $yajraTable = AdminHelper::arrIsset($sendArr, 'yajraTable', false);
-        View::share('yajraTable', $yajraTable);
-
-        $this->yajraPerPage = intval(AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_perpage', 10));
-        if ($this->yajraPerPage == 0) {
-            $this->yajraPerPage = 10;
-        }
-        View::share('yajraPerPage', $this->yajraPerPage);
-
-
         View::share('PrefixRoute', $this->PrefixRoute);
         View::share('PrefixRole', $this->PrefixRole);
         View::share('controllerName', $this->controllerName);
         View::share('PrefixCatRoute', $this->PrefixCatRoute ?? null);
-        View::share('configArr', $this->configArr);
-        View::share('PrintLocaleName', 'name_' . thisCurrentLocale());
-        View::share('DefCategoryTextName', null);
 
-        $this->formName = AdminHelper::arrIsset($sendArr, 'formName', null);
+        $this->configView = IsArr($sendArr, 'configView', null);
+
+        $this->settings =IsArr($sendArr, 'settings', array());
+        View::share('settings', $this->settings);
+
+        $this->config = IsArr($sendArr, 'config', array());
+        View::share('config', $this->config);
+
+        $this->formName = IsArr($sendArr, 'formName', null);
         View::share('formName', $this->formName);
+
+//        $this->viewDataTable = IsArr($sendArr, 'viewDataTable', 1);
+//        View::share('viewDataTable', $this->viewDataTable);
+//        View::share('yajraTable', false);
 
         $pageData = AdminHelper::returnPageDate($sendArr);
         $this->pageData = $pageData;
-        $this->yajraTable = $yajraTable;
+
+//        View::share('PrintLocaleName', 'name_' . thisCurrentLocale());
+//        View::share('DefCategoryTextName', null);
+//        $this->viewEditor = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_editor', 0);
+//        View::share('viewEditor', $this->viewEditor);
+//        $this->viewLabel = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_label_view', 1);
+//        View::share('viewLabel', $this->viewLabel);
+//        $yajraTable = AdminHelper::arrIsset($sendArr, 'yajraTable', false);
+//        View::share('yajraTable', $yajraTable);
+//        $this->yajraPerPage = intval(AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_perpage', 10));
+//        if ($this->yajraPerPage == 0) {
+//            $this->yajraPerPage = 10;
+//        }
+//        View::share('yajraPerPage', $this->yajraPerPage);
+//        $this->yajraTable = $yajraTable;
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

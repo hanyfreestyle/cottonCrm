@@ -5,6 +5,7 @@ use App\AppPlugin\Config\Privacy\WebPrivacyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/web-privacy/', [WebPrivacyController::class,'index'])->name('config.WebPrivacy.index');
+Route::get('/web-privacy/dataTable', [WebPrivacyController::class,'DataTable'])->name('config.WebPrivacy.DataTable');
 Route::get('/web-privacy/create', [WebPrivacyController::class,'create'])->name('config.WebPrivacy.create');
 Route::get('/web-privacy/edit/{id}', [WebPrivacyController::class,'edit'])->name('config.WebPrivacy.edit');
 Route::post('/web-privacy/Update/{id}', [WebPrivacyController::class,'storeUpdate'])->name('config.WebPrivacy.update');

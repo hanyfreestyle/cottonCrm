@@ -5,9 +5,10 @@ namespace App\AppPlugin\Config\Privacy;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class WebPrivacyController extends AdminMainController {
-
     use CrudTraits;
 
     function __construct(WebPrivacy $model) {
@@ -24,9 +25,9 @@ class WebPrivacyController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0],
+            'AddConfig' => false,
         ];
+
         self::loadConstructData($sendArr);
 
         $permission = [
@@ -34,12 +35,12 @@ class WebPrivacyController extends AdminMainController {
             'edit' => ['Sort'],
         ];
         self::loadPagePermission($permission);
-
     }
 
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
 
     }
@@ -49,13 +50,60 @@ class WebPrivacyController extends AdminMainController {
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $rowData = self::getSelectQuery(WebPrivacy::defquery());
+//        $rowData = self::getSelectQuery(WebPrivacy::defquery());
         return view('AppPlugin.ConfigPrivacy.index')->with([
             'pageData' => $pageData,
-            'rowData' => $rowData,
+//            'rowData' => $rowData,
         ]);
     }
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $table = 'config_web_privacy';
+        $table_trans = "config_web_privacy_translations";
+        $data = DB::table("$table");
+        $data->join("$table_trans", "$table.id", '=', "$table_trans.privacy_id")
+            ->where("$table_trans.locale", '=', dataTableDefLang())
+            ->select(
+                "$table.id as id",
+                "$table_trans.h1 as name",
+                "$table_trans.h2 as name2",
+            );
+        return $data;
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::indexQuery();
+            return self::TableColumns($rowData)->make(true);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function TableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('name', function ($row) {
+                return $row->name;
+            })
+            ->editColumn('name2', function ($row) {
+                return $row->name2;
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -131,5 +179,4 @@ class WebPrivacyController extends AdminMainController {
         }
         return response()->json(['success' => $positions]);
     }
-
 }

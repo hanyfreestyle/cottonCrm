@@ -1,68 +1,55 @@
 @extends('admin.layouts.app')
 @section('StyleFile')
-    <x-admin.data-table.plugins  :style="true" :is-active="$viewDataTable"/>
+    <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
 
-            <div class="row mb-3">
-                <div class="col-12 text-left">
-                    <x-admin.form.action-button  url="{{route($PrefixRoute.'.Sort')}}" type="sort" :tip="false" />
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 text-left">
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.Sort')}}" type="sort" :tip="false"/>
             </div>
-
-
-        <x-admin.card.def :page-data="$pageData" >
-
-            @if(count($rowData)>0)
-                <div class="card-body table-responsive p-0">
-                    <table {!!Table_Style($viewDataTable,$yajraTable) !!} >
-                        <thead>
-                        <tr>
-                            <th class="TD_20">#</th>
-                            <th>H1</th>
-                            <th>H1</th>
-
-                            @if($pageData['ViewType'] == 'deleteList')
-                                <x-admin.table.soft-delete />
-                            @else
-                                <th></th>
-                                <x-admin.table.action-but po="top" type="edit"/>
-                                <x-admin.table.action-but po="top" type="delete"/>
-                            @endif
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($rowData as $row)
-                            <tr>
-                                <td>{{$row->id}}</td>
-                                <td>{{$row->translate('ar')->h1}}</td>
-                                <td>{{$row->translate('en')->h1}}</td>
-
-                                @if($pageData['ViewType'] == 'deleteList')
-                                    <x-admin.table.soft-delete type="b" :row="$row" />
-                                @else
-                                    <td class="tc" >{!! is_active($row->is_active) !!}</td>
-                                    <x-admin.table.action-but type="edit" :row="$row" />
-                                    <x-admin.table.action-but type="delete" :row="$row" />
-                                @endif
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <x-admin.hmtl.alert-massage type="nodata" />
-            @endif
+        </div>
+        <x-admin.card.def :page-data="$pageData">
+            <table {!! Table_Style_Yajra() !!} >
+                <thead>
+                <tr>
+                    <th class="TD_20">#</th>
+                    <th>H1</th>
+                    <th>H2</th>
+                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="delete"/>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </x-admin.card.def>
-        <x-admin.hmtl.pages-link :row="$rowData" />
 
     </x-admin.hmtl.section>
 @endsection
 
 @push('JsCode')
-    <x-admin.table.sweet-delete-js/>
-    <x-admin.data-table.plugins  :jscode="true" :is-active="$viewDataTable" />
+    <x-admin.data-table.sweet-dalete/>
+    <x-admin.data-table.plugins-yajra :jscode="true"/>
+    <script type="text/javascript">
+        $(function () {
+            $('#YajraDatatable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                pageLength: {{$yajraPerPage ?? 25 }},
+                @include('datatable.lang')
+                ajax: "{{ route( $PrefixRoute.'.DataTable') }}",
+                columns: [
+                    {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
+                    {data: 'name', name: 'name', orderable: true, searchable: true},
+                    {data: 'name2', name: 'name2', orderable: true, searchable: true},
+                    @include('datatable.index_action_but',['type'=> 'edit'])
+                    @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
+                ],
+            });
+        });
+    </script>
 @endpush
