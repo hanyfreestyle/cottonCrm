@@ -296,7 +296,7 @@ trait AppSettingFileTraits {
 
 
         if (File::isFile(base_path('routes/AppPlugin/leads/newsLetter.php'))) {
-            SeedDbFile(NewsLetter::class, 'leads_news_letters.sql', false);
+            SeedDbFile(NewsLetter::class, 'leads_news_letters.sql');
         }
 
     }

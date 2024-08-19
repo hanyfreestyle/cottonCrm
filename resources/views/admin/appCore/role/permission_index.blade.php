@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('StyleFile')
-    <x-admin.data-table.plugins  :style="true" :is-active="$viewDataTable"/>
+    <x-admin.data-table.plugins  :style="true" :is-active="false"/>
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <x-admin.card.def :page-data="$pageData" >
             @if(count($permissions)>0)
                 <div class="card-body table-responsive p-0">
-                    <table  {!!Table_Style($viewDataTable,$yajraTable) !!}>
+                    <table  {!!Table_Style(false,false) !!}>
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -49,5 +49,5 @@
 
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
-    <x-admin.data-table.plugins  :jscode="true" :is-active="$viewDataTable" />
+    <x-admin.data-table.plugins  :jscode="true" :is-active="false" />
 @endpush

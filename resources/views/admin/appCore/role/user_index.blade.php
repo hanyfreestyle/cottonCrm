@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="$viewDataTable"/>
+    <x-admin.data-table.plugins :style="true" :is-active="true"/>
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <x-admin.card.def :page-data="$pageData">
             @if(count($users)>0)
                 <div class="card-body table-responsive p-0">
-                    <table {!!Table_Style($viewDataTable,$yajraTable) !!} >
+                    <table {!!Table_Style(true,false) !!} >
                         <thead>
                         <tr>
                             <th class="TD_20">#</th>
@@ -71,13 +71,13 @@
                 <x-admin.hmtl.alert-massage type="nodata"/>
             @endif
         </x-admin.card.def>
-        <x-admin.hmtl.pages-link :row="$users"/>
+
     </x-admin.hmtl.section>
 @endsection
 
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
-    <x-admin.data-table.plugins :jscode="true" :is-active="$viewDataTable"/>
+    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>
     <script>
         $(".status_but").bootstrapSwitch({
             'size': 'mini',

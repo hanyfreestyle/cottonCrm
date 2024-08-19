@@ -26,8 +26,8 @@ class BranchController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["orderbyPostion" => 1, "filterid" => 0,],
+            'AddConfig' => false,
+
         ];
 
         self::loadConstructData($sendArr);

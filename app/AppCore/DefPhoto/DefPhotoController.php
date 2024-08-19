@@ -112,7 +112,7 @@ class DefPhotoController extends AdminMainController {
         $deleteRow = AdminHelper::onlyDeletePhotos($deleteRow, 3);
         $deleteRow->delete();
         self::ClearCash();
-        return redirect(route('config.defPhoto.index'))->with('confirmDelete', "");
+        return redirect(route('admin.config.defPhoto.index'))->with('confirmDelete', "");
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

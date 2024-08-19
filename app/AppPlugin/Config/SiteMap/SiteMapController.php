@@ -5,6 +5,7 @@ namespace App\AppPlugin\Config\SiteMap;
 
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
 
@@ -41,11 +42,16 @@ class SiteMapController extends AdminMainController {
         $permission = [
             'sub' => 'sitemap_view',
             'view' => ['index', 'Robots', 'GoogleCode'],
-            'edit' => ['UpdateSiteMap','RobotsUpdate','GoogleCodeUpdate'],
+            'edit' => ['UpdateSiteMap', 'RobotsUpdate', 'GoogleCodeUpdate'],
         ];
         self::loadPagePermission($permission);
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClearCash() {
+        Cache::forget('CashGoogleCode');
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -64,7 +70,7 @@ class SiteMapController extends AdminMainController {
     public function Robots() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $googleCode = GoogleCode::query()->first();
+        $googleCode = GoogleCode::query()->firstOrNew();
 
         return view('AppPlugin.ConfigSiteMap.robots')->with([
             'pageData' => $pageData,
@@ -75,9 +81,10 @@ class SiteMapController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function RobotsUpdate(Request $request) {
-        $googleCode = GoogleCode::query()->first();
+        $googleCode = GoogleCode::query()->firstOrNew();
         $googleCode->robots = $request->input('robots');
         $googleCode->save();
+        self::ClearCash();
         return back()->with('Update.Done', '');
     }
 
@@ -86,7 +93,7 @@ class SiteMapController extends AdminMainController {
     public function GoogleCode() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $googleCode = GoogleCode::query()->first();
+        $googleCode = GoogleCode::query()->firstOrNew();
 
         return view('AppPlugin.ConfigSiteMap.google-code')->with([
             'pageData' => $pageData,
@@ -97,13 +104,14 @@ class SiteMapController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function GoogleCodeUpdate(Request $request) {
-        $googleCode = GoogleCode::query()->first();
+        $googleCode = GoogleCode::query()->firstOrNew();
         $googleCode->tag_manager_code = $request->input('tag_manager_code');
         $googleCode->analytics_code = $request->input('analytics_code');
         $googleCode->web_master_html = $request->input('web_master_html');
         $googleCode->web_master_meta = $request->input('web_master_meta');
         $googleCode->google_api = $request->input('google_api');
         $googleCode->save();
+        self::ClearCash();
         return back()->with('Update.Done', '');
     }
 
@@ -137,6 +145,8 @@ class SiteMapController extends AdminMainController {
         }
 
         SiteMapTools::updateIndexSiteMapXmlFile($this->config['singlePage']);
+
+        self::ClearCash();
         return back()->with('Update.Done', '');
     }
 

@@ -194,6 +194,7 @@ class AdminMainController extends DefaultMainController {
         View::share('PrefixRole', $this->PrefixRole);
         View::share('controllerName', $this->controllerName);
         View::share('PrefixCatRoute', $this->PrefixCatRoute ?? null);
+        View::share('PrintLocaleName', 'name_' . thisCurrentLocale());
 
         $this->configView = IsArr($sendArr, 'configView', null);
 
@@ -213,7 +214,7 @@ class AdminMainController extends DefaultMainController {
         $pageData = AdminHelper::returnPageDate($sendArr);
         $this->pageData = $pageData;
 
-//        View::share('PrintLocaleName', 'name_' . thisCurrentLocale());
+
 //        View::share('DefCategoryTextName', null);
 //        $this->viewEditor = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_editor', 0);
 //        View::share('viewEditor', $this->viewEditor);
@@ -306,7 +307,7 @@ class AdminMainController extends DefaultMainController {
     public function getSelectQuery($query) {
         $controllerName = $this->controllerName;
 
-        $perPage = self::getDefSetting($controllerName, '_perpage', '5');
+        $perPage = self::getDefSetting($controllerName, '_perpage', '15');
         $dataTable = self::getDefSetting($controllerName, '_datatable', '0');
         $orderBy = self::getDefSetting($controllerName, '_orderby', '1');
 

@@ -78,11 +78,7 @@
             <span class="info-box-icon"><i class="fas fa-server"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">{{__('admin/formFilter.box_total')}}</span>
-                @if($viewDataTable)
-                    <span class="info-box-number">{{number_format(count($row))}}</span>
-                @else
-                    <span class="info-box-number">{{number_format($row->total())}}</span>
-                @endif
+                <span class="info-box-number">{{number_format($row->total())}}</span>
 
 
             </div>

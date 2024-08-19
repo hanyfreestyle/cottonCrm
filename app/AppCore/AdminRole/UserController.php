@@ -50,7 +50,8 @@ class UserController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['Trashed'] = User::onlyTrashed()->count();
 
-        $users = self::getSelectQuery(User::where('id', '!=', 0));
+//        $users = self::getSelectQuery(User::where('id', '!=', 0));
+        $users =  User::query()->where('id', '!=', 0)->get();
         $roles = Role::all();
         return view('admin.appCore.role.user_index')->with([
             'pageData' => $pageData,

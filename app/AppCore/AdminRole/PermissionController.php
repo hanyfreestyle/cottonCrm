@@ -5,14 +5,12 @@ namespace App\AppCore\AdminRole;
 use App\AppCore\AdminRole\Request\AdminPermissionRequest;
 use App\AppCore\Menu\AdminMenu;
 use App\Http\Controllers\AdminMainController;
-
 use App\Http\Traits\CrudTraits;
 use Spatie\Permission\Models\Permission;
 
 
 class PermissionController extends AdminMainController {
     use CrudTraits;
-
 
     function __construct() {
         if (config('app.development')) {

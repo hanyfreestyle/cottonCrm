@@ -25,8 +25,7 @@ class RoleController extends AdminMainController{
             'TitlePage' =>  $this->PageTitle ,
             'PrefixRoute'=>  $this->PrefixRoute,
             'PrefixRole'=> $this->PrefixRole ,
-            'AddConfig'=> true ,
-            'configArr'=> ['filterid'=>0] ,
+            'AddConfig'=> false ,
         ];
 
         self::loadConstructData($sendArr);
@@ -38,8 +37,10 @@ class RoleController extends AdminMainController{
     public function index(){
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $roles = self::getSelectQuery(Role::where('id','!=',0));
+//        $roles = self::getSelectQuery(Role::where('id','!=',0));
+        $roles = Role::query()->where('id','!=',0)->get();
         $rolePrintName = 'name_'.thisCurrentLocale();
+
         return view('admin.appCore.role.role_index',compact('pageData','roles','rolePrintName'));
     }
 

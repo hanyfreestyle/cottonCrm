@@ -12,7 +12,7 @@
                 <div class="row mt-3 siteMapRobots">
                     <x-admin.card.normal :outline="false" bg="i" icon="fas fa-robot" title="Update Robots">
                         <div class="row mb-5">
-                            <x-admin.form.textarea :row="$googleCode" name="robots" :value="old('robots',$googleCode->robots)" id="robots" label="" col="12" dir="en" :req="false"/>
+                            <x-admin.form.textarea :row="$googleCode" name="robots" :value="old('robots',$googleCode->robots ?? '' )" id="robots" label="" col="12" dir="en" :req="false"/>
                         </div>
                     </x-admin.card.normal>
                 </div>

@@ -5,8 +5,10 @@ namespace App\AppPlugin\Leads\NewsLetter;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class NewsLetterController extends AdminMainController {
@@ -28,48 +30,83 @@ class NewsLetterController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0, "datatable" => 0, 'orderbyName' => 0, "orderbyDate" => 1],
-            'restore' => 0,
+            'AddConfig' => false,
             'AddAction' => 0,
             'formName' => "NewsLetter",
         ];
         self::loadConstructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_defPhoto_view', ['only' => ['index']]);
+
+        $permission = [
+            'sub' => 'config_newsletter',
+            'edit' => ['Sort'],
+        ];
+        self::loadPagePermission($permission);
     }
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-
         $session = self::getSessionData($request);
-
-        if($session == null) {
-            $rowData = self::getSelectQuery(NewsLetter::query());
-        } else {
-            $rowData = self::getSelectQuery(self::FilterQ(NewsLetter::query(), $session));
-        }
-
-        return view('AppPlugin.LeadsNewsLetter.index', compact('pageData', 'rowData'));
+        return view('AppPlugin.LeadsNewsLetter.index')->with([
+            'pageData' => $pageData,
+        ]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # Export
-    public function Export(Request $request) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $session = Session::get($this->formName);
-
-        $dwonLadeFile = Excel::download(new NewsLetterExport($request), 'newslette.xlsx');
-
-        $UpdateState = self::FilterQ(NewsLetter::query(), $session)->where('export', 0)->get();
-        foreach ($UpdateState as $update) {
-            $update->export = 1;
-            $update->save();
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::indexQuery();
+            return self::TableColumns($rowData)->make(true);
         }
-        return $dwonLadeFile;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $data = DB::table("leads_news_letters");
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function TableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('created_at', function ($row) {
+                return [
+                    'display' => date("Y-m-d", strtotime($row->created_at)),
+                    'timestamp' => strtotime($row->created_at)
+                ];
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+    }
+
+
+
+//    public function Export(Request $request) {
+//        $pageData = $this->pageData;
+//        $pageData['ViewType'] = "List";
+//        $session = Session::get($this->formName);
+//
+//        $dwonLadeFile = Excel::download(new NewsLetterExport($request), 'newslette.xlsx');
+//
+//        $UpdateState = self::FilterQ(NewsLetter::query(), $session)->where('export', 0)->get();
+//        foreach ($UpdateState as $update) {
+//            $update->export = 1;
+//            $update->save();
+//        }
+//        return $dwonLadeFile;
+//    }
 
 
 }
