@@ -71,7 +71,7 @@
 
         @if(config('app.WEB_VIEW'))
             <li class="nav-item">
-                <a class="nav-link" target="_blank" href="{{ route('page_index') }}"><i class="fas fa-home"></i></a>
+                <a class="nav-link" target="_blank" href="{{ route('web_index') }}"><i class="fas fa-home"></i></a>
             </li>
         @endif
 
