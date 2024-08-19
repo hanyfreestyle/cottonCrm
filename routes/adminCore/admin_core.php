@@ -34,6 +34,7 @@ Route::post('/defPhotos/store/{id}', [DefPhotoController::class,'storeUpdate'])-
 Route::post('/sortDefPhoto/saveSort', [DefPhotoController::class,'sortDefPhotoSave'])->name('config.defPhoto.sortDefPhoto');
 
 Route::get('/upFilter', [UploadFilterController::class,'index'])->name('config.upFilter.index');
+Route::get('/upFilter/dataTable', [UploadFilterController::class,'DataTable'])->name('config.upFilter.DataTable');
 Route::get('/upFilter/create', [UploadFilterController::class,'create'])->name('config.upFilter.create');
 Route::get('/upFilter/edit/{id}', [UploadFilterController::class,'edit'])->name('config.upFilter.edit');
 Route::get('/upFilter/delete/{id}', [UploadFilterController::class,'destroy'])->name('config.upFilter.destroy');

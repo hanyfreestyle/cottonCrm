@@ -9,7 +9,10 @@ use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class UploadFilterController extends AdminMainController {
@@ -31,10 +34,9 @@ class UploadFilterController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0],
-            'restore' => 1,
+            'AddConfig' => false,
         ];
+
         self::loadConstructData($sendArr);
 
         $permission = [
@@ -57,23 +59,68 @@ class UploadFilterController extends AdminMainController {
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['Trashed'] = UploadFilter::onlyTrashed()->count();
-        $rowData = self::getSelectQuery(UploadFilter::where('id', '!=', 0));
-
         return view('admin.appCore.photo_filter.index')->with([
             'pageData' => $pageData,
-            'rowData' => $rowData,
         ]);
+    }
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $table = 'config_upload_filter';
+        $table_trans = "config_web_privacy_translations";
+        $data = DB::table("$table");
+//        $data->join("$table_trans", "$table.id", '=', "$table_trans.privacy_id")
+//            ->where("$table_trans.locale", '=', dataTableDefLang())
+//        $data->select(
+//                "$table.id as id",
+//                "$table_trans.h1 as name",
+//                "$table_trans.h2 as name2",
+//            );
+        return $data;
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::indexQuery();
+            return self::TableColumns($rowData)->make(true);
+        }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(UploadFilter::onlyTrashed());
-        return view('admin.appCore.photo_filter.index', compact('pageData', 'rowData'));
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function TableColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('name', function ($row) {
+                return $row->name;
+            })
+            ->editColumn('type', function ($row) {
+                return   LoadConfigName($this->defCategory['FilterTypeArr'],$row->type);
+            })
+            ->editColumn('convert_state', function ($row) {
+                return is_active($row->convert_state);
+            })
+            ->editColumn('convert_state', function ($row) {
+                return is_active($row->convert_state);
+            })
+            ->editColumn('convert_state', function ($row) {
+                return is_active($row->convert_state);
+            })
+
+
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'convert_state', 'name']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

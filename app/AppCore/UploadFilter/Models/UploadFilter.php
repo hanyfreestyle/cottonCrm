@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class UploadFilter extends Model {
 
-    use SoftDeletes;
+//    use SoftDeletes;
 
     protected $table = "config_upload_filter";
 

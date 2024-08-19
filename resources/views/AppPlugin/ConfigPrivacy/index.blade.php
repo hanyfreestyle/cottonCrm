@@ -12,6 +12,7 @@
                 <x-admin.form.action-button url="{{route($PrefixRoute.'.Sort')}}" type="sort" :tip="false"/>
             </div>
         </div>
+
         <x-admin.card.def :page-data="$pageData">
             <table {!! Table_Style_Yajra() !!} >
                 <thead>
@@ -23,9 +24,11 @@
                     <x-admin.table.action-but po="top" type="delete"/>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                </tbody>
             </table>
         </x-admin.card.def>
+
 
     </x-admin.hmtl.section>
 @endsection
