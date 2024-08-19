@@ -7,9 +7,6 @@ use App\AppCore\AdminRole\Seeder\AdminUserSeeder;
 use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
-use App\AppPlugin\Models\Faq\Seeder\FaqSeeder;
-use App\AppPlugin\Models\BlogPost\Seeder\BlogCategorySeeder;
-use App\AppPlugin\Models\Pages\Seeder\PageSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
@@ -18,7 +15,7 @@ use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use App\Http\Traits\Files\ProductFileTraits;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\File;
+
 
 class DatabaseSeeder extends Seeder {
 
@@ -38,19 +35,9 @@ class DatabaseSeeder extends Seeder {
         HooverTicketsFileTraits::LoadSeeder();
 
         ProductFileTraits::LoadSeeder();
-        MainModelFileTraits::LoadSeeder();
 
-        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
-            $this->call(BlogCategorySeeder::class);
-        }
+        $this->call(ModelSeeder::class);
 
-        if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
-            $this->call(FaqSeeder::class);
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
-            $this->call(PageSeeder::class);
-        }
 
     }
 }

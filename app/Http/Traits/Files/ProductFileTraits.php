@@ -72,10 +72,6 @@ trait ProductFileTraits {
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
-            $addLang = ['pages' => ['id' => 'pages', 'group' => 'admin', 'file_name' => 'pages', 'name' => 'pages', 'name_ar' => 'الصفحات']];
-            $LangMenu = array_merge($LangMenu, $addLang);
-        }
         if (File::isFile(base_path('routes/AppPlugin/orders.php'))) {
             $addLang = ['orders' => ['id' => 'orders', 'group' => 'admin', 'file_name' => 'orders', 'name' => 'Orders', 'name_ar' => 'ادارة الطلبات']];
             $LangMenu = array_merge($LangMenu, $addLang);

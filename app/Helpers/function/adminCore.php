@@ -33,6 +33,8 @@ if (!function_exists('getDefPermission')) {
         $report = issetArr($sendArr, 'report', false);
         $filter = issetArr($sendArr, 'filter', false);
         $restore = issetArr($sendArr, 'restore', false);
+        $slug = issetArr($sendArr, 'slug', false);
+        $teamLeader = issetArr($sendArr, 'teamLeader', false);
 
         $newPer = [
             ['cat_id' => $cat_id, 'name' => $cat_id . '_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
@@ -40,6 +42,17 @@ if (!function_exists('getDefPermission')) {
             ['cat_id' => $cat_id, 'name' => $cat_id . '_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
             ['cat_id' => $cat_id, 'name' => $cat_id . '_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
         ];
+
+
+        if ($restore) {
+            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore']];
+            $newPer = array_merge($newPer, $add_new);
+        }
+
+        if ($slug) {
+            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_edit_slug', 'name_ar' => 'تعديل الرابط', 'name_en' => 'Edit Slug']];
+            $newPer = array_merge($newPer, $add_new);
+        }
 
         if ($report) {
             $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_report', 'name_ar' => 'التقارير', 'name_en' => 'Report']];
@@ -51,10 +64,11 @@ if (!function_exists('getDefPermission')) {
             $newPer = array_merge($newPer, $add_new);
         }
 
-        if ($restore) {
-            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_restore', 'name_ar' => 'استعادة المحذوف', 'name_en' => 'Restore']];
+        if ($teamLeader) {
+            $add_new = [['cat_id' => $cat_id, 'name' => $cat_id . '_teamleader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader']];
             $newPer = array_merge($newPer, $add_new);
         }
+
 
         return $newPer;
     }

@@ -28,6 +28,7 @@ use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
 use App\Http\Traits\Files\HooverTicketsFileTraits;
+use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
@@ -46,29 +47,7 @@ class AdminMenuSeeder extends Seeder {
         CustomersFileTraits::LoadMenu();
         HooverTicketsFileTraits::LoadMenu();
 
-        if (File::isFile(base_path('routes/AppPlugin/model/mainPost.php'))) {
-            if (File::isFile(base_path('routes/AppPlugin/model/blogPost.php'))) {
-                $loadMenu = new BlogPostCategoryController;
-                $loadMenu->LoadAdminMenu();
-            }
-        }
-
-
-        if (File::isFile(base_path('routes/AppPlugin/model/blog.php'))) {
-            BlogCategoryController::AdminMenu();
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/model/faq.php'))) {
-            FaqCategoryController::AdminMenu();
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/model/pages.php'))) {
-            PageCategoryController::AdminMenu();
-        }
-
-        if (File::isFile(base_path('routes/AppPlugin/fileManager.php'))) {
-            FileBrowserController::AdminMenu();
-        }
+        MainModelFileTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
             ProductController::AdminMenu();
@@ -87,6 +66,7 @@ class AdminMenuSeeder extends Seeder {
         }
 
         $updateMenuPostion = AdminMenu::query()->where('parent_id','!=',null)->get();
+
         foreach ($updateMenuPostion as $menu){
             $menu->position = $menu->id;
             $menu->save();

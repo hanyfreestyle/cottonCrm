@@ -228,6 +228,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
             ['database/migrations/' => '2019_12_14_000005_create_def_photos_table.php'],
             ['database/migrations/' => '2019_12_14_000006_create_upload_filters_table.php'],
             ['database/seeders/' => 'DatabaseSeeder.php'],
+            ['database/seeders/' => 'ModelSeeder.php'],
         ];
 
         foreach ($fileNames as $fileName) {
