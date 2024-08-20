@@ -1,6 +1,10 @@
 @if($po == 'top' and $viewBut == true)
     @if($type == 'empty')
         <th class="td_action {{$res}}"></th>
+    @elseif($type == 'option')
+
+        <th class=" {{$res}}">{{$l}}</th>
+
     @elseif($type == 'isActive')
         <th class="td_action {{$res}}"></th>
     @elseif($type == 'photo')
@@ -49,7 +53,13 @@
         @endcan
     @elseif($type == 'selectAll')
         <th class="td_action"><input type="checkbox" name="Check_ctr" value="yes" onClick="Check(document.myform.Check_ctr)"></th>
+
+    @elseif($type == 'can')
+        @can($can)
+            <th class="td_action {{$res}}"></th>
+        @endcan
     @endif
+
 @elseif($po == 'button' and $viewBut == true)
     @if($type == 'edit')
         @can($PrefixRole.'_edit')

@@ -2,9 +2,9 @@
 
 namespace App\Http\Traits\Files;
 
-use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
+use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use Illuminate\Support\Facades\File;
 
 trait CustomersFileTraits {
@@ -24,7 +24,7 @@ trait CustomersFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadMenu() {
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            CrmCustomersController::AdminMenu();
+            CrmCustomersConfigTraits::AdminMenu();
         }
     }
 

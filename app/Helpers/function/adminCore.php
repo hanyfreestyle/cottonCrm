@@ -212,17 +212,22 @@ if (!function_exists('getDefSettings')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('loadConfigFromJson')) {
-    function loadConfigFromJson($catId) {
-        $arr = array();
+    function loadConfigFromJson($fileName,$defConfig) {
         $folder = config('adminConfig.app_folder');
-        if ($folder) {
-            $filePath = base_path('config_' . $folder . '/app.json');
-            if (File::isFile($filePath)) {
-                $getArr = json_decode(file_get_contents($filePath), true);
-                $arr = IsArr($getArr, $catId, $arr);
+        $destinationFolder = base_path('config_' . $folder);
+        $filePath = base_path('config_' . $folder . '/' . $fileName . '.json');
+
+        if (!File::isFile($filePath)) {
+            if (!File::isDirectory($destinationFolder)) {
+                File::makeDirectory($destinationFolder, 0777, true, true);
             }
+            $fh = fopen($filePath, 'w') or die("can't open file");
+            $defConfigjson = json_encode($defConfig);
+            fwrite($fh, $defConfigjson);
+            fclose($fh);
         }
-        return $arr;
+        $configJson = json_decode(file_get_contents($filePath), true);
+        return $configJson;
     }
 }
 

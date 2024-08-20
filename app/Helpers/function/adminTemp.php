@@ -179,7 +179,7 @@ if (!function_exists('TablePhotoFlag')) {
 if (!function_exists('TablePhotoFlag_Code')) {
     function TablePhotoFlag_Code($row, $fildeName = 'photo_thum_1') {
         if ($row->$fildeName ?? false) {
-            $sendImg = '<img  class="tableImg cust_country img-rounded" src="' . flagAssets("120/" . $row->$fildeName) . '.webp">';
+            $sendImg = '<img  class="flag_icon" src="' . flagAssets("120/" . $row->$fildeName) . '.webp">';
         } else {
             $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }

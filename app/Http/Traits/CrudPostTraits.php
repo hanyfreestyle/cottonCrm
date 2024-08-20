@@ -17,14 +17,12 @@ trait CrudPostTraits {
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         $pageData['Trashed'] = $this->model::onlyTrashed()->count();
-
-
         return view('admin.mainView.post.index')->with([
             'pageData' => $pageData,
             'categoryId' => 0,
         ]);
-
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function PostListCategory($categoryId) {

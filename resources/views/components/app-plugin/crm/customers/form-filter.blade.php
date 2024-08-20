@@ -7,7 +7,7 @@
                 <input type="hidden" name="formName" value="{{$formName}}">
                 <div class="row">
 
-                    @if($Config['addCountry'])
+                    @if(IsConfig($config,'addCountry'))
                         @if(File::isFile(base_path('routes/AppPlugin/data/country.php')) )
                             @if($config['OneCountry'] == false )
                                 <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="3" :labelview="false"
@@ -30,12 +30,12 @@
                         @endif
                     @endif
 
-                    @if($Config['evaluation'])
+                    @if(IsConfig($config,'evaluation'))
                         <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}" :labelview="false"
                                                   cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :filter-form="true" :req="false"/>
                     @endif
 
-                    @if($Config['gender'])
+                    @if(IsConfig($config,'gender'))
                         <x-admin.form.select-arr name="gender_id" sendvalue="{{old('gender_id',issetArr($getSessionData,'gender_id'))}}" :labelview="false"
                                                  select-type="DefCat" :send-arr="$DefCat['gender']" col="3" :label="__($defLang.'form_gender')" :filter-form="true" :req="false"/>
                     @endif

@@ -2,6 +2,10 @@
     @can($PrefixRole.'_edit')
         {data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center actionButView"},
     @endcan
+@elseif($type == 'Profile')
+    @can($PrefixRole.'_edit')
+        {data: 'Profile', name: 'Profile', orderable: false, searchable: false, className: "text-center actionButView"},
+    @endcan
 @elseif($type == 'delete')
     @if($view)
         @can($PrefixRole.'_delete')
@@ -22,6 +26,10 @@
             {data: 'photo', name: 'photo', orderable: false, searchable: false, className: "text-center"},
         @endif
     @endif
+@elseif($type == 'Flag')
+    @if($view)
+        {data: 'Flag', name: 'Flag', orderable: false, searchable: false, className: "text-center flag_icon"},
+    @endif
 @elseif($type == 'morePhoto')
     @if(IsArr($modelSettings,$controllerName."_morePhoto",0))
         {data: 'morePhoto', name: 'morePhoto', orderable: false, searchable: false, className: "text-center actionButView"},
@@ -38,8 +46,6 @@
     @if($view)
         {'name': 'deleted_at','data': {'_': 'deleted_at.display','sort': 'deleted_at.timestamp'}},
     @endif
-
-
 @elseif($type == 'CategoryName')
     {data: 'CategoryName', name: 'category_names', orderable: false, searchable: false},
 @elseif($type == 'UserName')
@@ -48,7 +54,14 @@
             {data: 'UserName', name: 'users.name', orderable: false, searchable: false},
         @endif
     @endif
-
+@elseif($type == 'can')
+    @can($can)
+        {data: '{{$data}}', name: '{{$data}}', orderable: false, searchable: false, className: "text-center actionButView"},
+    @endcan
+@elseif($type == 'option')
+    @if($option)
+        {data: '{{$data}}', name: '{{$data}}', orderable: false, searchable: false, className: "text-center"},
+    @endif
 @endif
 
 

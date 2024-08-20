@@ -14,6 +14,8 @@ class ActionBut extends Component {
     public $modelid;
     public $res;
     public $viewBut;
+    public $can;
+    public $l;
 
     public function __construct(
         $row = array(),
@@ -22,8 +24,13 @@ class ActionBut extends Component {
         $modelid = null,
         $res = 'd',
         $viewBut = true,
+        $can = null,
+        $l = null,
+
 
     ) {
+        $this->l = $l;
+        $this->can = $can;
         $this->row = $row;
         $this->type = $type;
         $this->po = $po;
