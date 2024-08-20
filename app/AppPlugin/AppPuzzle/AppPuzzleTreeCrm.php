@@ -29,7 +29,6 @@ class AppPuzzleTreeCrm {
             'migrations' => [
                 '2021_01_01_000001_create_crm_customers_table.php',
             ],
-
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['customers.php'],
             'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
