@@ -1,9 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="false"/>
-@endsection
-
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
@@ -49,7 +45,6 @@
 
             @endif
         @endif
-
     </x-admin.hmtl.section>
 @endsection
 

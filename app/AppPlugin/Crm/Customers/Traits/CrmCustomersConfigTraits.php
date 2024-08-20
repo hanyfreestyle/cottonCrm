@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Crm\Customers\Traits;
 
 use App\AppCore\Menu\AdminMenu;
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use Illuminate\Support\Str;
 
 trait CrmCustomersConfigTraits {
@@ -85,6 +86,29 @@ trait CrmCustomersConfigTraits {
         $saveAddress->longitude = $request->input('longitude');
 
         return $saveAddress;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CustomersSearchFilter($request) {
+        if ($request->search_type == 1) {
+            $rowData = CrmCustomers::query()
+                ->where('mobile', $request->name)
+                ->orWhere('mobile_2', $request->name)
+                ->orWhere('phone', $request->name)
+                ->orWhere('whatsapp', $request->name)
+                ->get();
+        } elseif ($request->search_type == 2) {
+            $rowData = CrmCustomers::query()
+                ->where('name', 'like', '%' . $request->name . '%')
+                ->get();
+        } elseif ($request->search_type == 3) {
+            $searchString = $request->name;
+            $rowData = CrmCustomers::query()->with('address')->whereHas('address', function ($query) use ($searchString) {
+                $query->where('address', 'like', '%' . $searchString . '%');
+            })->get();
+        }
+        return $rowData;
     }
 
 

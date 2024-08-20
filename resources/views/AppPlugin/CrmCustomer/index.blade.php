@@ -63,7 +63,6 @@
                     @include('datatable.index_action_but',['type'=> 'edit'])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
                     @include('datatable.index_action_but',['type'=> 'can','can'=> 'crm_leads_add',"data"=>"addTicket"])
-
                 ],
 
             });

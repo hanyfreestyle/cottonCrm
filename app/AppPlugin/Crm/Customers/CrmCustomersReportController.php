@@ -41,15 +41,15 @@ class CrmCustomersReportController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'AddAction' => false,
-            'configArr' => ["filterid" => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
             'formName' => "CrmCustomersReportFilter",
         ];
 
-        self::loadConstructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => ['report']]);
+
+        self::constructData($sendArr);
+
+        $permission = ['sub' => 'crm_customer_report'];
+        self::loadPagePermission($permission);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

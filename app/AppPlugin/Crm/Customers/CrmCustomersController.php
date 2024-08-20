@@ -13,7 +13,6 @@ use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -48,7 +47,13 @@ class CrmCustomersController extends AdminMainController {
         ];
 
         self::constructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['search']]);
+
+         $permission = [
+             'view'=> ['search','profile','repeat'],
+         ];
+         self::loadPagePermission($permission);
+
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -235,96 +240,6 @@ class CrmCustomersController extends AdminMainController {
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
 
-
-
-
-/*
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function repeat($value) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "repeat";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
-
-        $rowData = CrmCustomers::def()->where('mobile', $value)->orWhere('mobile_2', $value)
-            ->orWhere('phone', $value)->orWhere('whatsapp', $value)->get();
-
-        return view('AppPlugin.CrmCustomer.repeat')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-
-
-
-
-
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function profile($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-        return view('AppPlugin.CrmCustomer.profile')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ForceDeleteException($id) {
-
-//        $deleteRow = CrmCustomers::query()->where('id', $id)
-//            ->firstOrFail();
-//        $deleteRow->delete();
-
-
-//        if ($deleteRow->orders_count == 0) {
-//            try {
-//                DB::transaction(function () use ($deleteRow, $id) {
-//                    if (count($deleteRow->more_photos) > 0) {
-//                        foreach ($deleteRow->more_photos as $del_photo) {
-//                            AdminHelper::DeleteAllPhotos($del_photo);
-//                        }
-//                    }
-//                    $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
-//                    AdminHelper::DeleteDir($this->UploadDirIs, $id);
-//                    $deleteRow->forceDelete();
-//                });
-//            } catch (\Exception $exception) {
-//                return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
-//            }
-//        } else {
-//            return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
-//        }
-
-        self::ClearCash();
-        return back()->with('confirmDelete', "");
-    }
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function search() {
@@ -338,7 +253,6 @@ class CrmCustomersController extends AdminMainController {
             'nodata' => false,
         ]);
     }
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function searchFilter(CrmCustomersSearchRequest $request) {
@@ -358,26 +272,68 @@ class CrmCustomersController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function CustomersSearchFilter($request) {
-        if ($request->search_type == 1) {
-            $rowData = CrmCustomers::query()
-                ->where('mobile', $request->name)
-                ->orWhere('mobile_2', $request->name)
-                ->orWhere('phone', $request->name)
-                ->orWhere('whatsapp', $request->name)
-                ->get();
-        } elseif ($request->search_type == 2) {
-            $rowData = CrmCustomers::query()
-                ->where('name', 'like', '%' . $request->name . '%')
-                ->get();
-        } elseif ($request->search_type == 3) {
-            $searchString = $request->name;
-            $rowData = CrmCustomers::query()->with('address')->whereHas('address', function ($query) use ($searchString) {
-                $query->where('address', 'like', '%' . $searchString . '%');
-            })->get();
-        }
-        return $rowData;
+    public function profile($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+        return view('AppPlugin.CrmCustomer.profile')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function repeat($value) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "repeat";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
+
+        $rowData = CrmCustomers::def()->where('mobile', $value)->orWhere('mobile_2', $value)
+            ->orWhere('phone', $value)->orWhere('whatsapp', $value)->get();
+
+        return view('AppPlugin.CrmCustomer.repeat')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+##||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ForceDeleteException($id) {
+        dd('hi');
+        //        $deleteRow = CrmCustomers::query()->where('id', $id)
+        //            ->firstOrFail();
+        //        $deleteRow->delete();
+
+
+        //        if ($deleteRow->orders_count == 0) {
+        //            try {
+        //                DB::transaction(function () use ($deleteRow, $id) {
+        //                    if (count($deleteRow->more_photos) > 0) {
+        //                        foreach ($deleteRow->more_photos as $del_photo) {
+        //                            AdminHelper::DeleteAllPhotos($del_photo);
+        //                        }
+        //                    }
+        //                    $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
+        //                    AdminHelper::DeleteDir($this->UploadDirIs, $id);
+        //                    $deleteRow->forceDelete();
+        //                });
+        //            } catch (\Exception $exception) {
+        //                return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
+        //            }
+        //        } else {
+        //            return back()->with(['confirmException' => '', 'fromModel' => 'Product', 'deleteRow' => $deleteRow]);
+        //        }
+
+        self::ClearCash();
+        return back()->with('confirmDelete', "");
+    }
+
+
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -385,5 +341,5 @@ class CrmCustomersController extends AdminMainController {
         return redirect()->route('admin.CrmLeads.addTicket', $id);
     }
 
-*/
+
 }

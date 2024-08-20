@@ -18,11 +18,8 @@
                     @can('crm_leads_add')
                         <x-admin.table.action-but po="top" type="add"/>
                     @endcan
-
                 @endif
             @endif
-
-
         </tr>
         </thead>
         <tbody>

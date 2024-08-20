@@ -15,7 +15,3 @@
     </x-admin.hmtl.section>
 @endsection
 
-@push('JsCode')
-
-@endpush
-

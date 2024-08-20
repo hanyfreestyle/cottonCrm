@@ -107,7 +107,7 @@ class AdminMainController extends DefaultMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadPagePermission($arr) {
-        $defview = ['index', 'indexData'];
+        $defview = ['index', 'indexData','report'];
         $defcreate = ['create', 'createData'];
         $defedit = ['edit', 'editData'];
         $defdelete = ['destroy', 'ForceDeleteException'];
@@ -119,7 +119,7 @@ class AdminMainController extends DefaultMainController {
         $sub = issetArr($arr, 'sub', null);
 
         $allPermission = array_merge($view, $create, $edit, $delete);
-
+//dd($allPermission);
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
         $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);

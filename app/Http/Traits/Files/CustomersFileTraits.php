@@ -14,7 +14,7 @@ trait CustomersFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadPermission($data) {
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            $newPer = getDefPermission('crm_customer', true);
+            $newPer = getDefPermission('crm_customer', ['report' => true]);
             $data = array_merge($data, $newPer);
         }
         return $data;
