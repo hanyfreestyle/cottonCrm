@@ -24,7 +24,8 @@ class FormAddress extends Component {
     ) {
         $this->rowData = $rowData;
         $this->title = $title;
-
+        $this->config = $config;
+//        dd($config) ;
 
         if (!$rowData->country_id) {
             $rowData->country_id = $config['defCountryId'];

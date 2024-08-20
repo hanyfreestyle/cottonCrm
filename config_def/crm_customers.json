@@ -5,7 +5,7 @@
     "OneCountry": false,
     "addressReq": true,
     "googleAddress": true,
-    "postcode": false,
+    "postcode": true,
     "phoneAreaCode": true,
     "fullAddress": true,
     "evaluation": true,

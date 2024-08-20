@@ -3,6 +3,7 @@
 namespace App\AppPlugin\Crm\Customers\Traits;
 
 use App\AppCore\Menu\AdminMenu;
+use Illuminate\Support\Str;
 
 trait CrmCustomersConfigTraits {
 
@@ -36,6 +37,59 @@ trait CrmCustomersConfigTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function saveDefField($saveData, $request) {
+        $saveData->evaluation_id = $request->input('evaluation_id');
+        $saveData->gender_id = $request->input('gender_id');
+
+        $saveData->name = $request->input('name');
+        $saveData->mobile = $request->input('mobile');
+        $saveData->mobile_code = $request->input('countryCode_mobile');
+
+        $saveData->mobile_2 = $request->input('mobile_2');
+        if ($request->input('mobile_2')) {
+            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
+        }
+
+        $saveData->phone = $request->input('phone');
+        if ($request->input('phone')) {
+            $saveData->phone_code = $request->input('countryCode_phone');
+        }
+
+        $saveData->whatsapp = $request->input('whatsapp');
+        if ($request->input('whatsapp')) {
+            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
+        }
+
+        $saveData->email = $request->input('email');
+        $saveData->notes = $request->input('notes');
+
+        return $saveData;
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function saveAddressField($saveAddress, $saveData, $request) {
+        $saveAddress->uuid = Str::uuid()->toString();
+        $saveAddress->customer_id = $saveData->id;
+
+        $saveAddress->country_id = $request->input('country_id');
+        $saveAddress->city_id = $request->input('city_id');
+        $saveAddress->area_id = $request->input('area_id');
+
+        $saveAddress->address = $request->input('address');
+        $saveAddress->floor = $request->input('floor');
+        $saveAddress->post_code = $request->input('post_code');
+        $saveAddress->unit_num = $request->input('unit_num');
+        $saveAddress->latitude = $request->input('latitude');
+        $saveAddress->longitude = $request->input('longitude');
+
+        return $saveAddress;
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {
 
         $mainMenu = new AdminMenu();
@@ -57,7 +111,7 @@ trait CrmCustomersConfigTraits {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "CrmCustomer.addNew";
+        $subMenu->sel_routs = "CrmCustomer.addNew|create|create_ar|create_en";
         $subMenu->url = "admin.CrmCustomer.addNew";
         $subMenu->name = "admin/crm/customers.app_menu_add";
         $subMenu->roleView = "crm_customer_add";

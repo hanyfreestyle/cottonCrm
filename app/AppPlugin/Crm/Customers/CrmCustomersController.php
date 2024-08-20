@@ -163,36 +163,6 @@ class CrmCustomersController extends AdminMainController {
             ->rawColumns(['Edit', "Delete", 'Profile', 'Flag', 'addTicket']);
     }
 
-
-
-
-
-
-
-
-/*
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function repeat($value) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "repeat";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
-
-        $rowData = CrmCustomers::def()->where('mobile', $value)->orWhere('mobile_2', $value)
-            ->orWhere('phone', $value)->orWhere('whatsapp', $value)->get();
-
-        return view('AppPlugin.CrmCustomer.repeat')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-
-
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
@@ -233,18 +203,6 @@ class CrmCustomersController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function profile($id) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
-        return view('AppPlugin.CrmCustomer.profile')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(CrmCustomersRequest $request, $id = 0) {
         $saveData = CrmCustomers::findOrNew($id);
         try {
@@ -274,13 +232,33 @@ class CrmCustomersController extends AdminMainController {
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
         }
-
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
 
 
 
 
+/*
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function repeat($value) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "repeat";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_repeat');
+
+        $rowData = CrmCustomers::def()->where('mobile', $value)->orWhere('mobile_2', $value)
+            ->orWhere('phone', $value)->orWhere('whatsapp', $value)->get();
+
+        return view('AppPlugin.CrmCustomer.repeat')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+
+
 
 
 
@@ -289,54 +267,30 @@ class CrmCustomersController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function saveDefField($saveData, $request) {
-        $saveData->evaluation_id = $request->input('evaluation_id');
-        $saveData->gender_id = $request->input('gender_id');
-
-        $saveData->name = $request->input('name');
-        $saveData->mobile = $request->input('mobile');
-        $saveData->mobile_code = $request->input('countryCode_mobile');
-
-        $saveData->mobile_2 = $request->input('mobile_2');
-        if ($request->input('mobile_2')) {
-            $saveData->mobile_2_code = $request->input('countryCode_mobile_2');
-        }
-
-        $saveData->phone = $request->input('phone');
-        if ($request->input('phone')) {
-            $saveData->phone_code = $request->input('countryCode_phone');
-        }
-
-        $saveData->whatsapp = $request->input('whatsapp');
-        if ($request->input('whatsapp')) {
-            $saveData->whatsapp_code = $request->input('countryCode_whatsapp');
-        }
-
-        $saveData->email = $request->input('email');
-        $saveData->notes = $request->input('notes');
-
-        return $saveData;
+    public function profile($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+        return view('AppPlugin.CrmCustomer.profile')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function saveAddressField($saveAddress, $saveData, $request) {
-        $saveAddress->uuid = Str::uuid()->toString();
-        $saveAddress->customer_id = $saveData->id;
 
-        $saveAddress->country_id = $request->input('country_id');
-        $saveAddress->city_id = $request->input('city_id');
-        $saveAddress->area_id = $request->input('area_id');
 
-        $saveAddress->address = $request->input('address');
-        $saveAddress->floor = $request->input('floor');
-        $saveAddress->post_code = $request->input('post_code');
-        $saveAddress->unit_num = $request->input('unit_num');
-        $saveAddress->latitude = $request->input('latitude');
-        $saveAddress->longitude = $request->input('longitude');
 
-        return $saveAddress;
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
