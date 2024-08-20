@@ -48,10 +48,10 @@ trait GetCashList {
     static function CashCityList($stopCash = 0) {
         if (File::isFile(base_path('routes/AppPlugin/data/city.php'))) {
             if ($stopCash) {
-                $CashCityList = City::with('translation')->orderby('position')->get();
+                $CashCityList = City::with('translation')->get();
             } else {
                 $CashCityList = Cache::remember('CashCityList', cashDay(7), function () {
-                    return City::with('translation')->orderby('position')->get();
+                    return City::with('translation')->get();
                 });
             }
             return $CashCityList;

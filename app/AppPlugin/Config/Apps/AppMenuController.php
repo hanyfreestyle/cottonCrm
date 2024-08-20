@@ -6,8 +6,6 @@ use App\AppPlugin\Config\Apps\Models\AppMenu;
 use App\AppPlugin\Config\Apps\Models\AppMenuTranslation;
 use App\AppPlugin\Config\Apps\Request\AppMenuRequest;
 use App\Http\Controllers\AdminMainController;
-
-
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +14,6 @@ class AppMenuController extends AdminMainController {
     use CrudTraits;
 
     function __construct(AppMenu $model) {
-
         parent::__construct();
         $this->controllerName = "AppMenu";
         $this->PrefixRole = 'AppSetting';
@@ -30,56 +27,56 @@ class AppMenuController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["orderbyPostion" => 1, "filterid" => 0,],
-            'restore' => 1,
+            'AddConfig' => false,
         ];
+
         self::loadConstructData($sendArr);
 
+        $permission = [
+            'edit' => ['Sort', 'photoUpdate', 'AppProfileUpdate'],
+        ];
+        self::loadPagePermission($permission);
     }
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['Trashed'] = AppMenu::onlyTrashed()->count();
-
-        $rowData = self::getSelectQuery(AppMenu::where('type', 'side'));
-        return view('AppPlugin.ConfigApp.menu_index', compact('pageData', 'rowData'));
+        $rowData = AppMenu::where('type', 'side')->get();
+        return view('AppPlugin.ConfigApp.menu_index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SoftDeletes
-    public function SoftDeletes() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "deleteList";
-        $rowData = self::getSelectQuery(AppMenu::where('type', 'side')->onlyTrashed());
-        return view('AppPlugin.ConfigApp.menu_index', compact('pageData', 'rowData'));
-    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     create
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Add";
         $menu = new AppMenu();
-        return view('AppPlugin.ConfigApp.menu_form', compact('menu', 'pageData'));
-    }
+        return view('AppPlugin.ConfigApp.menu_form')->with([
+            'pageData' => $pageData,
+            'menu' => $menu,
+        ]);
+     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     edit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $menu = AppMenu::where('type', 'side')->findOrFail($id);
-        return view('AppPlugin.ConfigApp.menu_form', compact('menu', 'pageData'));
+        return view('AppPlugin.ConfigApp.menu_form')->with([
+            'pageData' => $pageData,
+            'menu' => $menu,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function storeUpdate(AppMenuRequest $request, $id = '0') {
         try {
             DB::transaction(function () use ($request, $id) {
@@ -108,16 +105,19 @@ class AppMenuController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     Sort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function Sort() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $rowData = AppMenu::where('type', 'side')->orderBy('position')->get();
-        return view('AppPlugin.ConfigApp.menu_sort', compact('pageData', 'rowData'));
+        return view('AppPlugin.ConfigApp.menu_sort')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     SaveSort
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function SaveSort(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
@@ -129,5 +129,4 @@ class AppMenuController extends AdminMainController {
         }
         return response()->json(['success' => $positions]);
     }
-
 }

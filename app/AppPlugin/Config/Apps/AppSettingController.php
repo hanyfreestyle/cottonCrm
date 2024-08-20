@@ -12,7 +12,6 @@ use App\AppPlugin\Config\Apps\Request\AppSettingRequest;
 use App\AppCore\Menu\AdminMenu;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
 use App\Http\Controllers\AdminMainController;
-
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +29,6 @@ class AppSettingController extends AdminMainController {
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
-
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
@@ -38,27 +36,33 @@ class AppSettingController extends AdminMainController {
             'AddButToCard' => false,
         ];
         self::loadConstructData($sendArr);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => ['AppSettingUpdate', 'photoUpdate', 'AppProfileUpdate']]);
 
+        $permission = [
+            'edit' => ['AppSettingUpdate', 'photoUpdate', 'AppProfileUpdate'],
+        ];
+        self::loadPagePermission($permission);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('XXXXXXXXXXXXXXXX');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   webConfigEdit
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AppSetting() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $setting = AppSetting::findOrFail(1);
-
-        return view('AppPlugin.ConfigApp.setting')->with(compact('pageData', 'setting'));
+        return view('AppPlugin.ConfigApp.setting')->with([
+            'pageData' => $pageData,
+            'setting' => $setting,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AppSettingUpdate(AppSettingRequest $request) {
 
         $saveData = AppSetting::findorfail('1');
@@ -110,16 +114,19 @@ class AppSettingController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     AppPhotos
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AppPhotos() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $setting = AppSetting::findOrFail(1);
-        return view('AppPlugin.ConfigApp.app_photo')->with(compact('pageData', 'setting'));
+        return view('AppPlugin.ConfigApp.app_photo')->with([
+            'pageData' => $pageData,
+            'setting' => $setting,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function photoUpdate(AppPhotoRequest $request, $id = '0') {
 
         $saveData = AppSetting::findOrFail(1);
@@ -145,7 +152,7 @@ class AppSettingController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AppProfile
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AppProfile() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
@@ -157,12 +164,15 @@ class AppSettingController extends AdminMainController {
             $pageData['card'] = __('admin/configApp.app_menu_cart');
             $menu = AppMenu::where('type', 'cart')->firstOrFail();
         }
+        return view('AppPlugin.ConfigApp.form')->with([
+            'pageData' => $pageData,
+            'menu' => $menu,
+        ]);
 
-        return view('AppPlugin.ConfigApp.form')->with(compact('pageData', 'menu'));
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function AppProfileUpdate(AppMenuRequest $request) {
         $id = $request->input('id');
         $menu = AppMenu::findOrFail($id);
@@ -182,7 +192,7 @@ class AppSettingController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #   AdminMenu
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function AdminMenu() {
 
         $mainMenu = new AdminMenu();
@@ -237,6 +247,6 @@ class AppSettingController extends AdminMainController {
         $subMenu->roleView = "AppSetting_view";
         $subMenu->icon = "fas fa-shopping-cart";
         $subMenu->save();
-
     }
+
 }

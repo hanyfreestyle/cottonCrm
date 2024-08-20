@@ -35,12 +35,14 @@ class UserController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ['filterid' => 0],
             'restore' => 1,
         ];
         self::loadConstructData($sendArr);
 
+        $permission = [
+            'edit' => ['updateStatus'],
+        ];
+        self::loadPagePermission($permission);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -49,9 +51,7 @@ class UserController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['Trashed'] = User::onlyTrashed()->count();
-
-//        $users = self::getSelectQuery(User::where('id', '!=', 0));
-        $users =  User::query()->where('id', '!=', 0)->get();
+        $users = User::query()->where('id', '!=', 0)->get();
         $roles = Role::all();
         return view('admin.appCore.role.user_index')->with([
             'pageData' => $pageData,
@@ -73,6 +73,7 @@ class UserController extends AdminMainController {
             'roles' => $roles,
         ]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function create() {
@@ -81,7 +82,7 @@ class UserController extends AdminMainController {
         $pageData['passReq'] = true;
         $users = User::findOrNew(0);
         $roles = Role::all();
-        $team = User::query()->where('id','!=',0)->get();
+        $team = User::query()->where('id', '!=', 0)->get();
         return view('admin.appCore.role.user_form')->with([
             'pageData' => $pageData,
             'users' => $users,
@@ -101,7 +102,7 @@ class UserController extends AdminMainController {
         $users = User::findOrFail($id);
         $roles = Role::all();
         $userRole = $users->roles->pluck('name', 'id')->all();
-        $team = User::query()->where('id','!=',$id)->get();
+        $team = User::query()->where('id', '!=', $id)->get();
         return view('admin.appCore.role.user_form')->with([
             'pageData' => $pageData,
             'users' => $users,
@@ -190,10 +191,8 @@ class UserController extends AdminMainController {
         return $deleteRowCount;
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #  updateStatus
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function updateStatus(Request $request) {
         $userId = $request->send_id;
         if ($userId != '1') {
