@@ -52,15 +52,11 @@
                                                  :labelview="false" colrow="col-lg-12 "/>
                     </div>
                 @endif
-
                 {{$slot}}
-
-
                 <div class="row formFilterBut">
                     <button type="submit" name="Forget" class="btn btn-dark btn-sm adminButMobile"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
                 </div>
             </form>
-
 
             @if(isset($getSessionData))
                 <div class="row formForgetBut">
@@ -78,7 +74,11 @@
             <span class="info-box-icon"><i class="fas fa-server"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">{{__('admin/formFilter.box_total')}}</span>
-                <span class="info-box-number">{{number_format($row->total())}}</span>
+                @if($viewDataTable)
+                    <span class="info-box-number">{{number_format(count($row))}}</span>
+                @else
+                    <span class="info-box-number">{{number_format($row->total())}}</span>
+                @endif
 
 
             </div>

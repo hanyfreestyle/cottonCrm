@@ -19,48 +19,71 @@ if (!function_exists('CheckDateFormat')) {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('SaveDateFormat')) {
-    function SaveDateFormat($request, $name) {
-        if ($request->input($name) == null) {
-            $dateValue = Carbon::parse(now())->format("Y-m-d");
+if (!function_exists('CheckDateFormatState')) {
+    function CheckDateFormatState($date) {
+//        $date = "2024-08-18"; // على سبيل المثال
+        $year_min = 1900;
+        $year_max = 2099;
+
+        if (preg_match('/^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $date)) {
+            list($year, $month, $day) = explode('-', $date);
+
+            if ($year >= $year_min && $year <= $year_max && checkdate($month, $day, $year)) {
+//                echo "التاريخ صحيح ويتبع التنسيق.";
+                return true;
+            } else {
+                 return null ;
+            }
         } else {
-            $dateValue = Carbon::parse($request->input($name))->format("Y-m-d");
+            return null ;
         }
-        return $dateValue;
     }
 }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('PrintDate')) {
-    function PrintDate($date, $format = "Y-m-d") {
-        $dateValue = Carbon::parse($date)->format($format);
-        return $dateValue;
+    if (!function_exists('SaveDateFormat')) {
+        function SaveDateFormat($request, $name) {
+            if ($request->input($name) == null) {
+                $dateValue = Carbon::parse(now())->format("Y-m-d");
+            } else {
+                $dateValue = Carbon::parse($request->input($name))->format("Y-m-d");
+            }
+            return $dateValue;
+        }
     }
-}
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-if (!function_exists('getCurrentTime')) {
-    function getCurrentTime() {
-        if (config('app.timezone') == "Africa/Cairo") {
-            $now = Carbon::now(config('app.timezone'));
-            // الجمعة الأخيرة من شهر أبريل
-            $summerStart = Carbon::createFromDate(null, 4, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
-            // الجمعة الأخيرة من شهر أكتوبر
-            $summerEnd = Carbon::createFromDate(null, 10, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
+    if (!function_exists('PrintDate')) {
+        function PrintDate($date, $format = "Y-m-d") {
+            $dateValue = Carbon::parse($date)->format($format);
+            return $dateValue;
+        }
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    if (!function_exists('getCurrentTime')) {
+        function getCurrentTime() {
+            if (config('app.timezone') == "Africa/Cairo") {
+                $now = Carbon::now(config('app.timezone'));
+                // الجمعة الأخيرة من شهر أبريل
+                $summerStart = Carbon::createFromDate(null, 4, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
+                // الجمعة الأخيرة من شهر أكتوبر
+                $summerEnd = Carbon::createFromDate(null, 10, 1, 'Africa/Cairo')->lastOfMonth(Carbon::FRIDAY);
 
 //            $summerEnd = Carbon::createFromDate($now->year, 8, 16, 'Africa/Cairo');
 
-            if ($now->between($summerStart, $summerEnd)) {
-                // تعديل التوقيت الصيفي
-                $now->addHour();
+                if ($now->between($summerStart, $summerEnd)) {
+                    // تعديل التوقيت الصيفي
+                    $now->addHour();
+                }
+            } else {
+                $now = Carbon::now(config('app.timezone'));
             }
-        } else {
-            $now = Carbon::now(config('app.timezone'));
+            return $now;
         }
-        return $now;
     }
-}
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

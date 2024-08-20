@@ -5,6 +5,7 @@ namespace App\AppPlugin\Leads\NewsLetter;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
@@ -49,17 +50,40 @@ class NewsLetterController extends AdminMainController {
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
+
         $session = self::getSessionData($request);
+        $rowData = self::NewsLetterFilter(self::indexQuery(), $session);
+
         return view('AppPlugin.LeadsNewsLetter.index')->with([
             'pageData' => $pageData,
+            'rowData' => $rowData,
         ]);
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function NewsLetterFilter($query, $session, $order = null) {
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['to_date']) and $session['to_date'] != null) {
+            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
+        }
+
+        if ($order != null) {
+            $orderBy = explode("|", $order);
+            $query->orderBy($orderBy[0], $orderBy[1]);
+        }
+
+        return $query;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request) {
         if ($request->ajax()) {
-            $rowData = self::indexQuery();
+            $session = self::getSessionData($request);
+            $rowData = self::NewsLetterFilter(self::indexQuery(), $session);
             return self::TableColumns($rowData)->make(true);
         }
     }
@@ -92,21 +116,22 @@ class NewsLetterController extends AdminMainController {
     }
 
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function Export(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $session = Session::get($this->formName);
 
-//    public function Export(Request $request) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $session = Session::get($this->formName);
-//
-//        $dwonLadeFile = Excel::download(new NewsLetterExport($request), 'newslette.xlsx');
-//
+        $dwonLadeFile = Excel::download(new NewsLetterExport($request), 'newslette.xlsx');
+
 //        $UpdateState = self::FilterQ(NewsLetter::query(), $session)->where('export', 0)->get();
 //        foreach ($UpdateState as $update) {
 //            $update->export = 1;
 //            $update->save();
 //        }
-//        return $dwonLadeFile;
-//    }
+        return $dwonLadeFile;
+    }
 
 
 }

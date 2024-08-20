@@ -2,8 +2,6 @@
 
 namespace App\AppPlugin\Leads\NewsLetter;
 
-
-use App\Http\Controllers\AdminMainController;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -24,12 +22,11 @@ class NewsLetterExport implements FromQuery, ShouldAutoSize, WithMapping, WithHe
 
     public function query() {
         $session = Session::get($this->request->input('formName'));
-        $GetData = AdminMainController::FilterQ(NewsLetter::query(), $session, 'created_at|ASC');
+        $GetData = NewsLetterController::NewsLetterFilter(NewsLetterController::indexQuery(), $session, 'created_at|ASC');
         return $GetData;
     }
 
     public function map($GetData): array {
-
         return [
             $GetData->id,
             $GetData->email,
@@ -40,8 +37,8 @@ class NewsLetterExport implements FromQuery, ShouldAutoSize, WithMapping, WithHe
     public function headings(): array {
         return [
             '#',
-            __('admin/newsletter.t_email'),
-            __('admin/newsletter.t_date_add'),
+            __('admin/leadsNewsLetter.t_email'),
+            __('admin/leadsNewsLetter.t_date_add'),
         ];
     }
 

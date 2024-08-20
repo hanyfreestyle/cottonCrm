@@ -36,6 +36,7 @@ trait AppSettingFileTraits {
             ['cat_id' => 'config', 'name' => 'config_add', 'name_ar' => 'اضافة', 'name_en' => 'Add'],
             ['cat_id' => 'config', 'name' => 'config_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
             ['cat_id' => 'config', 'name' => 'config_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+            ['cat_id' => 'config', 'name' => 'config_export', 'name_ar' => 'تصدير البيانات', 'name_en' => 'Export Data'],
             ['cat_id' => 'config', 'name' => 'config_app', 'name_ar' => 'الإعدادات العامة', 'name_en' => 'General Settings'],
             ['cat_id' => 'config', 'name' => 'config_defPhoto_view', 'name_ar' => 'الصور الافتراضية', 'name_en' => 'View'],
             ['cat_id' => 'config', 'name' => 'config_upFilter_view', 'name_ar' => 'فلاتر الصور', 'name_en' => 'View'],

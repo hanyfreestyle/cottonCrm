@@ -61,9 +61,12 @@ class Date extends Component {
         if ($value == null) {
             $this->value = '';
         } else {
-            $this->value = Carbon::parse($value)->format("Y-m-d");
+            if (CheckDateFormatState($value)) {
+                $this->value = Carbon::parse($value)->format("Y-m-d");
+            } else {
+                $this->value = '';
+            }
         }
-
     }
 
     public function render(): View|Closure|string {

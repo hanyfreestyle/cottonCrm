@@ -5,11 +5,14 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
     <x-admin.hmtl.section>
+        <x-admin.filter-card.def form-name="{{$formName}}" :row="$rowData" :form-dates="true" :export-but="true" />
+    </x-admin.hmtl.section>
 
-        {{--    <x-admin.main.filter-form form-name="{{$formName}}" :row="$rowData"/>--}}
 
-        <x-admin.card.def :page-data="$pageData">
+    <x-admin.hmtl.section>
+        <x-admin.card.def :page-data="$pageData" :add-form-error="false">
             <table {!! Table_Style_Yajra() !!} >
                 <thead>
                 <tr>
