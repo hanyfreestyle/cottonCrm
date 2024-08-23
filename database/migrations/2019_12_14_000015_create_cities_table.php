@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->integer("old_id")->nullable();
             $table->bigInteger('country_id')->unsigned()->nullable();
             $table->boolean("is_active")->default(true);
-            $table->boolean("postion")->default(0);
+            $table->boolean("position")->default(0);
             $table->string("photo")->nullable();
             $table->string("photo_thum_1")->nullable();
 
