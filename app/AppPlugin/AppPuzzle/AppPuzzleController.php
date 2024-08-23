@@ -84,12 +84,12 @@ class AppPuzzleController extends AppPuzzleFun {
 
         $Product = AppPuzzleTreeProduct::tree();
         $Crm = AppPuzzleTreeCrm::tree();
-        $CrmHoover = AppPuzzleTreeCrmHoover::tree();
+        $CrmService = AppPuzzleTreeCrmService::tree();
         $Periodicals = AppPuzzleTreePeriodicals::tree();
         $AppCore = AppPuzzleTreeAppCore::AppCore();
         $Tools = AppPuzzleTreeTools::tree();
 
-        $treeData = $Config + $Model + $Data + $Product + $Crm + $AppCore + $Periodicals + $Tools + $CrmHoover;
+        $treeData = $Config + $Model + $Data + $Product + $Crm + $AppCore + $Periodicals + $Tools + $CrmService;
 
         return $treeData;
     }
