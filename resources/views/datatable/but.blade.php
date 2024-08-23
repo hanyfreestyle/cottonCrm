@@ -6,40 +6,11 @@
     <x-admin.form.action-button url='{{route($PrefixRoute.".viewTicket",$row->id)}}' type='viewTicket' :tip="false"/>
 @elseif($btype == 'addTicket')
     <x-admin.form.action-button url='{{route($PrefixRoute.".addTicket",$row->id)}}' type='addTicket' :tip="false"/>
-
-
-
 @elseif($btype == 'changeUser')
     <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#modal_user_{{$row->id}}'><i class="fas fa-people-arrows"></i></button>
-
-    {{--    <x-admin.hmtl.popup-modal id="modal_user_{{$row->id}}" :title="__('admin/crm/ticket.fr_change_but')">--}}
-
-    {{--        <div class="row infoDiv">--}}
-    {{--            <div class="col-lg-12">--}}
-    {{--                <h2 class="bg-danger mass_notes">{{__('admin/crm/ticket.fr_change_h2')}}</h2>--}}
-    {{--            </div>--}}
-
-    {{--            <div class="col-lg-12">--}}
-    {{--                <form action="{{route('admin.TicketFollowUp.changeUserUpdate' ,$row->id)}}" method="post">--}}
-    {{--                    @csrf--}}
-    {{--                    <x-app-plugin.crm-service.leads.user-select type="changeUser" :row="$row" col="12" :col-mobile="12" :labelview="false" :req="false"/>--}}
-    {{--                    <div class="container-fluid">--}}
-    {{--                        <x-admin.form.submit  text="{{__('admin/crm/ticket.fr_change_but')}}"/>--}}
-    {{--                    </div>--}}
-    {{--                </form>--}}
-    {{--            </div>--}}
-
-
-    {{--        </div>--}}
-
-
-    {{--        <div class="InfoViewList">--}}
-    {{--            <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
-    {{--        </div>--}}
-    {{--    </x-admin.hmtl.popup-modal>--}}
-
-    {{--    <x-app-plugin.crm.leads.popup-chaneg-user :id="$row->id" :config="$Config" :row="$row"/>--}}
-
+      <x-admin.hmtl.popup-modal id="modal_user_{{$row->id}}" :title="__('admin/crm/ticket.fr_change_but')">
+        <x-app-plugin.crm-service.leads.user-change :row="$row" />
+    </x-admin.hmtl.popup-modal>
 @elseif($btype == 'AddRelease')
     <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease' :tip="false"/>
 @elseif($btype == 'ListRelease')
@@ -47,18 +18,16 @@
 @elseif($btype == 'is_active_update')
     <x-admin.ajax.update-status-but :row="$row"/>
 @elseif($btype == 'morePhoto')
-    <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto' :tip="false" />
+    <x-admin.form.action-button url='{{route($PrefixRoute.".More_Photos",$row->id)}}' type='morePhoto' :tip="false"/>
 @elseif($btype == 'Delete')
     <a href="#" id="{{route($PrefixRoute.'.destroy',$row->id)}}" onclick="sweet_dalete(this.id)" class="edit btn btn-danger btn-sm adminButMobile">
         <i class="fas fa-trash"></i> <span class="tipName"> {{__('admin/form.button_delete')}}</span></a>
 @elseif($btype == 'viewInfo')
     <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
-
-    {{--    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">--}}
-    {{--        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$Config"/>--}}
-    {{--        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
-    {{--    </x-admin.hmtl.popup-modal>--}}
-
+    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">
+        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
+        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
+    </x-admin.hmtl.popup-modal>
 @elseif($btype == 'addLang')
     @if(!isset($row->translate('ar')->name))
         <x-admin.form.action-button url="{{route($PrefixRoute.'.editAr',$row->id)}}" icon="fa-solid fa-globe" :tip="true"

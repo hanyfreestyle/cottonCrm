@@ -1,9 +1,11 @@
 <?php
 
-namespace App\AppPlugin\Crm\TicketsTechFollow;
+namespace App\AppPlugin\Crm\CrmService\FollowUp;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
+use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
@@ -13,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
-class CrmTicketTechFollowController extends AdminMainController {
-    use CrmTicketsConfigTraits;
+class UserFollowUpController extends AdminMainController {
+    use CrmLeadsConfigTraits;
+    use CrmMainTraits;
     use ReportFunTraits;
 
     function __construct() {
@@ -23,8 +26,8 @@ class CrmTicketTechFollowController extends AdminMainController {
         $this->PrefixRole = 'crm_tech_follow';
         $this->selMenu = "admin.";
 
-        $this->Config = self::defConfig();
-        View::share('Config', $this->Config);
+        $this->config = self::defConfig();
+        View::share('config', $this->config);
 
         $this->PageTitle = __('admin/crm/ticket.app_menu_teck_follow');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -47,7 +50,7 @@ class CrmTicketTechFollowController extends AdminMainController {
 
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
         $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $Per_report]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge( $Per_view,$Per_Edit,$Per_report)]);
+        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_view, $Per_Edit, $Per_report)]);
 
     }
 
@@ -81,17 +84,14 @@ class CrmTicketTechFollowController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($RouteVal,$this->PrefixRole), $session);
+        $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
-        return view('AppPlugin.CrmTechFollow.index')->with([
+        return view('AppPlugin.CrmService.followUp.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
         ]);
-
     }
-
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -101,11 +101,12 @@ class CrmTicketTechFollowController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $chartData = array();
 
-        $this->formName = "CrmDistributionReportFilter";
+
+        $this->formName = "CrmUserFollowUp";
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $rowData = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $getData = $rowData->get();
 
         $deviceId = $getData->groupBy('device_id')->toarray();
@@ -125,11 +126,11 @@ class CrmTicketTechFollowController extends AdminMainController {
 
         $card = [];
         $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
-        $card['back_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
-        $card['next_count'] = self::CountData(self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+        $card['today_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
-        return view('AppPlugin.CrmTechFollow.report')->with([
+        return view('AppPlugin.CrmService.followUp.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
             'chartData' => $chartData,

@@ -1,27 +1,28 @@
 <?php
 
-namespace App\AppPlugin\Crm\Tickets;
+namespace App\AppPlugin\Crm\CrmService\Tickets;
 
 use App\AppCore\Menu\AdminMenu;
 
-use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
-use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
-use App\AppPlugin\Crm\Tickets\Request\ChangeUserRequest;
-use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+
+use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
+use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class CrmTicketFollowUpController extends AdminMainController {
+class CrmTicketOpenController extends AdminMainController {
 
-    use CrmTicketsConfigTraits;
+    use CrmLeadsConfigTraits;
+    use CrmMainTraits;
 
+//    use ReportFunTraits;
 
     function __construct() {
         parent::__construct();
@@ -32,8 +33,8 @@ class CrmTicketFollowUpController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
 
-        $this->Config = self::defConfig();
-        View::share('Config', $this->Config);
+        $this->config = self::defConfig();
+        View::share('config', $this->config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -44,14 +45,20 @@ class CrmTicketFollowUpController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'AddButToCard' => false,
-            'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
-            'formName' => "CrmCustomersFilter",
+            'formName' => "CrmTicketOpenFilter",
         ];
 
-        self::loadConstructData($sendArr);
+        self::constructData($sendArr);
+//        $per = [
+//            'view' => ['DistributionIndex'],
+//            'create' => ['addTicket', 'SearchFormCustomer', 'SearchFormCustomerFilter'],
+//            'edit' => ['editTicket'],
+//            'delete' => ['destroy'],
+//            'distribution' => ['DistributionIndex'],
+//            'report' => ['report'],
+//        ];
+//        self::loadPagePermission($per);
+
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -86,14 +93,14 @@ class CrmTicketFollowUpController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($RouteVal, $this->PrefixRole), $session);
+        $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
 
-        return view('AppPlugin.CrmTickets.index_follow_up')->with([
+        return view('AppPlugin.CrmService.ticketOpen.index')->with([
             'pageData' => $pageData,
             'RouteVal' => $RouteVal,
-//            'rowData' => $rowData,
+            'rowData' => $rowData,
         ]);
     }
 
@@ -105,12 +112,11 @@ class CrmTicketFollowUpController extends AdminMainController {
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
 
         $session = self::getSessionData($request);
-
-        $Query = self::TicketFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $ticket = $Query->where('id', $ticketId)->firstOrFail();
 
 
-        return view('AppPlugin.CrmTickets.view')->with([
+        return view('AppPlugin.CrmService.ticketOpen.view')->with([
             'pageData' => $pageData,
             'ticket' => $ticket,
         ]);
@@ -121,7 +127,7 @@ class CrmTicketFollowUpController extends AdminMainController {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
 //            $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
-            $rowData = self::TicketFilterQuery(self::indexQuery_OpenTicket($view, $this->PrefixRole), $session);
+            $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($view, $this->PrefixRole), $session);
             return self::DataTableColumns($rowData)->make(true);
         }
     }
@@ -132,9 +138,8 @@ class CrmTicketFollowUpController extends AdminMainController {
         return DataTables::eloquent($data)
             ->addIndexColumn()
             ->editColumn('id', function ($row) {
-                return returnTableId($this->agent,$row);
+                return returnTableId($this->agent, $row);
             })
-
             ->editColumn('created_at', function ($row) {
                 return [
                     'display' => date("Y-m-d", strtotime($row->created_at)) . '' . TicketDateFrom($row->created_at) . '',
@@ -225,21 +230,6 @@ class CrmTicketFollowUpController extends AdminMainController {
 
 
     }
-
-
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function ForceDeleteException($id) {
-//
-////        $deleteRow = CrmCustomers::query()->where('id', $id)
-////            ->firstOrFail();
-////        $deleteRow->delete();
-//
-//
-//        self::ClearCash();
-//        return back()->with('confirmDelete', "");
-//    }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -14,20 +14,10 @@ class CrmTicketsSeeder extends Seeder {
 
     public function run(): void {
 
-        $folder = config('adminConfig.app_folder');
 
-        if (File::isFile(public_path('db/' . $folder . '/crm_ticket.sql'))) {
-            if ($folder) {
+        SeedDbFile(CrmTickets::class, 'crm_ticket.sql');
+        SeedDbFile(CrmTicketsDes::class, 'crm_ticket_des.sql');
 
-                CrmTickets::unguard();
-                $tablePath = public_path('db/' . $folder . '/crm_ticket.sql');
-                DB::unprepared(file_get_contents($tablePath));
-
-                CrmTicketsDes::unguard();
-                $tablePath = public_path('db/' . $folder . '/crm_ticket_des.sql');
-                DB::unprepared(file_get_contents($tablePath));
-            }
-        }
     }
 
 }

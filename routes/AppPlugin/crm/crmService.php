@@ -8,13 +8,13 @@ if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
     Route::middleware('web')->group(base_path('routes/AppPlugin/CrmService/leads.php'));
 }
 
-if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket.php'))) {
-    Route::middleware('web')->group(base_path('routes/AppPlugin/CrmService/ticket.php'));
-}
-if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_tech_follow.php'))) {
-    Route::middleware('web')->group(base_path('routes/AppPlugin/CrmService/ticket_tech_follow.php'));
+if (File::isFile(base_path('routes/AppPlugin/CrmService/follow_up.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/CrmService/follow_up.php'));
 }
 
+if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_open.php'))) {
+    Route::middleware('web')->group(base_path('routes/AppPlugin/CrmService/ticket_open.php'));
+}
 
 
 
