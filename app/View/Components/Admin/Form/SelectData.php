@@ -60,19 +60,17 @@ class SelectData extends Component {
         } else {
             $this->id = $id;
         }
+
         $configData = self::CashConfigDataList();
         $this->catId = $catId;
         $this->sendArr = $configData->where('cat_id', $this->catId);
         $this->sendid = $sendid;
-
         $this->printName = $printName;
 
 
         if($filterForm){
             $this->sendvalue = $sendvalue;
         }else{
-
-
             if ($sendvalue != null) {
                 $this->sendvalue = $sendvalue;
             } else {
@@ -84,8 +82,12 @@ class SelectData extends Component {
     }
 
 
+    public function render(): View|Closure|string {
+        return view('components.admin.form.select-data');
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CashConfigDataList
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashConfigDataList($stopCash = 0) {
         if ($stopCash) {
             $CashConfigDataList = ConfigData::query()->orderByTranslation('name', 'ASC')->get();
@@ -97,7 +99,4 @@ class SelectData extends Component {
         return $CashConfigDataList;
     }
 
-    public function render(): View|Closure|string {
-        return view('components.admin.form.select-data');
-    }
 }

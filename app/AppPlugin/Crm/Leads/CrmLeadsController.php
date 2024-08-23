@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\View;
 class CrmLeadsController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
-//    use CrmTicketsConfigTraits;
+//   use CrmTicketsConfigTraits;
     use ReportFunTraits;
 
     function __construct() {
@@ -40,6 +40,7 @@ class CrmLeadsController extends AdminMainController {
 
         $this->Config = self::defConfig();
         View::share('Config', $this->Config);
+//        dd($this->Config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;

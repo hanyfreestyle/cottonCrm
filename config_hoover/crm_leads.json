@@ -1,8 +1,8 @@
 {
     "leads_sours_id": true,
     "leads_ads_id": true,
-    "leads_device_id": false,
-    "leads_brand_id": false,
+    "leads_device_id": true,
+    "leads_brand_id": true,
     "defCountry": "eg",
     "defCountryId": "66",
     "addCountry": true,
