@@ -49,15 +49,14 @@ class CrmTicketOpenController extends AdminMainController {
         ];
 
         self::constructData($sendArr);
-//        $per = [
-//            'view' => ['DistributionIndex'],
-//            'create' => ['addTicket', 'SearchFormCustomer', 'SearchFormCustomerFilter'],
-//            'edit' => ['editTicket'],
-//            'delete' => ['destroy'],
-//            'distribution' => ['DistributionIndex'],
-//            'report' => ['report'],
-//        ];
-//        self::loadPagePermission($per);
+        $per = [
+            'view' => ['index'],
+            'create' => [],
+            'edit' => ['editTicket'],
+            'delete' => ['destroy'],
+            'report' => ['report'],
+        ];
+        self::loadPagePermission($per);
 
     }
 
@@ -121,6 +120,7 @@ class CrmTicketOpenController extends AdminMainController {
             'ticket' => $ticket,
         ]);
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTable(Request $request, $view) {
@@ -187,24 +187,6 @@ class CrmTicketOpenController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function changeUser($id) {
-        $previous = Route::getRoutes()->match(request()->create(url()->previousPath()))->getName();
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __('admin/crm/ticket.fr_change_but');
-        $rowData = CrmTickets::defOpen()->where('id', $id)->firstOrFail();
-        return view('AppPlugin.CrmTickets.form_change_user')->with([
-            'pageData' => $pageData,
-            'rowData' => $rowData,
-            'previous' => $previous,
-        ]);
-
-    }
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function changeUserUpdate(Request $request, $id) {
 
         $saveData = CrmTickets::defOpen()->where('id', $id)->firstOrFail();
@@ -227,8 +209,6 @@ class CrmTicketOpenController extends AdminMainController {
                 return back()->with('confirmDelete', "");
             }
         }
-
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

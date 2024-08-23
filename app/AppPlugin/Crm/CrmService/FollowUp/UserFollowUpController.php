@@ -41,17 +41,14 @@ class UserFollowUpController extends AdminMainController {
             'formName' => "CrmTechFollowUpFilter",
         ];
 
-        self::loadConstructData($sendArr);
-
-
-        $Per_Edit = ['ViewTicket'];
-        $Per_report = ['Report'];
-        $Per_view = ['index'];
-
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $Per_report]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_view, $Per_Edit, $Per_report)]);
-
+        self::constructData($sendArr);
+        $per = [
+            'view' => ['index'],
+            'create' => [],
+            'edit' => [],
+            'report' => ['report'],
+        ];
+        self::loadPagePermission($per);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
