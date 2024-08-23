@@ -1,7 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Crm\Leads\Traits;
-
+namespace App\AppPlugin\Crm\CrmService\Leads\Traits;
 
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 

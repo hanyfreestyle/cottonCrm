@@ -8,7 +8,7 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         <x-admin.card.collapsed :title="__('admin/crm/leads.box_customer_data')" :open="true" :outline="false" :collapsed="true">
-            <x-app-plugin.crm.customers.card-profile :row="$customer" :soft-data="true" :config="$Config"/>
+            <x-app-plugin.crm.customers.card-profile :row="$customer" :soft-data="true" :config="$config"/>
         </x-admin.card.collapsed>
     </x-admin.hmtl.section>
 
@@ -19,16 +19,16 @@
                 @csrf
                 <div class="row">
                     <x-admin.form.select-data name="sours_id" :sendvalue="old('sours_id',$ticketInfo->sours_id)" cat-id="LeadSours"
-                                              :active="IsConfig($Config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
+                                              :active="IsConfig($config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
 
                     <x-admin.form.select-data name="ads_id" :sendvalue="old('ads_id',$ticketInfo->ads_id)" cat-id="LeadCategory"
-                                              :active="IsConfig($Config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
+                                              :active="IsConfig($config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
 
                     <x-admin.form.select-data name="device_id" :sendvalue="old('device_id',$ticketInfo->device_id)" cat-id="DeviceType"
-                                              :active="IsConfig($Config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
+                                              :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
 
                     <x-admin.form.select-data name="brand_id" :sendvalue="old('brand_id',$ticketInfo->brand_id)" cat-id="BrandName"
-                                              :active="IsConfig($Config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
+                                              :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
                 </div>
 
                 <div class="row">

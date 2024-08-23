@@ -1,8 +1,9 @@
 <?php
 
-namespace App\AppPlugin\Crm\Leads\Request;
+namespace App\AppPlugin\Crm\CrmService\Leads\Request;
 
-use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
+
+use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmTicketsConfigTraits;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 

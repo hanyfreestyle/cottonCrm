@@ -1,8 +1,7 @@
 <?php
 
-namespace App\AppPlugin\Crm\Leads\Request;
+namespace App\AppPlugin\Crm\CrmService\Leads\Request;
 
-use App\AppPlugin\Crm\Tickets\Traits\CrmTicketsConfigTraits;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
@@ -13,26 +12,23 @@ class DistributiontRequest extends FormRequest {
     }
 
     public function rules(Request $request): array {
-
-
         $rules = [
             "ids" => "required|array|min:2|max:50",
-            'user_id'=> "required",
+            'user_id' => "required",
         ];
 
         $rules += [
 
         ];
-
         return $rules;
     }
 
     public function messages() {
         return [
-            'user_id.required' => __('admin/crm/leads.distribution_err_user') ,
-            'ids.required' => __('admin/crm/leads.distribution_err_req') ,
-            'ids.min' => __('admin/crm/leads.distribution_err_min') ,
-            'ids.max' => __('admin/crm/leads.distribution_err_max') ,
+            'user_id.required' => __('admin/crm/leads.distribution_err_user'),
+            'ids.required' => __('admin/crm/leads.distribution_err_req'),
+            'ids.min' => __('admin/crm/leads.distribution_err_min'),
+            'ids.max' => __('admin/crm/leads.distribution_err_max'),
         ];
     }
 

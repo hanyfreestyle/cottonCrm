@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Crm\Tickets\Models;
+namespace App\AppPlugin\Crm\CrmService\Tickets\Models;
 
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Data\Area\Models\Area;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AppPlugin\Crm\Tickets\Request;
+namespace App\AppPlugin\Crm\CrmService\Tickets\Request;
 
 
 use Illuminate\Foundation\Http\FormRequest;

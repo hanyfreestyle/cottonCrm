@@ -1,9 +1,10 @@
 <?php
 
-namespace App\AppPlugin\Crm\Tickets\Traits;
+namespace App\AppPlugin\Crm\CrmService\Tickets\Traits;
 
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
-use App\AppPlugin\Crm\Tickets\Models\CrmTickets;
+
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
