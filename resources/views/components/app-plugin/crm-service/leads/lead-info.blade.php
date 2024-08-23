@@ -27,4 +27,3 @@
     <x-admin.hmtl.info-div-list n="notes" :row="$row" col="col-lg-6 col-12"/>
 
 </div>
-

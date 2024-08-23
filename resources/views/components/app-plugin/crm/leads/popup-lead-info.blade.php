@@ -10,7 +10,7 @@
                 </div>
                 <div class="modal-body InfoViewList">
 {{--                    <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>--}}
-{{--                    <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>--}}
+{{--                    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark adminButMobile" data-dismiss="modal"><i class="fas fa-window-close"></i> {{__('admin/form.button_close')}}</button>

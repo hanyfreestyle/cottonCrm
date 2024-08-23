@@ -6,7 +6,6 @@ namespace App\AppPlugin\Crm\CrmCore;
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersSearchRequest;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 
 trait CrmMainTraits {
@@ -46,7 +45,7 @@ trait CrmMainTraits {
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function TicketFilterQuery($query, $session, $order = null) {
+    static function DefLeadsFilterQuery($query, $session, $order = null) {
 
         if (isset($session['from_date']) and $session['from_date'] != null) {
             $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));

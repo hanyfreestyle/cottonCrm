@@ -120,7 +120,7 @@ class CrmLeadsController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-        $Data = self::TicketFilterQuery(self::indexQuery(), $session);
+        $Data = self::DefLeadsFilterQuery(self::indexQuery(), $session);
         $rowData = $Data->paginate(30);
         return view('AppPlugin.CrmService.leads.distribution')->with([
             'pageData' => $pageData,
@@ -222,7 +222,7 @@ class CrmLeadsController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+        $rowData = self::DefLeadsFilterQuery(self::indexQuery(), $session);
         $getData = $rowData->get();
 
         $deviceId = $getData->groupBy('device_id')->toarray();

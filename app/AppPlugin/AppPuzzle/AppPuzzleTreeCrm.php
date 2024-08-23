@@ -48,13 +48,8 @@ class AppPuzzleTreeCrm {
             'viewFolder' => 'CrmCore',
             'routeFolder' => "crm/",
             'routeFile' => 'crmCore.php',
-//            'migrations' => [
-//                '2021_01_01_000001_create_crm_customers_table.php',
-//            ],
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['crm.php'],
-//            'ComponentFolderClass' => ['AppPlugin/Crm/Customers'],
-//            'ComponentFolderView' => ['app-plugin/crm/customers'],
         ];
     }
 

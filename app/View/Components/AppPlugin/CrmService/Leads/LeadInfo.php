@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\AppPlugin\Crm\Leads;
+namespace App\View\Components\AppPlugin\CrmService\Leads;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -41,6 +41,6 @@ class LeadInfo extends Component {
     }
 
     public function render(): View|Closure|string {
-        return view('components.app-plugin.crm.leads.lead-info');
+        return view('components.app-plugin.crm-service.leads.lead-info');
     }
 }

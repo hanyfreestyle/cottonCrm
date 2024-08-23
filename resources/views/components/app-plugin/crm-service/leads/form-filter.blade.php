@@ -28,7 +28,7 @@
                         @if(IsConfig($config,'addCountry'))
                             @if(File::isFile(base_path('routes/AppPlugin/data/country.php')) )
                                 @if($config['OneCountry'] == false )
-                                    <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="3" :labelview="false"
+                                    <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($getSessionData,'country_id'))" col="2" :labelview="false"
                                                              add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/def.form_country')}}" :req="false"/>
                                 @endif
                             @endif

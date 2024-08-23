@@ -6,7 +6,7 @@
     "defCountry": "eg",
     "defCountryId": "66",
     "addCountry": true,
-    "OneCountry": false,
+    "OneCountry": true,
     "addressReq": true,
     "googleAddress": true,
     "postcode": false,

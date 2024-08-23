@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\AppPlugin\Crm\Leads;
+namespace App\View\Components\AppPlugin\CrmService\Leads;
 
 use App\Models\User;
 use Closure;
@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class UserSelect extends Component {
-
 
     public $type;
     public $row;
@@ -38,7 +37,7 @@ class UserSelect extends Component {
             $this->row = User::query()->where('crm_tech', true)->get();
         } elseif ($this->type == 'changeUser') {
             $this->label = __('admin/crm/ticket.fr_user_id');
-            $this->row = User::query()->where('crm_tech', true)->where('id','!=',$row->user_id)->get();
+            $this->row = User::query()->where('crm_tech', true)->where('id', '!=', $row->user_id)->get();
         }
 
 
@@ -50,6 +49,6 @@ class UserSelect extends Component {
     }
 
     public function render(): View|Closure|string {
-        return view('components.app-plugin.crm.leads.user-select');
+        return view('components.app-plugin.crm-service.leads.user-select');
     }
 }

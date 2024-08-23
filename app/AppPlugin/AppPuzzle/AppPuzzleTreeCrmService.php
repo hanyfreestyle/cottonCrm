@@ -24,19 +24,15 @@ class AppPuzzleTreeCrmService {
         return [
             'view' => true,
             'id' => "CrmLeads",
-            'CopyFolder' => "Crm_Leads",
-            'appFolder' => 'Crm/Leads',
-            'viewFolder' => 'CrmLeads',
-            'routeFolder' => "crm/",
+            'CopyFolder' => "CrmService_Leads",
+            'appFolder' => 'Crm/CrmService/Leads',
+            'viewFolder' => 'CrmService/leads',
+            'routeFolder' => "CrmService/",
             'routeFile' => 'leads.php',
-//            'migrations' => [
-//                '2021_01_01_000002_create_crm_tickets_table.php',
-//            ],
-
             'adminLangFolder' => "admin/crm/",
             'adminLangFiles' => ['leads.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
-            'ComponentFolderView' => ['app-plugin/crm/leads'],
+            'ComponentFolderClass' => ['AppPlugin/CrmService/Leads'],
+            'ComponentFolderView' => ['app-plugin/crm-service/leads'],
         ];
     }
 

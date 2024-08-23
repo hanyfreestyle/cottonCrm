@@ -5,11 +5,10 @@
 
     <x-admin.hmtl.section>
         @if($AllData >0)
-            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$config"/>
+            <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$config"/>
         @endif
 
         <div class="row">
-
             @if(isset($chartData['Device']) and  count($chartData['Device']) > 0)
                 <x-admin.card.normal col="col-lg-3" :title="__('admin/crm/leads.report_device')">
                     <x-admin.report.chart-def id="Device" :data-row="$chartData['Device']"/>

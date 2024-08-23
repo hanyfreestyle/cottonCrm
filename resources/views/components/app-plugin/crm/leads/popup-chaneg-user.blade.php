@@ -18,13 +18,13 @@
                     </div>
                     <form action="{{route('admin.TicketFollowUp.changeUserUpdate' ,$row->id)}}" method="post">
                         @csrf
-                        <x-app-plugin.crm.leads.user-select type="changeUser" :row="$row" col="12" :col-mobile="12" :labelview="false" :req="false"/>
+                        <x-app-plugin.crm-service.leads.user-select type="changeUser" :row="$row" col="12" :col-mobile="12" :labelview="false" :req="false"/>
                         <div class="container-fluid mt-3 mb-5">
                             <x-admin.form.submit  text="{{__('admin/crm/ticket.fr_change_but')}}"/>
                         </div>
                     </form>
                     <div class="InfoViewList">
-                        <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>
+                        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
                     </div>
 
                 </div>

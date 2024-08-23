@@ -22,7 +22,7 @@
     {{--            <div class="col-lg-12">--}}
     {{--                <form action="{{route('admin.TicketFollowUp.changeUserUpdate' ,$row->id)}}" method="post">--}}
     {{--                    @csrf--}}
-    {{--                    <x-app-plugin.crm.leads.user-select type="changeUser" :row="$row" col="12" :col-mobile="12" :labelview="false" :req="false"/>--}}
+    {{--                    <x-app-plugin.crm-service.leads.user-select type="changeUser" :row="$row" col="12" :col-mobile="12" :labelview="false" :req="false"/>--}}
     {{--                    <div class="container-fluid">--}}
     {{--                        <x-admin.form.submit  text="{{__('admin/crm/ticket.fr_change_but')}}"/>--}}
     {{--                    </div>--}}
@@ -34,7 +34,7 @@
 
 
     {{--        <div class="InfoViewList">--}}
-    {{--            <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>--}}
+    {{--            <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
     {{--        </div>--}}
     {{--    </x-admin.hmtl.popup-modal>--}}
 
@@ -56,7 +56,7 @@
 
     {{--    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">--}}
     {{--        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$Config"/>--}}
-    {{--        <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>--}}
+    {{--        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
     {{--    </x-admin.hmtl.popup-modal>--}}
 
 @elseif($btype == 'addLang')

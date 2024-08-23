@@ -8,7 +8,7 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         <div class="col-lg-12">
-            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
+            <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
         </div>
 
         <form name="myform" action="{{route('admin.CrmLeads.addToUser')}}" method="post">
@@ -17,7 +17,7 @@
                 @if(count($rowData)>0)
                     <x-admin.form.print-error-div :full-err="true"/>
                     <div class="row">
-                        <x-app-plugin.crm.leads.user-select :col-mobile="8" type="tech" :labelview="false" :req="true"/>
+                        <x-app-plugin.crm-service.leads.user-select :col-mobile="8" type="tech" :labelview="false" :req="true"/>
                         <div class="col">
                             <button type="submit" name="B1" class="btn btn-primary but_add_to_user adminButMobile float-left"><i class="fas fa-user-plus"></i> {{__('admin/crm/leads.but_add_to_user')}}
                             </button>
@@ -58,7 +58,7 @@
                                 </td>
                                 <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">
                                     <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-                                    <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>
+                                    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
                                 </x-admin.hmtl.popup-modal>
                                 <x-admin.table.action-but type="edit" :row="$row"/>
                                 <x-admin.table.action-but type="delete" :row="$row"/>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\AppPlugin\Crm\Leads;
+namespace App\View\Components\AppPlugin\CrmService\Leads;
 
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
 
 class FormFilter extends Component {
+
     public $defRoute;
     public $row;
     public $getSessionData;
@@ -60,6 +61,6 @@ class FormFilter extends Component {
     }
 
     public function render(): View|Closure|string {
-        return view('components.app-plugin.crm.leads.form-filter');
+        return view('components.app-plugin.crm-service.leads.form-filter');
     }
 }

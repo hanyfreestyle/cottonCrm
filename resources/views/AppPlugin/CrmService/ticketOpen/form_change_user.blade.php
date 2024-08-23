@@ -14,7 +14,7 @@
             <form action="{{route($PrefixRoute.'.changeUserUpdate' ,$rowData->id)}}" method="post">
                 @csrf
                 <div class="row">
-                    <x-app-plugin.crm.leads.user-select type="changeUser" :row="$rowData" col="12" :col-mobile="12" :labelview="false" :req="false"/>
+                    <x-app-plugin.crm-service.leads.user-select type="changeUser" :row="$rowData" col="12" :col-mobile="12" :labelview="false" :req="false"/>
                 </div>
 
                 <div class="container-fluid mt-3 mb-5">
@@ -23,7 +23,7 @@
             </form>
             <div class="InfoViewList">
                 <x-app-plugin.crm.customers.card-profile :row="$rowData->customer" :add-title="true"  view-list="text" :soft-data="true" :config="$Config"/>
-                <x-app-plugin.crm.leads.lead-info :add-title="true" view-list="text" :row="$rowData"/>
+                <x-app-plugin.crm-service.leads.lead-info :add-title="true" view-list="text" :row="$rowData"/>
             </div>
 
 
