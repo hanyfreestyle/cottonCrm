@@ -14,8 +14,8 @@
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Crm.IndexModel')}}" :tip="false" icon="fas fa-headset"
                                 size="m" print-lable="Crm" :bg="puzzleMenu('Crm',$selRoute)"/>
 
-    <x-admin.form.action-button url="{{route('admin.AppPuzzle.CrmHoover.IndexModel')}}" :tip="false" icon="fas fa-plug"
-                                size="m" print-lable="CrmHoover" :bg="puzzleMenu('CrmHoover',$selRoute)"/>
+    <x-admin.form.action-button url="{{route('admin.AppPuzzle.crmService.IndexModel')}}" :tip="false" icon="fas fa-plug"
+                                size="m" print-lable="CrmService" :bg="puzzleMenu('crmService',$selRoute)"/>
 
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Periodicals.IndexModel')}}" :tip="false" icon="fas fa-book"
                                 size="m" print-lable="Periodicals" :bg="puzzleMenu('Periodicals',$selRoute)"/>

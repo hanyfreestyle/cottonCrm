@@ -2,21 +2,44 @@
 
 namespace App\AppPlugin\AppPuzzle;
 
-class AppPuzzleTreeCrmHoover {
+class AppPuzzleTreeCrmService {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
             'CrmLeads' => self::treeCrmLeads(),
-            'CrmTickets' => self::treeCrmTickets(),
-            'CrmTechFollow' => self::treeCrmTechFollow(),
-            'BrandName' => self::treeBrandName(),
-            'DeviceType' => self::treeDeviceType(),
-            'Evaluation' => self::treeEvaluation(),
+//            'CrmTickets' => self::treeCrmTickets(),
+//            'CrmTechFollow' => self::treeCrmTechFollow(),
+//            'BrandName' => self::treeBrandName(),
+//            'DeviceType' => self::treeDeviceType(),
+//            'Evaluation' => self::treeEvaluation(),
         ];
         return $modelTree;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeCrmLeads() {
+        return [
+            'view' => true,
+            'id' => "CrmLeads",
+            'CopyFolder' => "Crm_Leads",
+            'appFolder' => 'Crm/Leads',
+            'viewFolder' => 'CrmLeads',
+            'routeFolder' => "crm/",
+            'routeFile' => 'leads.php',
+//            'migrations' => [
+//                '2021_01_01_000002_create_crm_tickets_table.php',
+//            ],
+
+            'adminLangFolder' => "admin/crm/",
+            'adminLangFiles' => ['leads.php'],
+            'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
+            'ComponentFolderView' => ['app-plugin/crm/leads'],
+        ];
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -53,27 +76,7 @@ class AppPuzzleTreeCrmHoover {
         ];
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmLeads() {
-        return [
-            'view' => true,
-            'id' => "CrmLeads",
-            'CopyFolder' => "Crm_Leads",
-            'appFolder' => 'Crm/Leads',
-            'viewFolder' => 'CrmLeads',
-            'routeFolder' => "crm/",
-            'routeFile' => 'leads.php',
-//            'migrations' => [
-//                '2021_01_01_000002_create_crm_tickets_table.php',
-//            ],
 
-            'adminLangFolder' => "admin/crm/",
-            'adminLangFiles' => ['leads.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Leads'],
-            'ComponentFolderView' => ['app-plugin/crm/leads'],
-        ];
-    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
