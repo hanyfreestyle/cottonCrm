@@ -3,9 +3,9 @@
 namespace App\AppCore\AdminRole\Seeder;
 
 use App\Http\Traits\Files\AppSettingFileTraits;
+use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
-use App\Http\Traits\Files\HooverTicketsFileTraits;
 use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use App\Http\Traits\Files\ProductFileTraits;
@@ -32,7 +32,7 @@ class PermissionSeeder extends Seeder {
 
         $data = PeriodicalsFileTraits::LoadPermission($data);
         $data = CustomersFileTraits::LoadPermission($data);
-        $data = HooverTicketsFileTraits::LoadPermission($data);
+        $data = CrmServiceFileTraits::LoadPermission($data);
         $data = ProductFileTraits::LoadPermission($data);
         $data = MainModelFileTraits::LoadPermission($data);
 

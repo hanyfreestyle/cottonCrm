@@ -22,12 +22,11 @@ use App\AppPlugin\Orders\OrderController;
 use App\AppPlugin\Models\Pages\PageCategoryController;
 use App\AppPlugin\Product\ProductController;
 
-
-use App\Http\Traits\CrmFunTraits;
 use App\Http\Traits\Files\AppSettingFileTraits;
+use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
-use App\Http\Traits\Files\HooverTicketsFileTraits;
+
 use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use Illuminate\Database\Seeder;
@@ -45,7 +44,7 @@ class AdminMenuSeeder extends Seeder {
 
         PeriodicalsFileTraits::LoadMenu();
         CustomersFileTraits::LoadMenu();
-        HooverTicketsFileTraits::LoadMenu();
+        CrmServiceFileTraits::LoadMenu();
 
         MainModelFileTraits::LoadMenu();
 

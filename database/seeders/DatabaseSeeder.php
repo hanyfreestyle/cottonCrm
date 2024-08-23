@@ -8,9 +8,9 @@ use App\AppCore\AdminRole\Seeder\RoleSeeder;
 use App\AppCore\AdminRole\Seeder\UsersTableSeeder;
 use App\AppCore\Menu\AdminMenuSeeder;
 use App\Http\Traits\Files\AppSettingFileTraits;
+use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
-use App\Http\Traits\Files\HooverTicketsFileTraits;
 use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use App\Http\Traits\Files\ProductFileTraits;
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder {
 
         CustomersFileTraits::LoadSeeder();
         PeriodicalsFileTraits::LoadSeeder();
-        HooverTicketsFileTraits::LoadSeeder();
+        CrmServiceFileTraits::LoadSeeder();
 
         ProductFileTraits::LoadSeeder();
 

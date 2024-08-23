@@ -10,7 +10,7 @@ use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use Illuminate\Support\Facades\File;
 
-trait HooverTicketsFileTraits {
+trait CrmServiceFileTraits {
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

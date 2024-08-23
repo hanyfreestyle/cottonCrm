@@ -8,12 +8,12 @@ class AppPuzzleTreeCrmService {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
-            'CrmLeads' => self::treeCrmLeads(),
-//            'CrmTickets' => self::treeCrmTickets(),
-//            'CrmTechFollow' => self::treeCrmTechFollow(),
-//            'BrandName' => self::treeBrandName(),
-//            'DeviceType' => self::treeDeviceType(),
-//            'Evaluation' => self::treeEvaluation(),
+            'CrmServiceLeads' => self::treeCrmLeads(),
+            'CrmServiceFollowUp' => self::treeCrmFollowUp(),
+            'CrmServiceTickets' => self::treeCrmTickets(),
+            'BrandName' => self::treeBrandName(),
+            'DeviceType' => self::treeDeviceType(),
+            'Evaluation' => self::treeEvaluation(),
         ];
         return $modelTree;
     }
@@ -23,7 +23,7 @@ class AppPuzzleTreeCrmService {
     static function treeCrmLeads() {
         return [
             'view' => true,
-            'id' => "CrmLeads",
+            'id' => "CrmServiceLeads",
             'CopyFolder' => "CrmService_Leads",
             'appFolder' => 'Crm/CrmService/Leads',
             'viewFolder' => 'CrmService/leads',
@@ -36,43 +36,40 @@ class AppPuzzleTreeCrmService {
         ];
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function treeCrmFollowUp() {
+        return [
+            'view' => true,
+            'id' => "CrmServiceFollowUp",
+            'CopyFolder' => "CrmService_FollowUp",
+            'appFolder' => 'Crm/CrmService/FollowUp',
+            'viewFolder' => 'CrmService/followUp',
+            'routeFolder' => "CrmService/",
+            'routeFile' => 'follow_up.php',
+            'ComponentFolderClass' => ['AppPlugin/CrmService/FollowUp'],
+            'ComponentFolderView' => ['app-plugin/crm-service/follow-up'],
+        ];
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function treeCrmTickets() {
         return [
             'view' => true,
-            'id' => "CrmTickets",
-            'CopyFolder' => "Crm_Tickets",
-            'appFolder' => 'Crm/Tickets',
-            'viewFolder' => 'CrmTickets',
-            'routeFolder' => "crm/",
-            'routeFile' => 'ticket.php',
+            'id' => "CrmServiceTickets",
+            'CopyFolder' => "CrmService_Tickets",
+            'appFolder' => 'Crm/CrmService/Tickets',
+            'viewFolder' => 'CrmService/ticketOpen',
+            'routeFolder' => "CrmService/",
+            'routeFile' => 'ticket_open.php',
+            'adminLangFolder' => "admin/crm/",
+            'adminLangFiles' => ['ticket.php'],
             'migrations' => [
                 '2021_01_01_000002_create_crm_tickets_table.php',
             ],
-            'adminLangFolder' => "admin/crm/",
-            'adminLangFiles' => ['ticket.php'],
-            'ComponentFolderClass' => ['AppPlugin/Crm/Ticket'],
-            'ComponentFolderView' => ['app-plugin/crm/ticket'],
         ];
     }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmTechFollow() {
-        return [
-            'view' => true,
-            'id' => "CrmTechFollow",
-            'CopyFolder' => "Crm_TechFollow",
-            'appFolder' => 'Crm/TicketsTechFollow',
-            'viewFolder' => 'CrmTechFollow',
-            'routeFolder' => "crm/",
-            'routeFile' => 'ticket_tech_follow.php',
-        ];
-    }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

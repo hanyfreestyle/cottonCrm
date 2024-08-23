@@ -3,15 +3,12 @@
 namespace App\AppCore\LangFile;
 
 use App\AppCore\Menu\AdminMenu;
-use App\AppPlugin\Data\ConfigData\Traits\ConfigDataTraits;
-use App\AppPlugin\Models\MainPost\Traits\MainPostPermissionTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
-use App\Http\Traits\CrmFunTraits;
 use App\Http\Traits\Files\AppSettingFileTraits;
+use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
-use App\Http\Traits\Files\HooverTicketsFileTraits;
 use App\Http\Traits\Files\MainModelFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
 use App\Http\Traits\Files\ProductFileTraits;
@@ -81,7 +78,7 @@ class LangFileController extends AdminMainController {
         $LangMenu = PeriodicalsFileTraits::LoadLangFiles($LangMenu);
         $LangMenu = CustomersFileTraits::LoadLangFiles($LangMenu);
 
-        $LangMenu = HooverTicketsFileTraits::LoadLangFiles($LangMenu);
+        $LangMenu = CrmServiceFileTraits::LoadLangFiles($LangMenu);
         $LangMenu = ProductFileTraits::LoadLangFiles($LangMenu);
 
         $LangMenu = MainModelFileTraits::LoadLangFiles($LangMenu);
