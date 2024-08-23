@@ -5,10 +5,8 @@ namespace App\Http\Traits;
 
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\Models\User;
-use mysql_xdevapi\Collection;
 
 trait ReportFunTraits {
-
     use DefCategoryTraits;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

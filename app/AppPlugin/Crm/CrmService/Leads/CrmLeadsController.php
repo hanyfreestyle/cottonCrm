@@ -3,12 +3,16 @@
 namespace App\AppPlugin\Crm\CrmService\Leads;
 
 use App\AppPlugin\Crm\CrmService\Leads\Request\CreateTicketRequest;
+use App\AppPlugin\Crm\CrmService\Leads\Request\DistributiontRequest;
+use App\AppPlugin\Data\Area\Models\Area;
+use App\AppPlugin\Data\City\Models\City;
 use App\Http\Controllers\AdminMainController;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\Http\Traits\ReportFunTraits;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use App\AppCore\Menu\AdminMenu;
@@ -40,27 +44,19 @@ class CrmLeadsController extends AdminMainController {
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => false,
             'AddButToCard' => false,
-            'configArr' => ["filterid" => 0, 'datatable' => 0, 'orderby' => 0],
-            'yajraTable' => true,
-            'AddLang' => false,
-            'restore' => 0,
             'formName' => "CrmDistributionFilter",
         ];
 
-        self::loadConstructData($sendArr);
-
-        $Per_Add = ['AddNew', 'searchFilter', 'addTicket', 'CreateTicket'];
-        $Per_Edit = ['editTicket'];
-        $Per_report = ['Report'];
-        $Per_Delete = ['destroy'];
-        $Per_distribution = ['DistributionIndex'];
-
-        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $Per_Add]);
-        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $Per_Edit]);
-        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $Per_Delete]);
-        $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $Per_report]);
-        $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $Per_distribution]);
-        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => array_merge($Per_Add, $Per_Edit, $Per_Delete, $Per_distribution, $Per_report)]);
+        self::constructData($sendArr);
+        $per = [
+            'view' => ['DistributionIndex'],
+            'create' => ['addTicket', 'SearchFormCustomer', 'SearchFormCustomerFilter'],
+            'edit' => ['editTicket'],
+            'delete' => ['destroy'],
+            'distribution' => ['DistributionIndex'],
+            'report' => ['report'],
+        ];
+        self::loadPagePermission($per);
 
     }
 
@@ -101,7 +97,6 @@ class CrmLeadsController extends AdminMainController {
                 $saveData->follow_state = 1;
                 $saveData->follow_date = SaveDateFormat($request, 'follow_date');
                 $saveData->user_id = $request->input('user_id') ?? null;
-
                 $saveData->sours_id = $request->input('sours_id');
                 $saveData->ads_id = $request->input('ads_id');
                 $saveData->device_id = $request->input('device_id');
@@ -113,171 +108,145 @@ class CrmLeadsController extends AdminMainController {
         } catch (\Exception $exception) {
             return back()->with('data_not_save', "");
         }
-        return redirect()->route('admin.CrmLeads.addNew');
+        return redirect()->route('admin.CrmLeads.SearchFormCustomer');
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function editTicket($id) {
-//        $pageData = $this->pageData;
-//        $this->defLang = "admin/crm/customers.";
-//        View::share('defLang', $this->defLang);
-//        $pageData['ViewType'] = "Edit";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-//        $pageData['SubView'] = false;
-//        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
-//        $customerID = $ticketInfo->customer_id;
-//        $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
-//
-//        return view('AppPlugin.CrmLeads.form_add_ticket')->with([
-//            'pageData' => $pageData,
-//            'customer' => $customer,
-//            'ticketInfo' => $ticketInfo,
-//            'form_route' => '.updateTicket',
-//            'followDate' => PrintDate($ticketInfo->follow_date),
-//            'UpdateId' => $ticketInfo->id
-//        ]);
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function UpdateTicket(CreateTicketRequest $request, $id) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Edit";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
-//        $saveData = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
-//        try {
-//            DB::transaction(function () use ($request, $saveData) {
-//                $saveData->follow_date = SaveDateFormat($request, 'follow_date');
-//                $saveData->user_id = $request->input('user_id');
-//                $saveData->sours_id = $request->input('sours_id');
-//                $saveData->ads_id = $request->input('ads_id');
-//                $saveData->device_id = $request->input('device_id');
-//                $saveData->brand_id = $request->input('brand_id');
-//                $saveData->notes_err = $request->input('notes_err');
-//                $saveData->notes = $request->input('notes');
-//                $saveData->save();
-//            });
-//        } catch (\Exception $exception) {
-//            return back()->with('data_not_save', "");
-//        }
-//        return redirect()->route('admin.CrmLeads.distribution');
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DistributionIndex(Request $request) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $pageData['BoxH1'] = __('admin/crm/leads.app_menu_distribution');
-//        $pageData['SubView'] = false;
-//
-//        $session = self::getSessionData($request);
-//        $Data = self::TicketFilterQuery(self::indexQuery(), $session);
-//        $rowData = $Data->paginate(30);
-//
-//        return view('AppPlugin.CrmLeads.distribution')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//        ]);
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function indexQuery() {
-//        $data = CrmTickets::query()
-//            ->where('state', 1)
-//            ->where('follow_state', 1)
-//            ->where('user_id', null)
-//            ->with('customer');
-//        return $data;
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function AddToUser(DistributiontRequest $request) {
-//
-//        if ($request->input('ids') and is_array($request->input('ids'))) {
-//            $ticketIds = $request->input('ids');
-//            $Tickets = CrmTickets::query()->defNew()->wherein('id', $ticketIds)->get();
-//            foreach ($Tickets as $ticket) {
-//                $ticket->user_id = $request->input('user_id');
-//                $ticket->save();
-//            }
-//        }
-//        return back()->with('confirmDone', "");
-//    }
-//
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function destroy($id) {
-//        $deleteRow = CrmTickets::query()->where('id', $id)
-//            ->where('state', 1)
-//            ->where('follow_state', 1)->firstOrFail();
-//        $deleteRow->forceDelete();
-//        return back()->with('confirmDelete', "");
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function report(Request $request) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $chartData = array();
-//
-//        $this->formName = "CrmDistributionReportFilter";
-//        View::share('formName', $this->formName);
-//
-//        $session = self::getSessionData($request);
-//        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
-//        $getData = $rowData->get();
-//
-//
-//        $deviceId = $getData->groupBy('device_id')->toarray();
-//        $brandId = $getData->groupBy('brand_id')->toarray();
-//        $soursId = $getData->groupBy('sours_id')->toarray();
-//        $adsId = $getData->groupBy('ads_id')->toarray();
-//        $city_id = $getData->groupBy('customer.address.0.city_id')->toarray();
-//        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
-//
-//
-//        $AllData = $rowData->count();
-//        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
-//        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
-//        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $soursId);
-//        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $adsId);
-//        $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $city_id);
-//        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
-////        $chartData['Gender'] = self::ChartDataFromDefCategory($AllData, 'gender', $GenderId);
-//        return view('AppPlugin.CrmLeads.report')->with([
-//            'pageData' => $pageData,
-//            'AllData' => $AllData,
-//            'chartData' => $chartData,
-//            'rowData' => $rowData,
-//        ]);
-//
-//    }
-//
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DistributionIndex(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __('admin/crm/leads.app_menu_distribution');
+        $pageData['SubView'] = false;
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function ViewInfo($id) {
-//
-//        $pageData = $this->pageData;
-//        $this->defLang = "admin/crm/customers.";
-//        View::share('defLang', $this->defLang);
-//        $pageData['ViewType'] = "Edit";
-//        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-//        $pageData['SubView'] = false;
-//        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
-//
-//        return view('AppPlugin.CrmLeads.view_info_ticket')->with([
-//            'pageData' => $pageData,
-//            'row' => $ticketInfo,
-//        ]);
-//    }
+        $session = self::getSessionData($request);
+        $Data = self::TicketFilterQuery(self::indexQuery(), $session);
+        $rowData = $Data->paginate(30);
+        return view('AppPlugin.CrmService.leads.distribution')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexQuery() {
+        $data = CrmTickets::query()
+            ->where('state', 1)
+            ->where('follow_state', 1)
+            ->where('user_id', null)
+            ->with('customer');
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddToUser(DistributiontRequest $request) {
+        if ($request->input('ids') and is_array($request->input('ids'))) {
+            $ticketIds = $request->input('ids');
+            $Tickets = CrmTickets::query()->defNew()->wherein('id', $ticketIds)->get();
+            foreach ($Tickets as $ticket) {
+                $ticket->user_id = $request->input('user_id');
+                $ticket->save();
+            }
+        }
+        return back()->with('confirmDone', "");
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function editTicket($id) {
+        $pageData = $this->pageData;
+        $this->defLang = "admin/crm/customers.";
+        View::share('defLang', $this->defLang);
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['SubView'] = false;
+        $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
+        $customerID = $ticketInfo->customer_id;
+        $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
+
+        return view('AppPlugin.CrmService.leads.form_add_ticket')->with([
+            'pageData' => $pageData,
+            'customer' => $customer,
+            'ticketInfo' => $ticketInfo,
+            'form_route' => '.updateTicket',
+            'followDate' => PrintDate($ticketInfo->follow_date),
+            'UpdateId' => $ticketInfo->id
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicket(CreateTicketRequest $request, $id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $pageData['BoxH1'] = __($this->defLang . 'app_menu_edit');
+        $saveData = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+                $saveData->follow_date = SaveDateFormat($request, 'follow_date');
+                $saveData->user_id = $request->input('user_id');
+                $saveData->sours_id = $request->input('sours_id');
+                $saveData->ads_id = $request->input('ads_id');
+                $saveData->device_id = $request->input('device_id');
+                $saveData->brand_id = $request->input('brand_id');
+                $saveData->notes_err = $request->input('notes_err');
+                $saveData->notes = $request->input('notes');
+                $saveData->save();
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        return redirect()->route('admin.CrmLeads.distribution');
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function destroy($id) {
+        $deleteRow = CrmTickets::query()->where('id', $id)
+            ->where('state', 1)
+            ->where('follow_state', 1)->firstOrFail();
+        $deleteRow->forceDelete();
+        return back()->with('confirmDelete', "");
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function report(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $chartData = array();
+
+        $this->formName = "CrmDistributionReportFilter";
+        View::share('formName', $this->formName);
+
+        $session = self::getSessionData($request);
+        $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
+        $getData = $rowData->get();
+
+        $deviceId = $getData->groupBy('device_id')->toarray();
+        $brandId = $getData->groupBy('brand_id')->toarray();
+        $soursId = $getData->groupBy('sours_id')->toarray();
+        $adsId = $getData->groupBy('ads_id')->toarray();
+        $city_id = $getData->groupBy('customer.address.0.city_id')->toarray();
+        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+
+
+        $AllData = $rowData->count();
+        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
+        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
+        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $soursId);
+        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $adsId);
+        $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $city_id);
+        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+        return view('AppPlugin.CrmService.leads.report')->with([
+            'pageData' => $pageData,
+            'AllData' => $AllData,
+            'chartData' => $chartData,
+            'rowData' => $rowData,
+        ]);
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -309,23 +278,23 @@ class CrmLeadsController extends AdminMainController {
 //        $subMenu->icon = "fas fa-file-excel";
 //        $subMenu->save();
 //
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmLeads.distribution|CrmLeads.filter";
-//        $subMenu->url = "admin.CrmLeads.distribution";
-//        $subMenu->name = "admin/crm/leads.app_menu_distribution";
-//        $subMenu->roleView = "crm_leads_distribution";
-//        $subMenu->icon = "fas fa-random";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "CrmLeads.report|CrmLeads.filterReport";
-//        $subMenu->url = "admin.CrmLeads.report";
-//        $subMenu->name = "admin/crm/leads.app_menu_report";
-//        $subMenu->roleView = "crm_leads_report";
-//        $subMenu->icon = "fas fa-chart-pie";
-//        $subMenu->save();
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "CrmLeads.distribution|CrmLeads.filter";
+        $subMenu->url = "admin.CrmLeads.distribution";
+        $subMenu->name = "admin/crm/leads.app_menu_distribution";
+        $subMenu->roleView = "crm_leads_distribution";
+        $subMenu->icon = "fas fa-random";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "CrmLeads.report|CrmLeads.filterReport";
+        $subMenu->url = "admin.CrmLeads.report";
+        $subMenu->name = "admin/crm/leads.app_menu_report";
+        $subMenu->roleView = "crm_leads_report";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
 
     }
 

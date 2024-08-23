@@ -5,7 +5,7 @@
 
     <x-admin.hmtl.section>
         @if($AllData >0)
-            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$Config"/>
+            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$config"/>
         @endif
 
         <div class="row">

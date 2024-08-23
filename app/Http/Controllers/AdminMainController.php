@@ -116,13 +116,21 @@ class AdminMainController extends DefaultMainController {
         $create = array_merge($defcreate, issetArr($arr, 'create', []));
         $edit = array_merge($defedit, issetArr($arr, 'edit', []));
         $delete = array_merge($defdelete, issetArr($arr, 'delete', []));
+        $distribution = issetArr($arr, 'distribution',  []);
+        $report = issetArr($arr, 'report', []);
         $sub = issetArr($arr, 'sub', null);
 
-        $allPermission = array_merge($view, $create, $edit, $delete);
-//dd($allPermission);
+        $allPermission = array_merge($view, $create, $edit, $delete,$distribution,$report);
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
         $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
+        if (count($distribution)>0){
+            $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $distribution]);
+        }
+        if (count($report)>0){
+            $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $report]);
+        }
+
         $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => $allPermission]);
         if ($sub) {
             $this->middleware('permission:' . $sub, ['only' => $allPermission]);

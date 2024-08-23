@@ -7,12 +7,9 @@
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
-
-        @if(count($rowData)>0)
-            <div class="col-lg-12">
-                <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData"  :config="$Config"/>
-            </div>
-        @endif
+        <div class="col-lg-12">
+            <x-app-plugin.crm.leads.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
+        </div>
 
         <form name="myform" action="{{route('admin.CrmLeads.addToUser')}}" method="post">
             @csrf
@@ -38,7 +35,7 @@
                                 <th>{{__('admin/crm/customers.form_ad_area')}}</th>
                                 <th>{{__('admin/crm/ticket.fr_lead_divce')}}</th>
                                 <th>{{__('admin/crm/ticket.fr_notes_err')}}</th>
-                                <x-admin.table.action-but po="top" type="edit"/>
+                                <th></th>
                                 <x-admin.table.action-but po="top" type="edit"/>
                                 <x-admin.table.action-but po="top" type="delete"/>
                                 <x-admin.table.action-but po="top" type="selectAll"/>
@@ -54,19 +51,15 @@
                                 <td class="hideForMobile" data-th="{{__('admin/crm/customers.form_ad_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
                                 <td class="hideForMobile" data-th="{{__('admin/crm/ticket.fr_lead_divce')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
                                 <td class="hideForMobile" data-th="{{__('admin/crm/ticket.fr_notes_err')}}">{{$row->notes_err}}</td>
-
-
                                 <td class="td_action">
                                     <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
-                                        <span class="tipName"> {{__('admin/crm/ticket.t_but_view')}}</span> <i class="fas fa-eye"></i>
+                                        <span class="tipName"></span> <i class="fas fa-eye"></i>
                                     </button>
                                 </td>
-
                                 <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm/leads.model_title')">
-                                    <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$Config"/>
+                                    <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
                                     <x-app-plugin.crm.leads.lead-info :add-title="true" :row="$row"/>
                                 </x-admin.hmtl.popup-modal>
-
                                 <x-admin.table.action-but type="edit" :row="$row"/>
                                 <x-admin.table.action-but type="delete" :row="$row"/>
                                 <x-admin.table.action-but type="selectAll" :row="$row"/>
@@ -79,11 +72,8 @@
                 @else
                     <x-admin.hmtl.alert-massage type="nodata"/>
                 @endif
-
             </x-admin.card.normal>
         </form>
-
-
     </x-admin.hmtl.section>
 @endsection
 

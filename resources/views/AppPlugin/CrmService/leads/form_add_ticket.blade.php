@@ -1,9 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('StyleFile')
-
-@endsection
-
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
@@ -18,6 +14,7 @@
             <form class="mainForm" action="{{route($PrefixRoute.$form_route,$UpdateId)}}" method="post">
                 @csrf
                 <div class="row">
+
                     <x-admin.form.select-data name="sours_id" :sendvalue="old('sours_id',$ticketInfo->sours_id)" cat-id="LeadSours"
                                               :active="IsConfig($config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
 
