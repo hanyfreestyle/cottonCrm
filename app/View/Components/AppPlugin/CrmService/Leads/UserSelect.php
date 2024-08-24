@@ -33,10 +33,10 @@ class UserSelect extends Component {
         $this->req = $req;
 
         if ($this->type == 'tech') {
-            $this->label = __('admin/crm/ticket.fr_user_id');
+            $this->label = __('admin/crm_service.label_user_id');
             $this->row = User::query()->where('crm_tech', true)->get();
         } elseif ($this->type == 'changeUser') {
-            $this->label = __('admin/crm/ticket.fr_user_id');
+            $this->label = __('admin/crm_service.label_user_id');
             $this->row = User::query()->where('crm_tech', true)->where('id', '!=', $row->user_id)->get();
         }
 

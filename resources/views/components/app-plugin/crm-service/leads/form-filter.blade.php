@@ -9,17 +9,19 @@
                     <div class="row">
                         @if($viewDates)
                             @if($dateAdd)
-                                <x-admin.form.date name="from_date" col="2" value="{{old('from_date',issetArr($getSessionData,'from_date'))}}" :label="__('admin/crm/ticket.filter_date_from')"
-                                                   :reqspan="false"/>
-                                <x-admin.form.date name="to_date" col="2" value="{{old('to_date',issetArr($getSessionData,'to_date'))}}" :label="__('admin/crm/ticket.filter_date_to')"
-                                                   :reqspan="false"/>
+                                <x-admin.form.date name="from_date" col="2" value="{{old('from_date',issetArr($getSessionData,'from_date'))}}"
+                                                   :label="__('admin/crm.filter_date_from')" :reqspan="false"/>
+
+                                <x-admin.form.date name="to_date" col="2" value="{{old('to_date',issetArr($getSessionData,'to_date'))}}"
+                                                   :label="__('admin/crm.filter_date_to')" :reqspan="false"/>
 
                             @endif
                             @if($dateFollow)
-                                <x-admin.form.date name="follow_from" col="2" value="{{old('follow_from',issetArr($getSessionData,'follow_from'))}}" :label="__('admin/crm/ticket.filter_follow_from')"
-                                                   :reqspan="false"/>
-                                <x-admin.form.date name="follow_to" col="2" value="{{old('follow_to',issetArr($getSessionData,'follow_to'))}}" :label="__('admin/crm/ticket.filter_follow_to')"
-                                                   :reqspan="false"/>
+                                <x-admin.form.date name="follow_from" col="2" value="{{old('follow_from',issetArr($getSessionData,'follow_from'))}}"
+                                                   :label="__('admin/crm.filter_follow_from')" :reqspan="false"/>
+
+                                <x-admin.form.date name="follow_to" col="2" value="{{old('follow_to',issetArr($getSessionData,'follow_to'))}}"
+                                                   :label="__('admin/crm.filter_follow_to')" :reqspan="false"/>
                             @endif
                         @endif
 
@@ -62,16 +64,16 @@
 
 
                         <x-admin.form.select-data name="sours_id" cat-id="LeadSours" :sendvalue="old('sours_id',issetArr($getSessionData,'sours_id'))"
-                                                  col="2" :active="IsConfig($config,'leads_sours_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_sours')"/>
+                                                  col="2" :active="IsConfig($config,'leads_sours_id')" :l="false" :label="__('admin/crm.label_lead_sours')"/>
 
                         <x-admin.form.select-data name="ads_id" cat-id="LeadCategory" :sendvalue="old('ads_id',issetArr($getSessionData,'ads_id'))"
-                                                  col="2" :active="IsConfig($config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
+                                                  col="2" :active="IsConfig($config,'leads_ads_id')" :l="false" :label="__('admin/crm.label_lead_category')"/>
 
                         <x-admin.form.select-data name="device_id" cat-id="DeviceType" :sendvalue="old('device_id',issetArr($getSessionData,'device_id'))"
-                                                  col="2" :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
+                                                  col="2" :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm_service.label_device')"/>
 
                         <x-admin.form.select-data name="brand_id" cat-id="BrandName" :sendvalue="old('brand_id',issetArr($getSessionData,'brand_id'))"
-                                                  col="2" :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
+                                                  col="2" :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm_service.label_brand')"/>
                     </div>
                     <div class="row formFilterBut">
                         <button type="submit" name="Forget" class="btn btn-dark adminButMobile btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>

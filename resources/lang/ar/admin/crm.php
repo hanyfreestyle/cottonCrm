@@ -2,6 +2,7 @@
 
 return
 [
+	'but_add_new' => 'اضافة متابعة جديدة',
 	'but_add_to_user' => 'اضافة',
 	'but_call' => 'اتصال',
 	'but_update' => 'تحديث',
@@ -15,10 +16,20 @@ return
 	'filter_date_to' => 'تاريخ الاضافة الى',
 	'filter_follow_from' => 'تاريخ المتابعة من',
 	'filter_follow_to' => 'تاريخ المتابعة الى',
+	'label_customer_area' => 'المنطقة',
+	'label_customer_mobile' => 'رقم الموبايل',
+	'label_customer_name' => 'اسم العميل',
+	'label_date_add' => 'تاريخ الاضافة',
+	'label_date_follow' => 'تاريخ المتابعة',
+	'label_lead_category' => 'الحمله الاعلانية',
+	'label_lead_sours' => 'مصدر التواصل',
+	'label_notes' => 'ملاحظات',
+	'model_h2_customer' => 'بيانات العميل',
+	'model_h2_ticket' => 'تفاصيل التذكرة',
+	'model_title_info' => 'تفاصيل المتابعة',
 	'report_card_all_count' => 'اجمالى عدد المتابعات',
 	'report_lead_area' => 'تقارير المناطق',
 	'report_lead_category' => 'تقرير الحملات الاعلانية',
 	'report_lead_city' => 'تقارير المحافظات',
 	'report_lead_sours' => 'تقرير مصدر التواصل',
-	'fr_date_add' => 'تاريخ الاضافة',
 ];

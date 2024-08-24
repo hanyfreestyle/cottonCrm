@@ -35,7 +35,7 @@ class CrmLeadsController extends AdminMainController {
         $this->config = self::defConfig();
         View::share('config', $this->config);
 
-        $this->PageTitle = __($this->defLang . 'app_menu');
+        $this->PageTitle = __('admin/crm_service.app_menu_leads');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
         $sendArr = [
@@ -116,7 +116,7 @@ class CrmLeadsController extends AdminMainController {
     public function DistributionIndex(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __('admin/crm/leads.app_menu_distribution');
+        $pageData['BoxH1'] = __('admin/crm_service.app_menu_leads_distribution');
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
@@ -255,7 +255,7 @@ class CrmLeadsController extends AdminMainController {
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
         $mainMenu->sel_routs = "admin.CrmLeads";
-        $mainMenu->name = "admin/crm/leads.app_menu";
+        $mainMenu->name = "admin/crm_service.app_menu_leads";
         $mainMenu->icon = "fas fa-phone-volume";
         $mainMenu->roleView = "crm_leads_view";
         $mainMenu->save();
@@ -264,7 +264,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmLeads.SearchFormCustomer|CrmLeads.SearchFormCustomerFilter";
         $subMenu->url = "admin.CrmLeads.SearchFormCustomer";
-        $subMenu->name = "admin/crm/leads.app_menu_add";
+        $subMenu->name = "admin/crm_service.app_menu_leads_add";
         $subMenu->roleView = "crm_leads_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
@@ -273,7 +273,7 @@ class CrmLeadsController extends AdminMainController {
 //        $subMenu->parent_id = $mainMenu->id;
 //        $subMenu->sel_routs = "admin.CrmLeads.index";
 //        $subMenu->url = "admin.CrmLeads.index";
-//        $subMenu->name = "admin/crm/leads.app_menu_add_bulk";
+//        $subMenu->name = "admin/crm_service.app_menu_leads_add_bulk";
 //        $subMenu->roleView = "crm_leads_view";
 //        $subMenu->icon = "fas fa-file-excel";
 //        $subMenu->save();
@@ -282,7 +282,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmLeads.distribution|CrmLeads.filter";
         $subMenu->url = "admin.CrmLeads.distribution";
-        $subMenu->name = "admin/crm/leads.app_menu_distribution";
+        $subMenu->name = "admin/crm_service.app_menu_leads_distribution";
         $subMenu->roleView = "crm_leads_distribution";
         $subMenu->icon = "fas fa-random";
         $subMenu->save();
@@ -291,7 +291,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmLeads.report|CrmLeads.filterReport";
         $subMenu->url = "admin.CrmLeads.report";
-        $subMenu->name = "admin/crm/leads.app_menu_report";
+        $subMenu->name = "admin/crm_service.app_menu_report";
         $subMenu->roleView = "crm_leads_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();

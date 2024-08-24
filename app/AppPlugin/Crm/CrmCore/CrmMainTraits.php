@@ -18,7 +18,7 @@ trait CrmMainTraits {
     public function SearchFormCustomer() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "search";
-        $this->defLang = "admin/crm/customers.";
+        $this->defLang = "admin/crm_customer.";
         View::share('defLang', $this->defLang);
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
         $rowData = CrmCustomers::query()->where('id', 0)->get();
@@ -33,7 +33,7 @@ trait CrmMainTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function SearchFormCustomerFilter(CrmCustomersSearchRequest $request) {
         $pageData = $this->pageData;
-        $this->defLang = "admin/crm/customers.";
+        $this->defLang = "admin/crm_customer.";
         View::share('defLang', $this->defLang);
         $pageData['ViewType'] = "LeadsSearch";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');

@@ -56,11 +56,11 @@
                            :des="$row->post_code" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='created_at')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-calendar-alt" :t="__('admin/crm/ticket.var_date_add')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-calendar-alt" :t="__('admin/crm.label_date_add')"
                            :des="PrintDate($row->created_at)" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='follow_date')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tools" :t="__('admin/crm/ticket.fr_follow_date')"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tools" :t="__('admin/crm.label_date_follow')"
                            :des="PrintDate($row->follow_date)" :col="$col" :all-data="$allData"/>
 @elseif($n=='user_id')
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-cog"  :sub-des="true" :t="__('admin/crm/ticket.fr_user_id')" :arr-data="$CashUsersList"
@@ -83,7 +83,7 @@
                            :des="$row->ads_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='device_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-desktop" :t="__('admin/crm/ticket.fr_lead_divce')" :arr-data="$CashConfigDataList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-desktop" :t="__('admin/crm_service.label_device')" :arr-data="$CashConfigDataList"
                            :des="$row->device_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='brand_id')
@@ -91,11 +91,11 @@
                            :des="$row->brand_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='notes_err')
-    <x-admin.hmtl.info-div i="fas fa-exclamation-triangle"  :t="__('admin/crm/ticket.fr_notes_err')"
+    <x-admin.hmtl.info-div i="fas fa-exclamation-triangle"  :t="__('admin/crm_service.label_notes_err')"
                            :des="$row->notes_err" :col="$col" :all-data="$allData"/>
 @elseif($n=='notes')
 
-    <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm/ticket.fr_notes')"
+    <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm.label_notes')"
                            :des="$row->notes" :col="$col" :all-data="$allData"/>
 @elseif($n=='XXXXXX')
 @elseif($n=='XXXXXX')

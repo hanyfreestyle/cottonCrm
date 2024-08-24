@@ -31,8 +31,8 @@
                         <th class="desktop">{{__('admin/crm/ticket.t_customer_area')}}</th>
                         <th class="desktop">{{__('admin/crm/ticket.t_ticket_state')}}</th>
                         <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.t_device')}}</th>
-                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes_err')}}</th>
-                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm/ticket.fr_notes')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_notes_err')}}</th>
+                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_notes')}}</th>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" res="all" type="edit"/>
                         <x-admin.table.action-but po="top" type="delete"/>

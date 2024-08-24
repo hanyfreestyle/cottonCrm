@@ -32,7 +32,7 @@
             </div>
 
             <div class="col-lg-6">
-                <x-admin.card.collapsed :open="true" bg="p" :title="__('admin/crm/ticket.t_h2_ticket')">
+                <x-admin.card.collapsed :open="true" bg="p" :title="__('admin/crm.model_h2_ticket')">
                     <div class="row">
                         <x-admin.hmtl.info-div-list n="created_at" :row="$ticket" col="col-lg-3 col-6"/>
                         <x-admin.hmtl.info-div-list n="follow_date" :row="$ticket" col="col-lg-3 col-6"/>

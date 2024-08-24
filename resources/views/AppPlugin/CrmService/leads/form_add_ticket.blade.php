@@ -22,21 +22,21 @@
                                               :active="IsConfig($config,'leads_ads_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_ads')"/>
 
                     <x-admin.form.select-data name="device_id" :sendvalue="old('device_id',$ticketInfo->device_id)" cat-id="DeviceType"
-                                              :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_divce')"/>
+                                              :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm_service.label_device')"/>
 
                     <x-admin.form.select-data name="brand_id" :sendvalue="old('brand_id',$ticketInfo->brand_id)" cat-id="BrandName"
                                               :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm/ticket.fr_lead_brand')"/>
                 </div>
 
                 <div class="row">
-                    <x-admin.form.date-crm name="follow_date" :label="__('admin/crm/ticket.fr_follow_date')" value="{{old('follow_date',$followDate)}}" col="3"/>
+                    <x-admin.form.date-crm name="follow_date" :label="__('admin/crm.label_date_follow')" value="{{old('follow_date',$followDate)}}" col="3"/>
                     @can($PrefixRole."_distribution")
                         <x-app-plugin.crm-service.leads.user-select type="tech" col-mobile="12" :req="false"/>
                     @endcan
                 </div>
                 <div class="row">
-                    <x-admin.form.textarea :row="$ticketInfo" name="notes_err" :value="old('notes_err',$ticketInfo->notes_err)" :label="__('admin/crm/ticket.fr_notes_err')" col="6" tdir="ar"/>
-                    <x-admin.form.textarea :row="$ticketInfo" name="notes" :value="old('notes',$ticketInfo->notes)" :label="__('admin/crm/ticket.fr_notes')" col="6" :req="false" tdir="ar"/>
+                    <x-admin.form.textarea :row="$ticketInfo" name="notes_err" :value="old('notes_err',$ticketInfo->notes_err)" :label="__('admin/crm_service.label_notes_err')" col="6" tdir="ar"/>
+                    <x-admin.form.textarea :row="$ticketInfo" name="notes" :value="old('notes',$ticketInfo->notes)" :label="__('admin/crm.label_notes')" col="6" :req="false" tdir="ar"/>
                 </div>
 
                 <div class="container-fluid mt-3 mb-5">

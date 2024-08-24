@@ -2,6 +2,7 @@
 
 return
 [
+	'but_add_new' => '',
 	'but_add_to_user' => '',
 	'but_call' => '',
 	'but_update' => '',
@@ -15,10 +16,20 @@ return
 	'filter_date_to' => '',
 	'filter_follow_from' => '',
 	'filter_follow_to' => '',
+	'label_customer_area' => '',
+	'label_customer_mobile' => '',
+	'label_customer_name' => '',
+	'label_date_add' => '',
+	'label_date_follow' => '',
+	'label_lead_category' => '',
+	'label_lead_sours' => '',
+	'label_notes' => '',
+	'model_h2_customer' => '',
+	'model_h2_ticket' => '',
+	'model_title_info' => '',
 	'report_card_all_count' => '',
 	'report_lead_area' => '',
 	'report_lead_category' => '',
 	'report_lead_city' => '',
 	'report_lead_sours' => '',
-	'fr_date_add' => '',
 ];
