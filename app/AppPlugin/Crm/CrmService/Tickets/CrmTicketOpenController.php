@@ -236,7 +236,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TicketFollowUp.New";
         $subMenu->url = "admin.TicketFollowUp.New";
-        $subMenu->name = "admin/crm_service_menu.follow_list_today";
+        $subMenu->name = "admin/crm_service_menu.follow_list_new";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();

@@ -34,4 +34,5 @@ return
 	'report_lead_category' => 'تقرير الحملات الاعلانية',
 	'report_lead_city' => 'تقارير المحافظات',
 	'report_lead_sours' => 'تقرير مصدر التواصل',
+	'but_edit_new' => 'تعديل بيانات المتابعة',
 ];

@@ -67,6 +67,7 @@ class CrmLeadsController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
         $pageData['ViewType'] = "Add";
+        $pageData['BoxH1'] = __('admin/crm.but_add_new');
         $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
         $ticketInfo = new CrmTickets();
 
@@ -114,7 +115,7 @@ class CrmLeadsController extends AdminMainController {
     public function DistributionIndex(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __('admin/crm_service.app_menu_leads_distribution');
+        $pageData['BoxH1'] = __('admin/crm_service_menu.leads_distribution');
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
@@ -158,7 +159,7 @@ class CrmLeadsController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
         $pageData['ViewType'] = "Edit";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['BoxH1'] = __('admin/crm.but_edit_new');
         $pageData['SubView'] = false;
         $ticketInfo = CrmTickets::query()->defNew()->where('id', $id)->firstOrFail();
         $customerID = $ticketInfo->customer_id;

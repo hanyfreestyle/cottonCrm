@@ -34,4 +34,5 @@ return
 	'report_lead_category' => 'campaigns report',
 	'report_lead_city' => 'City reports',
 	'report_lead_sours' => 'Lead Sours Report',
+	'but_edit_new' => 'Edit Leads Info',
 ];

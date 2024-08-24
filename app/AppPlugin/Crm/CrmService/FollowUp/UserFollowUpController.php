@@ -167,7 +167,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TechFollowUp.New";
         $subMenu->url = "admin.TechFollowUp.New";
-        $subMenu->name = "admin/crm_service_menu.follow_list_today";
+        $subMenu->name = "admin/crm_service_menu.follow_list_new";
         $subMenu->roleView = "crm_tech_follow_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();

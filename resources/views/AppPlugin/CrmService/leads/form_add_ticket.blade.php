@@ -9,7 +9,7 @@
     </x-admin.hmtl.section>
 
     <x-admin.hmtl.section>
-        <x-admin.card.collapsed :title="__('admin/crm.but_add_new')" :collapsed="false">
+        <x-admin.card.collapsed :title="$pageData['BoxH1']" :collapsed="false">
             <x-admin.form.print-error-div :full-err="false"/>
             <form class="mainForm" action="{{route($PrefixRoute.$form_route,$UpdateId)}}" method="post">
                 @csrf
