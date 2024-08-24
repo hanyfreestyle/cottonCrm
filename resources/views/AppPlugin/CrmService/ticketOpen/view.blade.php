@@ -9,7 +9,7 @@
     <x-admin.hmtl.section>
         <div class="row">
             <div class="col-lg-6">
-                <x-admin.card.collapsed :open="true" :outline="true" bg="p" :title="$pageData['BoxH1']">
+                <x-admin.card.collapsed :open="true" :outline="true" bg="p" :title="__('admin/crm.model_h2_customer')">
                     <div class="row">
                         <x-admin.hmtl.info-div-list n="name" :row="$ticket->customer" col="col-lg-6 col-12"/>
                         <x-admin.hmtl.info-div-list n="mobile" :row="$ticket->customer" col="col-lg-3 col-6"/>

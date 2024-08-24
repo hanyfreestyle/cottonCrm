@@ -15,21 +15,21 @@
 
             <x-admin.dashboard.color-card
                 :count="issetArr($card,'today_count')"
-                :title="__('admin/crm/ticket.app_menu_today')"
+                :title="__('admin/crm_service_menu.follow_list_today')"
                 icon="fas fa-bell"
                 bg="s"
                 :url="route('admin.TechFollowUp.Today')"/>
 
             <x-admin.dashboard.color-card
                 :count="issetArr($card,'next_count')"
-                :title="__('admin/crm/ticket.app_menu_next')"
+                :title="__('admin/crm_service_menu.follow_list_next')"
                 icon="fas fa-history"
                 bg="i"
                 :url="route('admin.TechFollowUp.Next')"/>
 
             <x-admin.dashboard.color-card
                 :count="issetArr($card,'back_count')"
-                :title="__('admin/crm/ticket.app_menu_back')"
+                :title="__('admin/crm_service_menu.follow_list_back')"
                 icon="fas fa-thumbs-down"
                 bg="d"
                 :url="route('admin.TechFollowUp.Back')"/>

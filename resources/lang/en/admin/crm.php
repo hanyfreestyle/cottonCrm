@@ -24,6 +24,7 @@ return
 	'label_lead_category' => '',
 	'label_lead_sours' => '',
 	'label_notes' => '',
+	'label_state' => '',
 	'model_h2_customer' => '',
 	'model_h2_ticket' => '',
 	'model_title_info' => '',
@@ -32,4 +33,5 @@ return
 	'report_lead_category' => '',
 	'report_lead_city' => '',
 	'report_lead_sours' => '',
+	'label_list_leads' => '',
 ];

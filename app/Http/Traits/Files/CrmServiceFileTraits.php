@@ -87,6 +87,11 @@ trait CrmServiceFileTraits {
             $addLang = ['CrmServiceVar' => ['id' => 'CrmServiceVar', 'group' => 'admin', 'sub_dir' => null,
                 'file_name' => 'crm_service_var', 'name_en' => 'CrmServiceVar', 'name_ar' => 'CrmServiceVar']];
             $LangMenu = array_merge($LangMenu, $addLang);
+
+            $addLang = ['CrmServiceMenu' => ['id' => 'CrmServiceMenu', 'group' => 'admin', 'sub_dir' => null,
+                'file_name' => 'crm_service_menu', 'name_en' => 'CrmServiceMenu', 'name_ar' => 'CrmServiceMenu']];
+            $LangMenu = array_merge($LangMenu, $addLang);
+
         }
 
         return $LangMenu;

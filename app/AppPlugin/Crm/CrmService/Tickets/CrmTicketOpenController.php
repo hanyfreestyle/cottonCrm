@@ -34,7 +34,7 @@ class CrmTicketOpenController extends AdminMainController {
         $this->config = self::defConfig();
         View::share('config', $this->config);
 
-        $this->PageTitle = __($this->defLang . 'app_menu');
+        $this->PageTitle = __('admin/crm_service_menu.ticket_open');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
         $sendArr = [
@@ -63,34 +63,34 @@ class CrmTicketOpenController extends AdminMainController {
     public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
+        $pageData['BoxH1'] = __('admin/crm.label_list_leads');
 
 
         $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
 
-        if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter' ) {
-            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
+        if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter') {
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_all');
             $pageData['IconPage'] = 'fa-eye';
             $RouteVal = "all";
 
         } elseif ($RouteName == $this->PrefixRoute . '.New') {
-            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
             $pageData['IconPage'] = 'fa-eye';
             $RouteVal = "New";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Today') {
-            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_today');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
             $pageData['IconPage'] = 'fa-bell';
             $RouteVal = "Today";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Back') {
-            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_back');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_back');
             $pageData['IconPage'] = 'fa-thumbs-down';
             $RouteVal = "Back";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Next') {
-            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_next');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_next');
             $pageData['IconPage'] = 'fa-history';
             $RouteVal = "Next";
         }
@@ -111,8 +111,6 @@ class CrmTicketOpenController extends AdminMainController {
     public function viewTicket(Request $request, $ticketId) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-
         $session = self::getSessionData($request);
         $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $ticket = $Query->where('id', $ticketId)->firstOrFail();
@@ -220,7 +218,7 @@ class CrmTicketOpenController extends AdminMainController {
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
         $mainMenu->sel_routs = "admin.TicketFollowUp";
-        $mainMenu->name = "admin/crm/ticket.app_menu";
+        $mainMenu->name = "admin/crm_service_menu.ticket_open";
         $mainMenu->icon = "fas fa-ticket-alt";
         $mainMenu->roleView = "crm_ticket_view";
         $mainMenu->save();
@@ -229,7 +227,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "All|filter";
         $subMenu->url = "admin.TicketFollowUp.All";
-        $subMenu->name = "admin/crm/ticket.app_menu_all";
+        $subMenu->name = "admin/crm_service_menu.follow_list_all";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-list";
         $subMenu->save();
@@ -238,7 +236,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TicketFollowUp.New";
         $subMenu->url = "admin.TicketFollowUp.New";
-        $subMenu->name = "admin/crm/ticket.app_menu_new";
+        $subMenu->name = "admin/crm_service_menu.follow_list_today";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();
@@ -247,7 +245,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TicketFollowUp.Today";
         $subMenu->url = "admin.TicketFollowUp.Today";
-        $subMenu->name = "admin/crm/ticket.app_menu_today";
+        $subMenu->name = "admin/crm_service_menu.follow_list_today";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-bell";
         $subMenu->save();
@@ -256,7 +254,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TicketFollowUp.Back";
         $subMenu->url = "admin.TicketFollowUp.Back";
-        $subMenu->name = "admin/crm/ticket.app_menu_back";
+        $subMenu->name = "admin/crm_service_menu.follow_list_back";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-thumbs-down";
         $subMenu->save();
@@ -265,7 +263,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "TicketFollowUp.Next";
         $subMenu->url = "admin.TicketFollowUp.Next";
-        $subMenu->name = "admin/crm/ticket.app_menu_next";
+        $subMenu->name = "admin/crm_service_menu.follow_list_next";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-history";
         $subMenu->save();

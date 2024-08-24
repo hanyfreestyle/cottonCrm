@@ -45,6 +45,8 @@ class AppPuzzleTreeCrmService {
             'CopyFolder' => "CrmService_FollowUp",
             'appFolder' => 'Crm/CrmService/FollowUp',
             'viewFolder' => 'CrmService/followUp',
+            'adminLangFolder' => "admin/",
+            'adminLangFiles' => ['crm_service_menu.php'],
             'routeFolder' => "CrmService/",
             'routeFile' => 'follow_up.php',
             'ComponentFolderClass' => ['AppPlugin/CrmService/FollowUp'],
