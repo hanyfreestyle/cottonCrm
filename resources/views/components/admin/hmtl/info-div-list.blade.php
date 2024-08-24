@@ -75,11 +75,11 @@
                            :des="$row->follow_state" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='sours_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-filter" :t="__('admin/crm/ticket.fr_lead_sours')" :arr-data="$CashConfigDataList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-filter" :t="__('admin/crm.label_lead_sours')" :arr-data="$CashConfigDataList"
                            :des="$row->sours_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='ads_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-google" :t="__('admin/crm/ticket.fr_lead_ads')" :arr-data="$CashConfigDataList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fab fa-google" :t="__('admin/crm.label_lead_category')" :arr-data="$CashConfigDataList"
                            :des="$row->ads_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='device_id')
@@ -87,7 +87,7 @@
                            :des="$row->device_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='brand_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-copyright" :t="__('admin/crm/ticket.fr_lead_brand')" :arr-data="$CashConfigDataList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-copyright" :t="__('admin/crm_service.label_brand')" :arr-data="$CashConfigDataList"
                            :des="$row->brand_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='notes_err')

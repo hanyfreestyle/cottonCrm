@@ -25,6 +25,7 @@ return
 	'label_date_add' => 'Date of creation',
 	'label_date_update' => 'Last updated on',
 	'label_deleted_at' => 'Deletion date',
+	'label_more_photo' => 'List Photo album',
 	'label_published_at' => 'Publication date',
 	'label_published_user' => 'Publisher',
 	'new_new' => 'New Page',

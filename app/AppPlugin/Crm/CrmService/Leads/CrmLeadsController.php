@@ -67,8 +67,6 @@ class CrmLeadsController extends AdminMainController {
         $this->defLang = "admin/crm/customers.";
         View::share('defLang', $this->defLang);
         $pageData['ViewType'] = "Add";
-        $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
-        $pageData['SubView'] = false;
         $customer = CrmCustomers::where('id', $customerID)->with('address')->firstOrFail();
         $ticketInfo = new CrmTickets();
 

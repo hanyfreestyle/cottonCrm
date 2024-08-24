@@ -3,11 +3,11 @@
 return
 [
 	'app_menu' => 'Manage Area',
-	'app_menu_add' => '',
-	'app_menu_edit' => '',
-	'app_menu_list' => '',
-	'form_city' => '',
-	'form_country' => '',
-	'form_sel_city' => '',
-	'form_sel_area' => '',
+	'app_menu_add' => 'Add Area',
+	'app_menu_edit' => 'Edit Area',
+	'app_menu_list' => 'List Area',
+	'form_city' => 'City',
+	'form_country' => 'Country',
+	'form_sel_area' => 'Please select area',
+	'form_sel_city' => 'Please select city',
 ];

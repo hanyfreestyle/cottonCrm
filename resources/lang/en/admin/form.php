@@ -13,7 +13,7 @@ return
 	'button_edit_back' => 'Update &amp; Go Back',
 	'button_more_photo' => 'More Photo',
 	'button_old_photo' => 'Previous Photos',
-	'button_profile' => '',
+	'button_profile' => 'Profile',
 	'button_search' => 'Search',
 	'button_sort' => 'Sort',
 	'button_update' => 'Update',
