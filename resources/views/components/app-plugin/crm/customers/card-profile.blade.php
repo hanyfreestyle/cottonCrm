@@ -56,7 +56,7 @@
     @if(issetArr($config,'addCountry',false))
         @if(issetArr($config,'fullAddress',false))
             <div class="row infoDiv">
-                <div class="col-lg-12"><h2 class="">{{__($defLang.'box_address')}}</h2></div>
+                <div class="col-lg-12"><h2 class="">{{__('admin/crm_customer.box_address')}}</h2></div>
             </div>
         @endif
         @foreach($row->address as  $address)
@@ -68,7 +68,7 @@
                     <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-2 col-6"/>
                     <x-admin.hmtl.info-div-list n="post_code" :row="$address" col="col-lg-2 col-6"/>
                     @if(issetArr($config,'postcode',false))
-                        <x-admin.hmtl.info-div :t="__($defLang.'form_ad_post_code')" :des="$address->post_code" col="2" col-row="col-4" :all-data="$allData"/>
+                        <x-admin.hmtl.info-div :t="__('admin/crm_customer.form_ad_post_code')" :des="$address->post_code" col="2" col-row="col-4" :all-data="$allData"/>
                     @endif
                 </div>
             @endif

@@ -23,7 +23,7 @@ class CrmCustomersReportController extends AdminMainController {
         $this->PrefixRole = 'crm_customer';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
-        $this->defLang = "admin/crm/customers.";
+        $this->defLang = "admin/crm_customer.";
         View::share('defLang', $this->defLang);
 
         $CashCountryList = self::CashCountryList();

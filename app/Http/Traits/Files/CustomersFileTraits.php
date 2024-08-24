@@ -33,7 +33,7 @@ trait CustomersFileTraits {
     static function LoadLangFiles($LangMenu) {
 
         if (File::isFile(base_path('routes/AppPlugin/crm/customers.php'))) {
-            $addLang = ['CrmCustomers' => ['id' => 'CrmCustomers', 'group' => 'admin', 'sub_dir' => 'crm', 'file_name' => 'customers', 'name_en' => 'Customers', 'name_ar' => 'العملاء']];
+            $addLang = ['CrmCustomers' => ['id' => 'CrmCustomers', 'group' => 'admin', 'sub_dir' => null, 'file_name' => 'crm_customer', 'name_en' => 'Customers', 'name_ar' => 'العملاء']];
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 

@@ -12,9 +12,9 @@ trait DefCategoryTraits {
             (object)['id' => 2, 'name' => __('admin/defCat.gender_2')],
         ];
         $Cat['CustomersSearchType'] = [
-            ['id' => 1, 'name' => __('admin/crm/customers.search_type_1')],
-            ['id' => 2, 'name' => __('admin/crm/customers.search_type_2')],
-            ['id' => 3, 'name' => __('admin/crm/customers.search_type_3')],
+            ['id' => 1, 'name' => __('admin/crm_customer.search_type_1')],
+            ['id' => 2, 'name' => __('admin/crm_customer.search_type_2')],
+            ['id' => 3, 'name' => __('admin/crm_customer.search_type_3')],
         ];
 
 

@@ -8,11 +8,9 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
     <x-admin.hmtl.section>
-        @if(($rowData->count())>0)
-            <div class="col-lg-12">
-                <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
-            </div>
-        @endif
+        <div class="col-lg-12">
+            <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
+        </div>
         <div class="col-lg-12">
             <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
                 <table {!! Table_Style_Yajra() !!} >

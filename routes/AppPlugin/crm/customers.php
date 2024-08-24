@@ -2,7 +2,6 @@
 
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\CrmCustomersReportController;
-use App\AppPlugin\Crm\Leads\CrmLeadsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,9 +18,9 @@ Route::get('/crm/customers/destroy/{id}', [CrmCustomersController::class, 'Force
 Route::get('/crm/customers/config', [CrmCustomersController::class, 'config'])->name('CrmCustomer.config');
 Route::get('/crm/customers/repeat/{num}', [CrmCustomersController::class, 'repeat'])->name('CrmCustomer.repeat');
 
-Route::get('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.index');
-Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.filter');
-
 Route::get('/crm/customers/search/', [CrmCustomersController::class, 'search'])->name('CrmCustomer.search');
 Route::post('/crm/customers/search/', [CrmCustomersController::class, 'searchFilter'])->name('CrmCustomer.searchFilter');
 Route::get('/crm/customers/add-ticket/{customerID}', [CrmCustomersController::class, 'addTicket'])->name('CrmCustomer.addTicket');
+
+Route::get('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.index');
+Route::post('/crm/customers/report/', [CrmCustomersReportController::class, 'report'])->name('CrmCustomer.Report.filter');

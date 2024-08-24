@@ -14,7 +14,7 @@ return
 	'button_more_photo' => 'More Photo',
 	'button_old_photo' => 'Previous Photos',
 	'button_profile' => '',
-	'button_serach' => 'Search',
+	'button_search' => 'Search',
 	'button_sort' => 'Sort',
 	'button_update' => 'Update',
 	'check_all' => 'Check All',

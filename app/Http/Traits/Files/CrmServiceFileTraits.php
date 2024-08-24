@@ -72,15 +72,16 @@ trait CrmServiceFileTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function LoadLangFiles($LangMenu) {
 
-        if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
-            $addLang = ['CrmLeads' => ['id' => 'CrmLeads', 'group' => 'admin', 'sub_dir' => 'crm',
-                'file_name' => 'leads', 'name_en' => 'Leads', 'name_ar' => 'Leads']];
+        if (File::isFile(base_path('routes/AppPlugin/crm/crmCore.php'))) {
+            $addLang = ['DefCrm' => ['id' => 'DefCrm', 'group' => 'admin', 'sub_dir' => null,
+                'file_name' => 'crm', 'name_en' => 'Crm', 'name_ar' => 'Crm']];
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 
-        if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_open.php'))) {
-            $addLang = ['CrmTicket' => ['id' => 'CrmTicket', 'group' => 'admin', 'sub_dir' => 'crm',
-                'file_name' => 'ticket', 'name_en' => 'Ticket', 'name_ar' => 'Ticket']];
+
+        if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
+            $addLang = ['CrmService' => ['id' => 'CrmService', 'group' => 'admin', 'sub_dir' => null,
+                'file_name' => 'crm_service', 'name_en' => 'CrmService', 'name_ar' => 'CrmService']];
             $LangMenu = array_merge($LangMenu, $addLang);
         }
 

@@ -5,10 +5,10 @@
 
     <x-admin.form.form-def :form-route="route($PrefixRoute.'.update',intval($rowData->id))" :row-data="$rowData" :page-data="$pageData" :full-err="false">
         <input type="hidden" name="config" value="{{json_encode($config)}}">
-        <x-app-plugin.crm.customers.form-def :row-data="$rowData" :title="__('admin/crm/customers.box_def')"/>
+        <x-app-plugin.crm.customers.form-def :row-data="$rowData" :title="__($defLang.'box_def')"/>
 
         @if( IsConfig( $config,'addCountry'))
-            <x-app-plugin.crm.customers.form-address :row-data="$rowDataAddress" :config="$config" :title="__('admin/crm/customers.box_address')"/>
+            <x-app-plugin.crm.customers.form-address :row-data="$rowDataAddress" :config="$config" :title="__($defLang.'box_address')"/>
         @endif
 
         <div class="row float-left">

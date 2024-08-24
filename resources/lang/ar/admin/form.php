@@ -14,7 +14,7 @@ return
 	'button_more_photo' => 'المزيد من الصور',
 	'button_old_photo' => 'البوم الصور السابقة',
 	'button_profile' => 'بروفايل',
-	'button_serach' => 'بحث',
+	'button_search' => 'بحث',
 	'button_sort' => 'ترتيب',
 	'button_update' => 'تحديث',
 	'check_all' => 'تحديد الكل',

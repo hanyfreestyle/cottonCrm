@@ -119,7 +119,7 @@ trait CrmCustomersConfigTraits {
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
         $mainMenu->sel_routs = "admin.CrmCustomer";
-        $mainMenu->name = "admin/crm/customers.app_menu";
+        $mainMenu->name = "admin/crm_customer.app_menu";
         $mainMenu->icon = "fas fa-user-tie";
         $mainMenu->roleView = "crm_customer_view";
         $mainMenu->save();
@@ -128,7 +128,7 @@ trait CrmCustomersConfigTraits {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = setActiveRoute("CrmCustomer");;
         $subMenu->url = "admin.CrmCustomer.index";
-        $subMenu->name = "admin/crm/customers.app_menu_list";
+        $subMenu->name = "admin/crm_customer.app_menu_list";
         $subMenu->roleView = "crm_customer_view";
         $subMenu->icon = "fas fa-list";
         $subMenu->save();
@@ -137,7 +137,7 @@ trait CrmCustomersConfigTraits {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmCustomer.addNew|create|create_ar|create_en";
         $subMenu->url = "admin.CrmCustomer.addNew";
-        $subMenu->name = "admin/crm/customers.app_menu_add";
+        $subMenu->name = "admin/crm_customer.app_menu_add";
         $subMenu->roleView = "crm_customer_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
@@ -146,7 +146,7 @@ trait CrmCustomersConfigTraits {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmCustomer.search|CrmCustomer.searchFilter";
         $subMenu->url = "admin.CrmCustomer.search";
-        $subMenu->name = "admin/crm/customers.app_menu_search";
+        $subMenu->name = "admin/crm_customer.app_menu_search";
         $subMenu->roleView = "crm_customer_view";
         $subMenu->icon = "fas fa-search";
         $subMenu->save();
@@ -155,7 +155,7 @@ trait CrmCustomersConfigTraits {
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "CrmCustomer.Report.index|CrmCustomer.Report.filter";
         $subMenu->url = "admin.CrmCustomer.Report.index";
-        $subMenu->name = "admin/crm/customers.app_menu_report";
+        $subMenu->name = "admin/crm_customer.app_menu_report";
         $subMenu->roleView = "crm_customer_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();

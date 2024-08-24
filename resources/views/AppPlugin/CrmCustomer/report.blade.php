@@ -7,7 +7,6 @@
         <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
 
         <div class="row">
-
             @if(isset($chartData['Evaluation']) and  count($chartData['Evaluation']) > 0)
                 <x-admin.card.normal col="col-lg-3" :title="__($defLang.'report_evaluation')">
                     <x-admin.report.chart-def id="Evaluation" :data-row="$chartData['Evaluation']"/>
