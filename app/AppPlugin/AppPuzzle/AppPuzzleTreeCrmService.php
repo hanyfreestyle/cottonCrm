@@ -63,6 +63,8 @@ class AppPuzzleTreeCrmService {
             'viewFolder' => 'CrmService/ticketOpen',
             'routeFolder' => "CrmService/",
             'routeFile' => 'ticket_open.php',
+            'adminLangFolder' => "admin/",
+            'adminLangFiles' => ['crm_service_var.php'],
             'migrations' => [
                 '2021_01_01_000002_create_crm_tickets_table.php',
             ],

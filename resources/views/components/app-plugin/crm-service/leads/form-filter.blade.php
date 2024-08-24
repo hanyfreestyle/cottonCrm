@@ -32,7 +32,7 @@
 
                         @if($stateOpen)
                             <x-admin.form.select-arr name="follow_state" sendvalue="{{old('follow_state',issetArr($getSessionData,'follow_state'))}}"
-                                                     select-type="DefCat" :send-arr="$DefCat['TicketStateOpen']" col="2" :label="__('admin/crm/ticket.t_ticket_state')"
+                                                     select-type="DefCat" :send-arr="$DefCat['CrmServiceTicketStateOpen']" col="2" :label="__('admin/crm/ticket.t_ticket_state')"
                                                      :filter-form="true" :req="false"/>
                         @endif
 

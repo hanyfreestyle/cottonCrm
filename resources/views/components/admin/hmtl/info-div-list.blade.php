@@ -67,11 +67,11 @@
                            :des="$row->user_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='open_type')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-eye" :t="__('admin/crm/ticket.var_open_type')" :arr-data="$DefCat['TicketOpenType']"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-eye" :t="__('admin/crm_service_var.open_type')" :arr-data="$DefCat['CrmServiceOpenType']"
                            :des="$row->open_type" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='follow_state')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tag" :t="__('admin/crm/ticket.var_ticket_state')" :arr-data="$DefCat['TicketState']"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tag" :t="__('admin/crm_service_var.ticket_state')" :arr-data="$DefCat['CrmServiceTicketState']"
                            :des="$row->follow_state" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='sours_id')

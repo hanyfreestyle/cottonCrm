@@ -170,7 +170,7 @@ class CrmTicketOpenController extends AdminMainController {
                 return $row->device_name->name;
             })
             ->editColumn('follow_state', function ($row) {
-                return LoadConfigName($this->DefCat['TicketState'], $row->follow_state);
+                return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
             })
             ->editColumn('viewTicket', function ($row) {
                 return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();

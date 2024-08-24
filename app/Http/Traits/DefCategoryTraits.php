@@ -33,22 +33,23 @@ trait DefCategoryTraits {
             (object)['id' => 12, "name" => __('admin/defCat.month_12')],
         ];
 
-        $Cat['TicketOpenType'] = [
-            (object)['id' => 1, 'name' => __('admin/crm/ticket.var_open_type_1')],
-            (object)['id' => 2, 'name' => __('admin/crm/ticket.var_open_type_2')],
-        ];
-        $Cat['TicketState'] = [
-            (object)['id' => 1, 'name' => __('admin/crm/ticket.var_ticket_state_1')],
-            (object)['id' => 2, 'name' => __('admin/crm/ticket.var_ticket_state_2')],
-            (object)['id' => 3, 'name' => __('admin/crm/ticket.var_ticket_state_3')],
-            (object)['id' => 4, 'name' => __('admin/crm/ticket.var_ticket_state_4')],
-            (object)['id' => 5, 'name' => __('admin/crm/ticket.var_ticket_state_5')],
+        $Cat['CrmServiceOpenType'] = [
+            (object)['id' => 1, 'name' => __('admin/crm_service_var.open_type_1')],
+            (object)['id' => 2, 'name' => __('admin/crm_service_var.open_type_1')],
         ];
 
-        $Cat['TicketStateOpen'] = [
-            (object)['id' => 1, 'name' => __('admin/crm/ticket.var_ticket_state_1')],
-            (object)['id' => 3, 'name' => __('admin/crm/ticket.var_ticket_state_3')],
-            (object)['id' => 4, 'name' => __('admin/crm/ticket.var_ticket_state_4')],
+        $Cat['CrmServiceTicketState'] = [
+            (object)['id' => 1, 'name' => __('admin/crm_service_var.ticket_state_1')],
+            (object)['id' => 2, 'name' => __('admin/crm_service_var.ticket_state_2')],
+            (object)['id' => 3, 'name' => __('admin/crm_service_var.ticket_state_3')],
+            (object)['id' => 4, 'name' => __('admin/crm_service_var.ticket_state_4')],
+            (object)['id' => 5, 'name' => __('admin/crm_service_var.ticket_state_5')],
+        ];
+
+        $Cat['CrmServiceTicketStateOpen'] = [
+            (object)['id' => 1, 'name' => __('admin/crm_service_var.ticket_state_1')],
+            (object)['id' => 3, 'name' => __('admin/crm_service_var.ticket_state_3')],
+            (object)['id' => 4, 'name' => __('admin/crm_service_var.ticket_state_4')],
         ];
 
         $Cat['ContinentArr'] = [

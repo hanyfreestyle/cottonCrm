@@ -119,7 +119,7 @@ class UserFollowUpController extends AdminMainController {
         $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
         $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
         $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
-        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'TicketState', $follow_state);
+        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'CrmServiceTicketState', $follow_state);
 
         $card = [];
         $card['all_count'] = $AllData;
