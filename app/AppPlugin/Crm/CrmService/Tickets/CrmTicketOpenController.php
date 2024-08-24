@@ -27,7 +27,7 @@ class CrmTicketOpenController extends AdminMainController {
     function __construct() {
         parent::__construct();
         $this->controllerName = "TicketOpen";
-        $this->PrefixRole = 'crm_ticket';
+        $this->PrefixRole = 'crm_service_open_ticket';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
         $this->defLang = "admin/crm/customers.";
@@ -272,7 +272,7 @@ class CrmTicketOpenController extends AdminMainController {
         $mainMenu->sel_routs = "admin.TicketOpen";
         $mainMenu->name = "admin/crm_service_menu.ticket_open";
         $mainMenu->icon = "fas fa-ticket-alt";
-        $mainMenu->roleView = "crm_ticket_view";
+        $mainMenu->roleView = "crm_service_open_ticket_view";
         $mainMenu->save();
 
         $subMenu = new AdminMenu();
@@ -280,7 +280,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "All|filter";
         $subMenu->url = "admin.TicketOpen.All";
         $subMenu->name = "admin/crm_service_menu.follow_list_all";
-        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->roleView = "crm_service_open_ticket_view";
         $subMenu->icon = "fas fa-list";
         $subMenu->save();
 
@@ -289,7 +289,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "TicketOpen.New";
         $subMenu->url = "admin.TicketOpen.New";
         $subMenu->name = "admin/crm_service_menu.follow_list_new";
-        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->roleView = "crm_service_open_ticket_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();
 
@@ -298,7 +298,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "TicketOpen.Today";
         $subMenu->url = "admin.TicketOpen.Today";
         $subMenu->name = "admin/crm_service_menu.follow_list_today";
-        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->roleView = "crm_service_open_ticket_view";
         $subMenu->icon = "fas fa-bell";
         $subMenu->save();
 
@@ -307,7 +307,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "TicketOpen.Back";
         $subMenu->url = "admin.TicketOpen.Back";
         $subMenu->name = "admin/crm_service_menu.follow_list_back";
-        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->roleView = "crm_service_open_ticket_view";
         $subMenu->icon = "fas fa-thumbs-down";
         $subMenu->save();
 
@@ -316,7 +316,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "TicketOpen.Next";
         $subMenu->url = "admin.TicketOpen.Next";
         $subMenu->name = "admin/crm_service_menu.follow_list_next";
-        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->roleView = "crm_service_open_ticket_view";
         $subMenu->icon = "fas fa-history";
         $subMenu->save();
 
@@ -325,7 +325,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->sel_routs = "Report|filterReport";
         $subMenu->url = "admin.TicketOpen.Report";
         $subMenu->name = "admin/crm_service_menu.report";
-        $subMenu->roleView = "crm_ticket_report";
+        $subMenu->roleView = "crm_service_open_ticket_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 

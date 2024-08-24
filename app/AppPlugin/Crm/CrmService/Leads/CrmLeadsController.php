@@ -26,7 +26,7 @@ class CrmLeadsController extends AdminMainController {
     function __construct() {
         parent::__construct();
         $this->controllerName = "CrmLeads";
-        $this->PrefixRole = 'crm_leads';
+        $this->PrefixRole = 'crm_service_leads';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
         $this->defLang = "admin/crm/leads.";
@@ -256,7 +256,7 @@ class CrmLeadsController extends AdminMainController {
         $mainMenu->sel_routs = "admin.CrmLeads";
         $mainMenu->name = "admin/crm_service_menu.leads";
         $mainMenu->icon = "fas fa-phone-volume";
-        $mainMenu->roleView = "crm_leads_view";
+        $mainMenu->roleView = "crm_service_leads_view";
         $mainMenu->save();
 
         $subMenu = new AdminMenu();
@@ -264,7 +264,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->sel_routs = "CrmLeads.SearchFormCustomer|CrmLeads.SearchFormCustomerFilter";
         $subMenu->url = "admin.CrmLeads.SearchFormCustomer";
         $subMenu->name = "admin/crm_service_menu.leads_add";
-        $subMenu->roleView = "crm_leads_add";
+        $subMenu->roleView = "crm_service_leads_add";
         $subMenu->icon = "fas fa-plus";
         $subMenu->save();
 
@@ -282,7 +282,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->sel_routs = "CrmLeads.distribution|CrmLeads.filter";
         $subMenu->url = "admin.CrmLeads.distribution";
         $subMenu->name = "admin/crm_service_menu.leads_distribution";
-        $subMenu->roleView = "crm_leads_distribution";
+        $subMenu->roleView = "crm_service_leads_distribution";
         $subMenu->icon = "fas fa-random";
         $subMenu->save();
 
@@ -291,7 +291,7 @@ class CrmLeadsController extends AdminMainController {
         $subMenu->sel_routs = "CrmLeads.report|CrmLeads.filterReport";
         $subMenu->url = "admin.CrmLeads.report";
         $subMenu->name = "admin/crm_service_menu.report";
-        $subMenu->roleView = "crm_leads_report";
+        $subMenu->roleView = "crm_service_leads_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 

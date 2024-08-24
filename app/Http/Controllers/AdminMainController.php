@@ -64,9 +64,10 @@ class AdminMainController extends DefaultMainController {
 
             "Periodicals" => ['name' => __('admin/Periodicals.app_menu')],
             "crm_customer" => ['name' => __('admin/crm_customer.app_menu')],
-            "crm_leads" => ['name' => __('admin/crm_service_menu.leads')],
-            "crm_ticket" => ['name' => __('admin/crm_service_menu.ticket_open')],
-            "crm_tech_follow" => ['name' => __('admin/crm_service_menu.follow')],
+            "crm_service_leads" => ['name' => __('admin/crm_service_menu.leads')],
+            "crm_service_follow" => ['name' => __('admin/crm_service_menu.follow')],
+            "crm_service_open_ticket" => ['name' => __('admin/crm_service_menu.ticket_open')],
+
 
         ];
         View::share('modelsNameArr', $modelsNameArr);

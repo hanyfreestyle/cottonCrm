@@ -23,7 +23,7 @@ class UserFollowUpController extends AdminMainController {
     function __construct() {
         parent::__construct();
         $this->controllerName = "TechFollowUp";
-        $this->PrefixRole = 'crm_tech_follow';
+        $this->PrefixRole = 'crm_service_follow';
         $this->selMenu = "admin.";
 
         $this->config = self::defConfig();
@@ -147,7 +147,7 @@ class UserFollowUpController extends AdminMainController {
         $mainMenu->sel_routs = "admin.TechFollowUp";
         $mainMenu->name = "admin/crm_service_menu.follow";
         $mainMenu->icon = "fas fa-tools";
-        $mainMenu->roleView = "crm_tech_follow_view";
+        $mainMenu->roleView = "crm_service_follow_view";
         $mainMenu->save();
 
 
@@ -156,7 +156,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->sel_routs = "TechFollowUp.New";
         $subMenu->url = "admin.TechFollowUp.New";
         $subMenu->name = "admin/crm_service_menu.follow_list_new";
-        $subMenu->roleView = "crm_tech_follow_view";
+        $subMenu->roleView = "crm_service_follow_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();
 
@@ -165,7 +165,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->sel_routs = "TechFollowUp.Today";
         $subMenu->url = "admin.TechFollowUp.Today";
         $subMenu->name = "admin/crm_service_menu.follow_list_today";
-        $subMenu->roleView = "crm_tech_follow_view";
+        $subMenu->roleView = "crm_service_follow_view";
         $subMenu->icon = "fas fa-bell";
         $subMenu->save();
 
@@ -174,7 +174,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->sel_routs = "TechFollowUp.Back";
         $subMenu->url = "admin.TechFollowUp.Back";
         $subMenu->name = "admin/crm_service_menu.follow_list_back";
-        $subMenu->roleView = "crm_tech_follow_view";
+        $subMenu->roleView = "crm_service_follow_view";
         $subMenu->icon = "fas fa-thumbs-down";
         $subMenu->save();
 
@@ -183,7 +183,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->sel_routs = "TechFollowUp.Next";
         $subMenu->url = "admin.TechFollowUp.Next";
         $subMenu->name = "admin/crm_service_menu.follow_list_next";
-        $subMenu->roleView = "crm_tech_follow_view";
+        $subMenu->roleView = "crm_service_follow_view";
         $subMenu->icon = "fas fa-history";
         $subMenu->save();
 
@@ -192,7 +192,7 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->sel_routs = "TechFollowUp.Report";
         $subMenu->url = "admin.TechFollowUp.Report";
         $subMenu->name = "admin/crm_service_menu.report";
-        $subMenu->roleView = "crm_tech_follow_report";
+        $subMenu->roleView = "crm_service_follow_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 
