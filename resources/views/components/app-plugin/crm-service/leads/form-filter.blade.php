@@ -1,5 +1,5 @@
 @can($PrefixRole.'_filter')
-    <x-admin.card.collapsed  :filter="true" :row="$row" :open="isset($getSessionData)" >
+    <x-admin.card.collapsed :filter="true" :row="$row" :open="isset($getSessionData)">
         <div class="row">
             <div class="col-lg-12">
 
@@ -22,6 +22,18 @@
                                                    :reqspan="false"/>
                             @endif
                         @endif
+
+                        @if($user)
+                            <x-app-plugin.crm-service.leads.user-select :col-mobile="6" :col="2" type="tech" :labelview="true" :req="false"
+                                                                        :sendvalue="old('user_id',issetArr($getSessionData,'user_id'))"/>
+                        @endif
+
+                        @if($stateOpen)
+                            <x-admin.form.select-arr name="follow_state" sendvalue="{{old('follow_state',issetArr($getSessionData,'follow_state'))}}"
+                                                     select-type="DefCat" :send-arr="$DefCat['TicketStateOpen']" col="2" :label="__('admin/crm/ticket.t_ticket_state')"
+                                                     :filter-form="true" :req="false"/>
+                        @endif
+
                     </div>
 
                     <div class="row">

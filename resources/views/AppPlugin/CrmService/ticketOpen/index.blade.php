@@ -6,8 +6,17 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
     <x-admin.hmtl.section>
-        {{--                <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>--}}
+
+        @if(Route::currentRouteName() == $PrefixRoute . '.All' or Route::currentRouteName() == $PrefixRoute . '.filter'  )
+            <div class="row">
+                <div class="col-lg-12">
+                    <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData" :user="true" :state-open="true" :config="$config"/>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <x-admin.card.normal :page-data="$pageData" :title="$pageData['BoxH1']">
                 <table {!! Table_Style_Yajra() !!} >

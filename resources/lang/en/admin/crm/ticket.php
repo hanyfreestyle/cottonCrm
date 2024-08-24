@@ -51,4 +51,5 @@ return
 	'var_ticket_state_5' => '',
 	'var_ticket_state_6' => '',
 	'var_ticket_state_7' => '',
+	'app_menu_all' => '',
 ];

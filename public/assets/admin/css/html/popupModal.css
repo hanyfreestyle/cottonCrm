@@ -14,9 +14,11 @@
 }
 .AdminModal .close {
     color: #fff;
+    cursor: pointer;
 }
 .AdminModal .close:hover, .mailbox-attachment-close:hover {
     color: #fff;
+    cursor: pointer;
 }
 
 .AdminModal .modal-body{

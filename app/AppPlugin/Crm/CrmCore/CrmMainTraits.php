@@ -43,7 +43,7 @@ trait CrmMainTraits {
             'pageData' => $pageData,
             'rowData' => $rowData,
             'nodata' => true,
-            'request'=> $request,
+            'request' => $request,
         ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -68,6 +68,12 @@ trait CrmMainTraits {
 
         if (isset($session['follow_to']) and $session['follow_to'] != null) {
             $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
+        }
+        if (isset($session['user_id']) and $session['user_id'] != null) {
+            $query->where('user_id', $session['user_id']);
+        }
+        if (isset($session['follow_state']) and $session['follow_state'] != null) {
+            $query->where('follow_state', $session['follow_state']);
         }
 
         if (isset($session['sours_id']) and $session['sours_id'] != null) {
@@ -118,7 +124,6 @@ trait CrmMainTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function OpenTicketFilter($RouteVal, $PrefixRole) {
         $data = self::FilterUserPer_OpenTicket($PrefixRole);
-//         dd($data->first());
         if ($RouteVal == "New") {
             $data->where('follow_state', 1);
         } elseif ($RouteVal == 'Today') {

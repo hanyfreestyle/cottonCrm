@@ -45,6 +45,12 @@ trait DefCategoryTraits {
             (object)['id' => 5, 'name' => __('admin/crm/ticket.var_ticket_state_5')],
         ];
 
+        $Cat['TicketStateOpen'] = [
+            (object)['id' => 1, 'name' => __('admin/crm/ticket.var_ticket_state_1')],
+            (object)['id' => 3, 'name' => __('admin/crm/ticket.var_ticket_state_3')],
+            (object)['id' => 4, 'name' => __('admin/crm/ticket.var_ticket_state_4')],
+        ];
+
         $Cat['ContinentArr'] = [
             ['id' => 'AS', 'name' => __('admin/dataCountry.continent_as')],
             ['id' => 'EU', 'name' => __('admin/dataCountry.continent_eu')],

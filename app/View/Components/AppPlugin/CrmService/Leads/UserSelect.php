@@ -16,7 +16,7 @@ class UserSelect extends Component {
     public $col;
     public $labelview;
     public $colMobile;
-    public $option_6;
+    public $sendvalue;
     public $option_7;
 
     public function __construct(
@@ -26,7 +26,7 @@ class UserSelect extends Component {
         $col = '3',
         $labelview = true,
         $colMobile = null,
-        $option_6 = null,
+        $sendvalue = null,
         $option_7 = null,
     ) {
         $this->type = $type;
@@ -44,7 +44,7 @@ class UserSelect extends Component {
         $this->col = $col;
         $this->labelview = $labelview;
         $this->colMobile = $colMobile;
-        $this->option_6 = $option_6;
+        $this->sendvalue = $sendvalue;
         $this->option_7 = $option_7;
     }
 

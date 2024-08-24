@@ -4,7 +4,8 @@
 use App\AppPlugin\Crm\CrmService\Tickets\CrmTicketOpenController;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/ticket-open/all', [CrmTicketOpenController::class, 'index'])->name('TicketFollowUp.All');
+Route::post('/ticket-open/all', [CrmTicketOpenController::class, 'index'])->name('TicketFollowUp.filter');
 Route::get('/ticket-open/new', [CrmTicketOpenController::class, 'index'])->name('TicketFollowUp.New');
 Route::get('/ticket-open/today', [CrmTicketOpenController::class, 'index'])->name('TicketFollowUp.Today');
 Route::get('/ticket-open/back', [CrmTicketOpenController::class, 'index'])->name('TicketFollowUp.Back');

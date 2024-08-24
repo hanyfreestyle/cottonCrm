@@ -22,8 +22,6 @@ class CrmTicketOpenController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
 
-//    use ReportFunTraits;
-
     function __construct() {
         parent::__construct();
         $this->controllerName = "TicketFollowUp";
@@ -71,7 +69,12 @@ class CrmTicketOpenController extends AdminMainController {
         $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
 
-        if ($RouteName == $this->PrefixRoute . '.New') {
+        if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter' ) {
+            $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
+            $pageData['IconPage'] = 'fa-eye';
+            $RouteVal = "all";
+
+        } elseif ($RouteName == $this->PrefixRoute . '.New') {
             $pageData['TitlePage'] = __('admin/crm/ticket.app_menu_new');
             $pageData['IconPage'] = 'fa-eye';
             $RouteVal = "New";
@@ -126,7 +129,6 @@ class CrmTicketOpenController extends AdminMainController {
     public function DataTable(Request $request, $view) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
-//            $rowData = self::TicketFilterQuery(self::indexQuery(), $session);
             $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($view, $this->PrefixRole), $session);
             return self::DataTableColumns($rowData)->make(true);
         }
@@ -223,6 +225,14 @@ class CrmTicketOpenController extends AdminMainController {
         $mainMenu->roleView = "crm_ticket_view";
         $mainMenu->save();
 
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "All|filter";
+        $subMenu->url = "admin.TicketFollowUp.All";
+        $subMenu->name = "admin/crm/ticket.app_menu_all";
+        $subMenu->roleView = "crm_ticket_view";
+        $subMenu->icon = "fas fa-list";
+        $subMenu->save();
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;

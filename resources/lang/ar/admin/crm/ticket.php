@@ -51,4 +51,5 @@ return
 	'var_ticket_state_5' => 'الغاء',
 	'var_ticket_state_6' => 'رفض',
 	'var_ticket_state_7' => 'رفض',
+	'app_menu_all' => 'عرض الكل',
 ];
