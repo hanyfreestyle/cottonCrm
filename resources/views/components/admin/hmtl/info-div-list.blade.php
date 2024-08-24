@@ -63,7 +63,7 @@
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tools" :t="__('admin/crm.label_date_follow')"
                            :des="PrintDate($row->follow_date)" :col="$col" :all-data="$allData"/>
 @elseif($n=='user_id')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-cog"  :sub-des="true" :t="__('admin/crm/ticket.fr_user_id')" :arr-data="$CashUsersList"
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-cog"  :sub-des="true" :t="__('admin/crm_service.label_user_id')" :arr-data="$CashUsersList"
                            :des="$row->user_id" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='open_type')

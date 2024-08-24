@@ -63,10 +63,10 @@ class AdminMainController extends DefaultMainController {
             "BlogPost" => ['name' => __('admin/model/blogPost.app_menu')],
 
             "Periodicals" => ['name' => __('admin/Periodicals.app_menu')],
-            "crm_customer" => ['name' => __('admin/crm/customers.app_menu')],
-            "crm_leads" => ['name' => __('admin/crm/leads.app_menu')],
-            "crm_ticket" => ['name' => __('admin/crm/ticket.app_menu')],
-            "crm_tech_follow" => ['name' => __('admin/crm/ticket.app_menu_teck_follow')],
+            "crm_customer" => ['name' => __('admin/crm_customer.app_menu')],
+            "crm_leads" => ['name' => __('admin/crm_service_menu.leads')],
+            "crm_ticket" => ['name' => __('admin/crm_service_menu.ticket_open')],
+            "crm_tech_follow" => ['name' => __('admin/crm_service_menu.follow')],
 
         ];
         View::share('modelsNameArr', $modelsNameArr);

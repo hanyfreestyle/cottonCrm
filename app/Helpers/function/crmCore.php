@@ -20,7 +20,7 @@ if (!function_exists('TicketDateFrom')) {
 if (!function_exists('TicketSendWhatsapp')) {
     function TicketSendWhatsapp($row) {
         $Brek = "%0a";
-        $GetMass = __('admin/crm/ticket.but_whatsapp_mass') . $Brek;
+        $GetMass = __('admin/crm.but_whatsapp_mass') . $Brek;
         $GetMass .= $row->customer->name;
         $Mass = str_replace(" ", "+", $GetMass);
         if ($row->customer->mobile_code == 'eg') {

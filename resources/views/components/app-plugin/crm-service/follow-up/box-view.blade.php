@@ -51,9 +51,9 @@
             </div>
 
             <div class="row text-center follow_action_but py-2">
-                <a href="tel:{{$row->customer->mobile}}" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm/ticket.but_call')}}</a>
-                <a href="{{TicketSendWhatsapp($row)}}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm/ticket.but_whatsapp')}}</a>
-                <a href="{{route($PrefixRoute.'.ViewTicket',$row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm/ticket.but_update')}}</a>
+                <a href="tel:{{$row->customer->mobile}}" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm.but_call')}}</a>
+                <a href="{{TicketSendWhatsapp($row)}}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm.but_whatsapp')}}</a>
+                <a href="{{route($PrefixRoute.'.ViewTicket',$row->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm.but_update')}}</a>
             </div>
         </div>
     </div>

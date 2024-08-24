@@ -33,4 +33,5 @@ return
 	'model_h2_ticket' => 'تفاصيل التذكرة',
 	'model_title_info' => 'تفاصيل المتابعة',
 	'report_card_all_count' => 'اجمالى عدد المتابعات',
+	'but_ticket_view' => 'عرض التفاصيل',
 ];

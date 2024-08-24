@@ -87,7 +87,7 @@ class ActionButton extends Component {
                 case 'viewTicket':
                     $this->icon = 'fas fa-search';
                     $this->bg = getBgColor('p');
-                    $this->printLable = __('admin/crm/ticket.t_but_view');
+                    $this->printLable = __('admin/crm.but_ticket_view');
                     break;
 
                 case 'addTicket':
