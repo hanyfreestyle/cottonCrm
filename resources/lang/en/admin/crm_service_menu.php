@@ -2,16 +2,16 @@
 
 return
 [
-	'follow' => '',
-	'follow_list_all' => '',
-	'follow_list_back' => '',
-	'follow_list_new' => '',
-	'follow_list_next' => '',
-	'follow_list_today' => '',
-	'leads' => '',
-	'leads_add' => '',
-	'leads_add_bulk' => '',
-	'leads_distribution' => '',
-	'report' => '',
-	'ticket_open' => '',
+	'follow' => 'Customer Follow-up',
+	'follow_list_all' => 'View All',
+	'follow_list_back' => 'Follow-ups not done',
+	'follow_list_new' => 'New Customer',
+	'follow_list_next' => 'Postponed follow-ups',
+	'follow_list_today' => 'Today follow-ups',
+	'leads' => 'Manage Leads',
+	'leads_add' => 'Add new Lead',
+	'leads_add_bulk' => 'Add From File',
+	'leads_distribution' => 'Distribution Leads',
+	'report' => 'Report',
+	'ticket_open' => 'Manage Open Ticket',
 ];

@@ -23,6 +23,7 @@ return
 	'label_date_follow' => 'تاريخ المتابعة',
 	'label_lead_category' => 'الحمله الاعلانية',
 	'label_lead_sours' => 'مصدر التواصل',
+	'label_list_leads' => 'عرض المتابعات',
 	'label_notes' => 'ملاحظات',
 	'label_state' => 'الحالة',
 	'model_h2_customer' => 'بيانات العميل',
@@ -33,5 +34,4 @@ return
 	'report_lead_category' => 'تقرير الحملات الاعلانية',
 	'report_lead_city' => 'تقارير المحافظات',
 	'report_lead_sours' => 'تقرير مصدر التواصل',
-	'label_list_leads' => 'عرض المتابعات',
 ];

@@ -11,8 +11,8 @@ return [
 //        'deleteMass'=> ['id'=> 'deleteMass','group'=>'admin','file_name'=>'deleteMass','name'=>'Delete Mass','name_ar'=>'رسائل الحذف' ],
         'def' => ['id' => 'def', 'group' => 'admin', 'file_name' => 'def', 'name_en' => 'Default Variables', 'name_ar' => 'المتغيرات الاساسية'],
         'defCat' => ['id' => 'defCat', 'group' => 'admin', 'file_name' => 'defCat', 'name_en' => 'Variables', 'name_ar' => 'متغيرات'],
-        'webConfig' => ['id' => 'webConfig', 'group' => 'admin', 'sub_dir' => 'config', 'file_name' => 'webConfig', 'name' => 'web Config', 'name_ar' => 'اعدادات الموقع'],
-        'roles' => ['id' => 'roles', 'group' => 'admin', 'sub_dir' => 'config', 'file_name' => 'roles', 'name' => 'Permissions', 'name_ar' => 'الصلاحيات'],
+        'webConfig' => ['id' => 'webConfig', 'group' => 'admin', 'sub_dir' => 'config', 'file_name' => 'webConfig', 'name_en' => 'web Config', 'name_ar' => 'اعدادات الموقع'],
+        'roles' => ['id' => 'roles', 'group' => 'admin', 'sub_dir' => 'config', 'file_name' => 'roles', 'name_en' => 'Permissions', 'name_ar' => 'الصلاحيات'],
         'form' => ['id' => 'form', 'group' => 'admin', 'file_name' => 'form', 'name_en' => 'Forms', 'name_ar' => 'الفورم'],
     ],
 
