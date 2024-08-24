@@ -22,25 +22,25 @@
             @endif
 
             @if(isset($chartData['LeadSours']) and  count($chartData['LeadSours']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.report_lead_sours')">
+                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_sours')">
                     <x-admin.report.chart-def id="LeadSours" :data-row="$chartData['LeadSours']"/>
                 </x-admin.card.normal>
             @endif
 
             @if(isset($chartData['LeadCategory']) and  count($chartData['LeadCategory']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.report_lead_category')">
+                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_category')">
                     <x-admin.report.chart-def id="LeadCategory" :data-row="$chartData['LeadCategory']"/>
                 </x-admin.card.normal>
             @endif
 
             @if(isset($chartData['City']) and  count($chartData['City']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.report_lead_city')">
+                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_city')">
                     <x-admin.report.chart-def id="City" :data-row="$chartData['City']"/>
                 </x-admin.card.normal>
             @endif
 
             @if(isset($chartData['Area']) and  count($chartData['Area']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.report_lead_area')">
+                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_area')">
                     <x-admin.report.chart-def id="Area" :data-row="$chartData['Area']"/>
                 </x-admin.card.normal>
             @endif

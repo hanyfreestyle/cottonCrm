@@ -154,4 +154,19 @@ trait CrmMainTraits {
         }
         return $data;
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CountData($data, $RouteVal) {
+        if ($RouteVal == "Today") {
+            $count = $data->where('follow_date', '=', Carbon::today())->count();
+        } elseif ($RouteVal == 'Back') {
+            $count = $data->where('follow_date', '<', Carbon::today())->count();
+        } elseif ($RouteVal == 'Next') {
+            $count = $data->where('follow_date', '>', Carbon::today())->count();
+        }
+        return $count;
+    }
+
+
 }

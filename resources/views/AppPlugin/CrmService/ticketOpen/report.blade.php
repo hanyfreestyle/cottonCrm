@@ -2,6 +2,15 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+    <x-admin.hmtl.section>
+        <div class="row">
+            <div class="col-lg-12">
+                <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData"
+                                                           def-route=".filterReport"  :user="true" :state-open="true" :config="$config"/>
+            </div>
+        </div>
+    </x-admin.hmtl.section>
+
 
     <x-app-plugin.crm-service.leads.report-open-chart :card="$card" :chart-data="$chartData"/>
 

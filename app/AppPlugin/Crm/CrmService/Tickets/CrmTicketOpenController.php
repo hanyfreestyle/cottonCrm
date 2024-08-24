@@ -8,10 +8,11 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
+use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,10 +22,11 @@ class CrmTicketOpenController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
+    use ReportFunTraits;
 
     function __construct() {
         parent::__construct();
-        $this->controllerName = "TicketFollowUp";
+        $this->controllerName = "TicketOpen";
         $this->PrefixRole = 'crm_ticket';
         $this->selMenu = "admin.";
         $this->PrefixCatRoute = "";
@@ -210,6 +212,56 @@ class CrmTicketOpenController extends AdminMainController {
             }
         }
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function report(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $chartData = array();
+
+
+        $this->formName = "CrmTicketOpenReportFilter";
+        View::share('formName', $this->formName);
+
+        $session = self::getSessionData($request);
+        $rowData = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $getData = $rowData->get();
+
+
+        $deviceId = $getData->groupBy('device_id')->toarray();
+        $userId = $getData->groupBy('user_id')->toarray();
+        $brandId = $getData->groupBy('brand_id')->toarray();
+        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+        $follow_state = $getData->groupBy('follow_state')->toarray();
+        $LeadSours = $getData->groupBy('sours_id')->toarray();
+        $LeadCategory = $getData->groupBy('ads_id')->toarray();
+
+
+
+        $AllData = $rowData->count();
+        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $LeadSours);
+        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $LeadCategory);
+        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
+        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
+        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+        $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
+        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'CrmServiceTicketState', $follow_state);
+
+        $card = [];
+        $card['all_count'] = $AllData;
+        $card['today_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+
+        return view('AppPlugin.CrmService.ticketOpen.report')->with([
+            'pageData' => $pageData,
+            'AllData' => $AllData,
+            'chartData' => $chartData,
+            'rowData' => $rowData,
+            'card' => $card,
+        ]);
+
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -217,7 +269,7 @@ class CrmTicketOpenController extends AdminMainController {
 
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
-        $mainMenu->sel_routs = "admin.TicketFollowUp";
+        $mainMenu->sel_routs = "admin.TicketOpen";
         $mainMenu->name = "admin/crm_service_menu.ticket_open";
         $mainMenu->icon = "fas fa-ticket-alt";
         $mainMenu->roleView = "crm_ticket_view";
@@ -226,7 +278,7 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "All|filter";
-        $subMenu->url = "admin.TicketFollowUp.All";
+        $subMenu->url = "admin.TicketOpen.All";
         $subMenu->name = "admin/crm_service_menu.follow_list_all";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-list";
@@ -234,8 +286,8 @@ class CrmTicketOpenController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "TicketFollowUp.New";
-        $subMenu->url = "admin.TicketFollowUp.New";
+        $subMenu->sel_routs = "TicketOpen.New";
+        $subMenu->url = "admin.TicketOpen.New";
         $subMenu->name = "admin/crm_service_menu.follow_list_new";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-eye";
@@ -243,8 +295,8 @@ class CrmTicketOpenController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "TicketFollowUp.Today";
-        $subMenu->url = "admin.TicketFollowUp.Today";
+        $subMenu->sel_routs = "TicketOpen.Today";
+        $subMenu->url = "admin.TicketOpen.Today";
         $subMenu->name = "admin/crm_service_menu.follow_list_today";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-bell";
@@ -252,8 +304,8 @@ class CrmTicketOpenController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "TicketFollowUp.Back";
-        $subMenu->url = "admin.TicketFollowUp.Back";
+        $subMenu->sel_routs = "TicketOpen.Back";
+        $subMenu->url = "admin.TicketOpen.Back";
         $subMenu->name = "admin/crm_service_menu.follow_list_back";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-thumbs-down";
@@ -261,59 +313,22 @@ class CrmTicketOpenController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "TicketFollowUp.Next";
-        $subMenu->url = "admin.TicketFollowUp.Next";
+        $subMenu->sel_routs = "TicketOpen.Next";
+        $subMenu->url = "admin.TicketOpen.Next";
         $subMenu->name = "admin/crm_service_menu.follow_list_next";
         $subMenu->roleView = "crm_ticket_view";
         $subMenu->icon = "fas fa-history";
         $subMenu->save();
 
-    }
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Report|filterReport";
+        $subMenu->url = "admin.TicketOpen.Report";
+        $subMenu->name = "admin/crm_service_menu.report";
+        $subMenu->roleView = "crm_ticket_report";
+        $subMenu->icon = "fas fa-chart-pie";
+        $subMenu->save();
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function indexQuery_DataTable() {
-        $table = "crm_ticket";
-        $data = DB::table($table)
-            ->where('state', 1)
-            ->where('user_id', '!=', null)
-            ->leftJoin("crm_customers", function ($join) {
-                $join->on('crm_ticket.customer_id', '=', 'crm_customers.id');
-            })
-            ->leftJoin("crm_customers_address", function ($join) {
-                $join->on('crm_ticket.customer_id', '=', 'crm_customers_address.customer_id');
-                $join->where('crm_customers_address.is_default', '=', '1');
-            })
-            ->leftJoin("data_area_translations", function ($join) {
-                $join->on('data_area_translations.area_id', '=', 'crm_customers_address.area_id');
-                $join->where('data_area_translations.locale', '=', 'ar');
-            })
-            ->leftJoin("config_data_translations", function ($join) {
-                $join->on('crm_ticket.device_id', '=', 'config_data_translations.data_id');
-                $join->where('config_data_translations.locale', '=', 'ar');
-            })
-            ->leftJoin("users", function ($join) {
-                $join->on('crm_ticket.user_id', '=', 'users.id');
-            })
-
-//            ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
-//            ->where($table_address . '.is_default', true)
-//            ->leftJoin("config_data_translations", function ($join) {
-//                $join->on('crm_customers.evaluation_id', '=', 'config_data_translations.data_id');
-//                $join->where('config_data_translations.locale', '=', 'ar');
-//            })
-            ->select("$table.id as id",
-                "$table.follow_date  as date_follow",
-                "$table.created_at  as date_add",
-                "$table.notes_err  as notes_err",
-                "$table.notes  as notes",
-                "crm_customers.name  as customers_name",
-                "crm_customers.mobile  as customers_mobile",
-                "data_area_translations.name  as customers_area_name",
-                "config_data_translations.name  as device_name",
-                "users.name  as user_name",
-            );
-        return $data;
 
     }
 

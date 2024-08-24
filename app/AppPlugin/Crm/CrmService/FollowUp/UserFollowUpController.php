@@ -29,7 +29,7 @@ class UserFollowUpController extends AdminMainController {
         $this->config = self::defConfig();
         View::share('config', $this->config);
 
-        $this->PageTitle = __('admin/crm_service.app_menu_follow');
+        $this->PageTitle = __('admin/crm_service_menu.report');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
 
         $sendArr = [
@@ -137,18 +137,6 @@ class UserFollowUpController extends AdminMainController {
 
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function CountData($data, $RouteVal) {
-        if ($RouteVal == "Today") {
-            $count = $data->where('follow_date', '=', Carbon::today())->count();
-        } elseif ($RouteVal == 'Back') {
-            $count = $data->where('follow_date', '<', Carbon::today())->count();
-        } elseif ($RouteVal == 'Next') {
-            $count = $data->where('follow_date', '>', Carbon::today())->count();
-        }
-        return $count;
-    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
