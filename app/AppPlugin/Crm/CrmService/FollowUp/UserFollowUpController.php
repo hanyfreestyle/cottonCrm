@@ -90,6 +90,26 @@ class UserFollowUpController extends AdminMainController {
         ]);
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicket($ticketId) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $ticket = [];
+        try {
+            $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $ticket = $Query->where('id', $ticketId)->firstOrFail();
+        } catch (\Exception $e) {
+            self::abortAdminError(403);
+        }
+
+        return view('AppPlugin.CrmService.followUp.add_follow')->with([
+            'pageData' => $pageData,
+            'ticket' => $ticket,
+        ]);
+
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

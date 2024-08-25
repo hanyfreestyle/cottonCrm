@@ -75,7 +75,9 @@
     </g>
 </svg>
 <h1>You are not allowed to enter here</h1>
-
+@if(Auth::user())
+    <a href="{{route('admin.Dashboard')}}" class="home-btn">Go Home</a>
+@endif
 <script>
     var root = document.documentElement;
     var eyef = document.getElementById('eyef');

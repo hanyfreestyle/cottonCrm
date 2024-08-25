@@ -27,22 +27,21 @@ class Handler extends ExceptionHandler {
 
 
     public function register(): void {
-
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
-            $adminDir = "admin/" ;
-//            $adminDir = config('app.configAdminDir');
+            $adminDir = config('app.configAdminDir');
+            $adminDirLens = strlen($adminDir);
             $currentSlug = Route::current()->uri ;
-            $currentSlug = str_replace('ar/admin','admin',$currentSlug);
-            $currentSlug = str_replace('en/admin','admin',$currentSlug);
-            if($e->getStatusCode() == 404 and  mb_substr($currentSlug, 0, 6) == $adminDir ){
+            $currentSlug = str_replace('ar/'.$adminDir,$adminDir,$currentSlug);
+            $currentSlug = str_replace('en/'.$adminDir,$adminDir,$currentSlug);
+            if($e->getStatusCode() == 404 and mb_substr($currentSlug, 0, $adminDirLens) == $adminDir ){
                 abort(410);
             }
         });
-
         $this->reportable(function (Throwable $e) {
             //
         });
     }
+
 
 //    public function render($request, Throwable $e) {
 //        if($e instanceof ModelNotFoundException){

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\View;
 class RouteNotFoundController extends Controller {
     public function __invoke() {
         $adminDir = config('app.configAdminDir');
-
         $currentSlug = Route::current()->originalParameters();
         if (isset($currentSlug['fallbackPlaceholder']) and mb_substr($currentSlug['fallbackPlaceholder'], 0, strlen($adminDir)) == $adminDir) {
             abort('410');

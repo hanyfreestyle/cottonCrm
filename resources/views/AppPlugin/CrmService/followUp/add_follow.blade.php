@@ -6,7 +6,6 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
-
     <x-admin.hmtl.section>
         <div class="row">
             <div class="col-lg-6">
@@ -17,10 +16,8 @@
             </div>
         </div>
     </x-admin.hmtl.section>
-
 @endsection
 
 @push('JsCode')
 
 @endpush
-

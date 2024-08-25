@@ -4,23 +4,17 @@ namespace App\Http\Controllers;
 
 use App\AppCore\Menu\AdminMenuController;
 use App\AppCore\UploadFilter\Models\UploadFilter;
-
-
 use App\Helpers\AdminHelper;
 use App\Helpers\MinifyTools;
 use App\Helpers\photoUpload\PuzzleUploadProcess;
-
 use App\Http\Requests\admin\ConfigModelUpdateRequest;
 use App\Http\Traits\DefCategoryTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Spatie\Valuestore\Valuestore;
-use Yajra\DataTables\Facades\DataTables;
+
 
 class AdminMainController extends DefaultMainController {
     use DefCategoryTraits;
@@ -108,7 +102,7 @@ class AdminMainController extends DefaultMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadPagePermission($arr) {
-        $defview = ['index', 'indexData','report'];
+        $defview = ['index', 'indexData', 'report'];
         $defcreate = ['create', 'createData'];
         $defedit = ['edit', 'editData'];
         $defdelete = ['destroy', 'ForceDeleteException'];
@@ -117,18 +111,18 @@ class AdminMainController extends DefaultMainController {
         $create = array_merge($defcreate, issetArr($arr, 'create', []));
         $edit = array_merge($defedit, issetArr($arr, 'edit', []));
         $delete = array_merge($defdelete, issetArr($arr, 'delete', []));
-        $distribution = issetArr($arr, 'distribution',  []);
+        $distribution = issetArr($arr, 'distribution', []);
         $report = issetArr($arr, 'report', []);
         $sub = issetArr($arr, 'sub', null);
 
-        $allPermission = array_merge($view, $create, $edit, $delete,$distribution,$report);
+        $allPermission = array_merge($view, $create, $edit, $delete, $distribution, $report);
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
         $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => $delete]);
-        if (count($distribution)>0){
+        if (count($distribution) > 0) {
             $this->middleware('permission:' . $this->PrefixRole . '_distribution', ['only' => $distribution]);
         }
-        if (count($report)>0){
+        if (count($report) > 0) {
             $this->middleware('permission:' . $this->PrefixRole . '_report', ['only' => $report]);
         }
 
@@ -169,11 +163,11 @@ class AdminMainController extends DefaultMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function loadPostPermission($arr) {
 
-        $defview = ['PostIndex','PostListCategory','ListMorePhoto','TagsIndex'];
-        $defcreate = ['PostCreate','AddMorePhotos','TagsCreate'];
+        $defview = ['PostIndex', 'PostListCategory', 'ListMorePhoto', 'TagsIndex'];
+        $defcreate = ['PostCreate', 'AddMorePhotos', 'TagsCreate'];
         $defedit = ['PostEdit', 'emptyPhoto', 'sortPhotoSave', 'emptyIcon', 'MorePhotosEdit', 'MorePhotosEditAll', 'TagsEdit', 'config'];
         $defdelete = ['destroy', 'DeleteLang', 'MorePhotosDestroy', 'MorePhotosDestroyAll', 'DeleteLang', 'TagsDelete'];
-        $restore = ['PostSoftDeletes','Restore', 'PostForceDeleteException'];
+        $restore = ['PostSoftDeletes', 'Restore', 'PostForceDeleteException'];
 
 
         $view = array_merge($defview, issetArr($arr, 'view', []));
@@ -183,7 +177,7 @@ class AdminMainController extends DefaultMainController {
 
         $sub = issetArr($arr, 'sub', null);
 
-        $allPermission = array_merge($view, $create, $edit, $delete,$restore);
+        $allPermission = array_merge($view, $create, $edit, $delete, $restore);
 
         $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => $create]);
         $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => $edit]);
@@ -207,7 +201,7 @@ class AdminMainController extends DefaultMainController {
 
         $this->configView = IsArr($sendArr, 'configView', null);
 
-        $this->settings =IsArr($sendArr, 'settings', array());
+        $this->settings = IsArr($sendArr, 'settings', array());
         View::share('settings', $this->settings);
 
         $this->config = IsArr($sendArr, 'config', array());
@@ -216,27 +210,8 @@ class AdminMainController extends DefaultMainController {
         $this->formName = IsArr($sendArr, 'formName', null);
         View::share('formName', $this->formName);
 
-//        $this->viewDataTable = IsArr($sendArr, 'viewDataTable', 1);
-//        View::share('viewDataTable', $this->viewDataTable);
-//        View::share('yajraTable', false);
-
         $pageData = AdminHelper::returnPageDate($sendArr);
         $this->pageData = $pageData;
-
-
-//        View::share('DefCategoryTextName', null);
-//        $this->viewEditor = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_editor', 0);
-//        View::share('viewEditor', $this->viewEditor);
-//        $this->viewLabel = AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_label_view', 1);
-//        View::share('viewLabel', $this->viewLabel);
-//        $yajraTable = AdminHelper::arrIsset($sendArr, 'yajraTable', false);
-//        View::share('yajraTable', $yajraTable);
-//        $this->yajraPerPage = intval(AdminHelper::arrIsset($this->modelSettings, $this->controllerName . '_perpage', 10));
-//        if ($this->yajraPerPage == 0) {
-//            $this->yajraPerPage = 10;
-//        }
-//        View::share('yajraPerPage', $this->yajraPerPage);
-//        $this->yajraTable = $yajraTable;
 
     }
 
@@ -548,133 +523,12 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function abortAdminError($err) {
+        if ($err == 403) {
+            abort(403);
+        }
 
+    }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    static function FilterQ($query, $session, $order = null) {
-//        $query->where('id', '!=', 0);
-//
-//        if (isset($session['from_date']) and $session['from_date'] != null) {
-//            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
-//        }
-//
-//        if (isset($session['to_date']) and $session['to_date'] != null) {
-//            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
-//        }
-//
-//        if (isset($session['country']) and $session['country'] != null) {
-//            $query->where('country', $session['country']);
-//        }
-//
-//        if (isset($session['project_id']) and $session['project_id'] != null) {
-//            $query->where('project_id', $session['project_id']);
-//        }
-//
-//        if (isset($session['is_active']) and $session['is_active'] != null) {
-//            $query->where('is_active', $session['is_active']);
-//        }
-//
-//        if (isset($session['country_id']) and $session['country_id'] != null) {
-//            $query->where('country_id', $session['country_id']);
-//        }
-//
-//        if ($order != null) {
-//            $orderBy = explode("|", $order);
-//            $query->orderBy($orderBy[0], $orderBy[1]);
-//        }
-//
-//        return $query;
-//    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # saveTranslation
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function redirectWhereNew($request, $id, $route) {
-//        if ($id == '0') {
-//            if ($request->input('AddNewSet') !== null) {
-//                return redirect()->back();
-//            } else {
-//                return redirect($route)->with('Add.Done', "");
-//            }
-//        } else {
-//            if ($request->input('GoBack') !== null) {
-//                return redirect()->back()->with('Edit.Done', "");
-//            } else {
-//                return redirect($route)->with('Edit.Done', "");
-//            }
-//        }
-//    }
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function DataTableAddColumns($data, $arr = array()) {
-//
-//        $viewPhoto = AdminHelper::arrIsset($arr, 'Photo', true);
-//
-//        return DataTables::eloquent($data)
-//            ->addIndexColumn()
-//            ->editColumn('tablename.0.name', function ($row) {
-//                return $row->tablename[0]->name ?? '';
-//            })
-//            ->editColumn('tablename.1.name', function ($row) {
-//                return $row->tablename[1]->name ?? '';
-//            })
-//            ->editColumn('arName', function ($row) {
-//                return $row->arName->name ?? '';
-//            })
-//            ->editColumn('enName', function ($row) {
-//                return $row->enName->name ?? '';
-//            })
-//            ->addColumn('photo', function ($row) use ($viewPhoto) {
-//                if ($viewPhoto) {
-//                    return TablePhoto($row);
-//                }
-//            })
-//            ->addColumn('is_active', function ($row) {
-//                return is_active($row->is_active);
-//            })
-//            ->addColumn('is_published', function ($row) {
-//                return is_active($row->is_published);
-//            })
-//            ->editColumn('regular_price', function ($row) {
-//                return number_format($row->regular_price);
-//            })
-//            ->editColumn('price', function ($row) {
-//                return number_format($row->price);
-//            })
-//            ->editColumn('published_at', function ($row) {
-//                return [
-//                    'display' => date("Y-m-d", strtotime($row->published_at)),
-//                    'timestamp' => strtotime($row->published_at)
-//                ];
-//            })
-//            ->addColumn('Brand', function ($row) {
-//                return $row->brand->name ?? '';
-//            })
-//            ->addColumn('CatName', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'CatName', 'row' => $row])->render();
-//            })
-//            ->addColumn('AddLang', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'addLang', 'row' => $row])->render();
-//            })
-//            ->addColumn('MorePhoto', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'MorePhoto', 'row' => $row])->render();
-//            })
-//            ->addColumn('Edit', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-//            })
-//            ->addColumn('Delete', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-//            })
-//            ->rawColumns(["photo", "is_active", "is_published", 'Edit', "Delete", 'MorePhoto', 'AddLang', 'OldPhotos', 'ViewListing', 'CatName']);
-//    }
 
 }

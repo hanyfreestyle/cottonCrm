@@ -10,6 +10,6 @@ Route::get('/follow-up/back', [UserFollowUpController::class, 'index'])->name('T
 Route::get('/follow-up/next', [UserFollowUpController::class, 'index'])->name('TechFollowUp.Next');
 Route::get('/follow-up/report', [UserFollowUpController::class, 'Report'])->name('TechFollowUp.Report');
 
-Route::get('/tech/view-ticket/{id}', [UserFollowUpController::class, 'ViewTicket'])->name('TechFollowUp.ViewTicket');
+Route::get('/follow-up/update-ticket/{ticketId}', [UserFollowUpController::class, 'UpdateTicket'])->name('TechFollowUp.UpdateTicket');
 
 
