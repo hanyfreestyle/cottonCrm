@@ -50,6 +50,23 @@ class AppPuzzleFunCopy extends AppPuzzleFun {
             }
         }
     }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function copyRouteFiles($thisModel) {
+        $CopyFolder = self::creatCopyFolder($thisModel);
+        $filesName = issetArr($thisModel, 'routeFiles', null);
+        $routeFolder = issetArr($thisModel, 'routeFolder', null);
+        if ($filesName != null and is_array($filesName)) {
+            foreach ($filesName as $fileName) {
+                $filePath = base_path('routes/AppPlugin/' . $routeFolder . $fileName);
+                if (File::isFile($filePath)) {
+                    $destinationFolder = $CopyFolder . 'routes/AppPlugin/' . $routeFolder;
+                    self::folderMakeDirectory($destinationFolder);
+                    File::copy($filePath, $destinationFolder . $fileName);
+                }
+            }
+        }
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -46,6 +46,21 @@ class AppPuzzleFunRemove extends AppPuzzleFun {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function removeRouteFiles($thisModel) {
+        $filesName = issetArr($thisModel, 'routeFiles', null);
+        $routeFolder = issetArr($thisModel, 'routeFolder', null);
+        if ($filesName != null and is_array($filesName)) {
+            foreach ($filesName as $fileName) {
+                $filePath = base_path('routes/AppPlugin/' . $routeFolder . $fileName);
+                if (File::isFile($filePath)) {
+                    File::delete($filePath);
+                }
+            }
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function removeMigrations($thisModel) {
         $migrations = issetArr($thisModel, 'migrations', null);
         if ($migrations != null and is_array($migrations)) {

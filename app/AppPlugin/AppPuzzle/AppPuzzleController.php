@@ -107,6 +107,7 @@ class AppPuzzleController extends AppPuzzleFun {
             $copy->copyAppFolder($thisModel);
             $copy->copyViewFolder($thisModel);
             $copy->copyRouteFile($thisModel);
+            $copy->copyRouteFiles($thisModel);
             $copy->copyMigrations($thisModel);
             $copy->copyLangFile($thisModel);
             $copy->copyPhotoFolder($thisModel);
@@ -130,10 +131,10 @@ class AppPuzzleController extends AppPuzzleFun {
         if (isset($modelTree[$model])) {
             $thisModel = $modelTree[$model];
             $remove = new AppPuzzleFunRemove();
-
             $remove->removeAppFolder($thisModel);
             $remove->removeViewFolder($thisModel);
             $remove->removeRouteFile($thisModel);
+            $remove->removeRouteFiles($thisModel);
             $remove->removeMigrations($thisModel);
             $remove->removeLangFiles($thisModel);
             $remove->removePhotoFolder($thisModel);
@@ -141,7 +142,6 @@ class AppPuzzleController extends AppPuzzleFun {
             $remove->removeComponentFolder($thisModel);
             $remove->removeComponentFile($thisModel);
             $remove->removeLivewireFile($thisModel);
-
             return redirect()->back();
         } else {
             return redirect()->back();

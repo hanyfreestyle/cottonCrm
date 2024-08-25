@@ -8,9 +8,7 @@ class AppPuzzleTreeCrmService {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function tree() {
         $modelTree = [
-            'CrmServiceLeads' => self::treeCrmLeads(),
-            'CrmServiceFollowUp' => self::treeCrmFollowUp(),
-            'CrmServiceTickets' => self::treeCrmTickets(),
+            'CrmService' => self::treeCrmService(),
             'BrandName' => self::treeBrandName(),
             'DeviceType' => self::treeDeviceType(),
             'Evaluation' => self::treeEvaluation(),
@@ -20,53 +18,19 @@ class AppPuzzleTreeCrmService {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmLeads() {
+    static function treeCrmService() {
         return [
             'view' => true,
-            'id' => "CrmServiceLeads",
-            'CopyFolder' => "CrmService_Leads",
-            'appFolder' => 'Crm/CrmService/Leads',
-            'viewFolder' => 'CrmService/leads',
+            'id' => "CrmService",
+            'CopyFolder' => "CrmService",
+            'appFolder' => 'Crm/CrmService',
+            'viewFolder' => 'CrmService',
             'routeFolder' => "CrmService/",
-            'routeFile' => 'leads.php',
+            'routeFiles' => ['leads.php','follow_up.php','ticket_open.php'],
             'adminLangFolder' => "admin/",
-            'adminLangFiles' => ['crm_service.php'],
-            'ComponentFolderClass' => ['AppPlugin/CrmService/Leads'],
-            'ComponentFolderView' => ['app-plugin/crm-service/leads'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmFollowUp() {
-        return [
-            'view' => true,
-            'id' => "CrmServiceFollowUp",
-            'CopyFolder' => "CrmService_FollowUp",
-            'appFolder' => 'Crm/CrmService/FollowUp',
-            'viewFolder' => 'CrmService/followUp',
-            'adminLangFolder' => "admin/",
-            'adminLangFiles' => ['crm_service_menu.php'],
-            'routeFolder' => "CrmService/",
-            'routeFile' => 'follow_up.php',
-            'ComponentFolderClass' => ['AppPlugin/CrmService/FollowUp'],
-            'ComponentFolderView' => ['app-plugin/crm-service/follow-up'],
-        ];
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function treeCrmTickets() {
-        return [
-            'view' => true,
-            'id' => "CrmServiceTickets",
-            'CopyFolder' => "CrmService_Tickets",
-            'appFolder' => 'Crm/CrmService/Tickets',
-            'viewFolder' => 'CrmService/ticketOpen',
-            'routeFolder' => "CrmService/",
-            'routeFile' => 'ticket_open.php',
-            'adminLangFolder' => "admin/",
-            'adminLangFiles' => ['crm_service_var.php'],
+            'adminLangFiles' => ['crm_service.php','crm_service_menu.php','crm_service_var.php'],
+            'ComponentFolderClass' => ['AppPlugin/CrmService'],
+            'ComponentFolderView' => ['app-plugin/crm-service'],
             'migrations' => [
                 '2021_01_01_000002_create_crm_tickets_table.php',
             ],
