@@ -15,7 +15,7 @@
 .dir_en{direction:ltr!important;text-align:left;width:100%}
 .dir_left{direction: ltr!important;}
 .hidediv{display: none!important;}
-
+.btn-warning, .btn-warning:hover {color: #fff;background-color: #f77600;border-color: #f77600;}
 .test_bg {background-color: red;}
 .but_icon i {font-size: 12px;line-height: 22px;}
 .admin_err_list {list-style: none;padding: 8px !important;}

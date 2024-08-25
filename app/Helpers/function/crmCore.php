@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Carbon;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -27,6 +28,23 @@ if (!function_exists('TicketSendWhatsapp')) {
             $Whatsapp_Url = 'https://api.whatsapp.com/send/?phone=2' . $row->customer->mobile . '&text=' . $Mass;
         }
         return $Whatsapp_Url;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('CardOpenState')) {
+    function CardOpenState($agent,$state=null) {
+        if($state){
+            $open = $state ;
+        }else{
+            if($agent->isDesktop()){
+                $open = true ;
+            }else{
+                $open = false ;
+            }
+        }
+        return $open;
     }
 }
 

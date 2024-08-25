@@ -14,4 +14,5 @@ return
 	'leads_distribution' => 'توزيع الاتصالات',
 	'report' => 'تقارير',
 	'ticket_open' => 'ادارة التذاكر المفتوحة',
+	'follow_update' => 'تحديث حالة المتابعة رقم',
 ];

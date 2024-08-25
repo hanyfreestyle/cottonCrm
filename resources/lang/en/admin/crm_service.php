@@ -8,4 +8,9 @@ return
 	'label_device' => 'Device type',
 	'label_notes_err' => 'Technical failure',
 	'label_user_id' => 'Technician name',
+	'but_update_finished' => 'Finished',
+	'but_update_depends' => 'Depends on spare parts',
+	'but_update_postponed' => 'Postponed',
+	'but_update_cancellation' => 'Cancellation',
+	'but_update_rejected' => 'Rejected',
 ];

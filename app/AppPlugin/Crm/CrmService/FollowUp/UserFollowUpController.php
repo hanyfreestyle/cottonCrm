@@ -94,11 +94,14 @@ class UserFollowUpController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicket($ticketId) {
         $pageData = $this->pageData;
+
         $pageData['ViewType'] = "List";
+        $pageData['TitlePage'] =  __('admin/crm_service_menu.follow_update');
         $ticket = [];
         try {
             $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
+            $pageData['TitlePage'] .= " ".$ticket->id;
         } catch (\Exception $e) {
             self::abortAdminError(403);
         }

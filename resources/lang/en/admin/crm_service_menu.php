@@ -14,4 +14,5 @@ return
 	'leads_distribution' => 'Distribution Leads',
 	'report' => 'Report',
 	'ticket_open' => 'Manage Open Ticket',
+	'follow_update' => '',
 ];
