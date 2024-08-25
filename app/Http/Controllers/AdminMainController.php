@@ -30,7 +30,7 @@ class AdminMainController extends DefaultMainController {
         $this->middleware('auth');
 
         $this->MinifyTools = new MinifyTools();
-        $this->minType = "Web";
+        $this->minType = "Seo";
         $this->reBuild = true;
         View::share('MinifyTools', $this->MinifyTools);
         View::share('minType', $this->minType);
