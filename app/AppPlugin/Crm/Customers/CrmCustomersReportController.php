@@ -79,11 +79,15 @@ class CrmCustomersReportController extends AdminMainController {
             $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $AreaId);
         }
 
+        View::share('chartData', $chartData);
+        View::share('session', $session);
+
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
             'chartData' => $chartData,
             'rowData' => $rowData,
+            'session' => $session,
         ]);
 
     }

@@ -8,7 +8,7 @@
 
     <div class="row">
         @if( IsConfig( $config,'OneCountry'))
-            <input type="hidden" value="{{$Config['defCountryId']}}" name="country_id">
+            <input type="hidden" value="{{$config['defCountryId']}}" name="country_id">
         @else
             <x-admin.form.select-arr name="country_id" :sendvalue="old('country_id',issetArr($rowData,'country_id',IsConfig( $config,'defCountryId')))"
                                      add-filde="phone" :send-arr="$CashCountryList" label="{{__('admin/dataCity.form_country')}}" col="3"/>

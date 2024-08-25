@@ -1,1 +1,15 @@
-{"defCountry":"eg","defCountryId":"66","addCountry":true,"OneCountry":false,"addressReq":true,"googleAddress":true,"postcode":false,"phoneAreaCode":true,"fullAddress":true,"evaluation":true,"gender":true,"list_flag":false,"list_evaluation":true}
+{
+    "defCountry": "eg",
+    "defCountryId": "66",
+    "addCountry": true,
+    "OneCountry": true,
+    "addressReq": true,
+    "googleAddress": true,
+    "postcode": false,
+    "phoneAreaCode": true,
+    "fullAddress": true,
+    "evaluation": true,
+    "gender": true,
+    "list_flag": false,
+    "list_evaluation": true
+}

@@ -4,11 +4,14 @@
     padding-bottom: 10px;
     margin-bottom: 5px;
     border-bottom: 1px solid #CCCCCC;
+
 }
 
 .My_Chart_Container .placeholder {
     width: 100%;
     height: 100%;
+
+
 }
 
 .My_Chart_Legend {
@@ -58,5 +61,56 @@
 
 }
 
+
+.ChartBoxInfo {
+
+}
+
+.info-box .info-box-content{
+    line-height: normal;
+
+}
+
+.ChartBoxInfo .info-box {
+    box-shadow: 0 0 1px rgba(0,0,0,.125),0 1px 1px rgba(0,0,0,.095);
+    border-radius: .25rem;
+    background-color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 50px;
+    padding: .3rem;
+    position: relative;
+    width: 100%;
+}
+
+.info-box .info-box-icon {
+    border-radius: .25rem;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 1.25rem;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 40px;
+
+    color: #17a2b8 ;
+
+}
+
+
+.info-box .info-box-text {
+    font-weight: bold;
+    color: #17a2b8 ;
+
+}
+
+.info-box .info-box-number {
+    display: block;
+    margin-top:0!important;
+    font-weight: 700;
+}
 
 
