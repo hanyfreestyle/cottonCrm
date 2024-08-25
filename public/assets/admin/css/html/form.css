@@ -160,3 +160,19 @@ textarea.parsley-error {
 }
 
 
+.TicketActionBut .btn{
+    margin-bottom: 10px;
+}
+.UpdateTicketForm .alert{
+    margin-bottom: 0!important;
+ }
+
+@media (max-width: 480px) {
+    .UpdateTicketForm .alert{
+        font-size: 14px;
+        padding: 7px 10px;
+
+    }
+}
+
+

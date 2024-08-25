@@ -15,6 +15,7 @@ class DateCrm extends Component {
     public $id;
     public $col;
     public $value;
+    public $readonly;
 
     public function __construct(
         $name = null,
@@ -24,6 +25,7 @@ class DateCrm extends Component {
         $id = null,
         $col = '3',
         $value = null,
+        $readonly = false,
 
     ) {
 
@@ -31,6 +33,12 @@ class DateCrm extends Component {
         $this->col = $col;
         $this->req = $req;
         $this->name = $name;
+        if($readonly){
+            $this->readonly = ' readonly="readonly" ';
+        }else{
+            $this->readonly = null;
+        }
+
 
         if ($label == null) {
             $this->label = __('admin/form.text_published_at');

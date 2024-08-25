@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12 TicketActionBut">
         <x-admin.form.action-button :l="__('admin/crm_service.but_update_finished')" bg="s" icon="fas fa-check"
                                     url="{{route($PrefixRoute.'.UpdateFinished',$ticket->id)}}" :tip="false" size="m"/>
 

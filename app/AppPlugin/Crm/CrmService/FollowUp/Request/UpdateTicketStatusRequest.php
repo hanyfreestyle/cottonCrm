@@ -14,15 +14,30 @@ class UpdateTicketStatusRequest extends FormRequest {
 
     public function rules(Request $request): array {
 
-//        dd($request->follow_state);
+        $followState = $request->follow_state;
 
         $rules = [
-            'name' => 'required'
+            'des' => 'required'
         ];
 
-        $rules += [
+        if ($followState == 2) {
+            $rules += [
+                'cost' => 'required|numeric|min:0'
+            ];
+        }
+        if ($followState == 3) {
+            $rules += [
+                'follow_date' => "required|date_format:Y-m-d|after_or_equal:today",
+                'deposit' => 'required|numeric|min:0'
+            ];
+        }
 
-        ];
+        if ($followState == 4) {
+            $rules += [
+                'follow_date' => "required|date_format:Y-m-d|after_or_equal:today",
+            ];
+        }
+
 
         return $rules;
     }

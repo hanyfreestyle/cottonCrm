@@ -14,7 +14,7 @@
                         <i class="far fa-calendar-alt"></i>
                       </span>
             </div>
-            <input type="text" id="{{$id}}" value="{{$value}}" placeholder="YYYY-MM-DD" name="{{$name}}"
+            <input type="text" id="{{$id}}" value="{{$value}}" {{$readonly}} placeholder="YYYY-MM-DD" name="{{$name}}"
                    class="form-control float-right DatePickerForm  @error($name) is-invalid @enderror">
 
             @error($name)
