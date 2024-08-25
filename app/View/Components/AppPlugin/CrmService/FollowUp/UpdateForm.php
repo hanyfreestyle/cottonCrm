@@ -9,8 +9,8 @@ use Illuminate\View\Component;
 class UpdateForm extends Component
 {
 
-    public $row;
-    public $isactive;
+    public $ticket;
+    public $followState;
     public $option_1;
     public $option_2;
     public $option_3;
@@ -20,8 +20,8 @@ class UpdateForm extends Component
     public $option_7;
 
     public function __construct(
-        $row = array(),
-        $isactive = true,
+        $ticket = array(),
+        $followState = null,
         $option_1 = null,
         $option_2 = null,
         $option_3 = null,
@@ -31,8 +31,8 @@ class UpdateForm extends Component
         $option_7 = null,
     )
     {
-        $this->row = $row;
-        $this->isactive = $isactive;
+        $this->ticket = $ticket;
+        $this->followState = $followState;
         $this->option_1 = $option_1;
         $this->option_2 = $option_2;
         $this->option_3 = $option_3;

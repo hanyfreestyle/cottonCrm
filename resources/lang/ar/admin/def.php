@@ -14,6 +14,7 @@ return
 	'delete_restor_view' => 'عرض المحتوى المحذوف',
 	'details' => 'التفاصيل',
 	'form_button_add' => 'اضافة جديدة',
+	'form_button_cancel' => 'الغاء',
 	'form_button_edit' => 'تعديل',
 	'form_button_submit' => 'اضافة',
 	'form_country' => 'الدولة',
@@ -40,4 +41,5 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
+	'form_button_update' => 'تحديث',
 ];

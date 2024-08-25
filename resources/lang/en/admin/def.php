@@ -14,6 +14,7 @@ return
 	'delete_restor_view' => 'View Delete',
 	'details' => 'Details',
 	'form_button_add' => 'Add New',
+	'form_button_cancel' => 'Cancel',
 	'form_button_edit' => 'Edit',
 	'form_button_submit' => 'Submit',
 	'form_country' => 'Country',
@@ -40,4 +41,5 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
+	'form_button_update' => 'Update',
 ];

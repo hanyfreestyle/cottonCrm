@@ -17,8 +17,11 @@
         </div>
 
 
-
-        <x-app-plugin.crm-service.follow-up.update-button :ticket="$ticket" />
+        @if($viewActionBut)
+            <x-app-plugin.crm-service.follow-up.update-button :ticket="$ticket"/>
+        @else
+            <x-app-plugin.crm-service.follow-up.update-form :ticket="$ticket" :follow-state="$followState"  />
+        @endif
 
 
     </x-admin.hmtl.section>

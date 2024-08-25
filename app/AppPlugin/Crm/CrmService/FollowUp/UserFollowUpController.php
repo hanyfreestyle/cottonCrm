@@ -4,6 +4,7 @@ namespace App\AppPlugin\Crm\CrmService\FollowUp;
 
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
+use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 
 use App\AppPlugin\Data\Area\Models\Area;
@@ -96,20 +97,46 @@ class UserFollowUpController extends AdminMainController {
         $pageData = $this->pageData;
 
         $pageData['ViewType'] = "List";
-        $pageData['TitlePage'] =  __('admin/crm_service_menu.follow_update');
+        $pageData['TitlePage'] = __('admin/crm_service_menu.follow_update');
         $ticket = [];
         try {
             $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
-            $pageData['TitlePage'] .= " ".$ticket->id;
+            $pageData['TitlePage'] .= " " . $ticket->id;
         } catch (\Exception $e) {
             self::abortAdminError(403);
+        }
+
+        $RouteName = Route::currentRouteName();
+        $viewActionBut = false;
+        $followState = null;
+
+        if ($RouteName == $this->PrefixRoute . '.UpdateTicket') {
+            $viewActionBut = true;
+        } elseif ($RouteName == $this->PrefixRoute . '.UpdateFinished') {
+            $followState = 2;
+        } elseif ($RouteName == $this->PrefixRoute . '.UpdateDepends') {
+            $followState = 3;
+        } elseif ($RouteName == $this->PrefixRoute . '.UpdatePostponed') {
+            $followState = 4;
+        } elseif ($RouteName == $this->PrefixRoute . '.UpdateCancellation') {
+            $followState = 5;
+        } elseif ($RouteName == $this->PrefixRoute . '.UpdateReject') {
+            $followState = 6;
         }
 
         return view('AppPlugin.CrmService.followUp.add_follow')->with([
             'pageData' => $pageData,
             'ticket' => $ticket,
+            'viewActionBut' => $viewActionBut,
+            'followState' => $followState,
         ]);
+
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicketStatus(UpdateTicketStatusRequest $request , $ticketId) {
 
     }
 
