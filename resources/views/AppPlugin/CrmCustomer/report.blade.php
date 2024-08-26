@@ -2,25 +2,20 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
     <x-admin.hmtl.section>
         <x-app-plugin.crm.customers.form-filter form-name="{{$formName}}" :row="$rowData" :config="$Config"/>
 
-
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <x-admin.report.chart-week/>
-                    </div>
-                    <div class="col-lg-6">
-                        <x-admin.report.chart-month/>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
         <div class="row">
+            <div class="col-lg-6">
+                <x-admin.report.chart-week :chart-data="$weekChart"/>
+            </div>
+            <div class="col-lg-6">
+                <x-admin.report.chart-month :chart-data="$monthChart"/>
+            </div>
+        </div>
+
+        <div class="row mb-5 pb-5">
             <x-admin.report.session-chart id="Evaluation" :l="__($defLang.'report_evaluation')" i="fas fa-star"/>
             @if($Config['addCountry'])
                 @if(!$Config['OneCountry'])

@@ -1,8 +1,8 @@
-<x-admin.card.normal >
+<x-admin.card.normal>
     <div class="d-flex">
         <p class="d-flex flex-column">
-            <span class="text-bold text-lg">{{$allDayCount ?? 0}}</span>
-            <span>{{__('admin/blogPost.dash_count_week')}}</span>
+            <span class="text-bold text-lg">{{ $chartData['allDayCount']  ?? 0}}</span>
+            <span>{{__('admin/def.report_chart_week')}}</span>
         </p>
     </div>
     <div class="position-relative mb-4">
@@ -27,10 +27,10 @@
 
             var visitorsChart = new Chart($visitorsChart, {
                 data: {
-                    labels: [{!!  $dayList !!}],
+                    labels: [{!!  $chartData['dayList'] !!}],
                     datasets: [{
                         type: 'line',
-                        data: [{{$dayCountList}}],
+                        data: [{{ $chartData['dayCountList'] }}],
                         backgroundColor: 'transparent',
                         borderColor: '#007bff',
                         pointBorderColor: '#007bff',

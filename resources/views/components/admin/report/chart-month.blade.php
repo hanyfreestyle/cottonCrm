@@ -1,8 +1,8 @@
 <x-admin.card.normal>
     <div class="d-flex">
         <p class="d-flex flex-column">
-            <span class="text-bold text-lg">{{number_format($allCount)}}</span>
-            <span>{{__('admin/blogPost.dash_count_month')}}</span>
+            <span class="text-bold text-lg">{{number_format($chartData['allCount'] ?? 0 )}}</span>
+            <span>{{__('admin/def.report_chart_month')}}</span>
         </p>
     </div>
     <div class="position-relative mb-4">
@@ -28,12 +28,12 @@
             var salesChart = new Chart($salesChart, {
                 type: 'bar',
                 data: {
-                    labels: [{!! $monthList !!}],
+                    labels: [{!! $chartData['monthList'] !!}],
                     datasets: [
                         {
                             backgroundColor: '#007bff',
                             borderColor: '#007bff',
-                            data: [{{$monthCountList}}]
+                            data: [{{ $chartData['monthCountList'] }}]
                         },
                     ]
                 },

@@ -58,7 +58,7 @@ class CrmUniqueMobileNum implements ValidationRule {
 
         if ($count != 0) {
             $url = route('admin.CrmCustomer.repeat', $value);
-            $fail(' :attribute ' . __('admin/crm/customers.err_repeat_num') . ' <a target="_blank" href="' . $url . '">' . __('admin/crm/customers.err_repeat_search') . '</a>');
+            $fail(' :attribute ' . __('admin/crm_customer.err_repeat_num') . ' <a target="_blank" href="' . $url . '">' . __('admin/crm_customer.err_repeat_search') . '</a>');
         }
 
 

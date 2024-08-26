@@ -17,6 +17,7 @@ return
 	'form_button_cancel' => 'الغاء',
 	'form_button_edit' => 'تعديل',
 	'form_button_submit' => 'اضافة',
+	'form_button_update' => 'تحديث',
 	'form_country' => 'الدولة',
 	'form_current_photo' => 'الصورة الحالية',
 	'form_photo_icon_upload' => 'تحميل ايكون',
@@ -41,5 +42,6 @@ return
 	'status_active' => 'فعال',
 	'status_unactive' => 'غير فعال',
 	'status_unactive_but' => 'المحتوى المؤرشف',
-	'form_button_update' => 'تحديث',
+	'report_chart_week' => 'الاضافات الجديدة اخر 7 ايام',
+	'report_chart_month' => 'الاضافات الجديدة اخر 12 شهر',
 ];

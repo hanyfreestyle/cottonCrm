@@ -216,7 +216,7 @@ class CrmCustomersController extends AdminMainController {
                 $saveData = self::saveDefField($saveData, $request);
                 $saveData->save();
 
-                if ($this->Config['addCountry']) {
+                if ($this->config['addCountry']) {
                     $addressId = intval($request->input('address_id'));
                     if ($addressId == 0) {
                         $saveAddress = new CrmCustomersAddress();

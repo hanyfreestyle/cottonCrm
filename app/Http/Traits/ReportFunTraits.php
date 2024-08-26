@@ -2,9 +2,9 @@
 
 namespace App\Http\Traits;
 
-
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 trait ReportFunTraits {
     use DefCategoryTraits;
@@ -187,5 +187,70 @@ trait ReportFunTraits {
         return $sendArr;
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getChartWeek($Query) {
+        $allDayCount = 0;
+        $dayList = "";
+        $dayCountList = "";
+        for ($i = 0; $i <= 7; $i++) {
+            $queryClone = clone $Query;
+            $day = Carbon::now()->subDay(7)->addDay($i);
+            $count = $queryClone->whereDate('created_at', $day)->count();
+            $allDayCount += $count;
+            if ($i == 7) {
+                $dayList .= "'" . date("dS", strtotime($day)) . "'";
+                $dayCountList .= $count;
+            } else {
+                $dayList .= "'" . date("dS", strtotime($day)) . "'" . ",";
+                $dayCountList .= $count . ",";
+            }
+        }
+        return [
+            'dayList' => $dayList,
+            'dayCountList' => $dayCountList,
+            'allDayCount' => $allDayCount,
+        ];
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getChartMonth($Query) {
+        $data = array();
+        $allCount = 0;
+        $monthList = "";
+        $monthCountList = "";
+
+        for ($i = 11; $i >= 0; $i--) {
+            $queryClone = clone $Query;
+
+            $month = Carbon::today()->startOfMonth()->subMonth($i);
+            $year = Carbon::today()->startOfMonth()->subMonth($i)->format('Y');
+
+            $count = $queryClone->whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
+
+            $allCount = $allCount + $count;
+
+            if ($i == 0) {
+                $monthList .= "'" . $month->shortMonthName . "'";
+                $monthCountList .= $count;
+            } else {
+                $monthList .= "'" . $month->shortMonthName . "'" . ",";
+                $monthCountList .= $count . ",";
+            }
+
+            array_push($data, array(
+                'month' => $month->shortMonthName,
+                'year' => $year,
+                'count' => $count
+            ));
+        }
+
+        return [
+            'monthList' => $monthList,
+            'monthCountList' => $monthCountList,
+            'allCount' => $allCount,
+        ];
+    }
 
 }

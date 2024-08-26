@@ -2,6 +2,7 @@
 
 namespace App\AppPlugin\Crm\Customers;
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
@@ -35,6 +36,9 @@ class CrmCustomersReportController extends AdminMainController {
         $this->PageTitle = __($this->defLang . 'app_menu');
         $this->PrefixRoute = $this->selMenu . $this->controllerName . ".Report";
 
+        $this->modelChart = CrmCustomers::class;
+        View::share('modelChart', $this->modelChart);
+
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
@@ -44,9 +48,7 @@ class CrmCustomersReportController extends AdminMainController {
             'formName' => "CrmCustomersReportFilter",
         ];
 
-
         self::constructData($sendArr);
-
         $permission = ['sub' => 'crm_customer_report'];
         self::loadPagePermission($permission);
 
@@ -79,17 +81,19 @@ class CrmCustomersReportController extends AdminMainController {
             $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $AreaId);
         }
 
+        $weekChart = self::getChartWeek($rowData);
+        $monthChart = self::getChartMonth($rowData);
+
         View::share('chartData', $chartData);
         View::share('session', $session);
 
         return view('AppPlugin.CrmCustomer.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
-            'chartData' => $chartData,
             'rowData' => $rowData,
-            'session' => $session,
+            'weekChart' => $weekChart,
+            'monthChart' => $monthChart,
         ]);
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -101,6 +105,7 @@ class CrmCustomersReportController extends AdminMainController {
             ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
             ->where($table_address . '.is_default', true)
             ->select("$table.id as id",
+                "$table.created_at  as created_at",
                 "$table.evaluation_id  as evaluation_id",
                 "$table.gender_id  as gender_id",
                 "$table_address.country_id as country_id",

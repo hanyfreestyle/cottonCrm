@@ -17,6 +17,7 @@ return
 	'form_button_cancel' => 'Cancel',
 	'form_button_edit' => 'Edit',
 	'form_button_submit' => 'Submit',
+	'form_button_update' => 'Update',
 	'form_country' => 'Country',
 	'form_current_photo' => 'Current Photo',
 	'form_photo_icon_upload' => 'Upload Icon',
@@ -41,5 +42,6 @@ return
 	'status_active' => 'Active',
 	'status_unactive' => 'UnActive',
 	'status_unactive_but' => 'Archived Data',
-	'form_button_update' => 'Update',
+	'report_chart_week' => 'New additions last 7 days',
+	'report_chart_month' => 'New additions in the last 12 months',
 ];

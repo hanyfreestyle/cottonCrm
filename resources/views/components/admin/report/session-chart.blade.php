@@ -1,7 +1,7 @@
 @if(isset($chartData[$id]) and  count($chartData[$id]) > 0)
     @if(!isset($session[$key]))
-        @if(IsConfig($session,'r_card_view',true))
-            <div class="col-lg-3">
+        @if(IsConfig($session,'r_card_view',false))
+            <div class="col-lg-3 mb-3">
                 <div class="col-md-12 col-sm-12 col-12 ChartBoxInfo">
                     <div class="info-box">
                         <span class="info-box-icon bg-info"><i class="{{$i}}"></i></span>
