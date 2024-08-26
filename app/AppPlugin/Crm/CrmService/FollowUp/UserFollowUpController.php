@@ -6,10 +6,12 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -60,7 +62,7 @@ class UserFollowUpController extends AdminMainController {
         $RouteName = Route::currentRouteName();
 
         if ($RouteName == $this->PrefixRoute . '.New') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_new');
             $pageData['IconPage'] = 'fa-eye';
             $RouteVal = "New";
 
@@ -135,7 +137,31 @@ class UserFollowUpController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicketStatus(UpdateTicketStatusRequest $request, $ticketId) {
+        try {
+            $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $ticket = $Query->where('id', $ticketId)->firstOrFail();
+        } catch (\Exception $e) {
+            self::abortAdminError(403);
+        }
 
+        $follow_state = $request->input('follow_state');
+
+        if ($follow_state == 6 or $follow_state == 5) {
+            $ticket->state = 2;
+            $ticket->follow_state = $follow_state;
+            $ticket->close_date = getCurrentTime();
+            $ticket->save();
+
+            $ticketDes = new CrmTicketsDes();
+            $ticketDes->created_at = getCurrentTime();
+            $ticketDes->ticket_id = $ticket->id;
+            $ticketDes->user_id = Auth::user()->id;
+            $ticketDes->follow_state = $follow_state;
+            $ticketDes->des = $request->input('des');
+            $ticketDes->save();
+        }
+
+       return redirect()->route($this->PrefixRoute . '.New');
     }
 
 

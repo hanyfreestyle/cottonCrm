@@ -23,17 +23,23 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->text('notes_err')->nullable();
 
+            $table->dateTime('close_date')->nullable();
+            $table->float('cost')->nullable();
+            $table->float('deposit')->nullable();
+            $table->integer('review_state')->nullable()->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('crm_ticket_des', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->dateTime('created_at')->nullable();
+            $table->dateTime('follow_date')->nullable();
             $table->unsignedBigInteger('ticket_id');
-
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('follow_state');
             $table->longText("des")->nullable();
-            $table->timestamps();
             $table->foreign('ticket_id')->references('id')->on('crm_ticket')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
     }

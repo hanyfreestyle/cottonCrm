@@ -3,15 +3,12 @@
 namespace App\AppPlugin\Crm\CrmService\Tickets\Models;
 
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
-use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
-use App\Http\Livewire\Site\Cart\CustomerAddress;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class CrmTickets extends Model {
