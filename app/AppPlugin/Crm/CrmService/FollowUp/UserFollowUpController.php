@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
+use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
@@ -20,6 +21,7 @@ class UserFollowUpController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
+    use CrmDataTableTraits ;
 
     function __construct() {
         parent::__construct();
@@ -82,7 +84,7 @@ class UserFollowUpController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($RouteVal, $this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::OpenTicketQuery($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
         return view('AppPlugin.CrmService.followUp.index')->with([
@@ -100,7 +102,7 @@ class UserFollowUpController extends AdminMainController {
         $pageData['TitlePage'] = __('admin/crm_service_menu.follow_update');
         $ticket = [];
         try {
-            $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
             $pageData['TitlePage'] .= " " . $ticket->id;
         } catch (\Exception $e) {
@@ -138,7 +140,7 @@ class UserFollowUpController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicketStatus(UpdateTicketStatusRequest $request, $ticketId) {
         try {
-            $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
         } catch (\Exception $e) {
             self::abortAdminError(403);
@@ -179,13 +181,13 @@ class UserFollowUpController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $getData = $rowData->get();
 
         $deviceId = $getData->groupBy('device_id')->toarray();
         $userId = $getData->groupBy('user_id')->toarray();
         $brandId = $getData->groupBy('brand_id')->toarray();
-        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+        $area_id = $getData->groupBy('area_id')->toarray();
         $follow_state = $getData->groupBy('follow_state')->toarray();
 
         $AllData = $rowData->count();
@@ -197,9 +199,9 @@ class UserFollowUpController extends AdminMainController {
 
         $card = [];
         $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
-        $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
-        $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+        $card['today_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
         View::share('chartData', $chartData);
         View::share('session', $session);

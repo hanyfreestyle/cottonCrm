@@ -1,9 +1,6 @@
 <?php
-
-
 use App\AppPlugin\Crm\CrmService\Leads\CrmLeadsController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::prefix('/leads/')->name('CrmLeads.')->group(function () {
     Route::get('search/', [CrmLeadsController::class, 'SearchFormCustomer'])->name('SearchFormCustomer');

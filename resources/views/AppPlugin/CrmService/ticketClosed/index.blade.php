@@ -17,46 +17,30 @@
             </div>
         @endif
 
-            <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
-                <table {!! Table_Style_Yajra() !!} >
-                    <thead>
-                    <tr>
-                        <th class="all">#</th>
-                        <th class="all">{{__('admin/crm.label_date_add')}}</th>
-                        <th class="all">{{__('admin/crm.label_date_closed')}}</th>
-                        <th class="all">{{__('admin/crm_service.label_user_id')}}</th>
-                        <th class="all">{{__('admin/crm.label_customer_name')}}</th>
-                        <th class="all">{{__('admin/crm.label_customer_mobile')}}</th>
-                        <th class="all">{{__('admin/crm.label_customer_area')}}</th>
-                        <th class="all">{{__('admin/crm.label_state')}}</th>
-                        <th class="all">{{__('admin/crm_service.label_device')}}</th>
-                        <th class="all">{{__('admin/crm_service.label_notes_err')}}</th>
-                        <th class="all">{{__('admin/crm.label_notes')}}</th>
-                        <x-admin.table.action-but po="top" type="edit"/>
-                        <x-admin.table.action-but po="top" type="delete"/>
-                        <x-admin.table.action-but po="top" res="all" type="edit"/>
+        <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
+            <table {!! Table_Style_Yajra() !!} >
+                <thead>
+                <tr>
+                    <th class="all">#</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_date_add')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_date_closed')}}</th>
+                    <th class="desktop">{{__('admin/crm_service.label_user_id')}}</th>
+                    <th class="desktop">{{__('admin/crm.label_customer_name')}}</th>
+                    <th class="all">{{__('admin/crm.label_customer_mobile')}}</th>
+                    <th class="desktop">{{__('admin/crm.label_customer_area')}}</th>
+                    <th class="desktop">{{__('admin/crm.label_state')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_device')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_notes_err')}}</th>
+                    <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_notes')}}</th>
+                    <x-admin.table.action-but po="top" type="edit"/>
+                    <x-admin.table.action-but po="top" type="delete"/>
+                    <x-admin.table.action-but po="top" res="all" type="edit"/>
+                </tr>
+                </thead>
+                <tbody></tbody>
 
-
-{{--                        <th class="all">#</th>--}}
-{{--                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_date_add')}}</th>--}}
-{{--                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_date_closed')}}</th>--}}
-{{--                        <th class="desktop">{{__('admin/crm_service.label_user_id')}}</th>--}}
-{{--                        <th class="desktop">{{__('admin/crm.label_customer_name')}}</th>--}}
-{{--                        <th class="all">{{__('admin/crm.label_customer_mobile')}}</th>--}}
-{{--                        <th class="desktop">{{__('admin/crm.label_customer_area')}}</th>--}}
-{{--                        <th class="desktop">{{__('admin/crm.label_state')}}</th>--}}
-{{--                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_device')}}</th>--}}
-{{--                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_notes_err')}}</th>--}}
-{{--                        <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_notes')}}</th>--}}
-{{--                        <x-admin.table.action-but po="top" type="edit"/>--}}
-{{--                        <x-admin.table.action-but po="top" type="delete"/>--}}
-{{--                        <x-admin.table.action-but po="top" res="all" type="edit"/>--}}
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
-
-                </table>
-            </x-admin.card.def>
+            </table>
+        </x-admin.card.def>
 
 
     </x-admin.hmtl.section>

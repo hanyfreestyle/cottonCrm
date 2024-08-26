@@ -4,6 +4,7 @@ namespace App\AppPlugin\Crm\CrmService\Leads;
 
 use App\AppPlugin\Crm\CrmService\Leads\Request\CreateTicketRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Request\DistributiontRequest;
+use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\City\Models\City;
 use App\Http\Controllers\AdminMainController;
@@ -22,6 +23,7 @@ class CrmLeadsController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
+    use CrmDataTableTraits ;
 
     function __construct() {
         parent::__construct();
@@ -119,7 +121,7 @@ class CrmLeadsController extends AdminMainController {
         $pageData['SubView'] = false;
 
         $session = self::getSessionData($request);
-        $Data = self::DefLeadsFilterQuery(self::indexQuery(), $session);
+        $Data = self::TicketFilter(self::indexQuery(), $session);
         $rowData = $Data->paginate(30);
         return view('AppPlugin.CrmService.leads.distribution')->with([
             'pageData' => $pageData,
@@ -221,7 +223,7 @@ class CrmLeadsController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::DefLeadsFilterQuery(self::indexQuery(), $session);
+        $rowData = self::TicketFilter(self::indexQuery(), $session);
         $getData = $rowData->get();
 
         $deviceId = $getData->groupBy('device_id')->toarray();
@@ -239,6 +241,18 @@ class CrmLeadsController extends AdminMainController {
         $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $adsId);
         $chartData['City'] = self::ChartDataFromModel($AllData, City::class, $city_id);
         $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+
+
+        View::share('chartData', $chartData);
+        View::share('session', $session);
+
+        $chartQ = self::DataTableIndex(null);
+        $weekChart = self::getChartWeek($chartQ);
+        $monthChart = self::getChartMonth($chartQ);
+        View::share('weekChart', $weekChart);
+        View::share('monthChart', $monthChart);
+
+
         return view('AppPlugin.CrmService.leads.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,

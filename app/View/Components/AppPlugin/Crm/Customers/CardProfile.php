@@ -2,6 +2,7 @@
 
 namespace App\View\Components\AppPlugin\Crm\Customers;
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,6 +16,7 @@ class CardProfile extends Component {
     public $defLang;
     public $addTitle;
     public $viewList;
+    public $customerId;
 
     public function __construct(
         $row = array(),
@@ -24,14 +26,23 @@ class CardProfile extends Component {
         $defLang = null,
         $addTitle = false,
         $viewList = 'icon',
+        $customerId = null,
 
     ) {
-        $this->row = $row;
+
+        $this->customerId = $customerId;
+        if($this->customerId){
+            $this->row = CrmCustomers::query()->where('id',$this->customerId)->with('address')->first();
+        }else{
+            $this->row = $row;
+        }
+
         $this->viewList = $viewList;
         $this->allData = $allData;
         $this->config = $config;
         $this->softData = $softData;
         $this->addTitle = $addTitle;
+
         if($defLang == null){
             $this->defLang = 'admin/crm/customers.';
         }else{

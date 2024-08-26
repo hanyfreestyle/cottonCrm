@@ -6,15 +6,15 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use Yajra\DataTables\Facades\DataTables;
+
 
 
 class CrmTicketClosedController extends AdminMainController {
@@ -22,6 +22,7 @@ class CrmTicketClosedController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
+    use CrmDataTableTraits ;
 
     function __construct() {
         parent::__construct();
@@ -70,9 +71,6 @@ class CrmTicketClosedController extends AdminMainController {
         $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
 
-
-//        dd(getDateDifference("2024-08-25 11:56:19", "2024-08-26 13:37:51"));
-
         if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_all');
             $pageData['IconPage'] = 'fa-eye';
@@ -94,7 +92,7 @@ class CrmTicketClosedController extends AdminMainController {
             $RouteVal = "Cancellation";
         }
 
-        $rowData = self::DefLeadsFilterQuery(self::ClosedTicketFilter($RouteVal), $session);
+        $rowData = self::TicketFilter(self::ClosedTicketQuery($RouteVal), $session);
         $rowData = $rowData->get();
 
 
@@ -107,50 +105,12 @@ class CrmTicketClosedController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ClosedTicketFilter() {
-
-        $table = "crm_ticket";
-        $table_customers = "crm_customers";
-        $table_customers_address = "crm_customers_address";
-        $table_user = 'users';
-        $table_data = 'config_data_translations';
-        $table_area_translations = 'data_area_translations';
-
-        $data = DB::table($table)
-            ->Join("$table_customers", $table . '.customer_id', '=', $table_customers . '.id')
-            ->Join("$table_user", $table . '.user_id', '=', $table_user . '.id')
-
-            ->leftJoin("$table_customers_address", function ($join) use ($table_customers_address,$table){
-                $join->on($table.'.customer_id', '=', $table_customers_address.'.customer_id');
-                $join->where($table_customers_address.'.is_default', '=', 1);
-            })
-
-            ->leftJoin("$table_data", function ($join) use ($table_data,$table){
-                $join->on($table.'.device_id', '=', $table_data.'.data_id');
-                $join->where($table_data.'.locale', '=', 'ar');
-            })
-
-            ->leftJoin("$table_area_translations", function ($join) use ($table_area_translations, $table_customers_address) {
-                $join->on($table_customers_address . '.area_id', '=', $table_area_translations . '.area_id');
-                $join->where($table_area_translations . '.locale', '=', 'ar');
-            })
-
-
-            ->select("$table.id as id",
-                "$table.created_at  as created_at",
-                "$table.close_date  as close_date",
-                "$table.follow_state  as follow_state",
-                "$table.notes_err  as notes_err",
-                "$table.notes  as notes",
-                "$table_customers.mobile  as customers_mobile",
-                "$table_customers.name  as customers_name",
-                "$table_user.name  as user_name",
-                "$table_data.name  as device_name",
-                "$table_customers_address.area_id  as area_id",
-                "$table_area_translations.name  as area_name",
-            );
-        return $data;
-
+    public function DataTable(Request $request, $view) {
+        if ($request->ajax()) {
+            $session = self::getSessionData($request);
+            $rowData = self::TicketFilter(self::ClosedTicketQuery($view), $session);
+            return self::TicketDataTableColumns($rowData)->make(true);
+        }
     }
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -159,7 +119,7 @@ class CrmTicketClosedController extends AdminMainController {
 //        $pageData = $this->pageData;
 //        $pageData['ViewType'] = "List";
 //        $session = self::getSessionData($request);
-//        $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+//        $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
 //        $ticket = $Query->where('id', $ticketId)->firstOrFail();
 //
 //
@@ -169,68 +129,9 @@ class CrmTicketClosedController extends AdminMainController {
 //        ]);
 //    }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function DataTable(Request $request, $view) {
-        if ($request->ajax()) {
-            $session = self::getSessionData($request);
-            $rowData = self::DefLeadsFilterQuery(self::ClosedTicketFilter($view), $session);
-            return self::DataTableColumns($rowData)->make(true);
-        }
-    }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function DataTableColumns($data, $arr = array()) {
-        return DataTables::query($data)
-            ->addIndexColumn()
-            ->editColumn('id', function ($row) {
-                return returnTableId($this->agent, $row);
-            })
-            ->editColumn('created_at', function ($row) {
-                return [
-                    'display' => date("Y-m-d", strtotime($row->created_at)),
-                    'timestamp' => strtotime($row->created_at)
-                ];
-            })
-            ->editColumn('close_date', function ($row) {
-                return [
-                    'display' => date("Y-m-d", strtotime($row->close_date)) . ' (' . getDateDifference($row->created_at, $row->close_date) . ')',
-                    'timestamp' => strtotime($row->close_date)
-                ];
-            })
-            ->editColumn('customers_name', function ($row) {
-                return $row->customers_name;
-            })
-            ->editColumn('customers_mobile', function ($row) {
-                return $row->customers_mobile;
-            })
-            ->editColumn('user_name', function ($row) {
-                return $row->user_name;
-            })
-            ->editColumn('follow_state', function ($row) {
-                return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
-            })
 
-//            ->editColumn('area', function ($row) {
-//                return $row->customer->address->first()->area->name;
-//            })
-//            ->editColumn('device', function ($row) {
-//                return $row->device_name->name;
-//            })
 
-            ->editColumn('viewTicket', function ($row) {
-                return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
-            })
-
-            ->editColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->editColumn('viewInfo', function ($row) {
-                return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
-            })
-            ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
-    }
 
 
 
@@ -246,7 +147,7 @@ class CrmTicketClosedController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $getData = $rowData->get();
 
 
@@ -270,9 +171,9 @@ class CrmTicketClosedController extends AdminMainController {
 
         $card = [];
         $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
-        $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
-        $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+        $card['today_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
         $weekChart = self::getChartWeek($rowData);
         $monthChart = self::getChartMonth($rowData);

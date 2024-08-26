@@ -20,7 +20,7 @@
 @section('AddScript')
     <script src="{{ defAdminAssets('flot/jquery.flot.min.js') }}"></script>
     <script src="{{ defAdminAssets('flot/jquery.flot.pie.min.js') }}"></script>
-    <script src="{{ defAdminAssets('plugins/chart.js/Chart.min.js')}}"></script>
+
 @endsection
 
 

@@ -196,7 +196,7 @@ trait ReportFunTraits {
         for ($i = 0; $i <= 7; $i++) {
             $queryClone = clone $Query;
             $day = Carbon::now()->subDay(7)->addDay($i);
-            $count = $queryClone->whereDate('created_at', $day)->count();
+            $count = $queryClone->whereDate('crm_ticket.created_at', $day)->count();
             $allDayCount += $count;
             if ($i == 7) {
                 $dayList .= "'" . date("dS", strtotime($day)) . "'";
@@ -227,7 +227,7 @@ trait ReportFunTraits {
             $month = Carbon::today()->startOfMonth()->subMonth($i);
             $year = Carbon::today()->startOfMonth()->subMonth($i)->format('Y');
 
-            $count = $queryClone->whereMonth('created_at', $month)->whereYear('created_at', $year)->count();
+            $count = $queryClone->whereMonth('crm_ticket.created_at', $month)->whereYear('crm_ticket.created_at', $year)->count();
 
             $allCount = $allCount + $count;
 

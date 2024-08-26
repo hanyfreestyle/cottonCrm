@@ -4,47 +4,31 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
 
     <x-admin.hmtl.section>
-        @if($AllData >0)
-            <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$config"/>
+
+        <x-app-plugin.crm-service.leads.form-filter form-name="{{$formName}}" :row="$rowData" def-route=".filterReport" :view-dates="false" :config="$config"/>
+
+
+        @if(issetArr($session,'filter_last_add',true))
+            <div class="row">
+                <div class="col-lg-6">
+                    <x-admin.report.chart-week :chart-data="$weekChart"/>
+                </div>
+                <div class="col-lg-6">
+                    <x-admin.report.chart-month :chart-data="$monthChart"/>
+                </div>
+            </div>
         @endif
 
+
         <div class="row">
-            @if(isset($chartData['Device']) and  count($chartData['Device']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm_service.label_device')">
-                    <x-admin.report.chart-def id="Device" :data-row="$chartData['Device']"/>
-                </x-admin.card.normal>
-            @endif
-
-            @if(isset($chartData['BrandName']) and  count($chartData['BrandName']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm_service.label_brand')">
-                    <x-admin.report.chart-def id="BrandName" :data-row="$chartData['BrandName']"/>
-                </x-admin.card.normal>
-            @endif
-
-            @if(isset($chartData['LeadSours']) and  count($chartData['LeadSours']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_sours')">
-                    <x-admin.report.chart-def id="LeadSours" :data-row="$chartData['LeadSours']"/>
-                </x-admin.card.normal>
-            @endif
-
-            @if(isset($chartData['LeadCategory']) and  count($chartData['LeadCategory']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_category')">
-                    <x-admin.report.chart-def id="LeadCategory" :data-row="$chartData['LeadCategory']"/>
-                </x-admin.card.normal>
-            @endif
-
-            @if(isset($chartData['City']) and  count($chartData['City']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_city')">
-                    <x-admin.report.chart-def id="City" :data-row="$chartData['City']"/>
-                </x-admin.card.normal>
-            @endif
-
-            @if(isset($chartData['Area']) and  count($chartData['Area']) > 0)
-                <x-admin.card.normal col="col-lg-3" :title="__('admin/crm.label_lead_area')">
-                    <x-admin.report.chart-def id="Area" :data-row="$chartData['Area']"/>
-                </x-admin.card.normal>
-            @endif
+            <x-admin.report.session-chart id="Device" :l="__('admin/crm_service.label_device')" i="fas fa-desktop" key="device_id"/>
+            <x-admin.report.session-chart id="BrandName" :l="__('admin/crm_service.label_brand')" i="fas fa-copyright" key="brand_id"/>
+            <x-admin.report.session-chart id="LeadSours" :l="__('admin/crm.label_lead_sours')" i="fas fa-filter" key="sours_id"/>
+            <x-admin.report.session-chart id="LeadCategory" :l="__('admin/crm.label_lead_category')" i="fab fa-google" key="ads_id"/>
+            <x-admin.report.session-chart id="City" :l="__('admin/crm.label_lead_city')" i="fas fa-flag" key="city_id"/>
+            <x-admin.report.session-chart id="Area" :l="__('admin/crm.label_customer_area')" i="fas fa-map-pin" key="area_id"/>
         </div>
+
     </x-admin.hmtl.section>
 @endsection
 
@@ -52,6 +36,7 @@
 @section('AddScript')
     <script src="{{ defAdminAssets('flot/jquery.flot.min.js') }}"></script>
     <script src="{{ defAdminAssets('flot/jquery.flot.pie.min.js') }}"></script>
+    <script src="{{ defAdminAssets('plugins/chart.js/Chart.min.js')}}"></script>
 @endsection
 
 

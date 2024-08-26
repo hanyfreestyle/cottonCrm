@@ -6,6 +6,7 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
@@ -21,6 +22,7 @@ class CrmTicketOpenController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
+    use CrmDataTableTraits;
 
     function __construct() {
         parent::__construct();
@@ -95,7 +97,10 @@ class CrmTicketOpenController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($RouteVal, $this->PrefixRole), $session);
+//        $xx = self::DataTableIndex('open');
+//        dd($xx->first());
+
+        $rowData = self::TicketFilter(self::OpenTicketQuery($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
 
@@ -111,11 +116,12 @@ class CrmTicketOpenController extends AdminMainController {
     public function viewTicket(Request $request, $ticketId) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $session = self::getSessionData($request);
-        $Query = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
-        $ticket = $Query->where('id', $ticketId)->firstOrFail();
-
-
+        try {
+            $Query = self::OpenTicketUserPer($this->PrefixRole);
+            $ticket = $Query->where('id', $ticketId)->firstOrFail();
+        } catch (\Exception $e) {
+            self::abortAdminError(403);
+        }
         return view('AppPlugin.CrmService.ticketOpen.view')->with([
             'pageData' => $pageData,
             'ticket' => $ticket,
@@ -127,62 +133,9 @@ class CrmTicketOpenController extends AdminMainController {
     public function DataTable(Request $request, $view) {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
-            $rowData = self::DefLeadsFilterQuery(self::OpenTicketFilter($view, $this->PrefixRole), $session);
-            return self::DataTableColumns($rowData)->make(true);
+            $rowData = self::TicketFilter(self::OpenTicketQuery($view, $this->PrefixRole), $session);
+            return self::TicketDataTableColumns($rowData)->make(true);
         }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function DataTableColumns($data, $arr = array()) {
-        return DataTables::eloquent($data)
-            ->addIndexColumn()
-            ->editColumn('id', function ($row) {
-                return returnTableId($this->agent, $row);
-            })
-            ->editColumn('created_at', function ($row) {
-                return [
-                    'display' => date("Y-m-d", strtotime($row->created_at)) . '' . TicketDateFrom($row->created_at) . '',
-                    'timestamp' => strtotime($row->created_at)
-                ];
-            })
-            ->editColumn('follow_date', function ($row) {
-                return [
-                    'display' => date("Y-m-d", strtotime($row->follow_date)) . '' . TicketDateFrom($row->follow_date) . '',
-                    'timestamp' => strtotime($row->follow_date)
-                ];
-            })
-            ->editColumn('name', function ($row) {
-                return $row->customer->name;
-            })
-            ->editColumn('mobile', function ($row) {
-                return $row->customer->mobile;
-            })
-            ->editColumn('user_name', function ($row) {
-                return $row->user->name;
-            })
-            ->editColumn('area', function ($row) {
-                return $row->customer->address->first()->area->name;
-            })
-            ->editColumn('device', function ($row) {
-                return $row->device_name->name;
-            })
-            ->editColumn('follow_state', function ($row) {
-                return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
-            })
-            ->editColumn('viewTicket', function ($row) {
-                return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
-            })
-            ->editColumn('changeUser', function ($row) {
-                return view('datatable.but')->with(['btype' => 'changeUser', 'row' => $row])->render();
-            })
-            ->editColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->editColumn('viewInfo', function ($row) {
-                return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
-            })
-            ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -222,14 +175,14 @@ class CrmTicketOpenController extends AdminMainController {
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
         $getData = $rowData->get();
 
 
         $deviceId = $getData->groupBy('device_id')->toarray();
         $userId = $getData->groupBy('user_id')->toarray();
         $brandId = $getData->groupBy('brand_id')->toarray();
-        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+        $area_id = $getData->groupBy('area_id')->toarray();
         $follow_state = $getData->groupBy('follow_state')->toarray();
         $LeadSours = $getData->groupBy('sours_id')->toarray();
         $LeadCategory = $getData->groupBy('ads_id')->toarray();
@@ -246,16 +199,13 @@ class CrmTicketOpenController extends AdminMainController {
 
         $card = [];
         $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
-        $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
-        $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+        $card['today_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
+        $card['back_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
+        $card['next_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
-        $weekChart = self::getChartWeek($rowData);
-        $monthChart = self::getChartMonth($rowData);
+
         View::share('chartData', $chartData);
         View::share('session', $session);
-        View::share('weekChart', $weekChart);
-        View::share('monthChart', $monthChart);
 
         return view('AppPlugin.CrmService.ticketOpen.report')->with([
             'pageData' => $pageData,
