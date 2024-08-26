@@ -148,8 +148,10 @@ class UserFollowUpController extends AdminMainController {
 
         if ($follow_state == 6 or $follow_state == 5) {
             $ticket->state = 2;
+            $ticket->follow_date = null;
             $ticket->follow_state = $follow_state;
             $ticket->close_date = getCurrentTime();
+            $ticket->cost_service =  $request->input('cost_service') ?? null;
             $ticket->save();
 
             $ticketDes = new CrmTicketsDes();

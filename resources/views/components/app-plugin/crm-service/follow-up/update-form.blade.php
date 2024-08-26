@@ -39,7 +39,11 @@
                 </div>
             @elseif($followState == 6)
                 <x-admin.hmtl.alert-massage bg="dark" margin="mt-3 " align="right" :mass="__('admin/crm_service_mass.state_6')"/>
+
                 <div class="row mt-2">
+                    <x-admin.form.input :type="getNumberType($agent)" name="cost_service" col="3" :value="old('cost_service')" :label="__('admin/crm_service.label_update_cost_service')"/>
+                </div>
+                <div class="row">
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_reason_for_rejection')"/>
                 </div>
             @endif

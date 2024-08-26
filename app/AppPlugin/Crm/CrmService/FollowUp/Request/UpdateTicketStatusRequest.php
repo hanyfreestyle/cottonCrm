@@ -38,6 +38,13 @@ class UpdateTicketStatusRequest extends FormRequest {
             ];
         }
 
+        if ($followState == 6) {
+            $rules += [
+                'cost_service' => 'required|numeric|min:0'
+            ];
+        }
+
+
 
         return $rules;
     }

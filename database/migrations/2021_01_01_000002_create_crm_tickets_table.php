@@ -24,8 +24,15 @@ return new class extends Migration {
             $table->text('notes_err')->nullable();
 
             $table->dateTime('close_date')->nullable();
+
             $table->float('cost')->nullable();
+            $table->float('cost_service')->nullable();
             $table->float('deposit')->nullable();
+
+            $table->float('cost_get')->nullable();
+            $table->float('cost_service_get')->nullable();
+            $table->float('deposit_get')->nullable();
+
             $table->integer('review_state')->nullable()->default(0);
             $table->timestamps();
         });
