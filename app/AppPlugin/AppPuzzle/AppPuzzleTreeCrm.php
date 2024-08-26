@@ -47,7 +47,7 @@ class AppPuzzleTreeCrm {
             'appFolder' => 'Crm/CrmCore',
             'viewFolder' => 'CrmCore',
             'routeFolder' => "crm/",
-            'routeFile' => 'crmCore.php',
+            'routeFiles' => ['crmCore.php','crmService.php'],
             'adminLangFolder' => "admin/",
             'adminLangFiles' => ['crm.php'],
         ];

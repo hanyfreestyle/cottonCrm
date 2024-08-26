@@ -168,5 +168,18 @@ trait CrmMainTraits {
         return $count;
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function ClosedTicketFilter($RouteVal) {
+        $data = CrmTickets::defClosed();
+        if ($RouteVal == "Finished") {
+            $data->where('follow_state', 2);
+        } elseif ($RouteVal == 'Cancellation') {
+            $data->where('follow_state', 5);
+        } elseif ($RouteVal == 'Reject') {
+            $data->where('follow_state', 6);
+        }
+        return $data;
+    }
 
 }

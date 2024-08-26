@@ -6,6 +6,7 @@ return
 	'but_add_to_user' => 'Add',
 	'but_call' => 'Call',
 	'but_edit_new' => 'Edit Leads Info',
+	'but_ticket_view' => 'Ticket View',
 	'but_update' => 'Update',
 	'but_whatsapp' => 'WhatsApp',
 	'but_whatsapp_mass' => 'Good evening',
@@ -33,5 +34,5 @@ return
 	'model_h2_ticket' => 'Ticket details',
 	'model_title_info' => 'Follow-up details',
 	'report_card_all_count' => 'Total of follow-ups',
-	'but_ticket_view' => 'Ticket View',
+	'label_date_closed' => 'Closed Date',
 ];

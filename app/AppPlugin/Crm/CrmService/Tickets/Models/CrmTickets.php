@@ -28,9 +28,19 @@ class CrmTickets extends Model {
             ->where('user_id','!=',null)
             ->with('customer')
             ->with('device_name')
-            ->with('user')
             ->with('user');
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function scopeDefClosed(Builder $query): Builder {
+        return $query->where('state',2)
+            ->with('customer')
+            ->with('device_name')
+            ->with('user');
+    }
+
+
 
     public function scopeDefNew(Builder $query): Builder {
         return $query->where('state',1)->where('follow_state',1);

@@ -6,6 +6,7 @@ return
 	'but_add_to_user' => 'اضافة',
 	'but_call' => 'اتصال',
 	'but_edit_new' => 'تعديل بيانات المتابعة',
+	'but_ticket_view' => 'عرض التفاصيل',
 	'but_update' => 'تحديث',
 	'but_whatsapp' => 'وتس اب',
 	'but_whatsapp_mass' => 'مساء الخير',
@@ -33,5 +34,5 @@ return
 	'model_h2_ticket' => 'تفاصيل التذكرة',
 	'model_title_info' => 'تفاصيل المتابعة',
 	'report_card_all_count' => 'اجمالى عدد المتابعات',
-	'but_ticket_view' => 'عرض التفاصيل',
+	'label_date_closed' => 'تاريخ الاغلاق',
 ];

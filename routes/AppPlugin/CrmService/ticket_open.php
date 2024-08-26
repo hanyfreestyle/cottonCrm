@@ -1,9 +1,7 @@
 <?php
 
-
 use App\AppPlugin\Crm\CrmService\Tickets\CrmTicketOpenController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::prefix('/ticket-open/')->name('TicketOpen.')->group(function () {
     Route::get('all', [CrmTicketOpenController::class, 'index'])->name('All');
@@ -23,5 +21,5 @@ Route::prefix('/ticket-open/')->name('TicketOpen.')->group(function () {
     Route::get('view-ticket/{ticketId}', [CrmTicketOpenController::class, 'viewTicket'])->name('viewTicket');
     Route::get('change-user/{id}', [CrmTicketOpenController::class, 'changeUser'])->name('changeUser');
     Route::post('change-user/{id}', [CrmTicketOpenController::class, 'changeUserUpdate'])->name('changeUserUpdate');
-    Route::get('destroy-ticket/{ticketId}', [CrmTicketOpenController::class, 'index'])->name('destroy');
+    Route::get('destroy-ticket/{ticketId}', [CrmTicketOpenController::class, 'destroy'])->name('destroy');
 });
