@@ -36,7 +36,7 @@ class PermissionSeeder extends Seeder {
         $data = ProductFileTraits::LoadPermission($data);
         $data = MainModelFileTraits::LoadPermission($data);
 
-//        $data = DataFileTraits::LoadPermission($data);
+        $data = DataFileTraits::LoadPermission($data);
         $data = AppSettingFileTraits::LoadPermission($data);
 
         $countData = Permission::all()->count();

@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -104,6 +105,54 @@ class CrmTicketClosedController extends AdminMainController {
         ]);
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClosedTicketFilter() {
+
+        $table = "crm_ticket";
+        $table_customers = "crm_customers";
+        $table_customers_address = "crm_customers_address";
+        $table_user = 'users';
+        $table_data = 'config_data_translations';
+        $table_area_translations = 'data_area_translations';
+
+        $data = DB::table($table)
+            ->Join("$table_customers", $table . '.customer_id', '=', $table_customers . '.id')
+            ->Join("$table_user", $table . '.user_id', '=', $table_user . '.id')
+
+            ->leftJoin("$table_customers_address", function ($join) use ($table_customers_address,$table){
+                $join->on($table.'.customer_id', '=', $table_customers_address.'.customer_id');
+                $join->where($table_customers_address.'.is_default', '=', 1);
+            })
+
+            ->leftJoin("$table_data", function ($join) use ($table_data,$table){
+                $join->on($table.'.device_id', '=', $table_data.'.data_id');
+                $join->where($table_data.'.locale', '=', 'ar');
+            })
+
+            ->leftJoin("$table_area_translations", function ($join) use ($table_area_translations, $table_customers_address) {
+                $join->on($table_customers_address . '.area_id', '=', $table_area_translations . '.area_id');
+                $join->where($table_area_translations . '.locale', '=', 'ar');
+            })
+
+
+            ->select("$table.id as id",
+                "$table.created_at  as created_at",
+                "$table.close_date  as close_date",
+                "$table.follow_state  as follow_state",
+                "$table.notes_err  as notes_err",
+                "$table.notes  as notes",
+                "$table_customers.mobile  as customers_mobile",
+                "$table_customers.name  as customers_name",
+                "$table_user.name  as user_name",
+                "$table_data.name  as device_name",
+                "$table_customers_address.area_id  as area_id",
+                "$table_area_translations.name  as area_name",
+            );
+        return $data;
+
+    }
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //    public function viewTicket(Request $request, $ticketId) {
@@ -133,7 +182,7 @@ class CrmTicketClosedController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DataTableColumns($data, $arr = array()) {
-        return DataTables::eloquent($data)
+        return DataTables::query($data)
             ->addIndexColumn()
             ->editColumn('id', function ($row) {
                 return returnTableId($this->agent, $row);
@@ -150,25 +199,26 @@ class CrmTicketClosedController extends AdminMainController {
                     'timestamp' => strtotime($row->close_date)
                 ];
             })
-            ->editColumn('name', function ($row) {
-                return $row->customer->name;
+            ->editColumn('customers_name', function ($row) {
+                return $row->customers_name;
             })
-            ->editColumn('mobile', function ($row) {
-                return $row->customer->mobile;
+            ->editColumn('customers_mobile', function ($row) {
+                return $row->customers_mobile;
             })
             ->editColumn('user_name', function ($row) {
-                return $row->user->name;
-            })
-            ->editColumn('area', function ($row) {
-                return $row->customer->address->first()->area->name;
-            })
-            ->editColumn('device', function ($row) {
-                return $row->device_name->name;
+                return $row->user_name;
             })
             ->editColumn('follow_state', function ($row) {
                 return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
-
             })
+
+//            ->editColumn('area', function ($row) {
+//                return $row->customer->address->first()->area->name;
+//            })
+//            ->editColumn('device', function ($row) {
+//                return $row->device_name->name;
+//            })
+
             ->editColumn('viewTicket', function ($row) {
                 return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
             })

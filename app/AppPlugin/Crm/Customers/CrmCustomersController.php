@@ -30,7 +30,7 @@ class CrmCustomersController extends AdminMainController {
         $this->defLang = "admin/crm_customer.";
         View::share('defLang', $this->defLang);
 
-        $this->config = self::defConfig();
+        $this->config = self::defConfigCustomers();
         View::share('config', $this->config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');

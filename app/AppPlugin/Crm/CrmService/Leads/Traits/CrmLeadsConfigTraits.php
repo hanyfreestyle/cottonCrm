@@ -5,10 +5,13 @@ namespace App\AppPlugin\Crm\CrmService\Leads\Traits;
 use App\AppPlugin\Crm\Customers\Traits\CrmCustomersConfigTraits;
 
 trait CrmLeadsConfigTraits {
+    use CrmCustomersConfigTraits ;
 
     static function defConfig() {
 
-        $CustomersConfig = CrmCustomersConfigTraits::defConfig();
+        $CustomersConfig = self::defConfigCustomers();
+
+
         $config = [
             'leads_sours_id' => true,
             'leads_ads_id' => true,

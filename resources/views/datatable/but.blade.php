@@ -25,8 +25,8 @@
 @elseif($btype == 'viewInfo')
     <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
     <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
-        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
+{{--        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>--}}
+{{--        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>--}}
     </x-admin.hmtl.popup-modal>
 @elseif($btype == 'addLang')
     @if(!isset($row->translate('ar')->name))

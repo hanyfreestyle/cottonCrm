@@ -10,7 +10,7 @@ trait CrmCustomersConfigTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function defConfig() {
+    static function defConfigCustomers() {
 
         $config = [
             'defCountry' => config('app.defCountry'),
