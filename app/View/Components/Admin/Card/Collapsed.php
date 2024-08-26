@@ -18,6 +18,8 @@ class Collapsed extends Component {
     public $bg;
     public $filter;
     public $header_filter;
+    public $icon;
+    public $count;
 
     public function __construct(
         $row = array(),
@@ -28,10 +30,14 @@ class Collapsed extends Component {
         $bg = 'p',
         $filter = false,
         $header_filter = null,
+        $icon = null,
+        $count = null,
     ) {
         $this->row = $row;
         $this->title = $title;
         $this->header_filter = $header_filter;
+        $this->icon = $icon;
+        $this->count = $count;
 
         if ($filter) {
             $outline = false;

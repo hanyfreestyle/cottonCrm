@@ -1,7 +1,13 @@
 <div class="adminCard card {{$outline}} card-{{$bg}} {{$collapsed_style}}">
     <div class="card-header {{$header_filter}}">
         @if($title)
-            <h3 class="card-title">{{$title}}</h3>
+            <h3 class="card-title">
+                <i class="{{$icon}}"></i>
+                {{$title}}
+                @if($count)
+                    <span>{{number_format($count)}}</span>
+                @endif
+            </h3>
         @endif
         @if($collapsed)
             <div class="card-tools">
@@ -13,15 +19,3 @@
         {{$slot}}
     </div>
 </div>
-
-@push('JsCode')
-{{--    <script type="text/javascript">--}}
-{{--        $(document).on("click",".changeOpen",function() {--}}
-{{--            $(".My_Chart_Container").each(function ()--}}
-{{--            {--}}
-{{--                $(this).css("display", "block");--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-@endpush
-

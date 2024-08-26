@@ -11,6 +11,7 @@ return
 	'set_label_view' => 'عرض عنوان الحقل',
 	'set_orderby' => 'ترتيب المحتوى',
 	'set_perpage' => 'فى الصفحة',
+	'set_view_photo' => 'عرض الصورة',
 	'sort_date_asc' => 'تاريخ النشر من الاحدث الى الاقدم',
 	'sort_date_desc' => 'تاريخ النشر من الاقدم الى الاحدث',
 	'sort_id_asc' => 'الترتيب من الاقدم الى الاحدث',
@@ -18,5 +19,5 @@ return
 	'sort_name_asc' => 'التريب بالاسم تنازلى',
 	'sort_name_desc' => 'التريب بالاسم تصاعدى',
 	'sort_postion' => 'الترتيب',
-	'set_view_photo' => 'عرض الصورة',
+	'set_filter_option' => 'خصائص التقارير',
 ];

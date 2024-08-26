@@ -62,11 +62,8 @@
 }
 
 
-.ChartBoxInfo {
 
-}
-
-.info-box .info-box-content{
+.ChartBoxInfo .info-box .info-box-content{
     line-height: normal;
 
 }
@@ -84,7 +81,7 @@
     width: 100%;
 }
 
-.info-box .info-box-icon {
+.ChartBoxInfo .info-box .info-box-icon {
     border-radius: .25rem;
     -ms-flex-align: center;
     align-items: center;
@@ -101,16 +98,30 @@
 }
 
 
-.info-box .info-box-text {
+.ChartBoxInfo .info-box .info-box-text {
     font-weight: bold;
     color: #17a2b8 ;
 
 }
 
-.info-box .info-box-number {
+.ChartBoxInfo .info-box .info-box-number {
     display: block;
     margin-top:0!important;
     font-weight: 700;
 }
 
 
+.reportChart .adminCard .card-title {
+    font-weight: bold;
+    font-size: 16px;
+    color:rgba(0,0,0,.7);
+}
+.reportChart .adminCard .card-title i {
+    color: #007bff;
+}
+.reportChart .adminCard .card-title span {
+    font-weight: bold;
+    font-size: 15px;
+    color:rgba(0,0,0,.4);
+    font-family: Arial, Helvetica, sans-serif;
+}

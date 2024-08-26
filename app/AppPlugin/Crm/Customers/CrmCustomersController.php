@@ -43,6 +43,7 @@ class CrmCustomersController extends AdminMainController {
             'AddConfig' => true,
             'AddLang' => false,
             'restore' => 0,
+            'settings'=>['report'=>true],
             'formName' => "CrmCustomersFilter",
         ];
 

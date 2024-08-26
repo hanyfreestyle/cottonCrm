@@ -11,7 +11,9 @@
 
         <select class="form-control select2 custom-select @error($name) is-invalid @enderror " id="{{$name}}" name="{{$name}}"
                 style="width: 100%;">
-            <option value="">{{$label}}</option>
+            @if($addLabelOption)
+                <option value="">{{$label}}</option>
+            @endif
 
             @if($selectType == 'normal')
 

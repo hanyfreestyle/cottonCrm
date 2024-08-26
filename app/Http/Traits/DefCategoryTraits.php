@@ -82,6 +82,17 @@ trait DefCategoryTraits {
         ];
 
 
+        $Cat['filter_card_open'] = [
+            (object)['id' => '0', 'name' => __('admin/defCat.filter_card_open_0')],
+            (object)['id' => '1', 'name' => __('admin/defCat.filter_card_open_1')],
+        ];
+
+        $Cat['filter_last_add'] = [
+            (object)['id' => '0', 'name' => __('admin/defCat.filter_last_add_0')],
+            (object)['id' => '1', 'name' => __('admin/defCat.filter_last_add_1')],
+        ];
+
+
         return $Cat;
     }
 

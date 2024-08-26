@@ -7,7 +7,7 @@ return [
 //        'alertMass'=> ['id'=> 'alertMass' ,'group'=>'admin','file_name'=> 'alertMass','name_en'=>'Alert Mass','name_ar'=>'رسائل التحذير' ],
 
 //        'filter'=> ['id'=> 'filter', 'group'=>'admin', 'file_name'=> 'formFilter','name_en'=>'Filter Form','name_ar'=>'فلتر' ],
-//        'settings'=> ['id'=> 'settings' , 'group'=>'admin' , 'sub_dir'=> 'config' , 'file_name'=> 'settings','name'=>'Settings','name_ar'=>'اعدادات الاقسام' ],
+        'settings'=> ['id'=> 'settings' , 'group'=>'admin' , 'sub_dir'=> 'config' , 'file_name'=> 'settings','name'=>'Settings','name_ar'=>'اعدادات الاقسام' ],
 //        'deleteMass'=> ['id'=> 'deleteMass','group'=>'admin','file_name'=>'deleteMass','name'=>'Delete Mass','name_ar'=>'رسائل الحذف' ],
         'def' => ['id' => 'def', 'group' => 'admin', 'file_name' => 'def', 'name_en' => 'Default Variables', 'name_ar' => 'المتغيرات الاساسية'],
         'defCat' => ['id' => 'defCat', 'group' => 'admin', 'file_name' => 'defCat', 'name_en' => 'Variables', 'name_ar' => 'متغيرات'],

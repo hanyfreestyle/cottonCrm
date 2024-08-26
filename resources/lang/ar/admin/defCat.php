@@ -2,6 +2,10 @@
 
 return
 [
+	'filter_card_open_0' => 'عرض كارت مغلق',
+	'filter_card_open_1' => 'عرض الكارت مفتوح',
+	'filter_last_add_0' => 'اخفاء الاضافات الجديدة',
+	'filter_last_add_1' => 'عرض الاضافات الجديدة',
 	'gender_1' => 'ذكر',
 	'gender_2' => 'انثى',
 	'month_1' => 'يناير',

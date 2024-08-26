@@ -2,6 +2,10 @@
 
 return
 [
+	'filter_card_open_0' => '',
+	'filter_card_open_1' => '',
+	'filter_last_add_0' => '',
+	'filter_last_add_1' => '',
 	'gender_1' => 'Male',
 	'gender_2' => 'Female',
 	'month_1' => 'January',

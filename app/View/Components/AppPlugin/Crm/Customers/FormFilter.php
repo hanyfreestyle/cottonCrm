@@ -18,6 +18,7 @@ class FormFilter extends Component {
     public $cityId;
     public $cityList;
     public $areaList;
+    public $reportView;
 
     public function __construct(
         $row = array(),
@@ -25,11 +26,13 @@ class FormFilter extends Component {
         $formName = null,
         $cityList = array(),
         $areaList = array(),
+        $reportView =false,
 
     ) {
         $this->row = $row;
         $this->config = $config;
         $this->formName = $formName;
+        $this->reportView = $reportView;
         $this->getSessionData = Session::get($this->formName);
 
         if (issetArr($config,'OneCountry')) {

@@ -11,6 +11,7 @@ return
 	'set_label_view' => 'Label View',
 	'set_orderby' => 'order By',
 	'set_perpage' => 'Per page',
+	'set_view_photo' => '',
 	'sort_date_asc' => 'Publication date from newest to oldest',
 	'sort_date_desc' => 'Publication date from oldest to newest',
 	'sort_id_asc' => 'Sort from oldest to newest',
@@ -18,5 +19,5 @@ return
 	'sort_name_asc' => 'order By name is descending',
 	'sort_name_desc' => 'order By name is ascending',
 	'sort_postion' => 'Postions',
-	'set_view_photo' => '',
+	'set_filter_option' => '',
 ];

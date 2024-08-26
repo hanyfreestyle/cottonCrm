@@ -70,6 +70,12 @@
         @endif
 
 
+        @if(IsConfig($settings,'report'))
+            <x-admin.form.select-arr label="{{ __('admin/config/settings.set_filter_option') }}" name="{{$modelname}}_report_filter_option" col="2"
+                                     sendvalue="{{old($modelname.'_report_filter_option', IsArr($modelSettings,$modelname.'_report_filter_option',0))}}" :req="false"
+                                     type="selActive"/>
+        @endif
+
 
         {{--    @if($orderby)--}}
         {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_orderby')}}" name="{{$modelname}}_orderby" col="3"--}}

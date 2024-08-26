@@ -37,9 +37,14 @@
 
                     @if(IsConfig($config,'gender'))
                         <x-admin.form.select-arr name="gender_id" sendvalue="{{old('gender_id',issetArr($getSessionData,'gender_id'))}}" :labelview="false"
-                                                 select-type="DefCat" :send-arr="$DefCat['gender']" col="3" :label="__($defLang.'form_gender')" :filter-form="true" col="2" :req="false"/>
+                                                 select-type="DefCat" :send-arr="$DefCat['gender']" :label="__($defLang.'form_gender')" :filter-form="true" col="2"/>
                     @endif
                 </div>
+
+                @if($reportView)
+                    <x-admin.report.filter-option-list :session="$getSessionData"/>
+                @endif
+
                 <div class="row formFilterBut">
                     <button type="submit" name="Forget" class="btn btn-dark btn-sm adminButMobile"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
                 </div>
@@ -55,6 +60,8 @@
                     </form>
                 </div>
             @endif
+
+
 
         </div>
     </div>

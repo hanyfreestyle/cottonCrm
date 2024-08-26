@@ -25,6 +25,7 @@ class SelectArr extends Component {
     public $req;
     public $type;
     public $l;
+    public $addLabelOption;
 
     public function __construct(
         $row = array(),
@@ -45,10 +46,12 @@ class SelectArr extends Component {
         $req = true,
         $type = null,
         $l = null,
+        $addLabelOption = true,
 
     ) {
         $this->name = $name;
         $this->req = $req;
+        $this->addLabelOption = $addLabelOption;
 
         if($l){
             $this->label = $l;
