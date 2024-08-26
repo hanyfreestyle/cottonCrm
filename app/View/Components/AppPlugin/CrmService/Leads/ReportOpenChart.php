@@ -10,15 +10,18 @@ class ReportOpenChart extends Component {
 
     public $card;
     public $chartData;
+    public $reportView;
 
 
     public function __construct(
         $card = array(),
         $chartData = array(),
+        $reportView = false,
 
     ) {
         $this->card = $card;
         $this->chartData = $chartData;
+        $this->reportView = $reportView;
 
     }
 

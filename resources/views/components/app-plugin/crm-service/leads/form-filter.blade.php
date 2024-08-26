@@ -75,6 +75,11 @@
                         <x-admin.form.select-data name="brand_id" cat-id="BrandName" :sendvalue="old('brand_id',issetArr($getSessionData,'brand_id'))"
                                                   col="2" :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm_service.label_brand')"/>
                     </div>
+
+                    @if($reportView)
+                        <x-admin.report.filter-option-list :session="$getSessionData"/>
+                    @endif
+
                     <div class="row formFilterBut">
                         <button type="submit" name="Forget" class="btn btn-dark adminButMobile btn-sm"><i class="fas fa-filter"></i> {{__('admin/formFilter.but_filter')}}</button>
                     </div>

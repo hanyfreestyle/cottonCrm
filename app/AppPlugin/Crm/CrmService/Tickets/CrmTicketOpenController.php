@@ -3,8 +3,6 @@
 namespace App\AppPlugin\Crm\CrmService\Tickets;
 
 use App\AppCore\Menu\AdminMenu;
-
-
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
@@ -43,9 +41,9 @@ class CrmTicketOpenController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => false,
-            'AddButToCard' => false,
+            'AddConfig' => true,
             'formName' => "CrmTicketOpenFilter",
+            'settings' => ['report' => true],
         ];
 
         self::constructData($sendArr);
@@ -237,7 +235,6 @@ class CrmTicketOpenController extends AdminMainController {
         $LeadCategory = $getData->groupBy('ads_id')->toarray();
 
 
-
         $AllData = $rowData->count();
         $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $LeadSours);
         $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $LeadCategory);
@@ -253,10 +250,16 @@ class CrmTicketOpenController extends AdminMainController {
         $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
         $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
+        $weekChart = self::getChartWeek($rowData);
+        $monthChart = self::getChartMonth($rowData);
+        View::share('chartData', $chartData);
+        View::share('session', $session);
+        View::share('weekChart', $weekChart);
+        View::share('monthChart', $monthChart);
+
         return view('AppPlugin.CrmService.ticketOpen.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
-            'chartData' => $chartData,
             'rowData' => $rowData,
             'card' => $card,
         ]);
@@ -322,15 +325,25 @@ class CrmTicketOpenController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Report|filterReport";
+        $subMenu->sel_routs = "TicketOpen.Report|TicketOpen.filterReport";
         $subMenu->url = "admin.TicketOpen.Report";
         $subMenu->name = "admin/crm_service_menu.report";
         $subMenu->roleView = "crm_service_open_ticket_report";
         $subMenu->icon = "fas fa-chart-pie";
         $subMenu->save();
 
-
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function config() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        if ($this->configView) {
+            return view($this->configView, compact('pageData'));
+        } else {
+            return view("admin.mainView.config", compact('pageData'));
+        }
+    }
 
 }

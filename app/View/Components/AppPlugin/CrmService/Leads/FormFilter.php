@@ -22,6 +22,7 @@ class FormFilter extends Component {
     public $dateFollow;
     public $user;
     public $stateOpen;
+    public $reportView;
 
 
     public function __construct(
@@ -36,6 +37,7 @@ class FormFilter extends Component {
         $dateFollow = true,
         $user = false,
         $stateOpen = false,
+        $reportView = false,
 
     ) {
         $this->defRoute = $defRoute;
@@ -48,6 +50,7 @@ class FormFilter extends Component {
         $this->dateFollow = $dateFollow;
         $this->user = $user;
         $this->stateOpen = $stateOpen;
+        $this->reportView = $reportView;
 
         if (issetArr($config, 'OneCountry')) {
             $this->cityList = City::where('country_id', intval($config['defCountryId']))->with('translation')->get();

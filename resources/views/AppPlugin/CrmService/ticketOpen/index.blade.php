@@ -17,8 +17,7 @@
             </div>
         @endif
 
-        <div class="row">
-            <x-admin.card.normal :page-data="$pageData" :title="$pageData['BoxH1']">
+            <x-admin.card.def :page-data="$pageData" :title="$pageData['BoxH1']">
                 <table {!! Table_Style_Yajra() !!} >
                     <thead>
                     <tr>
@@ -43,8 +42,7 @@
                     <tbody></tbody>
 
                 </table>
-            </x-admin.card.normal>
-        </div>
+            </x-admin.card.def>
 
 
     </x-admin.hmtl.section>

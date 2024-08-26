@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -69,12 +70,15 @@ class AdminHelper {
                     $data['ConfigRoute'] = AdminHelper::arrIsset($sendArr, 'ConfigRoute', route($PrefixRoute . '.config'));
                 }
 
-                if (AdminHelper::arrIsset($sendArr, 'PageListUrl', "") != '#') {
+                if (Route::has($PrefixRoute . '.index')) {
                     $data['PageListUrl'] = AdminHelper::arrIsset($sendArr, 'PageListUrl', route($PrefixRoute . '.index'));
                 }
 
+
                 if ($data['AddAction']) {
-                    $data['AddPageUrl'] = AdminHelper::arrIsset($sendArr, 'AddPageUrl', route($PrefixRoute . '.create'));
+                    if (Route::has($PrefixRoute . '.create')) {
+                        $data['AddPageUrl'] = AdminHelper::arrIsset($sendArr, 'AddPageUrl', route($PrefixRoute . '.create'));
+                    }
                 }
 
                 if ($data['Restore'] == 1) {

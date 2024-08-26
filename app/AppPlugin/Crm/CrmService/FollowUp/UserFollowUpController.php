@@ -6,12 +6,10 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
-
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -136,7 +134,7 @@ class UserFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateTicketStatus(UpdateTicketStatusRequest $request , $ticketId) {
+    public function UpdateTicketStatus(UpdateTicketStatusRequest $request, $ticketId) {
 
     }
 
@@ -162,8 +160,6 @@ class UserFollowUpController extends AdminMainController {
         $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
         $follow_state = $getData->groupBy('follow_state')->toarray();
 
-//      dd($follow_state);
-
         $AllData = $rowData->count();
         $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
         $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
@@ -177,11 +173,12 @@ class UserFollowUpController extends AdminMainController {
         $card['back_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
         $card['next_count'] = self::CountData(self::DefLeadsFilterQuery(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
 
+        View::share('chartData', $chartData);
+        View::share('session', $session);
+
         return view('AppPlugin.CrmService.followUp.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
-            'chartData' => $chartData,
-            'rowData' => $rowData,
             'card' => $card,
         ]);
 

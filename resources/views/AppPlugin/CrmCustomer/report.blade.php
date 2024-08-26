@@ -18,7 +18,7 @@
         @endif
 
         <div class="row mb-5 pb-5">
-            <x-admin.report.session-chart id="Evaluation" :l="__($defLang.'report_evaluation')" i="fas fa-star" count="2500" />
+            <x-admin.report.session-chart id="Evaluation" :l="__($defLang.'report_evaluation')" i="fas fa-star" />
             @if($Config['addCountry'])
                 @if(!$Config['OneCountry'])
                     <x-admin.report.session-chart id="Country" :l="__($defLang.'report_country')"/>
