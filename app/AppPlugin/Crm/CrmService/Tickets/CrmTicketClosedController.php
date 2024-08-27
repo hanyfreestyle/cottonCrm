@@ -241,16 +241,6 @@ class CrmTicketClosedController extends AdminMainController {
 
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function config() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        if ($this->configView) {
-            return view($this->configView, compact('pageData'));
-        } else {
-            return view("admin.mainView.config", compact('pageData'));
-        }
-    }
+
 
 }

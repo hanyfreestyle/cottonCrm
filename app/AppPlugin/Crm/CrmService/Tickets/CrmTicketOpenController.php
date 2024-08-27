@@ -117,7 +117,7 @@ class CrmTicketOpenController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         try {
-            $Query = self::OpenTicketUserPer($this->PrefixRole);
+            $Query = self::ViewOpenTicketUserPer($this->PrefixRole);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
         } catch (\Exception $e) {
             self::abortAdminError(403);
@@ -284,16 +284,6 @@ class CrmTicketOpenController extends AdminMainController {
 
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function config() {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "Edit";
-        if ($this->configView) {
-            return view($this->configView, compact('pageData'));
-        } else {
-            return view("admin.mainView.config", compact('pageData'));
-        }
-    }
+
 
 }

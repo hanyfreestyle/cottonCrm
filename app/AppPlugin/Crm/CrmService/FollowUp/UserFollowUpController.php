@@ -6,6 +6,8 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
@@ -21,7 +23,7 @@ class UserFollowUpController extends AdminMainController {
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
-    use CrmDataTableTraits ;
+    use CrmDataTableTraits;
 
     function __construct() {
         parent::__construct();
@@ -84,8 +86,17 @@ class UserFollowUpController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-        $rowData = self::TicketFilter(self::OpenTicketQuery($RouteVal, $this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::OpenTicketFollowUpQuery($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
+
+//        $xx = CrmTickets::query()->get();
+//        foreach ($xx as $x){
+//            $x->state = 1;
+//            $x->follow_state = 1;
+//            $x->follow_date = now();
+//            $x->close_date = null;
+//            $x->save();
+//       }
 
         return view('AppPlugin.CrmService.followUp.index')->with([
             'pageData' => $pageData,
@@ -102,7 +113,7 @@ class UserFollowUpController extends AdminMainController {
         $pageData['TitlePage'] = __('admin/crm_service_menu.follow_update');
         $ticket = [];
         try {
-            $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $Query = self::TicketFilter(self::ViewOpenTicketUserPer($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
             $pageData['TitlePage'] .= " " . $ticket->id;
         } catch (\Exception $e) {
@@ -140,33 +151,77 @@ class UserFollowUpController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicketStatus(UpdateTicketStatusRequest $request, $ticketId) {
         try {
-            $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), null);
+            $Query = self::TicketFilter(self::ViewOpenTicketUserPer($this->PrefixRole), null);
             $ticket = $Query->where('id', $ticketId)->firstOrFail();
         } catch (\Exception $e) {
             self::abortAdminError(403);
         }
 
         $follow_state = $request->input('follow_state');
+        self::UpdateTicketTable($ticket, $follow_state);
+        self::AddTicketsDes($ticket->id, $follow_state, $request);
+        self::AddPayCash($ticket->id, $follow_state, $request);
 
-        if ($follow_state == 6 or $follow_state == 5) {
-            $ticket->state = 2;
-            $ticket->follow_date = null;
-            $ticket->follow_state = $follow_state;
-            $ticket->close_date = getCurrentTime();
-            $ticket->cost_service =  $request->input('cost_service') ?? null;
-            $ticket->save();
+        return redirect()->route($this->PrefixRoute . '.New');
+    }
 
-            $ticketDes = new CrmTicketsDes();
-            $ticketDes->created_at = getCurrentTime();
-            $ticketDes->ticket_id = $ticket->id;
-            $ticketDes->user_id = Auth::user()->id;
-            $ticketDes->follow_state = $follow_state;
-            $ticketDes->des = $request->input('des');
-            $ticketDes->save();
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddPayCash($ticket, $follow_state, $request) {
+        $addCash = new CrmTicketsCash();
+        $addCash->ticket_id = $ticket->id;
+        $addCash->customer_id = $ticket->customer_id;
+        $addCash->follow_state = $follow_state;
+        $addCash->created_at = getCurrentTime();
+        $addCash->user_id = Auth::user()->id;
+        $addCash->des = $request->input('des') ?? null;
+
+        if ($follow_state == 2) {
+
+        } elseif ($follow_state == 3) {
+
+
+        } elseif ($follow_state == 6) {
+            if(intval($request->input('amount')) > 0 ){
+                $addCash->amount_type = 3;
+                $addCash->pay_type = 1;
+                $addCash->amount = $request->input('amount');
+                $addCash->save();
+            }
         }
 
-       return redirect()->route($this->PrefixRoute . '.New');
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicketTable($ticket, $follow_state) {
+        if (in_array($follow_state, [2, 5, 6])) {
+            $ticket->state = 2;
+            $ticket->follow_date = null;
+            $ticket->close_date = getCurrentTime();
+        }
+        $ticket->follow_state = $follow_state;
+        $ticket->save();
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddTicketsDes($ticketId, $follow_state, $request) {
+        $ticketDes = new CrmTicketsDes();
+        $ticketDes->created_at = getCurrentTime();
+        if (in_array($follow_state, [2, 5, 6])) {
+            $ticketDes->follow_date = null;
+        } else {
+            $ticketDes->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
+        }
+        $ticketDes->ticket_id = $ticketId;
+        $ticketDes->user_id = Auth::user()->id;
+        $ticketDes->follow_state = $follow_state;
+        $ticketDes->des = $request->input('des') ?? null;
+        $ticketDes->save();
+    }
+
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -5,9 +5,11 @@ namespace App\Http\Traits\Files;
 
 use App\AppPlugin\Crm\CrmService\FollowUp\UserFollowUpController;
 use App\AppPlugin\Crm\CrmService\Leads\CrmLeadsController;
+use App\AppPlugin\Crm\CrmService\Tickets\CrmTicketCashController;
 use App\AppPlugin\Crm\CrmService\Tickets\CrmTicketClosedController;
 use App\AppPlugin\Crm\CrmService\Tickets\CrmTicketOpenController;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use Illuminate\Support\Facades\File;
 
@@ -63,6 +65,12 @@ trait CrmServiceFileTraits {
 //            $data = array_merge($data, $newPer);
         }
 
+        if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_cash.php'))) {
+            $sendArr = ['report' => 1, 'filter' => 1];
+            $newPer = getDefPermission('crm_service_cash', $sendArr);
+            $data = array_merge($data, $newPer);
+        }
+
         return $data;
     }
 
@@ -83,6 +91,10 @@ trait CrmServiceFileTraits {
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_close.php'))) {
             CrmTicketClosedController::AdminMenu();
+        }
+
+        if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_cash.php'))) {
+            CrmTicketCashController::AdminMenu();
         }
 
     }
@@ -126,6 +138,7 @@ trait CrmServiceFileTraits {
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_open.php'))) {
             SeedDbFile(CrmTickets::class, 'crm_ticket.sql');
             SeedDbFile(CrmTicketsDes::class, 'crm_ticket_des.sql');
+            SeedDbFile(CrmTicketsCash::class, 'crm_ticket_cash.sql');
         }
     }
 

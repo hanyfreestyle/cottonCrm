@@ -24,16 +24,8 @@ return new class extends Migration {
             $table->text('notes_err')->nullable();
 
             $table->dateTime('close_date')->nullable();
-
-            $table->float('cost')->nullable();
-            $table->float('cost_service')->nullable();
-            $table->float('deposit')->nullable();
-
-            $table->float('cost_get')->nullable();
-            $table->float('cost_service_get')->nullable();
-            $table->float('deposit_get')->nullable();
-
             $table->integer('review_state')->nullable()->default(0);
+
             $table->timestamps();
         });
 
@@ -49,9 +41,36 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+
+        Schema::create('crm_ticket_cash', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('ticket_id');
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('follow_state');
+
+            $table->dateTime('created_at');
+            $table->dateTime('confirm_date')->nullable();
+
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('confirm_user_id');
+
+            $table->integer('amount_type');
+            $table->integer('pay_type');
+            $table->decimal('amount');
+            $table->decimal('amount_paid')->nullable();
+
+            $table->longText("des")->nullable();
+
+            $table->foreign('ticket_id')->references('id')->on('crm_ticket')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('customer_id')->references('id')->on('crm_customers')->onDelete('restrict');
+        });
+
+
     }
 
     public function down(): void {
+        Schema::dropIfExists('crm_ticket_cash');
         Schema::dropIfExists('crm_ticket_des');
         Schema::dropIfExists('crm_ticket');
     }

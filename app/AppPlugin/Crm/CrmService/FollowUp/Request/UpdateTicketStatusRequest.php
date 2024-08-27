@@ -22,13 +22,13 @@ class UpdateTicketStatusRequest extends FormRequest {
 
         if ($followState == 2) {
             $rules += [
-                'cost' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:1'
             ];
         }
         if ($followState == 3) {
             $rules += [
                 'follow_date' => "required|date_format:Y-m-d|after_or_equal:today",
-                'deposit' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:0'
             ];
         }
 
@@ -40,7 +40,7 @@ class UpdateTicketStatusRequest extends FormRequest {
 
         if ($followState == 6) {
             $rules += [
-                'cost_service' => 'required|numeric|min:0'
+                'amount' => 'required|numeric|min:0'
             ];
         }
 

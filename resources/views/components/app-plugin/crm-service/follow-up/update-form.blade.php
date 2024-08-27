@@ -1,8 +1,5 @@
 <div class="row">
 
-    {{--    <div class="col-lg-12">--}}
-    {{--        <x-admin.form.print-error-div/>--}}
-    {{--    </div>--}}
     <x-admin.card.normal col="col-lg-12">
         <form class="mainForm UpdateTicketForm" action="{{route($PrefixRoute.'.UpdateTicketStatus',$ticket->id)}}" method="post">
             <input type="hidden" name="follow_state" value="{{$followState}}">
@@ -11,14 +8,14 @@
             @if($followState == 2)
                 <x-admin.hmtl.alert-massage bg="s" margin="mt-3" align="right" :mass="__('admin/crm_service_mass.state_2')"/>
                 <div class="row mt-2">
-                    <x-admin.form.input :type="getNumberType($agent)" name="cost" :value="old('cost')" :label="__('admin/crm_service.label_update_cost')"/>
+                    <x-admin.form.input :type="getNumberType($agent)" name="amount" :value="old('amount')" :label="__('admin/crm_service.label_update_cost')"/>
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_update_works_done')"/>
                 </div>
 
             @elseif($followState == 3)
                 <x-admin.hmtl.alert-massage bg="w" margin="mt-3" align="right" :mass="__('admin/crm_service_mass.state_3')"/>
                 <div class="row mt-2">
-                    <x-admin.form.input :type="getNumberType($agent)" name="deposit" col="3" :value="old('deposit')" :label="__('admin/crm_service.label_update_deposit')"/>
+                    <x-admin.form.input :type="getNumberType($agent)" name="amount" col="3" :value="old('amount')" :label="__('admin/crm_service.label_update_deposit')"/>
                     <x-admin.form.date-crm name="follow_date" :readonly="true" :label="__('admin/crm.label_date_follow')" value="{{old('follow_date')}}" col="3"/>
                 </div>
                 <div class="row">
@@ -41,7 +38,7 @@
                 <x-admin.hmtl.alert-massage bg="dark" margin="mt-3 " align="right" :mass="__('admin/crm_service_mass.state_6')"/>
 
                 <div class="row mt-2">
-                    <x-admin.form.input :type="getNumberType($agent)" name="cost_service" col="3" :value="old('cost_service')" :label="__('admin/crm_service.label_update_cost_service')"/>
+                    <x-admin.form.input :type="getNumberType($agent)" name="amount" col="3" :value="old('amount')" :label="__('admin/crm_service.label_update_cost_service')"/>
                 </div>
                 <div class="row">
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_reason_for_rejection')"/>

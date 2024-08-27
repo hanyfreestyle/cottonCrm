@@ -48,9 +48,26 @@ trait CrmDataTableTraits {
     }
 
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function OpenTicketUserPer($PrefixRole) {
+    static function OpenTicketFollowUpQuery($RouteVal, $PrefixRole) {
+        $data = self::ViewOpenTicketUserPer($PrefixRole);
+        if ($RouteVal == "New") {
+            $data->where('follow_state', 1);
+        } elseif ($RouteVal == 'Today') {
+            $data->where('follow_date', '=', Carbon::today());
+        } elseif ($RouteVal == 'Back') {
+            $data->where('follow_date', '<', Carbon::today());
+        } elseif ($RouteVal == 'Next') {
+            $data->where('follow_date', '>', Carbon::today());
+        }
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function ViewOpenTicketUserPer($PrefixRole) {
         if (Auth::user()->hasPermissionTo($PrefixRole . '_admin')) {
             $data = CrmTickets::defOpen() ;
         } else {
@@ -251,4 +268,17 @@ trait CrmDataTableTraits {
             })
             ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function config() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        if ($this->configView) {
+            return view($this->configView, compact('pageData'));
+        } else {
+            return view("admin.mainView.config", compact('pageData'));
+        }
+    }
+
 }
