@@ -51,7 +51,7 @@ class GetCard extends Component {
         $this->isactive = $isactive;
 
 
-        $Mass = __('admin/crm_service.label_cash_confirm_mass');
+        $Mass = __('admin/crm_service_cash.label_confirm_mass');
         $rep = ['[username]', '[amount]'];
         $rep_r = [
             '<span class="get_cash_user_name">' . $row->user->name . '</span>',

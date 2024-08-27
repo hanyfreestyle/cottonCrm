@@ -8,7 +8,7 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         <div class="col-lg-12">
-            <x-app-plugin.crm-service.cash.form-filter form-name="{{$formName}}" :row="$rowData" :config="$config"/>
+            <x-app-plugin.crm-service.cash.form-filter form-name="{{$formName}}" :row="$rowData"/>
         </div>
         @if(count($rowData)>0)
             @foreach($rowData as $date => $datevalue)
@@ -18,7 +18,6 @@
                         <table {!! Table_Style_Normal('distribution_table')  !!} >
                             <thead>
                             <tr>
-                                {{--                                <th>{{__('admin/crm_service_cash.label_date_collection')}}</th>--}}
                                 <th>{{__('admin/crm_service_cash.label_date_pay')}}</th>
                                 <th>{{__('admin/crm.label_customer_name')}}</th>
                                 <th>{{__('admin/crm_service.label_user_id')}}</th>
@@ -31,15 +30,14 @@
                             <tbody>
                             @foreach($datevalue as $row)
                                 <tr>
-                                    {{--                                    <td data-th="{{__('admin/crm_service_cash.label_date_collection')}}">{{ PrintDate($row->created_at)}}</td>--}}
                                     <td data-th="{{__('admin/crm_service_cash.label_date_pay')}}">{{PrintDate($row->ticket->close_date)}}</td>
                                     <td data-th="{{__('admin/crm.label_customer_name')}}">{{$row->customer->name ?? ''}}</td>
                                     <td data-th="{{__('admin/crm_service.label_user_id')}}">{{$row->user->name ?? ''}}</td>
-                                    <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($CashConfigDataList,$row->amount_type)}}</td>
+                                    <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}</td>
                                     <td data-th="{{__('admin/crm_service_cash.label_amount')}}">{{number_format($row->amount)}}</td>
                                     <td class="td_action">
                                         <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
-                                            <span class="tipName"></span> <i class="fas fa-eye"></i>
+                                            <i class="fas fa-eye"></i> <span class="tipName">{{__('admin/crm_service_cash.label_notes')}}</span>
                                         </button>
                                     </td>
                                     <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
@@ -50,6 +48,17 @@
                                 </tr>
                             @endforeach
                             </tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td class="hideForMobile" colspan="3">&nbsp;</td>
+                                <td><strong>{{__('admin/crm_service_cash.label_sum')}}</strong></td>
+                                <td><strong>{{number_format($datevalue->sum('amount'))}}</strong></td>
+                                <td class="hideForMobile" >&nbsp;</td>
+                                <td class="hideForMobile" >&nbsp;</td>
+                            </tr>
+                            </tfoot>
+
                         </table>
                     </div>
                 </x-admin.card.normal>

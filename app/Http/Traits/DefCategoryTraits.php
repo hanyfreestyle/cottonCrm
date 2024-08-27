@@ -53,6 +53,13 @@ trait DefCategoryTraits {
             (object)['id' => 4, 'name' => __('admin/crm_service_var.ticket_state_4')],
         ];
 
+        $Cat['CrmServiceCashType'] = [
+            (object)['id' => 1, 'name' => __('admin/crm_service_var.cash_type_1')],
+            (object)['id' => 2, 'name' => __('admin/crm_service_var.cash_type_2')],
+            (object)['id' => 3, 'name' => __('admin/crm_service_var.cash_type_3')],
+        ];
+
+
         $Cat['ContinentArr'] = [
             ['id' => 'AS', 'name' => __('admin/dataCountry.continent_as')],
             ['id' => 'EU', 'name' => __('admin/dataCountry.continent_eu')],

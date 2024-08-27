@@ -17,22 +17,22 @@
         <div class="card-footer">
 
             <div class="row">
-                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service.label_cash_collection')"
+                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_date_pay')"
                                        :des="PrintDate($row->created_at)" col="col-lg-12 col-12"/>
 
-                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service.label_cash_amount')"
+                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_amount')"
                                        :des="number_format($row->amount)" col="col-lg-12 col-12"/>
 
-                <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service.label_cash_notes')"
+                <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service_cash.label_notes')"
                                        :des="$row->ticket->des->last()->des ?? '' " col="col-lg-12 col-12"/>
             </div>
 
             <div class="row text-center follow_action_but py-2">
                 <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
-                    <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service.label_cash_notes')}}
+                    <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service_cash.label_notes')}}
                 </button>
                 <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
-                                            :l="__('admin/crm_service.label_cash_but_collection')" bg="s" icon="fas fa-vote-yea"/>
+                                            :l="__('admin/crm_service_cash.label_but_collection')" bg="s" icon="fas fa-vote-yea"/>
             </div>
 
         </div>

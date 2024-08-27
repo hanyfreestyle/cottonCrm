@@ -29,6 +29,9 @@ div.dataTables_wrapper div.dataTables_filter input {
     #YajraDatatable .tipName {
         display: none;
     }
+    .rwd_table .tipName {
+        display: none;
+    }
 }
 @media (min-width: 992px) {
     table.dataTable > tbody > tr.child ul.dtr-details {

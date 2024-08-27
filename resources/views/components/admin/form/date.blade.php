@@ -14,7 +14,7 @@
                         <i class="far fa-calendar-alt"></i>
                       </span>
             </div>
-            <input type="text" id="{{$id}}" value="{{$value}}" placeholder="YYYY-MM-DD"  name="{{$name}}" class="form-control float-right FilterForm  @error($name) is-invalid @enderror" >
+            <input type="text" id="{{$id}}" value="{{$value}}"  {{$readonly}}  placeholder="YYYY-MM-DD"  name="{{$name}}" class="form-control float-right FilterForm  @error($name) is-invalid @enderror" >
 
             @error($name)
             <span class="invalid-feedback" role="alert">

@@ -17,6 +17,7 @@ class Date extends Component {
     public $col;
     public $colMobile;
     public $value;
+    public $readonly;
 
     public function __construct(
         $name = null,
@@ -28,10 +29,17 @@ class Date extends Component {
         $colMobile = null,
         $value = null,
         $type = null,
+        $readonly = false,
     ) {
 
         $this->col = getCol($col);
         $this->colMobile = getColMobile($colMobile);
+        if ($readonly) {
+            $this->readonly = 'readonly';
+        } else {
+            $this->readonly = null;
+        }
+
 
         if ($type == 'fromDate') {
             $this->name = 'from_date';

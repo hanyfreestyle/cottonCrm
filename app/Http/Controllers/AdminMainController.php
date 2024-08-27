@@ -255,6 +255,13 @@ class AdminMainController extends DefaultMainController {
                 'from_date' => 'nullable|date|date_format:Y-m-d',
                 'to_date' => 'nullable|date|after_or_equal:from_date',
             ]);
+
+            if(isset($request->crm_cash_filter)){
+                $request->validate([
+                    'from_date' => 'required|date|date_format:Y-m-d',
+                    'to_date' => 'required|date|after_or_equal:from_date',
+                ]);
+            }
             $session = Session::get($this->formName);
             if ($session) {
                 if ($request->input('country_id')) {
