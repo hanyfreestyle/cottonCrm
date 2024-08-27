@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -160,7 +161,15 @@ class UserFollowUpController extends AdminMainController {
         $follow_state = $request->input('follow_state');
         self::UpdateTicketTable($ticket, $follow_state);
         self::AddTicketsDes($ticket->id, $follow_state, $request);
-        self::AddPayCash($ticket->id, $follow_state, $request);
+        self::AddPayCash($ticket, $follow_state, $request);
+
+        try {
+            DB::transaction(function () use ($request,$ticket) {
+
+            });
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
 
         return redirect()->route($this->PrefixRoute . '.New');
     }

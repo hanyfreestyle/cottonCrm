@@ -71,6 +71,20 @@ class AdminMenuSeeder extends Seeder {
             $menu->save();
         }
 
+        $moveMenu = true;
+        $menuView = "crm_service_cash_view";
+        if($moveMenu){
+            $updateMenuPostion = AdminMenu::query()->where('type', 'Many')->get();
+            foreach ($updateMenuPostion as $menu){
+                if( $menu->roleView == $menuView){
+                    $menu->position = 1;
+                }else{
+                    $menu->position = $menu->id+1;
+                }
+                $menu->save();
+            }
+        }
+
         Cache::forget('CashAdminMenuList');
     }
 }

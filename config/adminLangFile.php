@@ -4,7 +4,7 @@ return [
 //        'admin'=> ['id'=> 'admin' , 'group'=>null ,'file_name'=> 'admin', 'name_en'=> "Admin Core" ,'name_ar'=> "لوحة التحكم " ],
 //        'upFilter'=> ['id'=> 'upFilter' , 'group'=>'admin','sub_dir'=> 'config','file_name'=> 'upFilter','name'=>'Photo Filter','name_ar'=>'فلاتر الصور' ],
 //        'dataTable'=> ['id'=> 'dataTable' , 'group'=>'admin' , 'sub_dir'=> 'config' , 'file_name'=> 'dataTable','name'=>'dataTable','name_ar'=>'dataTable' ],
-//        'alertMass'=> ['id'=> 'alertMass' ,'group'=>'admin','file_name'=> 'alertMass','name_en'=>'Alert Mass','name_ar'=>'رسائل التحذير' ],
+        'alertMass'=> ['id'=> 'alertMass' ,'group'=>'admin','file_name'=> 'alertMass','name_en'=>'Alert Mass','name_ar'=>'رسائل التحذير' ],
 
 //        'filter'=> ['id'=> 'filter', 'group'=>'admin', 'file_name'=> 'formFilter','name_en'=>'Filter Form','name_ar'=>'فلتر' ],
         'settings'=> ['id'=> 'settings' , 'group'=>'admin' , 'sub_dir'=> 'config' , 'file_name'=> 'settings','name'=>'Settings','name_ar'=>'اعدادات الاقسام' ],

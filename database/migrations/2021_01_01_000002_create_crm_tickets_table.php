@@ -52,7 +52,7 @@ return new class extends Migration {
             $table->dateTime('confirm_date')->nullable();
 
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('confirm_user_id');
+            $table->unsignedBigInteger('confirm_user_id')->nullable();
 
             $table->integer('amount_type');
             $table->integer('pay_type');

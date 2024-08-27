@@ -35,6 +35,9 @@
 .followUp_Card .follow_action_but a {
     margin: auto;
 }
+.followUp_Card .follow_action_but button{
+    margin: auto;
+}
 
 .followUp_Card .follow_action_but .btn-whatsapp {
     background-color: rgba(37, 211, 102, 1);

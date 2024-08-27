@@ -1,5 +1,11 @@
 <div class="row">
-
+    @if(Session::has('data_not_save'))
+        <div class="col-lg-12">
+            <div class="alert alert-danger alert-dismissible">
+                {!!  __('admin/alertMass.confirm_not_save') !!}
+            </div>
+        </div>
+    @endif
     <x-admin.card.normal col="col-lg-12">
         <form class="mainForm UpdateTicketForm" action="{{route($PrefixRoute.'.UpdateTicketStatus',$ticket->id)}}" method="post">
             <input type="hidden" name="follow_state" value="{{$followState}}">

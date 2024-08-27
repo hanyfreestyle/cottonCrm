@@ -273,6 +273,7 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
                 ["resources/lang/$lang/" => 'pagination.php'],
                 ["resources/lang/$lang/" => 'passwords.php'],
                 ["resources/lang/$lang/" => 'validation.php'],
+
                 ["resources/lang/$lang/admin/config/" => 'dataTable.php'],
                 ["resources/lang/$lang/admin/config/" => 'roles.php'],
                 ["resources/lang/$lang/admin/config/" => 'settings.php'],
@@ -282,7 +283,9 @@ class AppPuzzleTreeAppCore extends AppPuzzleFun {
                 ["resources/lang/$lang/admin/" => 'form.php'],
                 ["resources/lang/$lang/admin/" => 'def.php'],
                 ["resources/lang/$lang/admin/" => 'defCat.php'],
+                ["resources/lang/$lang/admin/" => 'alertMass.php'],
             ];
+
             $fileNames = array_merge($fileNames, $fileNames_new);
         }
 

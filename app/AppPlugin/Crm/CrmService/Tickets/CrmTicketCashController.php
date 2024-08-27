@@ -5,6 +5,7 @@ namespace App\AppPlugin\Crm\CrmService\Tickets;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
@@ -13,13 +14,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
-
 class CrmTicketCashController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
-    use CrmDataTableTraits ;
+    use CrmDataTableTraits;
 
     function __construct() {
         parent::__construct();
@@ -71,36 +71,44 @@ class CrmTicketCashController extends AdminMainController {
         if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_all');
             $pageData['IconPage'] = 'fa-eye';
-            $RouteVal = "all";
 
-        } elseif ($RouteName == $this->PrefixRoute . '.Finished') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
-            $pageData['IconPage'] = 'fa-eye';
-            $RouteVal = "Finished";
+        } elseif ($RouteName == $this->PrefixRoute . '.Cost') {
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_cost');
+            $pageData['IconPage'] = 'fas fa-car';
+            $amount_type = "1";
 
-        } elseif ($RouteName == $this->PrefixRoute . '.Reject') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
-            $pageData['IconPage'] = 'fa-bell';
-            $RouteVal = "Reject";
+        } elseif ($RouteName == $this->PrefixRoute . '.Deposit') {
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_deposit');
+            $pageData['IconPage'] = 'fas fa-random';
+            $amount_type = "2";
 
-        } elseif ($RouteName == $this->PrefixRoute . '.Cancellation') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_back');
-            $pageData['IconPage'] = 'fa-thumbs-down';
-            $RouteVal = "Cancellation";
+        } elseif ($RouteName == $this->PrefixRoute . '.Service') {
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_service');
+            $pageData['IconPage'] = 'fas fa-eye';
+            $amount_type = "3";
         }
 
-        $rowData = self::TicketFilter(self::ClosedTicketQuery($RouteVal), $session);
-        $rowData = $rowData->get();
+        $rowData = CrmTicketsCash::query()
+            ->where('amount_paid', null)
+            ->where('confirm_date', null)
+            ->where('pay_type', 1)
+            ->where('amount_type', $amount_type)
+            ->with('ticket')
+            ->with('customer')
+            ->with('user')
+            ->orderBy('user_id')
+            ->get();
 
 
-        return view('AppPlugin.CrmService.ticketClosed.index')->with([
+
+//        dd($rowData->first());
+
+        return view('AppPlugin.CrmService.ticketCash.index')->with([
             'pageData' => $pageData,
-            'RouteVal' => $RouteVal,
             'rowData' => $rowData,
         ]);
+
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -152,7 +160,6 @@ class CrmTicketCashController extends AdminMainController {
         $subMenu->save();
 
     }
-
 
 
 }
