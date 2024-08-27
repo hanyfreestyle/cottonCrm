@@ -13,4 +13,10 @@ return
 	'label_date_pay' => 'تاريخ السداد',
 	'label_notes' => 'التفاصيل',
 	'label_sum' => 'الاجمالى',
+	'report_card_month' => 'اجمالى تحصيل الشهر',
+	'report_card_today' => 'اجمالى تحصيل اليوم',
+	'report_card_un_piad' => 'تحصيلات معلقة',
+	'report_card_week' => 'اجمالى تحصيل الاسبوع',
+	'report_chart_month' => 'اجمالى التحصيلات لاخر 30 يوم',
+	'report_chart_year' => 'اجمالى التحصيلات لاخر 12 شهر',
 ];

@@ -71,7 +71,7 @@ class AdminMenuSeeder extends Seeder {
             $menu->save();
         }
 
-        $moveMenu = true;
+        $moveMenu = false;
         $menuView = "crm_service_cash_view";
         if($moveMenu){
             $updateMenuPostion = AdminMenu::query()->where('type', 'Many')->get();

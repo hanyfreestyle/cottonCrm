@@ -5,13 +5,11 @@ namespace App\AppPlugin\Crm\CrmService\Tickets;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
-use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 

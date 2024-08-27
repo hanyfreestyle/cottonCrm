@@ -189,14 +189,14 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getChartWeek($Query) {
+    public function getChartWeek($Query,$filterFiled='created_at') {
         $allDayCount = 0;
         $dayList = "";
         $dayCountList = "";
         for ($i = 0; $i <= 7; $i++) {
             $queryClone = clone $Query;
             $day = Carbon::now()->subDay(7)->addDay($i);
-            $count = $queryClone->whereDate('crm_ticket.created_at', $day)->count();
+            $count = $queryClone->whereDate($filterFiled, $day)->count();
             $allDayCount += $count;
             if ($i == 7) {
                 $dayList .= "'" . date("dS", strtotime($day)) . "'";
@@ -215,7 +215,7 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getChartMonth($Query) {
+    public function getChartMonth($Query,$filterFiled='created_at') {
         $data = array();
         $allCount = 0;
         $monthList = "";
@@ -227,7 +227,7 @@ trait ReportFunTraits {
             $month = Carbon::today()->startOfMonth()->subMonth($i);
             $year = Carbon::today()->startOfMonth()->subMonth($i)->format('Y');
 
-            $count = $queryClone->whereMonth('crm_ticket.created_at', $month)->whereYear('crm_ticket.created_at', $year)->count();
+            $count = $queryClone->whereMonth($filterFiled, $month)->whereYear($filterFiled, $year)->count();
 
             $allCount = $allCount + $count;
 

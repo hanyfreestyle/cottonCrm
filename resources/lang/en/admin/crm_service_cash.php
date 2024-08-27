@@ -13,4 +13,10 @@ return
 	'label_date_pay' => '',
 	'label_notes' => '',
 	'label_sum' => '',
+	'report_card_month' => '',
+	'report_card_today' => '',
+	'report_card_un_piad' => '',
+	'report_card_week' => '',
+	'report_chart_month' => '',
+	'report_chart_year' => '',
 ];

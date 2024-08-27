@@ -247,8 +247,8 @@ class CrmLeadsController extends AdminMainController {
         View::share('session', $session);
 
         $chartQ = self::DataTableIndex(null);
-        $weekChart = self::getChartWeek($chartQ);
-        $monthChart = self::getChartMonth($chartQ);
+        $weekChart = self::getChartWeek($chartQ,'crm_ticket.created_at');
+        $monthChart = self::getChartMonth($chartQ,'crm_ticket.created_at');
         View::share('weekChart', $weekChart);
         View::share('monthChart', $monthChart);
 

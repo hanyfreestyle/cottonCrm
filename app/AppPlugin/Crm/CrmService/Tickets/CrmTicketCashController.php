@@ -7,6 +7,7 @@ use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
+use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
 use Illuminate\Http\Request;
@@ -64,15 +65,9 @@ class CrmTicketCashController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __('admin/crm.label_list_leads');
 
-
-        $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
 
-        if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_all');
-            $pageData['IconPage'] = 'fa-eye';
-
-        } elseif ($RouteName == $this->PrefixRoute . '.Cost') {
+        if ($RouteName == $this->PrefixRoute . '.Cost') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_cost');
             $pageData['IconPage'] = 'fas fa-car';
             $amount_type = "1";
@@ -122,6 +117,7 @@ class CrmTicketCashController extends AdminMainController {
             return redirect()->route($this->PrefixRoute . '.Service',);
         }
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function DestroyPayment($id) {
@@ -194,6 +190,137 @@ class CrmTicketCashController extends AdminMainController {
 
         return $query;
     }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function report(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $chartData = array();
+
+        $this->formName = "CrmTicketOpenReportFilter";
+        View::share('formName', $this->formName);
+
+//        $session = self::getSessionData($request);
+//        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+//        $getData = $rowData->get();
+//
+//
+//        $deviceId = $getData->groupBy('device_id')->toarray();
+//        $userId = $getData->groupBy('user_id')->toarray();
+//        $brandId = $getData->groupBy('brand_id')->toarray();
+//        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+//        $follow_state = $getData->groupBy('follow_state')->toarray();
+//        $LeadSours = $getData->groupBy('sours_id')->toarray();
+//        $LeadCategory = $getData->groupBy('ads_id')->toarray();
+//
+//
+//        $AllData = $rowData->count();
+//        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $LeadSours);
+//        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $LeadCategory);
+//        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
+//        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
+//        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
+//        $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
+//        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'CrmServiceTicketState', $follow_state);
+//
+
+
+
+        $today = Carbon::parse(now())->format("Y-m-d");
+        $now = Carbon::now();
+        $startOfWeek = $now->startOfWeek(Carbon::SATURDAY)->format('Y-m-d');
+        $endOfWeek = $now->endOfWeek(Carbon::THURSDAY)->format('Y-m-d');
+        $currentMonth = $now->month;
+        $currentYear = $now->year;
+
+        $card['pay_today'] = self::indexCashQuery()->whereDate('confirm_date', $today)->sum('amount');
+        $card['pay_week'] = self::indexCashQuery()->whereBetween('confirm_date', [$startOfWeek, $endOfWeek])->sum('amount');
+        $card['pay_month'] = self::indexCashQuery()->whereMonth('confirm_date', $currentMonth)->whereYear('confirm_date', $currentYear)->sum('amount');
+        $card['pay_un_piad'] = CrmTicketsCash::defUnpaid()->sum('amount');
+
+
+        $monthChart = self::getCashChartMonth(self::indexCashQuery());
+         View::share('monthChart', $monthChart);
+
+        $yearChart = self::getCashChartYear(self::indexCashQuery());
+        View::share('yearChart', $yearChart);
+
+
+        return view('AppPlugin.CrmService.ticketCash.report')->with([
+            'pageData' => $pageData,
+            'card' => $card,
+        ]);
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getCashChartMonth($Query,$filterFiled='confirm_date') {
+        $allDayCount = 0;
+        $dayList = "";
+        $dayCountList = "";
+        for ($i = 0; $i <= 30; $i++) {
+            $queryClone = clone $Query;
+            $day = Carbon::now()->subDay(30)->addDay($i);
+            $count = $queryClone->whereDate($filterFiled, $day)->sum('amount');
+            $allDayCount += $count;
+            if ($i == 30) {
+                $dayList .= "'" . date("dS", strtotime($day)) . "'";
+                $dayCountList .= $count;
+            } else {
+                $dayList .= "'" . date("dS", strtotime($day)) . "'" . ",";
+                $dayCountList .= $count . ",";
+            }
+        }
+        return [
+            'dayList' => $dayList,
+            'dayCountList' => $dayCountList,
+            'allDayCount' => $allDayCount,
+        ];
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getCashChartYear($Query,$filterFiled='confirm_date') {
+        $data = array();
+        $allCount = 0;
+        $monthList = "";
+        $monthCountList = "";
+
+        for ($i = 11; $i >= 0; $i--) {
+            $queryClone = clone $Query;
+
+            $month = Carbon::today()->startOfMonth()->subMonth($i);
+            $year = Carbon::today()->startOfMonth()->subMonth($i)->format('Y');
+
+            $count = $queryClone->whereMonth($filterFiled, $month)->whereYear($filterFiled, $year)->sum('amount');
+
+            $allCount = $allCount + $count;
+
+            if ($i == 0) {
+                $monthList .= "'" . $month->shortMonthName . "'";
+                $monthCountList .= $count;
+            } else {
+                $monthList .= "'" . $month->shortMonthName . "'" . ",";
+                $monthCountList .= $count . ",";
+            }
+
+            array_push($data, array(
+                'month' => $month->shortMonthName,
+                'year' => $year,
+                'count' => $count
+            ));
+        }
+
+        return [
+            'monthList' => $monthList,
+            'monthCountList' => $monthCountList,
+            'allCount' => $allCount,
+        ];
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

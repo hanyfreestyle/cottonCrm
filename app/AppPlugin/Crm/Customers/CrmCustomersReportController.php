@@ -30,7 +30,7 @@ class CrmCustomersReportController extends AdminMainController {
         $CashCountryList = self::CashCountryList();
         View::share('CashCountryList', $CashCountryList);
 
-        $this->Config = self::defConfig();
+        $this->Config = self::defConfigCustomers();
         View::share('Config', $this->Config);
 
         $this->PageTitle = __($this->defLang . 'app_menu');
