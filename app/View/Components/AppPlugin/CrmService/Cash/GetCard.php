@@ -11,15 +11,44 @@ class GetCard extends Component {
     public $row;
     public $bg;
     public $mass;
+    public $collapsed;
+    public $collapsed_style;
+    public $open;
+    public $open_style;
+    public $isactive;
+
+
 
 
     public function __construct(
         $row = array(),
         $bg = "p",
         $mass = null,
+        $collapsed = true,
+        $open = true,
+        $isactive = true,
+
     ) {
         $this->row = $row;
         $this->bg = 'bg-' . getBgColor($bg);
+        $this->collapsed = $collapsed;
+        if ($collapsed) {
+            if ($open) {
+                $this->collapsed_style = "";
+            } else {
+                $this->collapsed_style = "collapsed-card";
+            }
+        } else {
+            $this->collapsed_style = "";
+        }
+        $this->open = $open;
+
+        if ($this->open) {
+            $this->open_style = "fas fa-minus";
+        } else {
+            $this->open_style = "fas fa-plus";
+        }
+        $this->isactive = $isactive;
 
 
         $Mass = __('admin/crm_service.label_cash_confirm_mass');

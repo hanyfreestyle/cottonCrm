@@ -48,8 +48,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('follow_state');
 
-            $table->dateTime('created_at');
-            $table->dateTime('confirm_date')->nullable();
+            $table->date('created_at');
+            $table->time('created_at_time');
+            $table->date('confirm_date')->nullable();
+            $table->time('confirm_date_time')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('confirm_user_id')->nullable();
@@ -59,7 +61,7 @@ return new class extends Migration {
             $table->decimal('amount');
             $table->decimal('amount_paid')->nullable();
 
-            $table->longText("des")->nullable();
+//            $table->longText("des")->nullable();
 
             $table->foreign('ticket_id')->references('id')->on('crm_ticket')->onDelete('restrict');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');

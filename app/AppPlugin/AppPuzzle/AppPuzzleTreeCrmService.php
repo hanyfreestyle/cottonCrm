@@ -28,7 +28,7 @@ class AppPuzzleTreeCrmService {
             'routeFolder' => "CrmService/",
             'routeFiles' => ['leads.php','follow_up.php','ticket_open.php','ticket_close.php','ticket_cash.php','ticket_review.php'],
             'adminLangFolder' => "admin/",
-            'adminLangFiles' => ['crm_service.php','crm_service_menu.php','crm_service_var.php','crm_service_mass.php'],
+            'adminLangFiles' => ['crm_service.php','crm_service_menu.php','crm_service_var.php','crm_service_mass.php','crm_service_cash.php'],
             'ComponentFolderClass' => ['AppPlugin/CrmService'],
             'ComponentFolderView' => ['app-plugin/crm-service'],
             'migrations' => [

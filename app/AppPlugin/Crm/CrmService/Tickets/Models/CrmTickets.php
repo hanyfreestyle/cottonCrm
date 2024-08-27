@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class CrmTickets extends Model {
@@ -28,7 +30,9 @@ class CrmTickets extends Model {
             ->where('user_id','!=',null)
             ->with('customer')
             ->with('device_name')
-            ->with('user');
+            ->with('user')
+//            ->with('des')
+            ;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -37,7 +41,18 @@ class CrmTickets extends Model {
         return $query->where('state',2)
             ->with('customer')
             ->with('device_name')
-            ->with('user');
+            ->with('user')
+//            ->with('des')
+            ;
+    }
+
+
+    public function des(): HasMany {
+        return $this->hasMany(CrmTicketsDes::class,'ticket_id','id');
+    }
+
+    public function last_des(): HasOne {
+        return $this->hasOne(CrmTicketsDes::class,'ticket_id','id');
     }
 
 

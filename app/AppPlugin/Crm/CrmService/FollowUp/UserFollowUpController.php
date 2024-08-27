@@ -181,9 +181,9 @@ class UserFollowUpController extends AdminMainController {
         $addCash->ticket_id = $ticket->id;
         $addCash->customer_id = $ticket->customer_id;
         $addCash->follow_state = $follow_state;
-        $addCash->created_at = getCurrentTime();
+        $addCash->created_at = saveOnlyDate();
+        $addCash->created_at_time = getCurrentTime();
         $addCash->user_id = Auth::user()->id;
-        $addCash->des = $request->input('des') ?? null;
 
         if ($follow_state == 2) {
 

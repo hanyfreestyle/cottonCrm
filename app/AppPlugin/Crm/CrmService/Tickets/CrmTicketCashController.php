@@ -5,11 +5,16 @@ namespace App\AppPlugin\Crm\CrmService\Tickets;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -88,21 +93,12 @@ class CrmTicketCashController extends AdminMainController {
             $amount_type = "3";
         }
 
-        $rowData = CrmTicketsCash::query()
-            ->where('amount_paid', null)
-            ->where('confirm_date', null)
-            ->where('pay_type', 1)
+        $rowData = CrmTicketsCash::defUnpaid()
             ->where('amount_type', $amount_type)
-            ->with('ticket')
-            ->with('customer')
-            ->with('user')
             ->orderBy('user_id')
-            ->get();
-
-
-
-//        dd($rowData->first());
-
+            ->get()
+            ->groupby('user_id');
+ 
         return view('AppPlugin.CrmService.ticketCash.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -112,8 +108,122 @@ class CrmTicketCashController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function AdminMenu() {
+    public function ConfirmPay($id) {
+        $confirmPayment = CrmTicketsCash::defUnpaid()->where('id', $id)->firstOrFail();
+        $confirmPayment->confirm_date = getCurrentTime();
+        $confirmPayment->confirm_date_time = getCurrentTime();
+        $confirmPayment->confirm_user_id = Auth::user()->id;
+        $confirmPayment->amount_paid = $confirmPayment->amount;
+        $confirmPayment->save();
 
+        if ($confirmPayment->amount_type == 1) {
+            return redirect()->route($this->PrefixRoute . '.Cost',);
+        } elseif ($confirmPayment->amount_type == 2) {
+            return redirect()->route($this->PrefixRoute . '.Deposit',);
+        } elseif ($confirmPayment->amount_type == 3) {
+            return redirect()->route($this->PrefixRoute . '.Service',);
+        } else {
+            return redirect()->route($this->PrefixRoute . '.Service',);
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function CashList(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __('admin/crm_service_menu.leads_distribution');
+        $pageData['SubView'] = false;
+
+        $session = self::getSessionData($request);
+        $Data = self::CashFilter(self::indexCashQuery(), $session);
+        if ($session) {
+            $rowData = $Data->get()->groupBy('confirm_date');
+        } else {
+            $today = Carbon::parse(now())->format("Y-m-d");
+            $rowData = $Data->whereDate('confirm_date', $today)->get()->groupBy('confirm_date');
+        }
+
+        return view('AppPlugin.CrmService.ticketCash.cash_list')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function indexCashQuery() {
+        $data = CrmTicketsCash::query()
+            ->whereNotNull('amount_type')
+            ->whereNotNull('confirm_date')
+            ->whereNotNull('confirm_user_id')
+            ->with('ticket')
+            ->with('customer')
+            ->with('user');
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashFilter($query, $session, $order = null) {
+
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['to_date']) and $session['to_date'] != null) {
+            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
+        }
+
+        if (isset($session['follow_from']) and $session['follow_from'] != null) {
+            $query->whereDate('follow_date', '>=', Carbon::createFromFormat('Y-m-d', $session['follow_from']));
+        }
+
+        if (isset($session['follow_to']) and $session['follow_to'] != null) {
+            $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
+        }
+        if (isset($session['user_id']) and $session['user_id'] != null) {
+            $query->where('user_id', $session['user_id']);
+        }
+        if (isset($session['follow_state']) and $session['follow_state'] != null) {
+            $query->where('follow_state', $session['follow_state']);
+        }
+
+        if (isset($session['sours_id']) and $session['sours_id'] != null) {
+            $query->where('sours_id', $session['sours_id']);
+        }
+        if (isset($session['ads_id']) and $session['ads_id'] != null) {
+            $query->where('ads_id', $session['ads_id']);
+        }
+        if (isset($session['device_id']) and $session['device_id'] != null) {
+            $query->where('device_id', $session['device_id']);
+        }
+        if (isset($session['brand_id']) and $session['brand_id'] != null) {
+            $query->where('brand_id', $session['brand_id']);
+        }
+
+        if (isset($session['country_id']) and $session['country_id'] != null) {
+            $query->where('crm_customers_address.country_id', $session['city_id']);
+        }
+
+        if (isset($session['city_id']) and $session['city_id'] != null) {
+            $query->where('crm_customers_address.city_id', $session['city_id']);
+        }
+
+        if (isset($session['area_id']) and $session['area_id'] != null) {
+            $query->where('crm_customers_address.area_id', $session['area_id']);
+        }
+
+        return $query;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function AdminMenu() {
 
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
@@ -148,6 +258,15 @@ class CrmTicketCashController extends AdminMainController {
         $subMenu->name = "admin/crm_service_menu.ticket_cash_service";
         $subMenu->roleView = "crm_service_cash_view";
         $subMenu->icon = "fas fa-eye";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "TicketCash.CashList";
+        $subMenu->url = "admin.TicketCash.CashList";
+        $subMenu->name = "admin/crm_service_menu.ticket_cash_list";
+        $subMenu->roleView = "crm_service_cash_view";
+        $subMenu->icon = "fas fa-file-invoice-dollar";
         $subMenu->save();
 
         $subMenu = new AdminMenu();

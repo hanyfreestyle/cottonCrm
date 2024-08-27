@@ -8,6 +8,12 @@
     margin-top: 22px;
 }
 
+.followUp_Card.getCash .btn-tool {
+    color: #ffffff;
+    margin-top: 11px;
+}
+
+
 .followUp_Card .bg-warning .username, .followUp_Card .bg-warning .description {
     color: rgba(24, 24, 24, 1) !important;
 }

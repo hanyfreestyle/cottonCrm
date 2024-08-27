@@ -1,14 +1,18 @@
 <div class="col-md-3">
-    <div class="card card-widget followUp_Card">
+    <div class="card card-widget followUp_Card getCash {{$collapsed_style}}">
         <div class="card-header  {{$bg}}">
             <div class="user-block">
                 <span class="username">{{$row->customer->name}}</span>
                 <span class="description">
                     {{ LoadConfigName($CashConfigDataList,$row->ticket->device_id)}} -
                     {{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}
+                    <span class="font-weight-bold" style="font-size: 16px"  > ({{number_format($row->amount)}}) </span>
+
                 </span>
             </div>
-
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas {{$open_style}}"></i></button>
+            </div>
         </div>
         <div class="card-footer">
 
@@ -19,14 +23,15 @@
                 <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service.label_cash_amount')"
                                        :des="number_format($row->amount)" col="col-lg-12 col-12"/>
 
-                <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service.label_cash_notes')" :des="$row->des" col="col-lg-12 col-12"/>
+                <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service.label_cash_notes')"
+                                       :des="$row->ticket->des->last()->des ?? '' " col="col-lg-12 col-12"/>
             </div>
 
             <div class="row text-center follow_action_but py-2">
                 <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
                     <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service.label_cash_notes')}}
                 </button>
-                <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.config',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
+                <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
                                             :l="__('admin/crm_service.label_cash_but_collection')" bg="s" icon="fas fa-vote-yea"/>
             </div>
 
@@ -41,5 +46,5 @@
 </x-admin.hmtl.popup-modal>
 
 @push('JsCode')
-    <x-admin.table.sweet-confirm-js class-name="sweet_confirm_but_{{$row->id}}" icon-style="confirm_get_amount"  s-text="{!! $mass !!}"/>
+    <x-admin.table.sweet-confirm-js class-name="sweet_confirm_but_{{$row->id}}" icon-style="confirm_get_amount" s-text="{!! $mass !!}"/>
 @endpush

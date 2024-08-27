@@ -8,11 +8,19 @@
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
         @if(count($rowData) > 0 )
-            <div class="row">
-                @foreach($rowData as $row)
-                    <x-app-plugin.crm-service.cash.get-card :row="$row" :open="true"/>
-                @endforeach
-            </div>
+
+            @foreach($rowData as $user => $val)
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-dark">{{ $val->first()->user->name }}</div>
+{{--                        <x-admin.hmtl.alert-massage bg="dark" align="right" :mass="$val->first()->user->name" />--}}
+                    </div>
+                     @foreach($val as $row)
+                        <x-app-plugin.crm-service.cash.get-card :row="$row" :open="true"/>
+                    @endforeach
+                </div>
+            @endforeach
+
         @else
             <x-admin.hmtl.alert-massage type="nodata"/>
         @endif

@@ -63,6 +63,16 @@ if (!function_exists('PrintDate')) {
 }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('saveOnlyDate')) {
+    function saveOnlyDate() {
+        $dateValue = Carbon::parse(now())->format("Y-m-d");
+        return $dateValue;
+    }
+}
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getCurrentTime')) {
     function getCurrentTime() {
         if (config('app.timezone') == "Africa/Cairo") {
