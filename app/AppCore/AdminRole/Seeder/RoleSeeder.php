@@ -10,8 +10,10 @@ class RoleSeeder extends Seeder {
     public function run(): void {
 
         $data = [
-            ['name' => 'editor', 'name_ar' => 'محرر', 'name_en' => 'editor'],
-            ['name' => 'sales', 'name_ar' => 'مبيعات', 'name_en' => 'Sales'],
+            ['name' => 'supervisor', 'name_ar' => 'مشرف عام', 'name_en' => 'Supervisor'],
+            ['name' => 'technician', 'name_ar' => 'فنى صيانة', 'name_en' => 'Technician'],
+            ['name' => 'data_entry', 'name_ar' => 'اضافة الطلبات', 'name_en' => 'Data Entry'],
+            ['name' => 'customer_service', 'name_ar' => 'خدمة العملاء', 'name_en' => 'Customer service'],
         ];
 
         $countData = Role::all()->count();
