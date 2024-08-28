@@ -22,6 +22,12 @@ Route::get('/getConfigData', [HooverDataController::class, 'getConfigData'])->na
 Route::get('/getCustomerData', [HooverDataController::class, 'getCustomerData'])->name('getCustomerData');
 Route::get('/syncCity', [HooverDataController::class, 'syncCity'])->name('syncCity');
 Route::get('/UpdateNames', [HooverDataController::class, 'UpdateNames'])->name('UpdateNames');
+Route::get('/getTicket', [HooverDataController::class, 'getTicket'])->name('getTicket');
+Route::get('/syncTicketData', [HooverDataController::class, 'syncTicketData'])->name('syncTicketData');
+Route::get('/UpdateCancellation', [HooverDataController::class, 'UpdateCancellation'])->name('UpdateCancellation');
+Route::get('/UpdateReject', [HooverDataController::class, 'UpdateReject'])->name('UpdateReject');
+Route::get('/UpdateFinished', [HooverDataController::class, 'UpdateFinished'])->name('UpdateFinished');
+
 
 
 

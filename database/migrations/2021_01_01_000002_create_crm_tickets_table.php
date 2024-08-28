@@ -10,11 +10,11 @@ return new class extends Migration {
 
         Schema::create('crm_ticket', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('customer_id');
+            $table->integer('customer_id')->nullable();
             $table->integer('open_type')->default(1);
             $table->integer('state')->nullable();
             $table->integer('follow_state')->nullable();
-            $table->dateTime('follow_date')->nullable();
+            $table->date('follow_date')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('sours_id')->nullable();
             $table->integer('ads_id')->nullable();
@@ -23,8 +23,22 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->text('notes_err')->nullable();
 
-            $table->dateTime('close_date')->nullable();
+
+            $table->date('close_date')->nullable();
             $table->integer('review_state')->nullable()->default(0);
+
+            $table->integer('old_id')->nullable();
+            $table->integer('old_customer_id')->nullable();
+            $table->integer('old_sours_id')->nullable();
+            $table->integer('old_ads_id')->nullable();
+            $table->integer('old_device_id')->nullable();
+            $table->integer('old_brand_id')->nullable();
+
+            $table->decimal('done_price')->nullable();
+            $table->decimal('done_price_prepaid')->nullable();
+            $table->longText("done_notes")->nullable();
+            $table->longText("reject_notes")->nullable();
+            $table->longText("cancellation_notes")->nullable();
 
             $table->timestamps();
         });
@@ -48,8 +62,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('follow_state');
 
-            $table->date('created_at');
-            $table->time('created_at_time');
+            $table->date('created_at')->nullable();
+            $table->time('created_at_time')->nullable();
             $table->date('confirm_date')->nullable();
             $table->time('confirm_date_time')->nullable();
 

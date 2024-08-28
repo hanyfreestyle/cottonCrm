@@ -69,7 +69,7 @@ trait CrmDataTableTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function ViewOpenTicketUserPer($PrefixRole) {
         if (Auth::user()->hasPermissionTo($PrefixRole . '_admin')) {
-            $data = CrmTickets::defOpen() ;
+            $data = CrmTickets::defOpen();
         } else {
             if (Auth::user()->hasPermissionTo($PrefixRole . '_team_leader')) {
                 $thisUserId = [Auth::user()->id];
@@ -121,8 +121,13 @@ trait CrmDataTableTraits {
             $data->where('state', 2);
         }
 
-        $data->Join("$table_customers", $table . '.customer_id', '=', $table_customers . '.id')
-            ->Join("$table_user", $table . '.user_id', '=', $table_user . '.id')
+
+        $data->leftJoin("$table_customers", function ($join) use ($table_customers, $table) {
+            $join->on($table . '.customer_id', '=', $table_customers . '.id');
+        })
+            ->leftJoin("$table_user", function ($join) use ($table_user, $table) {
+                $join->on($table . '.user_id', '=', $table_user . '.id');
+            })
             ->leftJoin("$table_customers_address", function ($join) use ($table_customers_address, $table) {
                 $join->on($table . '.customer_id', '=', $table_customers_address . '.customer_id');
                 $join->where($table_customers_address . '.is_default', '=', 1);

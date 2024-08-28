@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Data\Area\Models\Area;
@@ -11,11 +14,266 @@ use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
 use App\Http\Controllers\AdminMainController;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
 class HooverDataController extends AdminMainController {
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function syncTicketData() {
+        dd("done");
+        $allCustomers = CrmCustomers::query()->select('id', 'old_id')->get();
+        $configData = ConfigData::query()->select('id', 'old_id')->get();
+
+
+        $tickets = CrmTickets::query()
+            ->whereNull('customer_id')
+            ->take(250)
+            ->get();
+
+
+        foreach ($tickets as $updateTicket) {
+            $updateTicket->customer_id = $allCustomers->where('old_id', $updateTicket->old_customer_id)->first()->id;
+            $updateTicket->sours_id = $configData->where('old_id', $updateTicket->old_sours_id)->first()->id;
+            $updateTicket->ads_id = $configData->where('old_id', $updateTicket->old_ads_id)->first()->id;
+            $updateTicket->device_id = $configData->where('old_id', $updateTicket->old_device_id)->first()->id ?? null;
+            $updateTicket->brand_id = $configData->where('old_id', $updateTicket->old_brand_id)->first()->id ?? null;
+            $updateTicket->save();
+//            dd($updateTicket);
+        }
+        echobr(CrmTickets::query()->whereNull('customer_id')->count());
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateFinished() {
+//        dd("UpdateFinished");
+
+        $saveData = true;
+        $saveConfirm = true;
+        $tickets = CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 2)
+            ->take(200)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $addNotes = new CrmTicketsDes();
+            $addNotes->created_at = $updateTicket->close_date;
+            $addNotes->ticket_id = $updateTicket->id;
+            $addNotes->user_id = $updateTicket->user_id;
+            $addNotes->follow_state = $updateTicket->follow_state;
+            $addNotes->des = $updateTicket->done_notes;
+            if ($saveData) {
+                $addNotes->save();
+            }
+
+
+
+            if (intval($updateTicket->done_price) > 0) {
+                $addCash = new CrmTicketsCash();
+                $addCash->ticket_id = $updateTicket->id;
+                $addCash->customer_id = $updateTicket->customer_id;
+                $addCash->follow_state = 2;
+                $addCash->created_at = $updateTicket->close_date;
+                $addCash->created_at_time = null;
+                $addCash->user_id = $updateTicket->user_id;
+                $addCash->pay_type = 1;
+                $addCash->amount_type = 1;
+                $addCash->amount = $updateTicket->done_price;
+
+                if($saveConfirm){
+                    $addCash->confirm_date = $updateTicket->close_date;
+                    $addCash->confirm_date_time = null;
+                    $addCash->confirm_user_id = 1;
+                    $addCash->amount_paid =  $updateTicket->done_price;
+                }
+
+                if ($saveData) {
+                    $addCash->save();
+                }
+
+
+                if (intval($updateTicket->done_price_prepaid) > 1) {
+
+                    $addCash = new CrmTicketsCash();
+                    $addCash->ticket_id = $updateTicket->id;
+                    $addCash->customer_id = $updateTicket->customer_id;
+                    $addCash->follow_state = 3;
+                    $addCash->created_at = $updateTicket->close_date;
+                    $addCash->created_at_time = null;
+                    $addCash->user_id = $updateTicket->user_id;
+                    $addCash->pay_type = 1;
+                    $addCash->amount_type = 2;
+                    $addCash->amount = $updateTicket->done_price_prepaid;
+                    if($saveConfirm){
+                        $addCash->confirm_date = $updateTicket->close_date;
+                        $addCash->confirm_date_time = null;
+                        $addCash->confirm_user_id = 1;
+                        $addCash->amount_paid =  $updateTicket->done_price_prepaid;
+                    }
+
+                    if ($saveData) {
+                        $addCash->save();
+                    }
+                }
+
+            }
+
+            $updateTicket->old_customer_id = null;
+            $updateTicket->follow_date = null;
+            $updateTicket->old_sours_id = null;
+            $updateTicket->old_ads_id = null;
+            $updateTicket->old_device_id = null;
+            $updateTicket->old_brand_id = null;
+            $updateTicket->done_notes = null;
+            if ($saveData) {
+                $updateTicket->save();
+            }
+
+        }
+
+        echobr(CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 2)->count());
+
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateReject() {
+        dd("done");
+        $tickets = CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 6)
+            ->take(75)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $addNotes = new CrmTicketsDes();
+
+            $addNotes->created_at = $updateTicket->close_date;
+            $addNotes->ticket_id = $updateTicket->id;
+            $addNotes->user_id = $updateTicket->user_id;
+            $addNotes->follow_state = $updateTicket->follow_state;
+            $addNotes->des = $updateTicket->reject_notes;
+            $addNotes->save();
+
+            $updateTicket->old_customer_id = null;
+            $updateTicket->follow_date = null;
+            $updateTicket->old_sours_id = null;
+            $updateTicket->old_ads_id = null;
+            $updateTicket->old_device_id = null;
+            $updateTicket->old_brand_id = null;
+            $updateTicket->reject_notes = null;
+            $updateTicket->save();
+        }
+
+        echobr(CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 6)->count());
+
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateCancellation() {
+        dd('done');
+        $tickets = CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 5)
+            ->take(100)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $addNotes = new CrmTicketsDes();
+
+            $addNotes->created_at = $updateTicket->close_date;
+            $addNotes->ticket_id = $updateTicket->id;
+            $addNotes->user_id = $updateTicket->user_id;
+            $addNotes->follow_state = $updateTicket->follow_state;
+            $addNotes->des = $updateTicket->cancellation_notes;
+            $addNotes->save();
+
+            $updateTicket->old_customer_id = null;
+            $updateTicket->follow_date = null;
+            $updateTicket->old_sours_id = null;
+            $updateTicket->old_ads_id = null;
+            $updateTicket->old_device_id = null;
+            $updateTicket->old_brand_id = null;
+            $updateTicket->cancellation_notes = null;
+            $updateTicket->save();
+        }
+
+        echobr(CrmTickets::query()
+            ->whereNotNull('old_customer_id')
+            ->where('state', 2)
+            ->where('follow_state', 5)->count());
+
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getTicket() {
+//        dd('hi');
+        $oldData = DB::connection('mysql2')->table('sales_ticket')
+            ->orderBy('id')
+//            ->take(10)
+            ->get();
+
+        foreach ($oldData as $data) {
+            $saveTicket = new CrmTickets();
+
+            $saveTicket->user_id = $data->user_id;
+            $saveTicket->created_at = Carbon::createFromTimestamp($data->date_add);
+            $saveTicket->updated_at = Carbon::createFromTimestamp($data->date_add);
+
+            $saveTicket->old_id = $data->id;
+            $saveTicket->old_customer_id = $data->cust_id;
+            $saveTicket->old_sours_id = $data->lead_sours;
+            $saveTicket->old_ads_id = $data->lead_cat;
+            $saveTicket->old_device_id = $data->device_type;
+            $saveTicket->old_brand_id = $data->brand;
+
+            $saveTicket->open_type = $data->open_type;
+            $saveTicket->state = $data->open_state;
+            $saveTicket->follow_state = $data->state;
+
+            $saveTicket->follow_date = Carbon::createFromTimestamp($data->follow_date) ?? null;
+            $saveTicket->close_date = Carbon::createFromTimestamp($data->close_date) ?? null;
+
+
+            $saveTicket->notes = $data->notes ?? null;
+            $saveTicket->notes_err = $data->err_type ?? null;
+            $saveTicket->done_price = $data->done_price ?? null;
+            $saveTicket->done_price_prepaid = $data->done_price_prepaid ?? null;
+            $saveTicket->done_notes = $data->done_notes ?? null;
+            $saveTicket->reject_notes = $data->reject_notes ?? null;
+            $saveTicket->cancellation_notes = $data->cancellation_notes ?? null;
+            $saveTicket->save();
+
+
+//            dd($saveTicket);
+
+//            $saveTicket->follow_date = $data->state;
+
+        }
+
+
+    }
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
