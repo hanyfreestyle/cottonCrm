@@ -10,6 +10,8 @@ return new class extends Migration {
 
         Schema::create('crm_customers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('old_id')->nullable();
+
             $table->integer('evaluation_id')->nullable();
             $table->integer('gender_id')->nullable();
 
@@ -44,6 +46,9 @@ return new class extends Migration {
             $table->integer('country_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->integer('area_id')->nullable();
+
+            $table->integer('old_city_id')->nullable();
+            $table->integer('old_area_id')->nullable();
 
             $table->text("address")->nullable();
             $table->string("floor")->nullable();

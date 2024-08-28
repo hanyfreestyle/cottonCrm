@@ -19,6 +19,9 @@ if (File::isFile(base_path('app\AppPlugin\Crm\Periodicals\BookDashboardControlle
 
 Route::get('/testpdf', [DashboardController::class, 'testpdf'])->name('testpdf');
 Route::get('/getConfigData', [HooverDataController::class, 'getConfigData'])->name('getConfigData');
+Route::get('/getCustomerData', [HooverDataController::class, 'getCustomerData'])->name('getCustomerData');
+Route::get('/syncCity', [HooverDataController::class, 'syncCity'])->name('syncCity');
+Route::get('/UpdateNames', [HooverDataController::class, 'UpdateNames'])->name('UpdateNames');
 
 
 

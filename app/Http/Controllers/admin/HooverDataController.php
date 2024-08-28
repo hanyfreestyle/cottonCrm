@@ -2,17 +2,180 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
+use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\AppPlugin\Data\Area\Models\AreaTranslation;
+use App\AppPlugin\Data\City\Models\City;
 use App\AppPlugin\Data\ConfigData\Models\ConfigData;
 use App\AppPlugin\Data\ConfigData\Models\ConfigDataTranslation;
 use App\Http\Controllers\AdminMainController;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class HooverDataController extends AdminMainController {
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function getCustomerData() {
+        dd('hi');
+        $saveData = 1;
+//        $oldData = DB::connection('mysql2')->table('customer')->take(1)->get();
+        $oldData = DB::connection('mysql2')->table('customer')->get();
+        foreach ($oldData as $data) {
+            $saveCustomer = new  CrmCustomers();
+            $saveCustomer->created_at = Carbon::createFromTimestamp($data->date_add);
+            $saveCustomer->updated_at = Carbon::createFromTimestamp($data->date_add);
+            $saveCustomer->old_id = $data->id;
+            $saveCustomer->name = $data->name;
+            $saveCustomer->mobile = $data->mobile;
+            $saveCustomer->mobile_code = 'eg';
+
+            if ($data->mobile_2 != '') {
+                $saveCustomer->mobile_2 = $data->mobile_2;
+                $saveCustomer->mobile_2_code = 'eg';
+            }
+            if ($data->phone != '') {
+                $saveCustomer->phone = $data->phone;
+                $saveCustomer->phone_code = 'eg';
+            }
+
+            if ($saveData) {
+                $saveCustomer->save();
+            }
+
+            $saveCustomersAddress = new  CrmCustomersAddress();
+            $saveCustomersAddress->uuid = Str::uuid()->toString();
+            $saveCustomersAddress->is_default = 1;
+            $saveCustomersAddress->customer_id = $saveCustomer->id;
+
+            $saveCustomersAddress->country_id = '66';
+            $saveCustomersAddress->city_id = null;
+            $saveCustomersAddress->old_city_id = $data->city;
+            $saveCustomersAddress->area_id = null;
+            $saveCustomersAddress->old_area_id = $data->area;
+
+            $saveCustomersAddress->address = $data->address;
+            if ($data->floor != '') {
+                $saveCustomersAddress->floor = $data->floor;
+            }
+
+            if ($data->unit_num != '') {
+                $saveCustomersAddress->unit_num = $data->unit_num;
+            }
+
+
+            if ($saveData) {
+                $saveCustomersAddress->save();
+            }
+//            dd($saveCustomersAddress);
+        }
+//        dd($oldData);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function syncCity() {
+        dd("hi");
+
+        $allCity = City::query()->get();
+        $allArea = Area::query()->get();
+
+
+        $getoldDate = CrmCustomersAddress::query()
+            ->where('city_id', null)
+            ->where('area_id', null)
+//            ->take(1)
+            ->get();
+
+        foreach ($getoldDate as $oldDate) {
+            $oldDate->city_id = $allCity->where('old_id', $oldDate->old_city_id)->first()->id ?? null;
+            $oldDate->area_id = $allArea->where('old_id', $oldDate->old_area_id)->first()->id ?? null;
+            $oldDate->save();
+        }
+
+//        dd($oldDate);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateNames() {
+        dd('done');
+
+        $rep = [
+            '\\\\', '\\', 'الحج', 'الحجة', '.سلوى', 'محمدسلطان', 'السيدخلف', 'عبدالرسول', 'عبدالمنعم', 'عبدالحميد', 'عبدالغني', 'محمدرؤوف', 'رناطارق',
+            'محمدزكى', 'احمدمسعد', 'هويدامصطفى', 'ابوبكر', 'محمدحلمي', 'محمودالطماوي', 'ابوعمرو', 'محمدجمال', 'معتزغنيم', 'نادرحسن', 'مصطى', 'مروة.',
+            'عبدالله', 'عبدالمجيد', 'عبدالهادي', 'عبدالوارث', 'عبدالخالق', 'عبدالرحمن', 'عبدالسلام', 'عبدالعزيز', 'عبدالعظيم', 'عبدالعليم', 'عبدالقادر', 'عبدالكريم', 'عبدالله',
+            'السيدعبد', 'سلافة', 'عبدالباقي', 'عبدالحليم', 'عبدالرحيم', 'مداد', 'مهندس-', 'ابوالسيد', 'عبدالغفار', 'رضاالله', 'شِريف', 'ناد رحسن'
+        ];
+        $rep_r = [
+            ' / ', ' / ', 'الحاج ', 'الحاجة', 'سلوى', 'محمد سلطان', 'السيد خلف', 'عبد الرسول', 'عبد المنعم', 'عبد الحميد', 'عبد الغني', 'محمد رؤوف', 'رنا طارق',
+            'محمد زكى', 'احمد مسعد', 'هويدا مصطفى', 'ابو بكر', 'محمد حلمي', 'محمود الطماوي', 'ابو عمرو', 'محمد جمال', 'معتز غنيم', 'ناد رحسن', 'مصطفي', 'مروة ',
+            'عبد الله', 'عبد المجيد', 'عبد الهادي ', 'عبد الوارث', 'عبد الخالق', 'عبد الرحمن', 'عبد السلام', 'عبد العزيز', 'عبد العظيم', 'عبد العليم', 'عبد القادر', 'عبد الكريم', 'عبد الله',
+            'السيد عبد', 'سلامة', 'عبد الباقي', 'عبد الحليم', 'عبد الرحيم', 'مدام', 'مهندس ', 'ابو السيد', 'عبد الغفار', 'رضا الله', 'شريف', 'نادر حسن'
+        ];
+
+        $CustomersNames = CrmCustomers::query()->get();
+        foreach ($CustomersNames as $name) {
+            $name->name = str_replace($rep, $rep_r, $name->name);
+            $name->timestamps = false;
+            $name->save();
+        }
+
+        $CustomersNames = CrmCustomers::query()->where('gender_id', null)->get();
+        foreach ($CustomersNames as $name) {
+            $name->gender_id = guessGender($name->name);
+            $name->timestamps = false;
+            $name->save();
+        }
+
+        $idArr = ['3084'];
+        $CustomersNames = CrmCustomers::query()->whereIn('id', $idArr)->get();
+        foreach ($CustomersNames as $name) {
+            $name->name = "وائل غانم";
+            $name->timestamps = false;
+            $name->save();
+        }
+
+
+        $idArr = ['1995', '2210', '1225', '3138', '1233', '1238', '1982'];
+        $CustomersNames = CrmCustomers::query()->whereIn('id', $idArr)->get();
+        foreach ($CustomersNames as $name) {
+            $name->name = "الاسم غير محدد ";
+            $name->timestamps = false;
+            $name->save();
+        }
+
+        $rep = [
+            'أ.', 'أ/', 'ا /', 'ا.', 'ا/', 'د /', 'د.', 'د-', 'م.', 'م/', 'م-', 'د/', 'م /', 'د,', 'د / '
+        ];
+        $rep_r = [
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+        ];
+
+        $CustomersNames = CrmCustomers::query()->where('gender_id', null)->get();
+        foreach ($CustomersNames as $name) {
+            $name->name = str_replace($rep, $rep_r, $name->name);
+            $name->timestamps = false;
+            $name->save();
+        }
+
+        $CustomersNames = CrmCustomers::query()->where('gender_id', null)->get();
+        foreach ($CustomersNames as $name) {
+            $name->gender_id = guessGender($name->name);
+            $name->timestamps = false;
+            $name->save();
+        }
+
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function getConfigData() {
+        dd("hi");
         $LeadCategory = ConfigData::where('cat_id', 'LeadCategory')->count();
         if ($LeadCategory == 0) {
             $oldData = DB::connection('mysql2')->table('config_data')->where('cat_id', 'f_lead_cat')->get();
@@ -45,8 +208,6 @@ class HooverDataController extends AdminMainController {
         }
 
 
-
-
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -58,12 +219,12 @@ class HooverDataController extends AdminMainController {
                 $saveData->old_id = $data->id;
                 $saveData->country_id = 66;
 
-                if($data->pro_id == 189){
-                    $cityId = 10 ;
-                }elseif ($data->pro_id == 175){
-                    $cityId = 4 ;
-                }elseif ($data->pro_id == 176){
-                    $cityId = 1 ;
+                if ($data->pro_id == 189) {
+                    $cityId = 10;
+                } elseif ($data->pro_id == 175) {
+                    $cityId = 4;
+                } elseif ($data->pro_id == 176) {
+                    $cityId = 1;
                 }
                 $saveData->city_id = $cityId;
                 $saveData->save();
@@ -84,6 +245,7 @@ class HooverDataController extends AdminMainController {
             }
         }
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #   SaveData
     static function SaveData($cat_id, $oldData) {

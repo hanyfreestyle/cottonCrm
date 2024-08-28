@@ -43,16 +43,16 @@ class CrmCustomersController extends AdminMainController {
             'AddConfig' => true,
             'AddLang' => false,
             'restore' => 0,
-            'settings'=>['report'=>true],
+            'settings' => ['report' => true],
             'formName' => "CrmCustomersFilter",
         ];
 
         self::constructData($sendArr);
 
-         $permission = [
-             'view'=> ['search','profile','repeat'],
-         ];
-         self::loadPagePermission($permission);
+        $permission = [
+            'view' => ['search', 'profile', 'repeat'],
+        ];
+        self::loadPagePermission($permission);
 
 
     }
@@ -64,7 +64,6 @@ class CrmCustomersController extends AdminMainController {
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_list');
         $pageData['SubView'] = false;
-
         $session = self::getSessionData($request);
         $rowData = self::CustomerDataFilterQ(self::indexQuery(), $session);
 
@@ -91,6 +90,7 @@ class CrmCustomersController extends AdminMainController {
         $table_address = "crm_customers_address";
         $dataTable = 'config_data_translations';
         $data = DB::table($table)
+//            ->where('gender_id','=',null)
             ->Join($table_address, $table . '.id', '=', $table_address . '.customer_id')
             ->where($table_address . '.is_default', true)
             ->leftJoin("config_data_translations", function ($join) {
