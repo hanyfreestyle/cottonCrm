@@ -2,6 +2,18 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+
+    <x-admin.hmtl.section>
+        <div class="row mb-3">
+            <div class="col-12 dir_button">
+                @can('crm_customer_edit')
+                    <x-admin.form.action-button url="{{route('admin.CrmCustomer.profile',$customer->id)}}" :tip="false" type="Profile"/>
+                    <x-admin.form.action-button url="{{route('admin.CrmCustomer.edit',$customer->id)}}" :tip="false" type="edit"/>
+                @endcan
+            </div>
+        </div>
+    </x-admin.hmtl.section>
+
     <x-admin.hmtl.section>
         <x-admin.card.collapsed :title="__('admin/crm.model_h2_customer')" :open="true" :outline="false" :collapsed="true">
             <x-app-plugin.crm.customers.card-profile :row="$customer" :soft-data="true" :config="$config"/>

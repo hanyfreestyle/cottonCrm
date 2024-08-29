@@ -44,26 +44,26 @@
                             </thead>
                             <tbody>
                             @foreach($rowData as $row)
-
-                                <td class="hideForMobile" data-th="{{__('admin/crm.label_date_add')}}">{{ PrintDate($row->created_at)}}</td>
-                                <td class="hideForMobile" data-th="{{__('admin/crm.label_date_follow')}}">{{PrintDate($row->follow_date)}}</td>
-                                <td data-th="{{__('admin/crm.label_customer_name')}}">{{$row->customer->name ?? ''}}</td>
-                                <td data-th="{{__('admin/crm.label_customer_mobile')}}">{{$row->customer->mobile ?? ''}}</td>
-                                <td class="hideForMobile" data-th="{{__('admin/crm.label_customer_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
-                                <td class="hideForMobile" data-th="{{__('admin/crm_service.label_device')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
-                                <td class="hideForMobile" data-th="{{__('admin/crm_service.label_notes_err')}}">{{$row->notes_err}}</td>
-                                <td class="td_action">
-                                    <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
-                                        <span class="tipName"></span> <i class="fas fa-eye"></i>
-                                    </button>
-                                </td>
-                                <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
-                                    <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-                                    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
-                                </x-admin.hmtl.popup-modal>
-                                <x-admin.table.action-but type="edit" :row="$row"/>
-                                <x-admin.table.action-but type="delete" :row="$row"/>
-                                <x-admin.table.action-but type="selectAll" :row="$row"/>
+                                <tr>
+                                    <td class="hideForMobile" data-th="{{__('admin/crm.label_date_add')}}">{{ PrintDate($row->created_at)}}</td>
+                                    <td class="hideForMobile" data-th="{{__('admin/crm.label_date_follow')}}">{{PrintDate($row->follow_date)}}</td>
+                                    <td data-th="{{__('admin/crm.label_customer_name')}}">{{$row->customer->name ?? ''}}</td>
+                                    <td data-th="{{__('admin/crm.label_customer_mobile')}}">{{$row->customer->mobile ?? ''}}</td>
+                                    <td class="hideForMobile" data-th="{{__('admin/crm.label_customer_area')}}">{{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}</td>
+                                    <td class="hideForMobile" data-th="{{__('admin/crm_service.label_device')}}">{{ LoadConfigName($CashConfigDataList,$row->device_id)}}</td>
+                                    <td class="hideForMobile" data-th="{{__('admin/crm_service.label_notes_err')}}">{{$row->notes_err}}</td>
+                                    <td class="td_action">
+                                        <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
+                                            <span class="tipName"></span> <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
+                                        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
+                                        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
+                                    </x-admin.hmtl.popup-modal>
+                                    <x-admin.table.action-but type="edit" :row="$row"/>
+                                    <x-admin.table.action-but type="delete" :row="$row"/>
+                                    <x-admin.table.action-but type="selectAll" :row="$row"/>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -101,12 +101,19 @@ if (!function_exists('getCurrentTime')) {
 if (!function_exists('getDateDifference')) {
     function getDateDifference($date, $ToDate) {
         // تعريف الوحدات الزمنية وطول كل وحدة بالثواني
-        $periods = array("ثانية", "دقيقة", "ساعات", "يوم", "أسبوع", "شهر", "عام");
+        $periods = [
+            __('admin/def.label_date_diff_second'),
+            __('admin/def.label_date_diff_minute'),
+            __('admin/def.label_date_diff'),
+            __('admin/def.label_date_diff_day'),
+            __('admin/def.label_date_diff_week'),
+            __('admin/def.label_date_diff_month'),
+            __('admin/def.label_date_diff_year')
+        ];
         $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
 
         $date = strtotime($date);
         $ToDate = strtotime($ToDate);
-
 
         // تحديد الفرق بين التاريخين
         if ($date > $ToDate) {
@@ -126,7 +133,7 @@ if (!function_exists('getDateDifference')) {
 
         // التحقق من حالة اليوم نفسه
         if ($difference == 0) {
-            return "today";
+            return __('admin/def.label_date_diff_same_day');
         } else {
             return "$difference $periods[$j]";
         }

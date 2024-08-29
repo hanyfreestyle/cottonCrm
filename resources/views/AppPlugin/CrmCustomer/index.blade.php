@@ -20,12 +20,13 @@
                         <x-admin.table.action-but res="d" po="top" type="empty" :view-but="IsConfig($config,'list_flag')"/>
                         <th class="all">{{__($defLang.'form_name')}}</th>
                         <th class="all">{{__($defLang.'form_mobile')}}</th>
-                        <th class="desktop">{{__($defLang.'form_whatsapp')}}</th>
-                        <x-admin.table.action-but po="top" res="desktop" type="option" :l="__($defLang.'form_evaluation')" :view-but="IsConfig($config,'list_evaluation')"/>
+                        <th class="desktop">{{__($defLang.'form_mobile')}}</th>
+                        <th class="desktop">{{__($defLang.'form_phone')}}</th>
+                        <x-admin.table.action-but po="top" res="d" type="option" :l="__($defLang.'form_evaluation')" :view-but="IsConfig($config,'list_evaluation')"/>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
-                        <x-admin.table.action-but po="top" type="can" can="crm_leads_add"/>
+                        <x-admin.table.action-but po="top" type="can" can="crm_service_leads_add"/>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -45,22 +46,23 @@
                 serverSide: true,
                 responsive: true,
                 pageLength: {{$yajraPerPage}},
+                order: [0, 'desc'],
                 @include('datatable.lang')
-
                 ajax: "{{ route( $PrefixRoute.".DataTable") }}",
                 columns: [
-                    {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
+                    {data: 'id', name: 'id', orderable: true, searchable: true, className: "remove_id"},
                         @include('datatable.index_action_but',['type'=> 'Flag','view'=> IsConfig($config, 'list_flag')])
                     {
                         data: 'name', name: 'name', orderable: true, searchable: true
                     },
                     {data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: ""},
-                    {data: 'whatsapp', name: 'whatsapp', orderable: true, searchable: true, className: ""},
+                    {data: 'mobile_2', name: 'mobile_2', orderable: true, searchable: true, className: ""},
+                    {data: 'phone', name: 'phone', orderable: true, searchable: true, className: ""},
                     @include('datatable.index_action_but',['type'=> 'option',"data"=>"evaluation",'option'=> IsConfig($config, 'list_evaluation')])
                     @include('datatable.index_action_but',['type'=> 'Profile'])
                     @include('datatable.index_action_but',['type'=> 'edit'])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
-                    @include('datatable.index_action_but',['type'=> 'can','can'=> 'crm_leads_add',"data"=>"addTicket"])
+                    @include('datatable.index_action_but',['type'=> 'can','can'=> 'crm_service_leads_add',"data"=>"addTicket"])
                 ],
 
             });

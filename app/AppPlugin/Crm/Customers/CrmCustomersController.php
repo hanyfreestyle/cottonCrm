@@ -2,6 +2,8 @@
 
 namespace App\AppPlugin\Crm\Customers;
 
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
 use App\AppPlugin\Crm\Customers\Request\CrmCustomersRequest;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\File;
 
 
 class CrmCustomersController extends AdminMainController {
@@ -101,7 +104,8 @@ class CrmCustomersController extends AdminMainController {
                 "$table.name  as name",
                 "$table.mobile  as mobile",
                 "$table.mobile_code  as flag",
-                "$table.whatsapp  as whatsapp",
+                "$table.mobile_2  as mobile_2",
+                "$table.phone as phone",
                 "$table.evaluation_id  as evaluation_id",
                 "$table_address.country_id as country_id",
                 "$table_address.city_id as city_id",
@@ -277,9 +281,30 @@ class CrmCustomersController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = CrmCustomers::where('id', $id)->with('address')->firstOrFail();
+        $card = [];
+        $Tickets = [];
+
+        if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
+            $Tickets = CrmTickets::query()
+                ->where('customer_id',$id)
+                ->orderBy('created_at','desc')
+                ->withSum('customerAmount','amount')
+                ->get();
+
+            $card['Open'] = $Tickets->where('state',1)->count();
+            $card['Finished'] = $Tickets->where('state',2)->where('follow_state',2)->count();
+            $card['Cancellation'] = $Tickets->where('state',2)->where('follow_state',5)->count();
+            $card['Reject'] = $Tickets->where('state',2)->where('follow_state',6)->count();
+            $card['Reopen'] = $Tickets->where('open_type',2)->count();
+            $card['Cash'] = CrmTicketsCash::query()->where('customer_id',$id)->whereIn('amount_type',['1','3'])->sum('amount');
+        }
+
+
         return view('AppPlugin.CrmCustomer.profile')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
+            'card' => $card,
+            'OldTickets' => $Tickets,
         ]);
     }
 

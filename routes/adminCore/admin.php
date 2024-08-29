@@ -27,6 +27,7 @@ Route::get('/syncTicketData', [HooverDataController::class, 'syncTicketData'])->
 Route::get('/UpdateCancellation', [HooverDataController::class, 'UpdateCancellation'])->name('UpdateCancellation');
 Route::get('/UpdateReject', [HooverDataController::class, 'UpdateReject'])->name('UpdateReject');
 Route::get('/UpdateFinished', [HooverDataController::class, 'UpdateFinished'])->name('UpdateFinished');
+Route::get('/UpdateClosedDate', [HooverDataController::class, 'UpdateClosedDate'])->name('UpdateClosedDate');
 
 
 

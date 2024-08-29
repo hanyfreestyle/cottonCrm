@@ -38,10 +38,12 @@
                            :des="$row->floor ?? null" :col="$col" :all-data="$allData"/>
 
 @elseif($n=='latitude')
-    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-street-view" t="latitude" s="semi_number"
-                           des="[{{$row->latitude.' , '.$row->longitude}}]" :col="$col" :all-data="$allData"/>
-
+    @if($row->latitude)
+        <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-street-view" t="latitude" s="semi_number"
+                               des="[{{$row->latitude.' , '.$row->longitude}}]" :col="$col" :all-data="$allData"/>
+    @endif
 @elseif($n=='evaluation_id')
+
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-star" :t="__('admin/crm_customer.form_evaluation')" :arr-data="$CashConfigDataList"
                            :des="$row->evaluation_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='gender_id')

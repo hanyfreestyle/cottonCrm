@@ -47,6 +47,19 @@ class HooverDataController extends AdminMainController {
         echobr(CrmTickets::query()->whereNull('customer_id')->count());
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateClosedDate() {
+        $tickets = CrmTickets::query()
+            ->where('state', 1)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $updateTicket->close_date = null;
+            $updateTicket->timestamps = false;
+            $updateTicket->save();
+        }
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -74,7 +87,6 @@ class HooverDataController extends AdminMainController {
             }
 
 
-
             if (intval($updateTicket->done_price) > 0) {
                 $addCash = new CrmTicketsCash();
                 $addCash->ticket_id = $updateTicket->id;
@@ -87,11 +99,11 @@ class HooverDataController extends AdminMainController {
                 $addCash->amount_type = 1;
                 $addCash->amount = $updateTicket->done_price;
 
-                if($saveConfirm){
+                if ($saveConfirm) {
                     $addCash->confirm_date = $updateTicket->close_date;
                     $addCash->confirm_date_time = null;
                     $addCash->confirm_user_id = 1;
-                    $addCash->amount_paid =  $updateTicket->done_price;
+                    $addCash->amount_paid = $updateTicket->done_price;
                 }
 
                 if ($saveData) {
@@ -111,11 +123,11 @@ class HooverDataController extends AdminMainController {
                     $addCash->pay_type = 1;
                     $addCash->amount_type = 2;
                     $addCash->amount = $updateTicket->done_price_prepaid;
-                    if($saveConfirm){
+                    if ($saveConfirm) {
                         $addCash->confirm_date = $updateTicket->close_date;
                         $addCash->confirm_date_time = null;
                         $addCash->confirm_user_id = 1;
-                        $addCash->amount_paid =  $updateTicket->done_price_prepaid;
+                        $addCash->amount_paid = $updateTicket->done_price_prepaid;
                     }
 
                     if ($saveData) {
@@ -356,6 +368,7 @@ class HooverDataController extends AdminMainController {
 
 //        dd($oldDate);
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

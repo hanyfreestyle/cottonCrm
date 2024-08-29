@@ -32,6 +32,12 @@ return
 	'form_notes' => 'ملاحظات',
 	'form_phone' => 'رقم الهاتف',
 	'form_whatsapp' => 'رقم الواتس اب',
+	'profile_card_1' => 'حالية',
+	'profile_card_2' => 'خالص',
+	'profile_card_3' => 'مرتجع',
+	'profile_card_4' => 'مرفوض',
+	'profile_card_5' => 'الغاء',
+	'profile_card_6' => 'تحصيلات',
 	'report_area' => 'المناطق',
 	'report_city' => 'المدن',
 	'report_country' => 'الدول',
@@ -41,4 +47,5 @@ return
 	'search_type_1' => 'البحث بواسطة رقم الهاتف',
 	'search_type_2' => 'البحث بواسطة الاسم',
 	'search_type_3' => 'البحث بواسطة العنوان',
+	'profile_table_box' => 'المتابعات الخاصة بالعميل',
 ];

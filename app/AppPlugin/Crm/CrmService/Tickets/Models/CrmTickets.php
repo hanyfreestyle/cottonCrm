@@ -35,6 +35,10 @@ class CrmTickets extends Model {
             ;
     }
 
+    public function customerAmount(): HasMany {
+        return $this->hasMany(CrmTicketsCash::class,'ticket_id','id')->whereIn('amount_type',['1','3']);
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function scopeDefClosed(Builder $query): Builder {
