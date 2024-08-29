@@ -9,6 +9,7 @@ use App\Helpers\photoUpload\PuzzleUploadProcess;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\CrudTraits;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,11 @@ class UserController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClearCash() {
+        Cache::forget('CashUsersList');
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
@@ -67,6 +73,7 @@ class UserController extends AdminMainController {
         $pageData['ViewType'] = "deleteList";
         $roles = array();
         $users = self::getSelectQuery(User::onlyTrashed());
+        self::ClearCash();
         return view('admin.appCore.role.user_index')->with([
             'pageData' => $pageData,
             'users' => $users,
@@ -146,6 +153,7 @@ class UserController extends AdminMainController {
         $saveData->assignRole($request->input('roles'));
 
         $saveData->save();
+        self::ClearCash();
         return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
     }
 
@@ -166,8 +174,10 @@ class UserController extends AdminMainController {
             } else {
                 return back()->with(['confirmException' => '', 'fromModel' => 'UsersPost', 'deleteRow' => $deleteRow]);
             }
+            self::ClearCash();
             return redirect(route($this->PrefixRoute . '.index'))->with('confirmDelete', "");
         } else {
+            self::ClearCash();
             return back();
         }
     }
@@ -203,6 +213,7 @@ class UserController extends AdminMainController {
                 $updateData->status = '1';
             }
             $updateData->save();
+            self::ClearCash();
             return response()->json(['success' => $userId]);
         }
     }

@@ -22,6 +22,7 @@ return
 	'label_customer_mobile' => 'رقم الموبايل',
 	'label_customer_name' => 'اسم العميل',
 	'label_date_add' => 'تاريخ الاضافة',
+	'label_date_closed' => 'تاريخ الاغلاق',
 	'label_date_follow' => 'تاريخ المتابعة',
 	'label_lead_area' => 'المناطق',
 	'label_lead_category' => 'الحمله الاعلانية',
@@ -34,5 +35,6 @@ return
 	'model_h2_ticket' => 'تفاصيل التذكرة',
 	'model_title_info' => 'تفاصيل المتابعة',
 	'report_card_all_count' => 'اجمالى عدد المتابعات',
-	'label_date_closed' => 'تاريخ الاغلاق',
+	'label_review_0' => 'ينتظر المراجعة',
+	'label_review_1' => 'تم المراجعة',
 ];

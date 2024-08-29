@@ -45,7 +45,6 @@
         </x-admin.hmtl.section>
     @endif
 
-
     @if(count($OldTickets) > 0 )
         <x-admin.hmtl.section>
             <x-admin.card.normal>
@@ -80,6 +79,7 @@
                                     </button>
                                 </td>
                                 <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
+                                    <x-app-plugin.crm-service.leads.lead-info-closed :row="$row"/>
                                     <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
                                 </x-admin.hmtl.popup-modal>
                             </tr>
@@ -89,6 +89,8 @@
                 </div>
             </x-admin.card.normal>
         </x-admin.hmtl.section>
+
+
     @endif
 
 @endsection

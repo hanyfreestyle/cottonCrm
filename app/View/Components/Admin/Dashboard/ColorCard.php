@@ -15,6 +15,7 @@ class ColorCard extends Component {
     public $icon;
     public $url;
     public $col;
+    public $type;
 
 
     public function __construct(
@@ -25,6 +26,7 @@ class ColorCard extends Component {
         $icon = null,
         $url = null,
         $col = "col-lg-3 col-6",
+        $type = "normal",
 
 
     ) {
@@ -35,6 +37,7 @@ class ColorCard extends Component {
         $this->icon = $icon;
         $this->url = $url;
         $this->col = $col;
+        $this->type = $type;
 
     }
 

@@ -11,7 +11,7 @@
                 <div class="col-lg-12">
 
                     <div class="row">
-                        <x-admin.form.input name="name" :row="$users" :label="__('admin/config/roles.users_fr_name')" col="4" tdir="en"/>
+                        <x-admin.form.input name="name" :row="$users" :label="__('admin/config/roles.users_fr_name')" col="4" tdir="ar"/>
                         <x-admin.form.input name="email" :row="$users" :label="__('admin/config/roles.users_fr_email')" col="4" tdir="en"/>
                         <x-admin.form.input name="phone" :row="$users" :label="__('admin/config/roles.users_fr_phone')" col="4" tdir="en"/>
 

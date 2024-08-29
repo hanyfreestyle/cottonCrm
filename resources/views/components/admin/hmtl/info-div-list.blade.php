@@ -64,6 +64,11 @@
 @elseif($n=='follow_date')
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-tools" :t="__('admin/crm.label_date_follow')"
                            :des="PrintDate($row->follow_date)" :col="$col" :all-data="$allData"/>
+
+@elseif($n=='close_date')
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-power-off" :t="__('admin/crm.label_date_closed')"
+                           :des="PrintDate($row->follow_date)" :col="$col" :all-data="$allData"/>
+
 @elseif($n=='user_id')
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-user-cog"  :sub-des="true" :t="__('admin/crm_service.label_user_id')" :arr-data="$CashUsersList"
                            :des="$row->user_id" :col="$col" :all-data="$allData"/>
@@ -99,7 +104,10 @@
 
     <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm.label_notes')"
                            :des="$row->notes" :col="$col" :all-data="$allData"/>
-@elseif($n=='XXXXXX')
+@elseif($n=='lastNotes')
+    <x-admin.hmtl.info-div i="fas fa-comment-alt" :t="__('admin/crm_service.label_notes_user')"
+                           :des="$row->des->last()->des" :col="$col" :all-data="$allData"/>
+
 @elseif($n=='XXXXXX')
 
 @elseif($n=='XXXXXX')

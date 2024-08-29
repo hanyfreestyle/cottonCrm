@@ -21,4 +21,5 @@ return
 	'label_update_spare_parts' => 'Spare parts required',
 	'label_update_works_done' => 'Works carried out',
 	'label_user_id' => 'Technician name',
+	'label_notes_user' => 'Technician Notes',
 ];

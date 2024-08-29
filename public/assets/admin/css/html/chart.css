@@ -125,3 +125,18 @@
     color:rgba(0,0,0,.4);
     font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+.closed_lead_card .small-box h3{
+    font-size: 3.3rem;
+    margin-bottom: 0!important;
+
+}
+.closed_lead_card .small-box p{
+
+
+    margin-bottom: 5px!important;
+
+}
+

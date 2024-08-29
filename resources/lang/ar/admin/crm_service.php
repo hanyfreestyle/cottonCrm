@@ -21,4 +21,5 @@ return
 	'label_update_spare_parts' => 'قطع الغيار المطلوبة',
 	'label_update_works_done' => 'الاعمال المنفذة',
 	'label_user_id' => 'اسم الفنى',
+	'label_notes_user' => 'تقرير الفنى',
 ];

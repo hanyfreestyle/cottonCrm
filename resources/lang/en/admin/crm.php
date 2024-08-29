@@ -22,6 +22,7 @@ return
 	'label_customer_mobile' => 'Mobile',
 	'label_customer_name' => 'Customer Name',
 	'label_date_add' => 'Date added',
+	'label_date_closed' => 'Closed Date',
 	'label_date_follow' => 'Follow-up date',
 	'label_lead_area' => 'Area',
 	'label_lead_category' => 'Campaign',
@@ -34,5 +35,6 @@ return
 	'model_h2_ticket' => 'Ticket details',
 	'model_title_info' => 'Follow-up details',
 	'report_card_all_count' => 'Total of follow-ups',
-	'label_date_closed' => 'Closed Date',
+	'label_review_0' => '',
+	'label_review_1' => '',
 ];
