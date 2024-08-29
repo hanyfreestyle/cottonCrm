@@ -31,6 +31,7 @@ class CardProfile extends Component {
     ) {
 
         $this->customerId = $customerId;
+
         if($this->customerId){
             $this->row = CrmCustomers::query()->where('id',$this->customerId)->with('address')->first();
         }else{

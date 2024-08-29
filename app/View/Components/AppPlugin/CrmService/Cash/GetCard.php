@@ -16,6 +16,7 @@ class GetCard extends Component {
     public $open;
     public $open_style;
     public $isactive;
+    public $showBut;
 
 
 
@@ -27,9 +28,11 @@ class GetCard extends Component {
         $collapsed = true,
         $open = true,
         $isactive = true,
+        $showBut = false,
 
     ) {
         $this->row = $row;
+        $this->showBut = $showBut;
         $this->bg = 'bg-' . getBgColor($bg);
         $this->collapsed = $collapsed;
         if ($collapsed) {

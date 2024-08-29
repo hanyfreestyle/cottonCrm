@@ -31,11 +31,13 @@ class UsersTableSeeder extends Seeder {
                 $user->email = $old->email;
                 $user->password = $old->password;
                 $user->des = $old->des;
+                $user->crm_tech = $old->crm_tech;
                 $user->roles_name = $old->roles_name;
                 $user->save();
 
                 $role = Role::findByName('technician');
                 $permissions = Permission::where('cat_id', 'crm_service_follow')->pluck('id');
+                $permissions = ['23','24','25','26',];
                 $role->syncPermissions($permissions);
                 $user->assignRole([$role->id]);
             }

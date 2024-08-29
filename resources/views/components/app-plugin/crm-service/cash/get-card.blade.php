@@ -27,14 +27,17 @@
                                        :des="$row->ticket->des->last()->des ?? '' " col="col-lg-12 col-12"/>
             </div>
 
-            <div class="row text-center follow_action_but py-2">
-                <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
-                    <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service_cash.label_notes')}}
-                </button>
-                <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
-                                            :l="__('admin/crm_service_cash.label_but_collection')" bg="s" icon="fas fa-vote-yea"/>
-            </div>
-
+            @if($showBut)
+                @can('crm_service_cash_edit')
+                    <div class="row text-center follow_action_but py-2">
+                        <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
+                            <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service_cash.label_notes')}}
+                        </button>
+                        <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
+                                                    :l="__('admin/crm_service_cash.label_but_collection')" bg="s" icon="fas fa-vote-yea"/>
+                    </div>
+                @endcan
+            @endif
         </div>
     </div>
 </div>

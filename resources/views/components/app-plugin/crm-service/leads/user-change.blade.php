@@ -13,5 +13,5 @@
     </div>
 </div>
 <div class="InfoViewList">
-    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
+    <x-app-plugin.crm-service.leads.lead-info :add-title="true"  :row="$row"/>
 </div>

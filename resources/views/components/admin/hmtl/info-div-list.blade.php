@@ -105,8 +105,11 @@
     <x-admin.hmtl.info-div i="fas fa-bullhorn" :t="__('admin/crm.label_notes')"
                            :des="$row->notes" :col="$col" :all-data="$allData"/>
 @elseif($n=='lastNotes')
-    <x-admin.hmtl.info-div i="fas fa-comment-alt" :t="__('admin/crm_service.label_notes_user')"
-                           :des="$row->des->last()->des" :col="$col" :all-data="$allData"/>
+    @if($row->des->last()->des ?? null)
+        <x-admin.hmtl.info-div i="fas fa-comment-alt" :t="__('admin/crm_service.label_notes_user')"
+                               :des="$row->des->last()->des ?? null" :col="$col" :all-data="$allData"/>
+    @endif
+
 
 @elseif($n=='XXXXXX')
 

@@ -17,6 +17,7 @@ return
 	'ticket_cash' => 'ادارة التحصيلات',
 	'ticket_cash_cost' => 'تكلفة الزيارة',
 	'ticket_cash_deposit' => 'العربون',
+	'ticket_cash_list' => 'كشف حساب',
 	'ticket_cash_service' => 'مصاريف الكشف',
 	'ticket_close' => 'ادارة التذاكر المغلقة',
 	'ticket_close_cancellation' => 'مغلقة الغاء',
@@ -24,5 +25,5 @@ return
 	'ticket_close_reject' => 'مغلقة رفض',
 	'ticket_open' => 'ادارة التذاكر المفتوحة',
 	'ticket_review' => 'مراجعة التذاكر المغلقة',
-	'ticket_cash_list' => 'كشف حساب',
+	'follow_list_amount' => 'تحصيلات',
 ];

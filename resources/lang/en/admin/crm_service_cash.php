@@ -19,4 +19,5 @@ return
 	'report_card_week' => '',
 	'report_chart_month' => '',
 	'report_chart_year' => '',
+	'label_sum_user' => '',
 ];

@@ -19,4 +19,5 @@ return
 	'report_card_week' => 'اجمالى تحصيل الاسبوع',
 	'report_chart_month' => 'اجمالى التحصيلات لاخر 30 يوم',
 	'report_chart_year' => 'اجمالى التحصيلات لاخر 12 شهر',
+	'label_sum_user' => 'اجمالى التحصيلات المعلقة',
 ];

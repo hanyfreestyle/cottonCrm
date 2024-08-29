@@ -10,6 +10,7 @@ Route::prefix('/follow-up')->name('TechFollowUp.')->group(function () {
     Route::get('/back', [UserFollowUpController::class, 'index'])->name('Back');
     Route::get('/next', [UserFollowUpController::class, 'index'])->name('Next');
     Route::get('/report/', [UserFollowUpController::class, 'Report'])->name('Report');
+    Route::get('/amount/', [UserFollowUpController::class, 'AmountList'])->name('AmountList');
     Route::get('/update-ticket/{ticketId}', [UserFollowUpController::class, 'UpdateTicket'])->name('UpdateTicket');
     Route::post('/update-status/{ticketId}', [UserFollowUpController::class, 'UpdateTicketStatus'])->name('UpdateTicketStatus');
 

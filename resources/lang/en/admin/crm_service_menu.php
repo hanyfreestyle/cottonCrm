@@ -17,6 +17,7 @@ return
 	'ticket_cash' => 'Collections',
 	'ticket_cash_cost' => '',
 	'ticket_cash_deposit' => '',
+	'ticket_cash_list' => '',
 	'ticket_cash_service' => '',
 	'ticket_close' => 'Manage Closed Ticket',
 	'ticket_close_cancellation' => 'Closed Cancellation',
@@ -24,5 +25,5 @@ return
 	'ticket_close_reject' => 'Closed Reject',
 	'ticket_open' => 'Manage Open Ticket',
 	'ticket_review' => 'Closed Review',
-	'ticket_cash_list' => '',
+	'follow_list_amount' => '',
 ];

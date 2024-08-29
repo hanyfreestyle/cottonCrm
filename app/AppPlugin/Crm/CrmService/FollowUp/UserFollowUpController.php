@@ -6,7 +6,6 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
-use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
@@ -107,6 +106,30 @@ class UserFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AmountList() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['IconPage'] = 'fas fa-hand-holding-usd';
+        $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_amount');
+
+        $rowData = CrmTicketsCash::defUnpaid()
+            ->where('user_id',Auth::user()->id)
+            ->orderBy('user_id')
+            ->get();
+
+        $totalAmount = $rowData->sum('amount');
+
+        return view('AppPlugin.CrmService.followUp.amount_list')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'totalAmount' => $totalAmount,
+        ]);
+    }
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicket($ticketId) {
         $pageData = $this->pageData;
 
@@ -164,7 +187,7 @@ class UserFollowUpController extends AdminMainController {
         self::AddPayCash($ticket, $follow_state, $request);
 
         try {
-            DB::transaction(function () use ($request,$ticket) {
+            DB::transaction(function () use ($request, $ticket) {
 
             });
         } catch (\Exception $exception) {
@@ -186,12 +209,23 @@ class UserFollowUpController extends AdminMainController {
         $addCash->user_id = Auth::user()->id;
 
         if ($follow_state == 2) {
+            if (intval($request->input('amount')) > 0) {
+                $addCash->amount_type = 1;
+                $addCash->pay_type = 1;
+                $addCash->amount = $request->input('amount');
+                $addCash->save();
+            }
 
         } elseif ($follow_state == 3) {
-
+            if (intval($request->input('amount')) > 0) {
+                $addCash->amount_type = 2;
+                $addCash->pay_type = 1;
+                $addCash->amount = $request->input('amount');
+                $addCash->save();
+            }
 
         } elseif ($follow_state == 6) {
-            if(intval($request->input('amount')) > 0 ){
+            if (intval($request->input('amount')) > 0) {
                 $addCash->amount_type = 3;
                 $addCash->pay_type = 1;
                 $addCash->amount = $request->input('amount');
@@ -326,6 +360,16 @@ class UserFollowUpController extends AdminMainController {
         $subMenu->name = "admin/crm_service_menu.follow_list_next";
         $subMenu->roleView = "crm_service_follow_view";
         $subMenu->icon = "fas fa-history";
+        $subMenu->save();
+
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "TechFollowUp.AmountList";
+        $subMenu->url = "admin.TechFollowUp.AmountList";
+        $subMenu->name = "admin/crm_service_menu.follow_list_amount";
+        $subMenu->roleView = "crm_service_follow_view";
+        $subMenu->icon = "fas fa-hand-holding-usd";
         $subMenu->save();
 
         $subMenu = new AdminMenu();

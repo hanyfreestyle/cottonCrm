@@ -75,17 +75,17 @@ class CrmTicketClosedController extends AdminMainController {
             $RouteVal = "all";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Finished') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
-            $pageData['IconPage'] = 'fa-eye';
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_finished');
+            $pageData['IconPage'] = 'fa-thumbs-up';
             $RouteVal = "Finished";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Reject') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_today');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_reject');
             $pageData['IconPage'] = 'fa-bell';
             $RouteVal = "Reject";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Cancellation') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_back');
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_cancellation');
             $pageData['IconPage'] = 'fa-thumbs-down';
             $RouteVal = "Cancellation";
         }

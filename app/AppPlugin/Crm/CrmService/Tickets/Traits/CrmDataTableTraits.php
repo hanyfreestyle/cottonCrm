@@ -252,13 +252,6 @@ trait CrmDataTableTraits {
                 return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
             })
 
-//            ->editColumn('area', function ($row) {
-//                return $row->customer->address->first()->area->name;
-//            })
-//            ->editColumn('device', function ($row) {
-//                return $row->device_name->name;
-//            })
-
             ->editColumn('viewTicket', function ($row) {
                 return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
             })

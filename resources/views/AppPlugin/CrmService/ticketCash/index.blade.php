@@ -14,7 +14,7 @@
                         <div class="alert alert-dark">{{ $val->first()->user->name }}</div>
                     </div>
                      @foreach($val as $row)
-                        <x-app-plugin.crm-service.cash.get-card :row="$row" :open="false"/>
+                        <x-app-plugin.crm-service.cash.get-card :show-but="true" :row="$row" :open="false"/>
                     @endforeach
                 </div>
             @endforeach

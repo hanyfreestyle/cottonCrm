@@ -6,6 +6,7 @@
     </div>
 @endif
 <div class="row">
+
     <x-admin.hmtl.info-div-list n="created_at" :row="$row" col="col-lg-2 col-6"/>
     @if($row->state == 1)
         <x-admin.hmtl.info-div-list n="follow_date" :row="$row" col="col-lg-2 col-6"/>
@@ -16,7 +17,6 @@
     <x-admin.hmtl.info-div-list n="open_type" :row="$row" col="col-lg-2 col-6"/>
     <x-admin.hmtl.info-div-list n="follow_state" :row="$row" col="col-lg-2 col-6"/>
 </div>
-
 
 <div class="row">
     <x-admin.hmtl.info-div-list n="sours_id" :row="$row" col="col-lg-3 col-6"/>
