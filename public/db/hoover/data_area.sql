@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2024 at 04:24 PM
+-- Generation Time: Aug 30, 2024 at 12:10 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_crm`
+-- Database: `app_crm_hoover`
 --
 
 --
@@ -131,7 +131,10 @@ INSERT INTO `data_area` (`id`, `old_id`, `country_id`, `city_id`, `is_active`, `
 (103, 295, 66, 4, 1, 0, NULL, NULL),
 (104, 297, 66, 4, 1, 0, NULL, NULL),
 (105, 298, 66, 4, 1, 0, NULL, NULL),
-(106, 299, 66, 4, 1, 0, NULL, NULL);
+(106, 299, 66, 4, 1, 0, NULL, NULL),
+(107, 303, 66, 4, 1, 0, NULL, NULL),
+(108, 304, 66, 4, 1, 0, NULL, NULL),
+(109, 305, 66, 4, 1, 0, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

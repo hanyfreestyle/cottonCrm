@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2024 at 06:05 PM
+-- Generation Time: Aug 30, 2024 at 12:09 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_crm`
+-- Database: `app_crm_hoover`
 --
 
 --
@@ -118,33 +118,36 @@ INSERT INTO `config_data` (`id`, `old_id`, `cat_id`, `is_active`) VALUES
 (90, 290, 'BrandName', 1),
 (91, 294, 'BrandName', 1),
 (92, 296, 'BrandName', 1),
-(93, 52, 'DeviceType', 1),
-(94, 53, 'DeviceType', 1),
-(95, 54, 'DeviceType', 1),
-(96, 55, 'DeviceType', 1),
-(97, 56, 'DeviceType', 1),
-(98, 57, 'DeviceType', 1),
-(99, 58, 'DeviceType', 1),
-(100, 180, 'DeviceType', 1),
-(101, 181, 'DeviceType', 1),
-(102, 182, 'DeviceType', 1),
-(103, 183, 'DeviceType', 1),
-(104, 184, 'DeviceType', 1),
-(105, 185, 'DeviceType', 1),
-(106, 186, 'DeviceType', 1),
-(107, 187, 'DeviceType', 1),
-(108, 195, 'DeviceType', 1),
-(109, 200, 'DeviceType', 1),
-(110, 208, 'DeviceType', 1),
-(111, 210, 'DeviceType', 1),
-(112, 212, 'DeviceType', 1),
-(113, 215, 'DeviceType', 1),
-(114, 276, 'DeviceType', 1),
-(115, 283, 'DeviceType', 1),
-(116, 285, 'DeviceType', 1),
-(117, NULL, 'EvaluationCust', 1),
-(118, NULL, 'EvaluationCust', 1),
-(119, NULL, 'EvaluationCust', 1);
+(93, 300, 'BrandName', 1),
+(94, 302, 'BrandName', 1),
+(95, 52, 'DeviceType', 1),
+(96, 53, 'DeviceType', 1),
+(97, 54, 'DeviceType', 1),
+(98, 55, 'DeviceType', 1),
+(99, 56, 'DeviceType', 1),
+(100, 57, 'DeviceType', 1),
+(101, 58, 'DeviceType', 1),
+(102, 180, 'DeviceType', 1),
+(103, 181, 'DeviceType', 1),
+(104, 182, 'DeviceType', 1),
+(105, 183, 'DeviceType', 1),
+(106, 184, 'DeviceType', 1),
+(107, 185, 'DeviceType', 1),
+(108, 186, 'DeviceType', 1),
+(109, 187, 'DeviceType', 1),
+(110, 195, 'DeviceType', 1),
+(111, 200, 'DeviceType', 1),
+(112, 208, 'DeviceType', 1),
+(113, 210, 'DeviceType', 1),
+(114, 212, 'DeviceType', 1),
+(115, 215, 'DeviceType', 1),
+(116, 276, 'DeviceType', 1),
+(117, 283, 'DeviceType', 1),
+(118, 285, 'DeviceType', 1),
+(119, 301, 'DeviceType', 1),
+(120, NULL, 'EvaluationCust', 1),
+(121, NULL, 'EvaluationCust', 1),
+(122, NULL, 'EvaluationCust', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

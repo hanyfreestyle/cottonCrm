@@ -64,7 +64,7 @@
 
                 ajax: "{{ route( $PrefixRoute.".DataTable",$RouteVal) }}",
                 columns: [
-                    {data: 'id', name: 'id', orderable: true, searchable: false},
+                    {data: 'id', name: 'id', orderable: true, searchable: true},
                     {'name': 'created_at', 'data': {'_': 'created_at.display', 'sort': 'created_at.timestamp'}},
                     {'name': 'close_date', 'data': {'_': 'close_date.display', 'sort': 'close_date.timestamp'}},
                     {data: 'user_name', name: 'users.name', orderable: true, searchable: true},
