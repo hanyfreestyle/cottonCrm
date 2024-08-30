@@ -107,6 +107,7 @@ class CrmCustomersController extends AdminMainController {
                 "$table.mobile_2  as mobile_2",
                 "$table.phone as phone",
                 "$table.evaluation_id  as evaluation_id",
+                "$table.type_id  as type_id",
                 "$table_address.country_id as country_id",
                 "$table_address.city_id as city_id",
                 "$table_address.area_id as area_id",
@@ -118,6 +119,10 @@ class CrmCustomersController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CustomerDataFilterQ($query, $session, $order = null) {
+
+        if (isset($session['type_id']) and $session['type_id'] != null) {
+            $query->where('type_id', $session['type_id']);
+        }
 
         if (isset($session['evaluation_id']) and $session['evaluation_id'] != null) {
             $query->where('evaluation_id', $session['evaluation_id']);
@@ -157,6 +162,10 @@ class CrmCustomersController extends AdminMainController {
             })
             ->editColumn('Flag', function ($row) {
                 return TablePhotoFlag_Code($row, 'flag');
+            })
+            ->editColumn('type_id', function ($row) {
+                $getSoursData = collect($this->DefCat['CustomersTypeId']);
+                return $getSoursData->where('id',$row->type_id)->first()->name ?? null;
             })
             ->editColumn('addTicket', function ($row) {
                 return view('datatable.but')->with(['btype' => 'addTicket', 'row' => $row])->render();
@@ -256,6 +265,7 @@ class CrmCustomersController extends AdminMainController {
             'pageData' => $pageData,
             'rowData' => $rowData,
             'nodata' => false,
+            'lastAdd' => [],
         ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -272,6 +282,7 @@ class CrmCustomersController extends AdminMainController {
             'rowData' => $rowData,
             'nodata' => true,
             'request' => $request,
+            'lastAdd' => [],
         ]);
     }
 
@@ -286,17 +297,17 @@ class CrmCustomersController extends AdminMainController {
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
             $Tickets = CrmTickets::query()
-                ->where('customer_id',$id)
-                ->orderBy('created_at','desc')
-                ->withSum('customerAmount','amount')
+                ->where('customer_id', $id)
+                ->orderBy('created_at', 'desc')
+                ->withSum('customerAmount', 'amount')
                 ->get();
 
-            $card['Open'] = $Tickets->where('state',1)->count();
-            $card['Finished'] = $Tickets->where('state',2)->where('follow_state',2)->count();
-            $card['Cancellation'] = $Tickets->where('state',2)->where('follow_state',5)->count();
-            $card['Reject'] = $Tickets->where('state',2)->where('follow_state',6)->count();
-            $card['Reopen'] = $Tickets->where('open_type',2)->count();
-            $card['Cash'] = CrmTicketsCash::query()->where('customer_id',$id)->whereIn('amount_type',['1','3'])->sum('amount');
+            $card['Open'] = $Tickets->where('state', 1)->count();
+            $card['Finished'] = $Tickets->where('state', 2)->where('follow_state', 2)->count();
+            $card['Cancellation'] = $Tickets->where('state', 2)->where('follow_state', 5)->count();
+            $card['Reject'] = $Tickets->where('state', 2)->where('follow_state', 6)->count();
+            $card['Reopen'] = $Tickets->where('open_type', 2)->count();
+            $card['Cash'] = CrmTicketsCash::query()->where('customer_id', $id)->whereIn('amount_type', ['1', '3'])->sum('amount');
         }
 
 

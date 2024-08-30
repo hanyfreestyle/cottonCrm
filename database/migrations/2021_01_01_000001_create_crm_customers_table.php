@@ -14,6 +14,7 @@ return new class extends Migration {
 
             $table->integer('evaluation_id')->nullable();
             $table->integer('gender_id')->nullable();
+            $table->integer('type_id')->nullable();
 
             $table->string('name')->nullable();
             $table->string('mobile')->unique();
@@ -35,6 +36,7 @@ return new class extends Migration {
             $table->boolean("is_active")->default(true);
             $table->timestamps();
             $table->softDeletes();
+            $table->uuid()->unique()->nullable();
         });
 
         Schema::create('crm_customers_address', function (Blueprint $table) {

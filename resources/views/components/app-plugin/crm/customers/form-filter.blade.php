@@ -7,6 +7,20 @@
                 <input type="hidden" name="formName" value="{{$formName}}">
                 <div class="row">
 
+                    <x-admin.form.select-arr name="type_id" sendvalue="{{old('type_id',issetArr($getSessionData,'type_id'))}}" :labelview="false"
+                                             select-type="DefCat" :send-arr="$DefCat['CustomersTypeId']" :label="__($defLang.'var_customer_type_id')" :filter-form="true" col="2"/>
+
+                    @if(IsConfig($config,'evaluation'))
+                        <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}" :labelview="false"
+                                                  cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :filter-form="true" col="2" :req="false"/>
+                    @endif
+
+                    @if(IsConfig($config,'gender'))
+                        <x-admin.form.select-arr name="gender_id" sendvalue="{{old('gender_id',issetArr($getSessionData,'gender_id'))}}" :labelview="false"
+                                                 select-type="DefCat" :send-arr="$DefCat['gender']" :label="__($defLang.'form_gender')" :filter-form="true" col="2"/>
+                    @endif
+
+
                     @if(IsConfig($config,'addCountry'))
                         @if(File::isFile(base_path('routes/AppPlugin/data/country.php')) )
                             @if($config['OneCountry'] == false )
@@ -30,15 +44,7 @@
                         @endif
                     @endif
 
-                    @if(IsConfig($config,'evaluation'))
-                        <x-admin.form.select-data name="evaluation_id" sendvalue="{{old('evaluation_id',issetArr($getSessionData,'evaluation_id'))}}" :labelview="false"
-                                                  cat-id="EvaluationCust" :label="__($defLang.'form_evaluation')" :filter-form="true" col="2" :req="false"/>
-                    @endif
 
-                    @if(IsConfig($config,'gender'))
-                        <x-admin.form.select-arr name="gender_id" sendvalue="{{old('gender_id',issetArr($getSessionData,'gender_id'))}}" :labelview="false"
-                                                 select-type="DefCat" :send-arr="$DefCat['gender']" :label="__($defLang.'form_gender')" :filter-form="true" col="2"/>
-                    @endif
                 </div>
 
                 @if($reportView)

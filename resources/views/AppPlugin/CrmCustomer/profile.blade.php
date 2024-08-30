@@ -38,7 +38,7 @@
                     <x-admin.dashboard.color-card :count="$card['Cancellation']" col="col-lg-2 col-6" :title="__('admin/crm_customer.profile_card_5')" icon="fas fa-thumbs-down" bg="d"/>
                 @endif
                 @if($card['Cash'] != 0)
-                    <x-admin.dashboard.color-card :count="number_format($card['Cash'])" col="col-lg-2 col-6" :title="__('admin/crm_customer.profile_card_6')" icon="fas fa-file-invoice-dollar"
+                    <x-admin.dashboard.color-card :count="$card['Cash']" col="col-lg-2 col-6" :title="__('admin/crm_customer.profile_card_6')" icon="fas fa-file-invoice-dollar"
                                                   bg="dark"/>
                 @endif
             </div>
@@ -89,8 +89,7 @@
                 </div>
             </x-admin.card.normal>
         </x-admin.hmtl.section>
-
-
     @endif
 
+    <div class="mb-5 pb-5"></div>
 @endsection

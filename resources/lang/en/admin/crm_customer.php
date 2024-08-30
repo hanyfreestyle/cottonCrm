@@ -38,6 +38,7 @@ return
 	'profile_card_4' => '',
 	'profile_card_5' => '',
 	'profile_card_6' => '',
+	'profile_table_box' => '',
 	'report_area' => 'Area',
 	'report_city' => 'City',
 	'report_country' => 'Country',
@@ -47,5 +48,7 @@ return
 	'search_type_1' => 'Search by Phone number',
 	'search_type_2' => 'Search by Name',
 	'search_type_3' => 'Search by  Address',
-	'profile_table_box' => '',
+	'var_customer_type_id_1' => '',
+	'var_customer_type_id_2' => '',
+	'var_customer_type_id' => '',
 ];

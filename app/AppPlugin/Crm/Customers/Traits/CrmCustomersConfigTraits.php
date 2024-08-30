@@ -40,11 +40,16 @@ trait CrmCustomersConfigTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function saveDefField($saveData, $request) {
         $saveData->evaluation_id = $request->input('evaluation_id');
-        if($request->input('add_type') == 'Add' and $saveData->gender_id == null){
-            $saveData->gender_id = guessGender($request->input('name'));
-        }else{
-            $saveData->gender_id = $request->input('gender_id');
+
+        if ($request->input('add_type') == 'Add') {
+            $saveData->uuid = Str::uuid()->toString();
+            if ($saveData->gender_id == null) {
+                $saveData->gender_id = guessGender($request->input('name'));
+            } else {
+                $saveData->gender_id = $request->input('gender_id');
+            }
         }
+
         $saveData->name = $request->input('name');
         $saveData->mobile = $request->input('mobile');
         $saveData->mobile_code = $request->input('countryCode_mobile');

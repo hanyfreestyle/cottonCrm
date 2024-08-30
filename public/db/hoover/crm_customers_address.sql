@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2024 at 12:31 PM
+-- Generation Time: Aug 30, 2024 at 05:31 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -3218,7 +3218,8 @@ INSERT INTO `crm_customers_address` (`id`, `uuid`, `is_default`, `customer_id`, 
 (3182, '87fd7200-2ce3-47c9-8c04-b3ba2d1eb6c7', 1, 3182, 66, 4, 20, 175, 24, 'لوران', NULL, NULL, NULL, NULL, NULL),
 (3183, 'fe8be9b3-451e-4b29-9beb-26ba09735712', 1, 3183, 66, 4, 54, 175, 199, 'العجمي ابو يوسف شارع ابو يوسف الجديد مدخل الروضه الخضراء خلف صيدليه إيمان منزل ابراهيم المحامي', NULL, NULL, NULL, NULL, NULL),
 (3184, 'b07b4400-85fd-4a5b-890a-ae0f66707dfa', 1, 3184, 66, 4, 7, 175, 11, 'عمارة كارفور - متفرع من شارع ونجت - كفر عبده', NULL, NULL, NULL, NULL, NULL),
-(3185, '72db82da-39af-4683-b24d-83cca13ca268', 1, 3185, 66, 4, 95, 175, 277, 'لم يحدد', NULL, NULL, NULL, NULL, NULL);
+(3185, '72db82da-39af-4683-b24d-83cca13ca268', 1, 3185, 66, 4, 95, 175, 277, 'لم يحدد', NULL, NULL, NULL, NULL, NULL),
+(3186, '67d8957e-077b-4643-9c3e-0ba424e9191b', 1, 3186, 66, 4, 15, NULL, NULL, '6 شارع حسين كامل محمود بجوار نفق الابراهيمية', '2', '5', NULL, NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

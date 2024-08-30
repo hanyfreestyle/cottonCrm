@@ -18,14 +18,18 @@ trait CrmMainTraits {
     public function SearchFormCustomer() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "search";
+        $pageData['ViewType'] = "LeadsSearch";
         $this->defLang = "admin/crm_customer.";
         View::share('defLang', $this->defLang);
         $pageData['BoxH1'] = __($this->defLang . 'app_menu_search');
         $rowData = CrmCustomers::query()->where('id', 0)->get();
+        $lastAdd = CrmCustomers::query()->orderBy('id','desc')->take(5)->get();
+
         return view('AppPlugin.CrmCustomer.search')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
             'nodata' => false,
+            'lastAdd' => $lastAdd,
         ]);
     }
 
@@ -44,6 +48,7 @@ trait CrmMainTraits {
             'rowData' => $rowData,
             'nodata' => true,
             'request' => $request,
+            'lastAdd' => [],
         ]);
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -33,6 +33,7 @@
 
     <div class="row">
         <x-admin.hmtl.info-div-list n="name" :row="$row" col="col-lg-4 col-12"/>
+        <x-admin.hmtl.info-div-list n="type_id" :all-data="$allData" :row="$row" col="col-lg-2 col-6"/>
         @if(issetArr($config,'evaluation',false))
             <x-admin.hmtl.info-div-list n="evaluation_id" :all-data="$allData" :row="$row" col="col-lg-2 col-6"/>
         @endif

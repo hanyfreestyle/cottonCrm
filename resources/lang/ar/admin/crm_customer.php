@@ -38,6 +38,7 @@ return
 	'profile_card_4' => 'مرفوض',
 	'profile_card_5' => 'الغاء',
 	'profile_card_6' => 'تحصيلات',
+	'profile_table_box' => 'المتابعات الخاصة بالعميل',
 	'report_area' => 'المناطق',
 	'report_city' => 'المدن',
 	'report_country' => 'الدول',
@@ -47,5 +48,7 @@ return
 	'search_type_1' => 'البحث بواسطة رقم الهاتف',
 	'search_type_2' => 'البحث بواسطة الاسم',
 	'search_type_3' => 'البحث بواسطة العنوان',
-	'profile_table_box' => 'المتابعات الخاصة بالعميل',
+	'var_customer_type_id_1' => 'عميل',
+	'var_customer_type_id_2' => 'غير عميل',
+	'var_customer_type_id' => 'حالة العميل',
 ];

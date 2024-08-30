@@ -19,30 +19,35 @@
                                     <i class="fas fa-search"></i> {{__('admin/form.button_search')}}</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </x-admin.card.normal>
 
-        @if(count($rowData)>0)
-            <x-admin.card.normal :page-data="$pageData" :outline="false" :title="$pageData['BoxH2']">
-                @include('AppPlugin.CrmCustomer.inc_table')
+
+        @if(count($lastAdd))
+            <x-admin.card.normal :page-data="$pageData" :outline="false">
+                @include('AppPlugin.CrmCustomer.inc_table',['rowData'=>$lastAdd])
             </x-admin.card.normal>
         @else
-            @if($nodata)
-                <div class="col-lg-12">
-                    <x-admin.hmtl.alert-massage type="nodata"/>
-                </div>
-                @if($request->search_type == 1)
-                    <div class="col-lg-3 float-left">
-                        <div class="form-group col-lg-12">
-                            <a href="{{route('admin.CrmCustomer.addNew',['s'=>$request->search_type,'n'=>$request->name])}}" class="btn btn-primary w-100 but_icon ">
-                                <i class="fas fa-user-plus"></i> {{__('admin/crm/customers.but_add_new')}}</a>
-                        </div>
+            @if(count($rowData)>0)
+                <x-admin.card.normal :page-data="$pageData" :outline="false" :title="$pageData['BoxH2']">
+                    @include('AppPlugin.CrmCustomer.inc_table')
+                </x-admin.card.normal>
+            @else
+                @if($nodata)
+                    <div class="col-lg-12">
+                        <x-admin.hmtl.alert-massage type="nodata"/>
                     </div>
+                    @if($request->search_type == 1)
+                        <div class="col-lg-3 float-left">
+                            <div class="form-group col-lg-12">
+                                <a href="{{route('admin.CrmCustomer.addNew',['s'=>$request->search_type,'n'=>$request->name])}}" class="btn btn-primary w-100 but_icon ">
+                                    <i class="fas fa-user-plus"></i> {{__('admin/crm_customer.but_add_new')}}</a>
+                            </div>
+                        </div>
+                    @endif
                 @endif
-
             @endif
         @endif
     </x-admin.hmtl.section>

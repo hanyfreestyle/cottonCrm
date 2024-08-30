@@ -43,12 +43,15 @@
                                des="[{{$row->latitude.' , '.$row->longitude}}]" :col="$col" :all-data="$allData"/>
     @endif
 @elseif($n=='evaluation_id')
-
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-star" :t="__('admin/crm_customer.form_evaluation')" :arr-data="$CashConfigDataList"
                            :des="$row->evaluation_id" :col="$col" :all-data="$allData"/>
 @elseif($n=='gender_id')
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-restroom" :t="__('admin/crm_customer.form_gender')" :arr-data="$DefCat['gender']"
                            :des="$row->gender_id" :col="$col" :all-data="$allData"/>
+@elseif($n=='type_id')
+    <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-business-time" :t="__('admin/crm_customer.var_customer_type_id')" :arr-data="$DefCat['CustomersTypeId']"
+                           :des="$row->type_id" :col="$col" :all-data="$allData"/>
+
 @elseif($n=='email')
 
     <x-admin.hmtl.info-div :v-type="$viewList" i="fas fa-at" :t="__('admin/crm_customer.form_email')" s="semi_number"

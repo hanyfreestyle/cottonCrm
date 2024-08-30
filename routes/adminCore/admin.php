@@ -29,6 +29,10 @@ Route::get('/CheckPriceWithClosed', [HooverDataController::class, 'CheckPriceWit
 Route::get('/UpdateCancellation', [HooverDataController::class, 'UpdateCancellation'])->name('UpdateCancellation');
 Route::get('/UpdateReject', [HooverDataController::class, 'UpdateReject'])->name('UpdateReject');
 Route::get('/UpdateFinished', [HooverDataController::class, 'UpdateFinished'])->name('UpdateFinished');
+Route::get('/UpdateTicketUUid', [HooverDataController::class, 'UpdateTicketUUid'])->name('UpdateTicketUUid');
+Route::get('/UpdateCustomerUUid', [HooverDataController::class, 'UpdateCustomerUUid'])->name('UpdateCustomerUUid');
+Route::get('/UpdateCustomerTypes', [HooverDataController::class, 'UpdateCustomerTypes'])->name('UpdateCustomerTypes');
+
 
 
 

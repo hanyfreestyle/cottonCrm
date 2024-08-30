@@ -469,7 +469,6 @@ class HooverDataController extends AdminMainController {
 
     }
 
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateFinished() {
@@ -564,5 +563,71 @@ class HooverDataController extends AdminMainController {
 
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicketUUid() {
+        $tickets = CrmTickets::query()
+            ->whereNull('uuid')
+            ->take(250)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $updateTicket->uuid = Str::uuid()->toString();
+            $updateTicket->timestamps = false;
+            $updateTicket->save();
+        }
+        echobr(CrmTickets::query()->whereNull('uuid')->count());
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateCustomerUUid() {
+        $tickets = CrmCustomers::query()
+            ->whereNull('uuid')
+            ->take(250)
+            ->get();
+
+        foreach ($tickets as $updateTicket) {
+            $updateTicket->uuid = Str::uuid()->toString();
+            $updateTicket->timestamps = false;
+            $updateTicket->save();
+        }
+        echobr(CrmCustomers::query()->whereNull('uuid')->count());
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateCustomerTypes() {
+        $openT = CrmTickets::query()->where('state', 1)->pluck('customer_id');
+//        dd($openT);
+        $Customers = CrmCustomers::query()
+            ->whereNotIn('id',$openT)
+            ->whereNull('type_id')
+            ->take(250)
+            ->get();
+
+        foreach ($Customers as $updateCustomer) {
+            $countDone = CrmTickets::query()
+                ->where('customer_id',$updateCustomer->id)
+                ->where('state',2)
+                ->where('follow_state','2')->count();
+            if($countDone >= 1){
+                $updateCustomer->type_id = 1 ;
+            }else{
+                $updateCustomer->type_id = 2 ;
+            }
+            $updateCustomer->save() ;
+        }
+
+        echobr(CrmCustomers::query()->whereNull('type_id')->whereNotIn('id',$openT)->count());
+    }
+
 
 }
+
+
+
+
+

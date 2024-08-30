@@ -22,7 +22,7 @@
                         <th class="all">{{__($defLang.'form_mobile')}}</th>
                         <th class="desktop">{{__($defLang.'form_mobile')}}</th>
                         <th class="desktop">{{__($defLang.'form_phone')}}</th>
-                        <x-admin.table.action-but po="top" res="d" type="option" :l="__($defLang.'form_evaluation')" :view-but="IsConfig($config,'list_evaluation')"/>
+                        <x-admin.table.action-but po="top" res="d" type="option" :l="__($defLang.'var_customer_type_id')"/>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="edit"/>
                         <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
@@ -58,7 +58,8 @@
                     {data: 'mobile', name: 'mobile', orderable: true, searchable: true, className: ""},
                     {data: 'mobile_2', name: 'mobile_2', orderable: true, searchable: true, className: ""},
                     {data: 'phone', name: 'phone', orderable: true, searchable: true, className: ""},
-                    @include('datatable.index_action_but',['type'=> 'option',"data"=>"evaluation",'option'=> IsConfig($config, 'list_evaluation')])
+                    {data: 'type_id', name: 'type_id', orderable: true, searchable: false, className: ""},
+
                     @include('datatable.index_action_but',['type'=> 'Profile'])
                     @include('datatable.index_action_but',['type'=> 'edit'])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])

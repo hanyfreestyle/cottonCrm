@@ -34,13 +34,14 @@ trait ReportFunTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ChartDataFromGroup($AllData, $selectDataId, $addName = null, $limit = 20) {
         $sendArr = self::LoopForGetDataSoft($AllData, $selectDataId, $addName, $limit);
         return $sendArr;
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function LoopForGetDataSoft($AllData, $selectDataId, $addName, $limit) {
         $countAllData = $AllData;
         $sendArr = [];
@@ -99,8 +100,8 @@ trait ReportFunTraits {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function ChartDataFromDataConfig($AllData, $CatId, $selectDataId, $limit = 15) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ChartDataFromDataConfig($AllData, $CatId, $selectDataId, $limit = 15, $sort = true) {
         $selectDataIdKey = array_keys($selectDataId);
 
         $getSoursData = ConfigData::query()
@@ -109,47 +110,49 @@ trait ReportFunTraits {
             ->with('translation')
             ->get();
 
-        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit, $sort);
         return $sendArr;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ChartDataFromDefCategory
-    public function ChartDataFromDefCategory($AllData, $CatId, $selectDataId, $limit = 15) {
-        $selectDataIdKey = array_keys($selectDataId);
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ChartDataFromDefCategory($AllData, $CatId, $selectDataId, $limit = 10, $sort = true) {
         $getLoadCategory = self::LoadCategory();
         $getSoursData = issetArr($getLoadCategory, $CatId, array());
         $getSoursData = collect($getSoursData);
-        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit);
+        $sendArr = self::LoopForGetData($AllData, $getSoursData, $selectDataId, $limit, $sort);
         return $sendArr;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #
-    public function LoopForGetData($AllData, $getSoursData, $selectDataId, $limit) {
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function LoopForGetData($AllData, $getSoursData, $selectDataId, $limit, $sort = true) {
         $countAllData = $AllData;
         $sendArr = [];
         $countData = 0;
         $other_count = 0;
         $start = 0;
-
         unset($selectDataId['']);
 
         foreach ($selectDataId as $key => $value) {
-
             $name = $getSoursData->where('id', $key)->first()->name ?? '';
-
+            $setColor = $getSoursData->where('id', $key)->first()->setColor ?? null;
             $persent = round((count($value) / $countAllData) * 100) . "%";
             $arr = [
                 'name' => "(" . count($value) . ") " . $name . " " . $persent,
                 'count' => count($value)
             ];
+            if ($setColor) {
+                $arr = array_merge($arr, ['setColor' => $setColor]);
+            }
 
             $countData = $countData + count($value);
             array_push($sendArr, $arr);
         }
 
-        $sendArr = array_sort($sendArr, 'count', SORT_DESC);
+        if ($sort){
+            $sendArr = array_sort($sendArr, 'count', SORT_DESC);
+        }
 
         if (count($sendArr) > $limit) {
             foreach ($sendArr as $key => $value) {
@@ -189,7 +192,7 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getChartWeek($Query,$filterFiled='created_at') {
+    public function getChartWeek($Query, $filterFiled = 'created_at') {
         $allDayCount = 0;
         $dayList = "";
         $dayCountList = "";
@@ -215,7 +218,7 @@ trait ReportFunTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getChartMonth($Query,$filterFiled='created_at') {
+    public function getChartMonth($Query, $filterFiled = 'created_at') {
         $data = array();
         $allCount = 0;
         $monthList = "";

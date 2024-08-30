@@ -41,6 +41,7 @@ return new class extends Migration {
             $table->longText("cancellation_notes")->nullable();
 
             $table->timestamps();
+            $table->uuid()->unique()->nullable();
         });
 
         Schema::create('crm_ticket_des', function (Blueprint $table) {
