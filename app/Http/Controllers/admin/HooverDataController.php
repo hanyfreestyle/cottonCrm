@@ -618,6 +618,8 @@ class HooverDataController extends AdminMainController {
             }else{
                 $updateCustomer->type_id = 2 ;
             }
+
+            $updateCustomer->timestamps = false;
             $updateCustomer->save() ;
         }
 

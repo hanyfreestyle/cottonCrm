@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2024 at 06:03 PM
+-- Generation Time: Aug 30, 2024 at 06:54 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -3442,7 +3442,9 @@ INSERT INTO `crm_ticket` (`id`, `customer_id`, `open_type`, `state`, `follow_sta
 (3398, 3183, 1, 1, 1, '2024-08-28', 6, 7, 2, 103, 12, NULL, 'صيانة', NULL, 0, 3652, 3283, 4, 174, 181, 133, '0.00', '0.00', NULL, NULL, NULL, '2024-08-28 20:00:00', '2024-08-28 20:00:00', '8a4e5154-c693-427b-a03d-15b91c278751'),
 (3399, 3184, 1, 1, 1, '2024-08-28', 7, 7, 3, 96, 24, NULL, 'حلة', NULL, 0, 3653, 3284, 4, 179, 53, 145, '0.00', '0.00', NULL, NULL, NULL, '2024-08-28 20:00:00', '2024-08-28 20:00:00', '4e7336af-a90e-45e5-b904-b9833f77a645'),
 (3400, 3185, 1, 1, 1, '2024-08-28', 7, 7, 3, 95, 31, NULL, 'تغيير مروحة', NULL, 0, 3654, 3285, 4, 179, 52, 152, '0.00', '0.00', NULL, NULL, NULL, '2024-08-28 20:00:00', '2024-08-28 20:00:00', '91fb8887-f623-406f-91f4-43342041fd78'),
-(3401, 3186, 1, 1, 1, '2024-08-30', 2, 5, 3, 100, 12, NULL, 'لا يعمل', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-30 14:54:26', '2024-08-30 15:01:48', '502a6305-de31-44d3-b6d7-c452ab69cd6a');
+(3401, 3186, 1, 2, 6, NULL, 2, 5, 3, 100, 12, NULL, 'لا يعمل', '2024-08-30', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-30 14:54:26', '2024-08-30 15:40:30', '502a6305-de31-44d3-b6d7-c452ab69cd6a'),
+(3402, 3186, 1, 2, 5, NULL, 2, 5, 1, 95, 12, NULL, 'العطل', '2024-08-30', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-30 15:41:28', '2024-08-30 15:42:24', 'd3b36f2a-b784-4aeb-a6a0-c18dd6e42d59'),
+(3403, 3186, 1, 1, 1, '2024-08-30', 2, 5, 1, 95, 12, NULL, 'العطل', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-08-30 15:43:18', '2024-08-30 15:43:18', 'ec49c76a-fda5-4b37-8f5f-feb0e9318d7e');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

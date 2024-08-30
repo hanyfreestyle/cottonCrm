@@ -9,6 +9,7 @@
     <x-admin.card.normal col="col-lg-12">
         <form class="mainForm UpdateTicketForm" action="{{route($PrefixRoute.'.UpdateTicketStatus',$ticket->id)}}" method="post">
             <input type="hidden" name="follow_state" value="{{$followState}}">
+            <input type="text" name="open_type" value="{{$ticket->open_type}}">
             @csrf
 
             @if($followState == 2)
@@ -50,7 +51,7 @@
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_reason_for_rejection')"/>
                 </div>
             @endif
-            <x-admin.form.submit-cancel :back-to="route($PrefixRoute.'.UpdateTicket',$ticket->id)"/>
+            <x-admin.form.submit-cancel :back-to="route($PrefixRoute.'.UpdateTicket',$ticket->uuid)"/>
         </form>
     </x-admin.card.normal>
 </div>

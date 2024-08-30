@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2024 at 06:03 PM
+-- Generation Time: Aug 30, 2024 at 06:54 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -1879,7 +1879,8 @@ INSERT INTO `crm_ticket_cash` (`id`, `ticket_id`, `customer_id`, `follow_state`,
 (1848, 3377, 3166, 2, '2024-08-28', NULL, '2024-08-28', NULL, 6, 1, 1, 1, '350.00', '350.00'),
 (1849, 3379, 3168, 2, '2024-08-28', NULL, '2024-08-28', NULL, 4, 1, 1, 1, '2200.00', '2200.00'),
 (1850, 3379, 3168, 3, '2024-08-28', NULL, '2024-08-28', NULL, 4, 1, 2, 1, '200.00', '200.00'),
-(1851, 3392, 3179, 2, '2024-08-28', NULL, '2024-08-28', NULL, 3, 1, 1, 1, '2500.00', '2500.00');
+(1851, 3392, 3179, 2, '2024-08-28', NULL, '2024-08-28', NULL, 3, 1, 1, 1, '2500.00', '2500.00'),
+(1852, 3401, 3186, 6, '2024-08-30', '19:40:30', NULL, NULL, 2, NULL, 3, 1, '100.00', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

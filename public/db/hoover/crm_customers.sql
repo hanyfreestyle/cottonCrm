@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2024 at 06:02 PM
+-- Generation Time: Aug 30, 2024 at 06:54 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -3224,7 +3224,7 @@ INSERT INTO `crm_customers` (`id`, `old_id`, `evaluation_id`, `gender_id`, `type
 (3183, 3283, NULL, 1, NULL, 'كمال زين العابدين', '01559465465', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-28 20:00:00', '2024-08-30 12:24:33', NULL, '6275622a-fa3a-4216-b358-b2e45139f7f4'),
 (3184, 3284, NULL, 1, NULL, 'محمد احمد حامد', '01001091941', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-28 20:00:00', '2024-08-30 12:24:33', NULL, 'f01f8688-4124-449e-ac1f-4a5a8270517b'),
 (3185, 3285, NULL, 1, NULL, 'وائل زايد', '01229480348', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-28 20:00:00', '2024-08-30 12:24:33', NULL, '90b66eb9-7f4e-416c-9f91-32cc614e2f62'),
-(3186, NULL, NULL, 1, NULL, 'هانى محمد محمد درويش', '01221563252', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-30 14:13:02', '2024-08-30 14:13:02', NULL, '48b3060f-8624-43b8-93b7-3caedfcedc05');
+(3186, NULL, NULL, 1, 2, 'هانى محمد محمد درويش', '01221563252', 'eg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2024-08-30 14:13:02', '2024-08-30 14:13:02', NULL, '48b3060f-8624-43b8-93b7-3caedfcedc05');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

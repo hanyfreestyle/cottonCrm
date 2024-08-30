@@ -6,9 +6,11 @@ use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\FollowUp\Request\UpdateTicketStatusRequest;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsDes;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
+use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
@@ -89,15 +91,6 @@ class UserFollowUpController extends AdminMainController {
         $rowData = self::TicketFilter(self::OpenTicketFollowUpQuery($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
-//        $xx = CrmTickets::query()->get();
-//        foreach ($xx as $x){
-//            $x->state = 1;
-//            $x->follow_state = 1;
-//            $x->follow_date = now();
-//            $x->close_date = null;
-//            $x->save();
-//       }
-
         return view('AppPlugin.CrmService.followUp.index')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -113,7 +106,7 @@ class UserFollowUpController extends AdminMainController {
         $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_amount');
 
         $rowData = CrmTicketsCash::defUnpaid()
-            ->where('user_id',Auth::user()->id)
+            ->where('user_id', Auth::user()->id)
             ->orderBy('user_id')
             ->get();
 
@@ -138,7 +131,7 @@ class UserFollowUpController extends AdminMainController {
         $ticket = [];
         try {
             $Query = self::TicketFilter(self::ViewOpenTicketUserPer($this->PrefixRole), null);
-            $ticket = $Query->where('id', $ticketId)->firstOrFail();
+            $ticket = $Query->where('uuid', $ticketId)->firstOrFail();
             $pageData['TitlePage'] .= " " . $ticket->id;
         } catch (\Exception $e) {
             self::abortAdminError(403);
@@ -182,10 +175,13 @@ class UserFollowUpController extends AdminMainController {
         }
 
         $follow_state = $request->input('follow_state');
-        self::UpdateTicketTable($ticket, $follow_state);
-        self::AddTicketsDes($ticket->id, $follow_state, $request);
-        self::AddPayCash($ticket, $follow_state, $request);
-
+        $saveThisData = true;
+        self::UpdateTicketTable($ticket, $follow_state, $saveThisData);
+        self::AddTicketsDes($ticket->id, $follow_state, $request, $saveThisData);
+        self::AddPayCash($ticket, $follow_state, $request, $saveThisData);
+        if (in_array($follow_state, [2, 5, 6])) {
+            self::UpdateCustomersType($ticket, $saveThisData);
+        }
         try {
             DB::transaction(function () use ($request, $ticket) {
 
@@ -199,7 +195,7 @@ class UserFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function AddPayCash($ticket, $follow_state, $request) {
+    public function AddPayCash($ticket, $follow_state, $request, $saveThisData) {
         $addCash = new CrmTicketsCash();
         $addCash->ticket_id = $ticket->id;
         $addCash->customer_id = $ticket->customer_id;
@@ -213,7 +209,9 @@ class UserFollowUpController extends AdminMainController {
                 $addCash->amount_type = 1;
                 $addCash->pay_type = 1;
                 $addCash->amount = $request->input('amount');
-                $addCash->save();
+                if ($saveThisData) {
+                    $addCash->save();
+                }
             }
 
         } elseif ($follow_state == 3) {
@@ -221,7 +219,10 @@ class UserFollowUpController extends AdminMainController {
                 $addCash->amount_type = 2;
                 $addCash->pay_type = 1;
                 $addCash->amount = $request->input('amount');
-                $addCash->save();
+                if ($saveThisData) {
+                    $addCash->save();
+                }
+
             }
 
         } elseif ($follow_state == 6) {
@@ -229,7 +230,9 @@ class UserFollowUpController extends AdminMainController {
                 $addCash->amount_type = 3;
                 $addCash->pay_type = 1;
                 $addCash->amount = $request->input('amount');
-                $addCash->save();
+                if ($saveThisData) {
+                    $addCash->save();
+                }
             }
         }
 
@@ -237,19 +240,41 @@ class UserFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateTicketTable($ticket, $follow_state) {
+    public function UpdateTicketTable($ticket, $follow_state, $saveThisData) {
         if (in_array($follow_state, [2, 5, 6])) {
             $ticket->state = 2;
             $ticket->follow_date = null;
             $ticket->close_date = getCurrentTime();
         }
         $ticket->follow_state = $follow_state;
-        $ticket->save();
+        if ($saveThisData) {
+            $ticket->save();
+        }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function AddTicketsDes($ticketId, $follow_state, $request) {
+    public function UpdateCustomersType($ticket, $saveThisData) {
+        $customer = CrmCustomers::query()->where('id', $ticket->customer_id)->first();
+        $countDone = CrmTickets::query()
+            ->where('customer_id', $customer->id)
+            ->where('state', 2)
+            ->where('follow_state', '2')->count();
+
+        if ($countDone >= 1) {
+            $customer->type_id = 1;
+        } else {
+            $customer->type_id = 2;
+        }
+        if ($saveThisData) {
+            $customer->timestamps = false;
+            $customer->save();
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddTicketsDes($ticketId, $follow_state, $request, $saveThisData) {
         $ticketDes = new CrmTicketsDes();
         $ticketDes->created_at = getCurrentTime();
         if (in_array($follow_state, [2, 5, 6])) {
@@ -261,7 +286,10 @@ class UserFollowUpController extends AdminMainController {
         $ticketDes->user_id = Auth::user()->id;
         $ticketDes->follow_state = $follow_state;
         $ticketDes->des = $request->input('des') ?? null;
-        $ticketDes->save();
+
+        if ($saveThisData) {
+            $ticketDes->save();
+        }
     }
 
 
@@ -273,7 +301,6 @@ class UserFollowUpController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $chartData = array();
-
 
         $this->formName = "CrmUserFollowUp";
         View::share('formName', $this->formName);
