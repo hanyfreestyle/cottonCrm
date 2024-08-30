@@ -41,7 +41,7 @@ trait DefCategoryTraits {
 
         $Cat['CrmServiceOpenType'] = [
             (object)['id' => 1, 'name' => __('admin/crm_service_var.open_type_1')],
-            (object)['id' => 2, 'name' => __('admin/crm_service_var.open_type_1')],
+            (object)['id' => 2, 'name' => __('admin/crm_service_var.open_type_2')],
         ];
 
         $Cat['CrmServiceTicketState'] = [

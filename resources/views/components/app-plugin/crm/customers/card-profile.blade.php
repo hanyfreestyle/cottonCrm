@@ -10,9 +10,9 @@
     <div class="row">
         <x-admin.hmtl.info-div-list n="name" :row="$row" col="col-lg-4 col-12"/>
         <x-admin.hmtl.info-div-list n="mobile" :row="$row" col="col-lg-2 col-6"/>
-        <x-admin.hmtl.info-div-list n="mobile_2" :row="$row" col="col-lg-2 col-6"/>
-        <x-admin.hmtl.info-div-list n="phone" :row="$row" col="col-lg-2 col-6"/>
-        <x-admin.hmtl.info-div-list n="whatsapp" :row="$row" col="col-lg-2 col-6"/>
+        <x-admin.hmtl.info-div-list n="mobile_2" :row="$row" col="col-lg-2 col-6" :all-data="true" />
+        <x-admin.hmtl.info-div-list n="phone" :row="$row" col="col-lg-2 col-6" :all-data="true" />
+        <x-admin.hmtl.info-div-list n="type_id" :row="$row" :all-data="true" col="col-lg-2 col-6"/>
     </div>
     @if(issetArr($config,'addCountry',false))
         @if($row->address ?? null)
@@ -23,6 +23,8 @@
                         <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-2 col-6"/>
                         <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-2 col-6"/>
                     @endif
+                </div>
+                <div class="row">
                     <x-admin.hmtl.info-div-list n="city_id" :row="$address" col="col-lg-2 col-6"/>
                     <x-admin.hmtl.info-div-list n="area_id" :row="$address" col="col-lg-2 col-6"/>
                 </div>

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use App\AppCore\Menu\AdminMenu;
+use Illuminate\Support\Str;
 
 class CrmLeadsController extends AdminMainController {
 
@@ -93,9 +94,11 @@ class CrmLeadsController extends AdminMainController {
         try {
             DB::transaction(function () use ($request, $customer) {
                 $saveData = new CrmTickets();
+                $saveData->uuid = Str::uuid()->toString();
                 $saveData->customer_id = $customer->id;
                 $saveData->state = 1;
                 $saveData->follow_state = 1;
+                $saveData->open_type = $request->input('open_type');
                 $saveData->follow_date = SaveDateFormat($request, 'follow_date');
                 $saveData->user_id = $request->input('user_id') ?? null;
                 $saveData->sours_id = $request->input('sours_id');
@@ -275,7 +278,7 @@ class CrmLeadsController extends AdminMainController {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "CrmLeads.SearchFormCustomer|CrmLeads.SearchFormCustomerFilter";
+        $subMenu->sel_routs = "CrmLeads.SearchFormCustomer|CrmLeads.SearchFormCustomerFilter|addTicket";
         $subMenu->url = "admin.CrmLeads.SearchFormCustomer";
         $subMenu->name = "admin/crm_service_menu.leads_add";
         $subMenu->roleView = "crm_service_leads_add";

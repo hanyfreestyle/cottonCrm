@@ -18,6 +18,7 @@ class CreateTicketRequest extends FormRequest {
         $rules = [
             'follow_date' => "required|date_format:Y-m-d|after_or_equal:today",
             'notes_err' => "required",
+            'open_type' => "required",
         ];
 
         if (IsConfig($Config, 'leads_sours_id')) {

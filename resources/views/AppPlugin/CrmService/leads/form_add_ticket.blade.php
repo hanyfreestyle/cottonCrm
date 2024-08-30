@@ -27,16 +27,20 @@
                 @csrf
                 <div class="row">
 
-                    <x-admin.form.select-data name="sours_id" :sendvalue="old('sours_id',$ticketInfo->sours_id)" cat-id="LeadSours"
+                    <x-admin.form.select-arr name="open_type" sendvalue="{{old('open_type',issetArr($_POST,'open_type',1))}}" :labelview="false"
+                                             select-type="DefCat" :send-arr="$DefCat['CrmServiceOpenType']"
+                                             :label="__('admin/crm_service_var.open_type')" col="2"/>
+
+                    <x-admin.form.select-data name="sours_id" :sendvalue="old('sours_id',$ticketInfo->sours_id)" cat-id="LeadSours" col="2"
                                               :active="IsConfig($config,'leads_sours_id')" :l="false" :label="__('admin/crm.label_lead_sours')"/>
 
-                    <x-admin.form.select-data name="ads_id" :sendvalue="old('ads_id',$ticketInfo->ads_id)" cat-id="LeadCategory"
+                    <x-admin.form.select-data name="ads_id" :sendvalue="old('ads_id',$ticketInfo->ads_id)" cat-id="LeadCategory" col="2"
                                               :active="IsConfig($config,'leads_ads_id')" :l="false" :label="__('admin/crm.label_lead_category')"/>
 
-                    <x-admin.form.select-data name="device_id" :sendvalue="old('device_id',$ticketInfo->device_id)" cat-id="DeviceType"
+                    <x-admin.form.select-data name="device_id" :sendvalue="old('device_id',$ticketInfo->device_id)" cat-id="DeviceType" col="2"
                                               :active="IsConfig($config,'leads_device_id')" :l="false" :label="__('admin/crm_service.label_device')"/>
 
-                    <x-admin.form.select-data name="brand_id" :sendvalue="old('brand_id',$ticketInfo->brand_id)" cat-id="BrandName"
+                    <x-admin.form.select-data name="brand_id" :sendvalue="old('brand_id',$ticketInfo->brand_id)" cat-id="BrandName" col="2"
                                               :active="IsConfig($config,'leads_brand_id')" :l="false" :label="__('admin/crm_service.label_brand')"/>
                 </div>
 
