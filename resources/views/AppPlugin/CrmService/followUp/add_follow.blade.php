@@ -1,9 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('StyleFile')
-
-@endsection
-
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
@@ -16,18 +12,15 @@
             </div>
         </div>
 
+        @if(count($ticket->des) >0 )
+            <x-app-plugin.crm-service.leads.lead-info-des :row="$ticket->des"/>
+        @endif
 
         @if($viewActionBut)
             <x-app-plugin.crm-service.follow-up.update-button :ticket="$ticket"/>
         @else
-            <x-app-plugin.crm-service.follow-up.update-form :ticket="$ticket" :follow-state="$followState"  />
+            <x-app-plugin.crm-service.follow-up.update-form :ticket="$ticket" :follow-state="$followState"/>
         @endif
-
-
     </x-admin.hmtl.section>
 
 @endsection
-
-@push('JsCode')
-
-@endpush

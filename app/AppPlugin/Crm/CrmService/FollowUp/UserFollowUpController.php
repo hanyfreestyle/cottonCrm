@@ -146,7 +146,11 @@ class UserFollowUpController extends AdminMainController {
         } elseif ($RouteName == $this->PrefixRoute . '.UpdateFinished') {
             $followState = 2;
         } elseif ($RouteName == $this->PrefixRoute . '.UpdateDepends') {
-            $followState = 3;
+            if ($ticket->follow_state != 3) {
+                $followState = 3;
+            } else {
+                $viewActionBut = true;
+            }
         } elseif ($RouteName == $this->PrefixRoute . '.UpdatePostponed') {
             $followState = 4;
         } elseif ($RouteName == $this->PrefixRoute . '.UpdateCancellation') {
@@ -176,7 +180,7 @@ class UserFollowUpController extends AdminMainController {
 
         $follow_state = $request->input('follow_state');
         $saveThisData = true;
-        self::UpdateTicketTable($ticket, $follow_state, $saveThisData);
+        self::UpdateTicketTable($ticket, $follow_state, $request, $saveThisData);
         self::AddTicketsDes($ticket->id, $follow_state, $request, $saveThisData);
         self::AddPayCash($ticket, $follow_state, $request, $saveThisData);
         if (in_array($follow_state, [2, 5, 6])) {
@@ -191,6 +195,44 @@ class UserFollowUpController extends AdminMainController {
         }
 
         return redirect()->route($this->PrefixRoute . '.New');
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateTicketTable($ticket, $follow_state, $request, $saveThisData) {
+        if (in_array($follow_state, [2, 5, 6])) {
+            $ticket->state = 2;
+            $ticket->follow_date = null;
+            $ticket->close_date = getCurrentTime();
+        }
+
+        $ticket->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
+        if ($ticket->follow_state != 3) {
+            $ticket->follow_state = $follow_state;
+        }
+        if ($saveThisData) {
+            $ticket->save();
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function AddTicketsDes($ticketId, $follow_state, $request, $saveThisData) {
+        $ticketDes = new CrmTicketsDes();
+        $ticketDes->created_at = getCurrentTime();
+        if (in_array($follow_state, [2, 5, 6])) {
+            $ticketDes->follow_date = null;
+        } else {
+            $ticketDes->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
+        }
+        $ticketDes->ticket_id = $ticketId;
+        $ticketDes->user_id = Auth::user()->id;
+        $ticketDes->follow_state = $follow_state;
+        $ticketDes->des = $request->input('des') ?? null;
+
+        if ($saveThisData) {
+            $ticketDes->save();
+        }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -240,20 +282,6 @@ class UserFollowUpController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function UpdateTicketTable($ticket, $follow_state, $saveThisData) {
-        if (in_array($follow_state, [2, 5, 6])) {
-            $ticket->state = 2;
-            $ticket->follow_date = null;
-            $ticket->close_date = getCurrentTime();
-        }
-        $ticket->follow_state = $follow_state;
-        if ($saveThisData) {
-            $ticket->save();
-        }
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateCustomersType($ticket, $saveThisData) {
         $customer = CrmCustomers::query()->where('id', $ticket->customer_id)->first();
         $countDone = CrmTickets::query()
@@ -272,25 +300,7 @@ class UserFollowUpController extends AdminMainController {
         }
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function AddTicketsDes($ticketId, $follow_state, $request, $saveThisData) {
-        $ticketDes = new CrmTicketsDes();
-        $ticketDes->created_at = getCurrentTime();
-        if (in_array($follow_state, [2, 5, 6])) {
-            $ticketDes->follow_date = null;
-        } else {
-            $ticketDes->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
-        }
-        $ticketDes->ticket_id = $ticketId;
-        $ticketDes->user_id = Auth::user()->id;
-        $ticketDes->follow_state = $follow_state;
-        $ticketDes->des = $request->input('des') ?? null;
 
-        if ($saveThisData) {
-            $ticketDes->save();
-        }
-    }
 
 
 

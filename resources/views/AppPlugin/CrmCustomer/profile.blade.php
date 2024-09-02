@@ -72,16 +72,16 @@
                                 <td class="hideForMobile" data-th="{{__('admin/crm_service.label_notes_err')}}">{{$row->notes_err}}</td>
 
                                 <td data-th="{{__('admin/crm.label_customer_mobile')}}">{{ LoadConfigName($DefCat['CrmServiceTicketState'], $row->follow_state)}}</td>
-                                <td data-th="{{__('admin/crm_service_cash.label_amount')}}">{{ number_format($row->customer_amount_sum_amount)  }}</td>
+                                <td data-th="{{__('admin/crm_service_cash.label_amount')}}">{{ returnAmount($row->customer_amount_sum_amount)  }}</td>
                                 <td class="td_action">
                                     <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
                                         <span class="tipName"></span> <i class="fas fa-eye"></i>
                                     </button>
+                                    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
+                                        <x-app-plugin.crm-service.leads.lead-info-closed :row="$row"/>
+                                        <x-app-plugin.crm-service.leads.lead-info :add-des="true" :add-title="true" :row="$row"/>
+                                    </x-admin.hmtl.popup-modal>
                                 </td>
-                                <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
-                                    <x-app-plugin.crm-service.leads.lead-info-closed :row="$row"/>
-                                    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row"/>
-                                </x-admin.hmtl.popup-modal>
                             </tr>
                         @endforeach
                         </tbody>

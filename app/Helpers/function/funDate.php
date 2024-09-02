@@ -57,7 +57,11 @@ if (!function_exists('SaveDateFormat')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('PrintDate')) {
     function PrintDate($date, $format = "Y-m-d") {
-        $dateValue = Carbon::parse($date)->format($format);
+        if($date){
+            $dateValue = Carbon::parse($date)->format($format);
+        }else{
+            $dateValue = null ;
+        }
         return $dateValue;
     }
 }
@@ -100,6 +104,64 @@ if (!function_exists('getCurrentTime')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getDateDifference')) {
     function getDateDifference($date, $ToDate) {
+
+        $date = Carbon::parse($date)->format("Y-m-d");
+        $ToDate = Carbon::parse($ToDate)->format("Y-m-d");
+
+        $periods = [
+            __('admin/def.label_date_diff_second'),
+            __('admin/def.label_date_diff_minute'),
+            __('admin/def.label_date_diff'),
+            __('admin/def.label_date_diff_day'),
+            __('admin/def.label_date_diff_week'),
+            __('admin/def.label_date_diff_month'),
+            __('admin/def.label_date_diff_year')
+        ];
+
+
+        $date = strtotime($date);
+        $ToDate = strtotime($ToDate);
+        $datediff = $ToDate - $date ;
+        $days = floor( $datediff / ( 3600 * 24 ) );
+
+        if($days == 0){
+            $label =  __('admin/def.label_date_diff_same_day');
+        }else{
+            $label = '';
+
+            if ($days >= 365) { // over a year
+                $years = floor($days / 365);
+                $label .= $years . __('admin/def.label_date_diff_year');
+                $days -= 365 * $years;
+            }
+
+            if ($days) {
+                $months = floor( $days / 30 );
+                $label .= ' ' . $months . __('admin/def.label_date_diff_month');
+                $days -= 30 * $months;
+            }
+
+            if ($days) {
+                $label .= ' ' . $days .  __('admin/def.label_date_diff_day');
+            }
+        }
+
+
+
+        return $label;
+
+    }
+
+}
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getDateDifference_old')) {
+    function getDateDifference_old($date, $ToDate) {
+
+        $date = Carbon::parse($date)->format("Y-m-d");
+
         // تعريف الوحدات الزمنية وطول كل وحدة بالثواني
         $periods = [
             __('admin/def.label_date_diff_second'),
@@ -124,13 +186,14 @@ if (!function_exists('getDateDifference')) {
             //$tense = "من الآن";
         }
 
+
         // حساب الفرق لكل فترة زمنية
         for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths) - 1; $j++) {
             $difference /= $lengths[$j];
         }
 
         $difference = round($difference);
-
+        dd($difference);
         // التحقق من حالة اليوم نفسه
         if ($difference == 0) {
             return __('admin/def.label_date_diff_same_day');
@@ -140,6 +203,7 @@ if (!function_exists('getDateDifference')) {
     }
 
 }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2024 at 06:12 PM
+-- Generation Time: Sep 01, 2024 at 07:15 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,14 @@ SET time_zone = "+00:00";
 --
 -- Database: `app_crm_hoover`
 --
+
+--
+-- Dumping data for table `crm_ticket_des`
+--
+
+INSERT INTO `crm_ticket_des` (`id`, `created_at`, `follow_date`, `ticket_id`, `user_id`, `follow_state`, `des`) VALUES
+(1, '2024-09-01 19:18:00', NULL, 1, 2, 5, 'سبب الالغاء'),
+(2, '2024-09-01 20:11:44', NULL, 2, 2, 6, 'سبب الرفض');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

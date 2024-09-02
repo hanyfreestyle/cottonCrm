@@ -8,10 +8,10 @@
 @elseif($btype == 'addTicket')
     <x-admin.form.action-button url='{{route($PrefixRoute.".addTicket",$row->id)}}' type='addTicket' :tip="false"/>
 @elseif($btype == 'changeUser')
-    <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#modal_user_{{$row->id}}'><i class="fas fa-people-arrows"></i></button>
-      <x-admin.hmtl.popup-modal id="modal_user_{{$row->id}}" :title="__('admin/crm_service.change_user_but')">
-{{--        <x-app-plugin.crm-service.leads.user-change :row="$row" />--}}
-    </x-admin.hmtl.popup-modal>
+        <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#modal_user_{{$row->id}}'><i class="fas fa-people-arrows"></i></button>
+        <x-admin.hmtl.popup-modal id="modal_user_{{$row->id}}" :title="__('admin/crm_service.change_user_but')">
+            <x-app-plugin.crm-service.leads.user-change :row="$row"/>
+        </x-admin.hmtl.popup-modal>
 @elseif($btype == 'AddRelease')
     <x-admin.form.action-button url='{{route($PrefixRoute.".AddRelease",$row->id)}}' type='AddRelease' :tip="false"/>
 @elseif($btype == 'ListRelease')
@@ -26,9 +26,9 @@
 @elseif($btype == 'viewInfo')
     <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'><i class="fas fa-eye"></i></button>
     <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
-        <x-app-plugin.crm-service.leads.lead-info-closed :ticket-id="$row->id" />
+        <x-app-plugin.crm-service.leads.lead-info-closed :ticket-id="$row->id"/>
         <x-app-plugin.crm.customers.card-profile :customer-id="$row->customer_id" :add-title="true" :soft-data="true" :config="$config"/>
-        <x-app-plugin.crm-service.leads.lead-info :ticket-id="$row->id" :add-title="true"/>
+        <x-app-plugin.crm-service.leads.lead-info :add-des="true" :ticket-id="$row->id" :add-title="true"/>
     </x-admin.hmtl.popup-modal>
 @elseif($btype == 'addLang')
     @if(!isset($row->translate('ar')->name))

@@ -15,9 +15,9 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <x-admin.hmtl.info-div-list n="mobile" :row="$row->customer" col="col-lg-4 col-6"/>
-                <x-admin.hmtl.info-div-list n="mobile_2" :row="$row->customer" col="col-lg-4 col-6"/>
-                <x-admin.hmtl.info-div-list n="phone" :row="$row->customer" col="col-lg-4 col-6"/>
+                <x-admin.hmtl.info-div-list n="mobile" :row="$row->customer" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="mobile_2" :row="$row->customer" col="col-lg-6 col-6"/>
+                <x-admin.hmtl.info-div-list n="phone" :row="$row->customer" col="col-lg-6 col-6"/>
             </div>
             @foreach($row->customer->address as $address)
                 <div class="row">
@@ -26,8 +26,8 @@
                 <div class="row">
                     <x-admin.hmtl.info-div-list n="city_id" :row="$address" col="col-lg-6 col-6"/>
                     <x-admin.hmtl.info-div-list n="area_id" :row="$address" col="col-lg-6 col-6"/>
-                    <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-4 col-6"/>
-                    <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-4 col-6"/>
+                    <x-admin.hmtl.info-div-list n="unit_num" :row="$address" col="col-lg-6 col-6"/>
+                    <x-admin.hmtl.info-div-list n="floor" :row="$address" col="col-lg-6 col-6"/>
                 </div>
             @endforeach
             <div class="row">

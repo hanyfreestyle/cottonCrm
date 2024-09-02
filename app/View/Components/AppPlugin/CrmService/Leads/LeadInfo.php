@@ -15,6 +15,8 @@ class LeadInfo extends Component {
     public $softView;
     public $viewList;
     public $ticketId;
+    public $addDes;
+
 
 
     public function __construct(
@@ -24,11 +26,14 @@ class LeadInfo extends Component {
         $softView = false,
         $viewList = 'icon',
         $ticketId = null,
+        $addDes = false,
+
     ) {
         $this->ticketId = $ticketId;
+        $this->addDes = $addDes;
 
         if($ticketId > 0 ){
-            $this->row = CrmTickets::query()->where('id',$ticketId)->first();
+            $this->row = CrmTickets::query()->where('id',$ticketId)->with('des')->first();
         }else{
             $this->row = $row;
         }
@@ -37,7 +42,10 @@ class LeadInfo extends Component {
         $this->softView = $softView;
         $this->viewList = $viewList;
 
+
     }
+
+
 
     public function render(): View|Closure|string {
         return view('components.app-plugin.crm-service.leads.lead-info');

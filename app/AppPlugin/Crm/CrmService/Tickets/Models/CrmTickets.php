@@ -50,9 +50,8 @@ class CrmTickets extends Model {
             ;
     }
 
-
     public function des(): HasMany {
-        return $this->hasMany(CrmTicketsDes::class,'ticket_id','id');
+        return $this->hasMany(CrmTicketsDes::class,'ticket_id','id')->orderBy('id','desc');
     }
 
     public function last_des(): HasOne {
