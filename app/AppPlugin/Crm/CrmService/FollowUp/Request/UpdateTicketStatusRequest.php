@@ -20,11 +20,16 @@ class UpdateTicketStatusRequest extends FormRequest {
             'des' => 'required'
         ];
 
-        if ($followState == 2) {
+        if ($followState == 2 and $request->ticket_follow_state == 3) {
+            $rules += [
+                'amount' => 'required|numeric|gt:cash_amount'
+            ];
+        } elseif ($followState == 2) {
             $rules += [
                 'amount' => 'required|numeric|min:1'
             ];
         }
+
         if ($followState == 3) {
             $rules += [
                 'follow_date' => "required|date_format:Y-m-d|after_or_equal:today",
@@ -43,7 +48,6 @@ class UpdateTicketStatusRequest extends FormRequest {
                 'amount' => 'required|numeric|min:0'
             ];
         }
-
 
 
         return $rules;

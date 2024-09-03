@@ -12,6 +12,7 @@ return
 	'label_brand' => 'العلامة التجارية',
 	'label_device' => 'نوع الجهاز',
 	'label_notes_err' => 'العطل',
+	'label_notes_user' => 'تقرير الفنى',
 	'label_reason_for_cancellation' => 'سبب الالغاء',
 	'label_reason_for_postponement' => 'سبب التاجيل',
 	'label_reason_for_rejection' => 'سبب الرفض',
@@ -21,5 +22,5 @@ return
 	'label_update_spare_parts' => 'قطع الغيار المطلوبة',
 	'label_update_works_done' => 'الاعمال المنفذة',
 	'label_user_id' => 'اسم الفنى',
-	'label_notes_user' => 'تقرير الفنى',
+	'label_update_deposit_unpiad' => '(المبلغ غير مسدد)',
 ];

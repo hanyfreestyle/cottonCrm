@@ -105,6 +105,8 @@ class CrmTicketCashController extends AdminMainController {
         $confirmPayment->confirm_date_time = getCurrentTime();
         $confirmPayment->confirm_user_id = Auth::user()->id;
         $confirmPayment->amount_paid = $confirmPayment->amount;
+
+//        dd($confirmPayment);
         $confirmPayment->save();
 
         if ($confirmPayment->amount_type == 1) {
@@ -147,6 +149,7 @@ class CrmTicketCashController extends AdminMainController {
             $today = Carbon::parse(now())->format("Y-m-d");
             $rowData = $Data->whereDate('confirm_date', $today)->get()->groupBy('confirm_date');
         }
+
 
         return view('AppPlugin.CrmService.ticketCash.cash_list')->with([
             'pageData' => $pageData,

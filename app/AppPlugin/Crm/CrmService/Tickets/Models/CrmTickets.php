@@ -79,10 +79,9 @@ class CrmTickets extends Model {
             ->where('locale' , 'ar');
     }
 
-
-
-
-
+    public function paymentCash(): HasOne {
+        return $this->hasOne(CrmTicketsCash::class,'ticket_id','id')->where('follow_state',3);
+    }
 
 
 }

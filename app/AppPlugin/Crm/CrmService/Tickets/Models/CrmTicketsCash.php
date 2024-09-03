@@ -39,4 +39,9 @@ class CrmTicketsCash extends Model {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function cashDes(): BelongsTo {
+        return $this->belongsTo(CrmTicketsDes::class,'ticket_id','ticket_id')->where('follow_state',$this->follow_state);
+    }
+
+//
 }

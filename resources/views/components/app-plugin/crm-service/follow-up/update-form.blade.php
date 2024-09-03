@@ -9,13 +9,22 @@
     <x-admin.card.normal col="col-lg-12">
         <form class="mainForm UpdateTicketForm" action="{{route($PrefixRoute.'.UpdateTicketStatus',$ticket->id)}}" method="post">
             <input type="hidden" name="follow_state" value="{{$followState}}">
-            <input type="text" name="open_type" value="{{$ticket->open_type}}">
+            <input type="hidden" name="open_type" value="{{$ticket->open_type}}">
+            <input type="text" name="ticket_follow_state" value="{{$ticket->follow_state}}">
+            <input type="text" name="cash_amount" value="{{$ticket->paymentCash->amount ?? 0}}">
             @csrf
+
 
             @if($followState == 2)
                 <x-admin.hmtl.alert-massage bg="s" margin="mt-3" align="right" :mass="__('admin/crm_service_mass.state_2')"/>
                 <div class="row mt-2">
-                    <x-admin.form.input :type="getNumberType($agent)" name="amount" :value="old('amount')" :label="__('admin/crm_service.label_update_cost')"/>
+                    @if($ticket->follow_state == 3)
+                        <div class="infoDiv col-lg-6">
+                            <div class="title"><i class="fas fa-hand-holding-usd"></i> {{__('admin/crm_service.label_update_deposit')}}</div>
+                            <div class="des">{!! returnDepositInfo($ticket) !!}</div>
+                        </div>
+                    @endif
+                    <x-admin.form.input :type="getNumberType($agent)" name="amount" col="6" :value="old('amount')" :label="__('admin/crm_service.label_update_cost')"/>
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_update_works_done')"/>
                 </div>
 

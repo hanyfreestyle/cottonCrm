@@ -24,7 +24,7 @@
                                        :des="number_format($row->amount)" col="col-lg-12 col-12"/>
 
                 <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service_cash.label_notes')"
-                                       :des="$row->ticket->des->last()->des ?? '' " col="col-lg-12 col-12"/>
+                                       :des="$row->cashDes()->first()->des ?? '' " col="col-lg-12 col-12"/>
             </div>
 
             @if($showBut)

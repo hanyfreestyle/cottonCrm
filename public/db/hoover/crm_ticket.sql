@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2024 at 07:14 PM
+-- Generation Time: Sep 03, 2024 at 10:10 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `crm_ticket` (`id`, `customer_id`, `open_type`, `state`, `follow_state`, `follow_date`, `user_id`, `sours_id`, `ads_id`, `device_id`, `brand_id`, `notes`, `notes_err`, `close_date`, `review_state`, `old_id`, `old_customer_id`, `old_sours_id`, `old_ads_id`, `old_device_id`, `old_brand_id`, `done_price`, `done_price_prepaid`, `done_notes`, `reject_notes`, `cancellation_notes`, `created_at`, `updated_at`, `uuid`) VALUES
-(1, 1, 1, 2, 5, NULL, 2, 6, 2, 96, 12, NULL, 'العطل', '2024-09-01', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-07-15 15:11:27', '2024-09-01 15:18:00', 'cc5dc802-8c12-41bf-9a57-131ea4e53074'),
-(2, 1, 1, 2, 6, NULL, 2, 5, 1, 95, 12, NULL, 'العطل', '2024-09-01', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-01 16:10:57', '2024-09-01 16:11:44', '66fa82e3-e2d4-4e32-accd-7224fd9d3443');
+(1, 1, 1, 1, 1, '2024-09-03', 2, 5, 1, 95, 12, NULL, 'العطل', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-03 07:08:33', '2024-09-03 07:08:33', '55f8c599-713a-4708-861f-eb07d51e6a82'),
+(4, 1, 1, 1, 1, '2024-09-03', 2, 5, 1, 95, 12, NULL, 'العطل', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-09-03 07:10:28', '2024-09-03 07:10:28', '18a45d9d-07c5-45bf-bbdb-4394a39606b1');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

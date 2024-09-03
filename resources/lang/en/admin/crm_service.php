@@ -12,6 +12,7 @@ return
 	'label_brand' => 'Brand',
 	'label_device' => 'Device type',
 	'label_notes_err' => 'Technical failure',
+	'label_notes_user' => 'Technician Notes',
 	'label_reason_for_cancellation' => 'Reason for cancellation',
 	'label_reason_for_postponement' => 'Reason for postponement',
 	'label_reason_for_rejection' => 'Reason for rejection',
@@ -21,5 +22,5 @@ return
 	'label_update_spare_parts' => 'Spare parts required',
 	'label_update_works_done' => 'Works carried out',
 	'label_user_id' => 'Technician name',
-	'label_notes_user' => 'Technician Notes',
+	'label_update_deposit_unpiad' => '',
 ];

@@ -96,6 +96,24 @@ if (!function_exists('returnAmount')) {
     }
 }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('returnDepositInfo')) {
+    function returnDepositInfo($ticket) {
+        $label = " " ;
+        if($ticket->paymentCash->amount_paid){
+            $label .=  number_format($ticket->paymentCash->amount) ;
+        }else{
+            $label .=   number_format($ticket->paymentCash->amount) ;
+            $label .=   "  "  . __('admin/crm_service.label_update_deposit_unpiad') ;
+        }
+        return $label ;
+    }
+}
+
+
+
+
 
 
 

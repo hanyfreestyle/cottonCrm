@@ -69,16 +69,16 @@ trait CrmDataTableTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function ViewOpenTicketUserPer($PrefixRole) {
         if (Auth::user()->hasPermissionTo($PrefixRole . '_admin')) {
-            $data = CrmTickets::defOpen();
+            $data = CrmTickets::defOpen()->with('paymentCash');
         } else {
             if (Auth::user()->hasPermissionTo($PrefixRole . '_team_leader')) {
                 $thisUserId = [Auth::user()->id];
                 if (is_array(Auth::user()->crm_team)) {
                     $thisUserId = array_merge($thisUserId, Auth::user()->crm_team);
                 }
-                $data = CrmTickets::defOpen()->WhereIn('user_id', $thisUserId);
+                $data = CrmTickets::defOpen()->with('paymentCash')->WhereIn('user_id', $thisUserId);
             } else {
-                $data = CrmTickets::defOpen()->where('user_id', Auth::user()->id);
+                $data = CrmTickets::defOpen()->with('paymentCash')->where('user_id', Auth::user()->id);
             }
         }
         return $data;

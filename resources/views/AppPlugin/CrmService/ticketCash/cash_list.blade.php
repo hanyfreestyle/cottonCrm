@@ -30,7 +30,7 @@
                             <tbody>
                             @foreach($datevalue as $row)
                                 <tr>
-                                    <td data-th="{{__('admin/crm_service_cash.label_date_pay')}}">{{PrintDate($row->ticket->close_date)}}</td>
+                                    <td data-th="{{__('admin/crm_service_cash.label_date_pay')}}">{{PrintDate($row->created_at)}}</td>
                                     <td data-th="{{__('admin/crm.label_customer_name')}}">{{$row->customer->name ?? ''}}</td>
                                     <td data-th="{{__('admin/crm_service.label_user_id')}}">{{$row->user->name ?? ''}}</td>
                                     <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}</td>

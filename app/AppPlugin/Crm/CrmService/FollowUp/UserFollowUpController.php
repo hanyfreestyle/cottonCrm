@@ -154,7 +154,11 @@ class UserFollowUpController extends AdminMainController {
         } elseif ($RouteName == $this->PrefixRoute . '.UpdatePostponed') {
             $followState = 4;
         } elseif ($RouteName == $this->PrefixRoute . '.UpdateCancellation') {
-            $followState = 5;
+            if ($ticket->follow_state != 3) {
+                $followState = 5;
+            } else {
+                $viewActionBut = true;
+            }
         } elseif ($RouteName == $this->PrefixRoute . '.UpdateReject') {
             $followState = 6;
         }
@@ -248,11 +252,15 @@ class UserFollowUpController extends AdminMainController {
 
         if ($follow_state == 2) {
             if (intval($request->input('amount')) > 0) {
-                $addCash->amount_type = 1;
-                $addCash->pay_type = 1;
-                $addCash->amount = $request->input('amount');
-                if ($saveThisData) {
-                    $addCash->save();
+                if ($request->ticket_follow_state == 3) {
+                    $addCash->amount_type = 1;
+                    $addCash->pay_type = 1;
+                    $addCash->amount = $request->input('amount') - $request->cash_amount;
+                    if ($saveThisData) {
+                        $addCash->save();
+                    }
+                } else {
+
                 }
             }
 
