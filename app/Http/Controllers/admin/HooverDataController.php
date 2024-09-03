@@ -201,7 +201,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateNames() {
-        dd('done');
+         dd('UpdateNames');
 
         $rep = [
             '\\\\', '\\', 'الحج', 'الحجة', '.سلوى', 'محمدسلطان', 'السيدخلف', 'عبدالرسول', 'عبدالمنعم', 'عبدالحميد', 'عبدالغني', 'محمدرؤوف', 'رناطارق',
@@ -271,7 +271,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function getTicket() {
-        dd('getTicket');
+         dd('getTicket');
 
         $oldData = DB::connection('mysql2')->table('sales_ticket')
             ->orderBy('id')
@@ -323,7 +323,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function syncTicketData() {
-//        dd("syncTicketData");
+        dd("syncTicketData");
         $allCustomers = CrmCustomers::query()->select('id', 'old_id')->get();
         $configData = ConfigData::query()->select('id', 'old_id')->get();
 
@@ -394,7 +394,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateCancellation() {
-        dd('UpdateCancellation');
+//        dd('UpdateCancellation');
         $tickets = CrmTickets::query()
             ->whereNotNull('old_customer_id')
             ->where('state', 2)
@@ -472,7 +472,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateFinished() {
-        dd("UpdateFinished");
+//        dd("UpdateFinished");
         $saveData = true;
         $saveConfirm = true;
         $tickets = CrmTickets::query()
@@ -568,7 +568,7 @@ class HooverDataController extends AdminMainController {
     public function UpdateTicketUUid() {
         $tickets = CrmTickets::query()
             ->whereNull('uuid')
-            ->take(250)
+            ->take(500)
             ->get();
 
         foreach ($tickets as $updateTicket) {
@@ -585,7 +585,7 @@ class HooverDataController extends AdminMainController {
     public function UpdateCustomerUUid() {
         $tickets = CrmCustomers::query()
             ->whereNull('uuid')
-            ->take(250)
+            ->take(500)
             ->get();
 
         foreach ($tickets as $updateTicket) {
@@ -605,7 +605,7 @@ class HooverDataController extends AdminMainController {
         $Customers = CrmCustomers::query()
             ->whereNotIn('id',$openT)
             ->whereNull('type_id')
-            ->take(250)
+            ->take(500)
             ->get();
 
         foreach ($Customers as $updateCustomer) {
