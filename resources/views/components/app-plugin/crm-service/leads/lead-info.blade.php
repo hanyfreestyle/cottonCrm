@@ -27,19 +27,46 @@
 
 <div class="row">
     <x-admin.hmtl.info-div-list n="notes_err" :all-data="true" :row="$row" col="col-lg-6 col-12"/>
-    <x-admin.hmtl.info-div-list n="notes" :all-data="true" :row="$row" col="col-lg-6 col-12"/>
+    <x-admin.hmtl.info-div-list n="notes" :all-data="false" :row="$row" col="col-lg-6 col-12"/>
 </div>
 
-@if($row->state == 2)
-    <div class="row">
-        <x-admin.hmtl.info-div-list n="lastNotes" :row="$row" col="col-lg-12 col-12"/>
-    </div>
-@endif
 
+@if($row->state == 2)
+    @if(count($cashInfo) == 2 )
+        <div class="row">
+            @php
+                $total = 0 ;
+            @endphp
+            @foreach($cashInfo as $cash)
+                @if($cash->amount)
+                    @if($cash->amount_type == 2)
+                        <x-admin.hmtl.info-div i="fas fa-funnel-dollar" :t="__('admin/crm_service_var.cash_type_2')" :des="number_format($cash->amount)" col="col-lg-4 col-6" :all-data="true"/>
+                    @elseif($cash->amount_type == 1)
+                        <x-admin.hmtl.info-div i="fas fa-file-invoice-dollar" :t="__('admin/crm_service_var.cash_type_4')" :des="number_format($cash->amount)" col="col-lg-4 col-6" :all-data="true"/>
+                    @endif
+                @endif
+                @php
+                    $total = $total + $cash->amount;
+                @endphp
+            @endforeach
+                <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($total)" col="col-lg-4 col-12" :all-data="true"/>
+        </div>
+    @elseif(count($cashInfo) == 1)
+        @foreach($cashInfo as $cash)
+            @if($cash->amount)
+                @if($cash->amount_type == 1)
+                    <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+                @elseif($cash->amount_type == 3)
+                    <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_3')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+                @endif
+            @endif
+        @endforeach
+    @endif
+@endif
 
 @if($addDes)
     @if(count($row->des) > 0 )
-        <x-app-plugin.crm-service.leads.lead-info-des :row="$row->des" />
+        <x-app-plugin.crm-service.leads.lead-info-des :row="$row->des"/>
     @endif
 @endif
 

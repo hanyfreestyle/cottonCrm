@@ -14,13 +14,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
-
 class CrmTicketClosedController extends AdminMainController {
 
     use CrmLeadsConfigTraits;
     use CrmMainTraits;
     use ReportFunTraits;
-    use CrmDataTableTraits ;
+    use CrmDataTableTraits;
 
     function __construct() {
         parent::__construct();
@@ -68,21 +67,19 @@ class CrmTicketClosedController extends AdminMainController {
 
         $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
+        $AddCost = false;
 
-        if ($RouteName == $this->PrefixRoute . '.All' or $RouteName == $this->PrefixRoute . '.filter') {
-            $pageData['TitlePage'] = __('admin/crm_service_menu.follow_list_all');
-            $pageData['IconPage'] = 'fa-eye';
-            $RouteVal = "all";
-
-        } elseif ($RouteName == $this->PrefixRoute . '.Finished') {
+        if ($RouteName == $this->PrefixRoute . '.Finished') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_finished');
             $pageData['IconPage'] = 'fa-thumbs-up';
             $RouteVal = "Finished";
+            $AddCost = true;
 
         } elseif ($RouteName == $this->PrefixRoute . '.Reject') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_reject');
             $pageData['IconPage'] = 'fa-bell';
             $RouteVal = "Reject";
+            $AddCost = true;
 
         } elseif ($RouteName == $this->PrefixRoute . '.Cancellation') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_close_cancellation');
@@ -93,11 +90,13 @@ class CrmTicketClosedController extends AdminMainController {
         $rowData = self::TicketFilter(self::ClosedTicketQuery($RouteVal), $session);
         $rowData = $rowData->get();
 
+//        dd($rowData);
 
         return view('AppPlugin.CrmService.ticketClosed.index')->with([
             'pageData' => $pageData,
             'RouteVal' => $RouteVal,
             'rowData' => $rowData,
+            'AddCost' => $AddCost,
         ]);
     }
 
@@ -126,11 +125,6 @@ class CrmTicketClosedController extends AdminMainController {
 //            'ticket' => $ticket,
 //        ]);
 //    }
-
-
-
-
-
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -238,7 +232,6 @@ class CrmTicketClosedController extends AdminMainController {
         $subMenu->save();
 
     }
-
 
 
 }

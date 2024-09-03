@@ -32,7 +32,9 @@
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_device')}}</th>
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_notes_err')}}</th>
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_notes')}}</th>
-{{--                    <x-admin.table.action-but po="top" type="edit"/>--}}
+                    @if($AddCost)
+                        <th>{{__('admin/crm_customer.profile_card_6')}}</th>
+                    @endif
                     <x-admin.table.action-but po="top" type="delete"/>
                     <x-admin.table.action-but po="top" res="all" type="edit"/>
                 </tr>
@@ -76,7 +78,8 @@
                     {data: 'notes_err', name: 'notes_err', orderable: false, searchable: false},
                     {data: 'notes', name: 'notes', orderable: false, searchable: false},
 
-{{--                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'viewTicket'])--}}
+
+                    @include('datatable.index_action_but',['type'=> 'option','option'=> $AddCost ,'data'=>"cost"])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
                     @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'viewInfo'])
                 ],

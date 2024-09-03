@@ -67,10 +67,12 @@ class CrmTicketCashController extends AdminMainController {
 
         $RouteName = Route::currentRouteName();
 
+
         if ($RouteName == $this->PrefixRoute . '.Cost') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_cost');
             $pageData['IconPage'] = 'fas fa-car';
             $amount_type = "1";
+
 
         } elseif ($RouteName == $this->PrefixRoute . '.Deposit') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_deposit');

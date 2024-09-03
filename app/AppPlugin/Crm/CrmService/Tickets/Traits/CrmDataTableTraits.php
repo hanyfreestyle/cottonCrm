@@ -5,6 +5,7 @@ namespace App\AppPlugin\Crm\CrmService\Tickets\Traits;
 
 
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -264,6 +265,15 @@ trait CrmDataTableTraits {
             ->editColumn('viewInfo', function ($row) {
                 return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
             })
+            ->editColumn('cost', function ($row) {
+                $amount = CrmTicketsCash::query()->where('ticket_id',$row->id)->sum('amount');
+                if ($amount){
+                    return  number_format($amount);
+                }else{
+                    return null;
+                }
+            })
+
             ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
     }
 

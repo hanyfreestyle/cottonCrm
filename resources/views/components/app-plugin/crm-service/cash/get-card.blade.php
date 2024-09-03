@@ -6,8 +6,7 @@
                 <span class="description">
                     {{ LoadConfigName($CashConfigDataList,$row->ticket->device_id)}} -
                     {{ LoadConfigName($CashAreaList,$row->customer->address->first()->area_id)}}
-                    <span class="font-weight-bold" style="font-size: 16px"  > ({{number_format($row->amount)}}) </span>
-
+                    <span class="font-weight-bold" style="font-size: 16px"> ({{number_format($row->amount)}}) </span>
                 </span>
             </div>
             <div class="card-tools">
@@ -15,14 +14,36 @@
             </div>
         </div>
         <div class="card-footer">
-
             <div class="row">
-                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_date_pay')"
-                                       :des="PrintDate($row->created_at)" col="col-lg-12 col-12"/>
+                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_date_pay')" :des="PrintDate($row->created_at)" col="col-lg-12 col-12"/>
+                @if($row->amount_type == 1)
+                    @if(count($depositCash) == 2 )
+                        @php
+                            $total = 0 ;
+                        @endphp
+                        @foreach($depositCash as $cash)
+                            @if($cash->amount_type == 2)
+                                <x-admin.hmtl.info-div i="fas fa-funnel-dollar" :t="__('admin/crm_service_var.cash_type_2')" :des="number_format($cash->amount)" col="col-lg-6 col-12"
+                                                       :all-data="true"/>
+                            @elseif($cash->amount_type == 1)
+                                <x-admin.hmtl.info-div i="fas fa-file-invoice-dollar" :t="__('admin/crm_service_var.cash_type_4')" :des="number_format($cash->amount)" col="col-lg-6 col-12"
+                                                       :all-data="true"/>
+                            @endif
 
-                <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_amount')"
-                                       :des="number_format($row->amount)" col="col-lg-12 col-12"/>
-
+                            @php
+                                $total = $total + $cash->amount;
+                            @endphp
+                        @endforeach
+                        <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_amount')"
+                                               :des="number_format($total)" col="col-lg-12 col-12"/>
+                    @else
+                        <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_amount')"
+                                               :des="number_format($row->amount)" col="col-lg-12 col-12"/>
+                    @endif
+                @else
+                    <x-admin.hmtl.info-div :sub-des="true" i="fas fa-calendar-alt" :t="__('admin/crm_service_cash.label_amount')"
+                                           :des="number_format($row->amount)" col="col-lg-12 col-12"/>
+                @endif
                 <x-admin.hmtl.info-div :sub-des="false" i="fas fa-comment" :t="__('admin/crm_service_cash.label_notes')"
                                        :des="$row->cashDes()->first()->des ?? '' " col="col-lg-12 col-12"/>
             </div>

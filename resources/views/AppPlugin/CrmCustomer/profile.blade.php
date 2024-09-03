@@ -79,7 +79,7 @@
                                     </button>
                                     <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
                                         <x-app-plugin.crm-service.leads.lead-info-closed :row="$row"/>
-                                        <x-app-plugin.crm-service.leads.lead-info :add-des="true" :add-title="true" :row="$row"/>
+                                        <x-app-plugin.crm-service.leads.lead-info :ticket-id="$row->id" :add-des="true" :add-title="true"/>
                                     </x-admin.hmtl.popup-modal>
                                 </td>
                             </tr>

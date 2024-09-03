@@ -165,7 +165,7 @@ class CrmCustomersController extends AdminMainController {
             })
             ->editColumn('type_id', function ($row) {
                 $getSoursData = collect($this->DefCat['CustomersTypeId']);
-                return $getSoursData->where('id',$row->type_id)->first()->name ?? null;
+                return $getSoursData->where('id', $row->type_id)->first()->name ?? null;
             })
             ->editColumn('addTicket', function ($row) {
                 return view('datatable.but')->with(['btype' => 'addTicket', 'row' => $row])->render();
@@ -307,7 +307,7 @@ class CrmCustomersController extends AdminMainController {
             $card['Cancellation'] = $Tickets->where('state', 2)->where('follow_state', 5)->count();
             $card['Reject'] = $Tickets->where('state', 2)->where('follow_state', 6)->count();
             $card['Reopen'] = $Tickets->where('open_type', 2)->count();
-            $card['Cash'] = CrmTicketsCash::query()->where('customer_id', $id)->whereIn('amount_type', ['1', '3'])->sum('amount');
+            $card['Cash'] = CrmTicketsCash::query()->where('customer_id', $id)->whereIn('amount_type', ['1', '2', '3'])->sum('amount');
         }
 
 

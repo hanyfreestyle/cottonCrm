@@ -134,9 +134,15 @@
 
 }
 .closed_lead_card .small-box p{
-
-
     margin-bottom: 5px!important;
+}
 
+@media (max-width: 767.98px) {
+    .closed_lead_card  .small-box h3 {
+        text-align: center;
+    }
+    .closed_lead_card .small-box p{
+        text-align: center;
+    }
 }
 

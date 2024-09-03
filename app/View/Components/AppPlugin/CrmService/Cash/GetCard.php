@@ -2,6 +2,7 @@
 
 namespace App\View\Components\AppPlugin\CrmService\Cash;
 
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -17,8 +18,7 @@ class GetCard extends Component {
     public $open_style;
     public $isactive;
     public $showBut;
-
-
+    public $depositCash;
 
 
     public function __construct(
@@ -29,12 +29,21 @@ class GetCard extends Component {
         $open = true,
         $isactive = true,
         $showBut = false,
+        $depositCash = [],
 
     ) {
         $this->row = $row;
+
+        if ($row->amount_type == '1') {
+            $this->depositCash = CrmTicketsCash::query()->where('ticket_id', $row->ticket_id)->get();
+        } else {
+            $this->depositCash = [];
+        }
+
         $this->showBut = $showBut;
         $this->bg = 'bg-' . getBgColor($bg);
         $this->collapsed = $collapsed;
+
         if ($collapsed) {
             if ($open) {
                 $this->collapsed_style = "";

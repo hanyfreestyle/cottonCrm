@@ -2,6 +2,9 @@
 
 return
 [
+	'cash_type_1' => '',
+	'cash_type_2' => '',
+	'cash_type_3' => '',
 	'open_type' => 'Reason for visit',
 	'open_type_1' => 'New visit',
 	'open_type_2' => 'Return visit',
@@ -12,7 +15,5 @@ return
 	'ticket_state_4' => 'Postponed',
 	'ticket_state_5' => 'Cancellation',
 	'ticket_state_6' => 'Reject',
-	'cash_type_1' => '',
-	'cash_type_2' => '',
-	'cash_type_3' => '',
+	'cash_type_4' => '',
 ];

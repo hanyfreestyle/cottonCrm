@@ -208,12 +208,14 @@ class UserFollowUpController extends AdminMainController {
             $ticket->state = 2;
             $ticket->follow_date = null;
             $ticket->close_date = getCurrentTime();
-        }
-
-        $ticket->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
-        if ($ticket->follow_state != 3) {
             $ticket->follow_state = $follow_state;
+        } else {
+            $ticket->follow_date = SaveDateFormat($request, 'follow_date') ?? null;
+            if ($ticket->follow_state != 3) {
+                $ticket->follow_state = $follow_state;
+            }
         }
+//        dd($ticket);
         if ($saveThisData) {
             $ticket->save();
         }

@@ -7,7 +7,6 @@ Route::prefix('/ticket-close/')->name('TicketClose.')->group(function () {
     Route::get('Finished', [CrmTicketClosedController::class, 'index'])->name('Finished');
     Route::get('Reject', [CrmTicketClosedController::class, 'index'])->name('Reject');
     Route::get('Cancellation', [CrmTicketClosedController::class, 'index'])->name('Cancellation');
-//    Route::post('all', [CrmTicketOpenController::class, 'index'])->name('filter');
 
     Route::get('DataTable/{view}', [CrmTicketClosedController::class, 'DataTable'])->name('DataTable');
 

@@ -141,8 +141,8 @@ trait CrmServiceFileTraits {
     static function LoadSeeder() {
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_open.php'))) {
             SeedDbFile(CrmTickets::class, 'crm_ticket.sql');
-//            SeedDbFile(CrmTicketsDes::class, 'crm_ticket_des.sql');
-//            SeedDbFile(CrmTicketsCash::class, 'crm_ticket_cash.sql');
+            SeedDbFile(CrmTicketsDes::class, 'crm_ticket_des.sql');
+            SeedDbFile(CrmTicketsCash::class, 'crm_ticket_cash.sql');
         }
     }
 

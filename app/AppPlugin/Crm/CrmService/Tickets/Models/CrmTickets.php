@@ -31,12 +31,11 @@ class CrmTickets extends Model {
             ->with('customer')
             ->with('device_name')
             ->with('user')
-//            ->with('des')
             ;
     }
 
     public function customerAmount(): HasMany {
-        return $this->hasMany(CrmTicketsCash::class,'ticket_id','id')->whereIn('amount_type',['1','3']);
+        return $this->hasMany(CrmTicketsCash::class,'ticket_id','id')->whereIn('amount_type',['1','2','3']);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -46,7 +45,6 @@ class CrmTickets extends Model {
             ->with('customer')
             ->with('device_name')
             ->with('user')
-//            ->with('des')
             ;
     }
 
