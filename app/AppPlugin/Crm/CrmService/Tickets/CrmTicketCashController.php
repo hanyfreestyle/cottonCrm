@@ -73,16 +73,19 @@ class CrmTicketCashController extends AdminMainController {
             $pageData['IconPage'] = 'fas fa-car';
             $amount_type = "1";
 
-
         } elseif ($RouteName == $this->PrefixRoute . '.Deposit') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_deposit');
-            $pageData['IconPage'] = 'fas fa-random';
+            $pageData['IconPage'] = 'fas fa-funnel-dollar';
             $amount_type = "2";
 
         } elseif ($RouteName == $this->PrefixRoute . '.Service') {
             $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_service');
             $pageData['IconPage'] = 'fas fa-eye';
             $amount_type = "3";
+        } elseif ($RouteName == $this->PrefixRoute . '.CashBack') {
+            $pageData['TitlePage'] = __('admin/crm_service_menu.ticket_cash_back');
+            $pageData['IconPage'] = 'fas fa-random';
+            $amount_type = "4";
         }
 
         $rowData = CrmTicketsCash::defUnpaid()
@@ -99,6 +102,29 @@ class CrmTicketCashController extends AdminMainController {
 
     }
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function indexCashBack() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $pageData['BoxH1'] = __('admin/crm.label_list_leads');
+
+        $rowData = CrmTicketsCash::query()
+            ->where('amount_paid', null)
+            ->where('confirm_date', null)
+            ->where('pay_type', 1)
+            ->where('amount_type', 4)
+            ->orderBy('user_id')
+            ->get()
+            ->groupby('user_id');
+
+        return view('AppPlugin.CrmService.ticketCash.index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
+    }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ConfirmPay($id) {
@@ -107,20 +133,41 @@ class CrmTicketCashController extends AdminMainController {
         $confirmPayment->confirm_date_time = getCurrentTime();
         $confirmPayment->confirm_user_id = Auth::user()->id;
         $confirmPayment->amount_paid = $confirmPayment->amount;
-
-//        dd($confirmPayment);
         $confirmPayment->save();
 
         if ($confirmPayment->amount_type == 1) {
-            return redirect()->route($this->PrefixRoute . '.Cost',);
+            return redirect()->route($this->PrefixRoute . '.Cost');
         } elseif ($confirmPayment->amount_type == 2) {
-            return redirect()->route($this->PrefixRoute . '.Deposit',);
+            return redirect()->route($this->PrefixRoute . '.Deposit');
         } elseif ($confirmPayment->amount_type == 3) {
-            return redirect()->route($this->PrefixRoute . '.Service',);
+            return redirect()->route($this->PrefixRoute . '.Service');
         } else {
-            return redirect()->route($this->PrefixRoute . '.Service',);
+            return redirect()->route($this->PrefixRoute . '.Service');
         }
     }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ConfirmPayBack($id) {
+        $confirmPayment = CrmTicketsCash::query()
+            ->where('amount_paid', null)
+            ->where('confirm_date', null)
+            ->where('pay_type', 1)
+            ->wherein('amount_type', ['4'])
+            ->with('ticket')
+            ->with('customer')
+            ->with('user')
+            ->where('id', $id)->firstOrFail();
+
+        $confirmPayment->confirm_date = getCurrentTime();
+        $confirmPayment->confirm_date_time = getCurrentTime();
+        $confirmPayment->confirm_user_id = Auth::user()->id;
+        $confirmPayment->amount_paid = $confirmPayment->amount;
+        $confirmPayment->save();
+
+        return redirect()->route($this->PrefixRoute . '.CashBack');
+    }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -162,15 +209,17 @@ class CrmTicketCashController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexCashQuery() {
-        $data = CrmTicketsCash::query()
-            ->whereNotNull('amount_type')
+        $data = CrmTicketsCash::query() ;
+        $data->whereNotNull('amount_type')
             ->whereNotNull('confirm_date')
             ->whereNotNull('confirm_user_id')
+            ->wherein('amount_type',['1','2','3',])
             ->with('ticket')
             ->with('customer')
             ->with('user');
         return $data;
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -207,31 +256,6 @@ class CrmTicketCashController extends AdminMainController {
         $this->formName = "CrmTicketOpenReportFilter";
         View::share('formName', $this->formName);
 
-//        $session = self::getSessionData($request);
-//        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
-//        $getData = $rowData->get();
-//
-//
-//        $deviceId = $getData->groupBy('device_id')->toarray();
-//        $userId = $getData->groupBy('user_id')->toarray();
-//        $brandId = $getData->groupBy('brand_id')->toarray();
-//        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
-//        $follow_state = $getData->groupBy('follow_state')->toarray();
-//        $LeadSours = $getData->groupBy('sours_id')->toarray();
-//        $LeadCategory = $getData->groupBy('ads_id')->toarray();
-//
-//
-//        $AllData = $rowData->count();
-//        $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $LeadSours);
-//        $chartData['LeadCategory'] = self::ChartDataFromDataConfig($AllData, 'LeadCategory', $LeadCategory);
-//        $chartData['Device'] = self::ChartDataFromDataConfig($AllData, 'DeviceType', $deviceId);
-//        $chartData['BrandName'] = self::ChartDataFromDataConfig($AllData, 'BrandName', $brandId);
-//        $chartData['Area'] = self::ChartDataFromModel($AllData, Area::class, $area_id);
-//        $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
-//        $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'CrmServiceTicketState', $follow_state);
-//
-
-
 
         $today = Carbon::parse(now())->format("Y-m-d");
         $now = Carbon::now();
@@ -247,7 +271,7 @@ class CrmTicketCashController extends AdminMainController {
 
 
         $monthChart = self::getCashChartMonth(self::indexCashQuery());
-         View::share('monthChart', $monthChart);
+        View::share('monthChart', $monthChart);
 
         $yearChart = self::getCashChartYear(self::indexCashQuery());
         View::share('yearChart', $yearChart);
@@ -262,7 +286,7 @@ class CrmTicketCashController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getCashChartMonth($Query,$filterFiled='confirm_date') {
+    public function getCashChartMonth($Query, $filterFiled = 'confirm_date') {
         $allDayCount = 0;
         $dayList = "";
         $dayCountList = "";
@@ -288,7 +312,7 @@ class CrmTicketCashController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function getCashChartYear($Query,$filterFiled='confirm_date') {
+    public function getCashChartYear($Query, $filterFiled = 'confirm_date') {
         $data = array();
         $allCount = 0;
         $monthList = "";
@@ -354,7 +378,7 @@ class CrmTicketCashController extends AdminMainController {
         $subMenu->url = "admin.TicketCash.Deposit";
         $subMenu->name = "admin/crm_service_menu.ticket_cash_deposit";
         $subMenu->roleView = "crm_service_cash_view";
-        $subMenu->icon = "fas fa-random";
+        $subMenu->icon = "fas fa-funnel-dollar";
         $subMenu->save();
 
         $subMenu = new AdminMenu();
@@ -365,6 +389,16 @@ class CrmTicketCashController extends AdminMainController {
         $subMenu->roleView = "crm_service_cash_view";
         $subMenu->icon = "fas fa-eye";
         $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "TicketCash.CashBack";
+        $subMenu->url = "admin.TicketCash.CashBack";
+        $subMenu->name = "admin/crm_service_menu.ticket_cash_back";
+        $subMenu->roleView = "crm_service_cash_view";
+        $subMenu->icon = "fas fa-random";
+        $subMenu->save();
+
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;

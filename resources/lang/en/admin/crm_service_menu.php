@@ -4,6 +4,7 @@ return
 [
 	'follow' => 'Customer Follow-up',
 	'follow_list_all' => 'View All',
+	'follow_list_amount' => '',
 	'follow_list_back' => 'Follow-ups not done',
 	'follow_list_new' => 'New Customer',
 	'follow_list_next' => 'Postponed follow-ups',
@@ -25,5 +26,5 @@ return
 	'ticket_close_reject' => 'Closed Reject',
 	'ticket_open' => 'Manage Open Ticket',
 	'ticket_review' => 'Closed Review',
-	'follow_list_amount' => '',
+	'ticket_cash_back' => '',
 ];

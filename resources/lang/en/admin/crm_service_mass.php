@@ -7,4 +7,5 @@ return
 	'state_4' => 'Please specify the new follow-up date and state the reason for the postponement.',
 	'state_5' => 'The follow-up will be closed. Please state the reason for cancellation.',
 	'state_6' => 'The follow-up will be closed. Please state the reason for rejection.',
+	'state_6_3' => 'هناك عربون محصل فى حالة الاغلاق سيتم استرداد العربون فى حالة وجود مصاريف برجاء اضافتها',
 ];

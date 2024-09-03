@@ -1,5 +1,6 @@
 <?php
 
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use Illuminate\Support\Carbon;
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -108,6 +109,15 @@ if (!function_exists('returnDepositInfo')) {
             $label .=   "  "  . __('admin/crm_service.label_update_deposit_unpiad') ;
         }
         return $label ;
+    }
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('returnCashCount')) {
+    function returnCashCount($ticketid) {
+        $count = CrmTicketsCash::query()->where('ticket_id',$ticketid)->count();
+        return $count ;
     }
 }
 

@@ -1,7 +1,7 @@
 <x-admin.card.normal>
     <div class="d-flex">
         <p class="d-flex flex-column">
-            <span class="text-bold text-lg">{{ $chartData['allDayCount']  ?? 0}}</span>
+            <span class="text-bold text-lg">{{ number_format($chartData['allDayCount'])  ?? 0}}</span>
             <span>{{__('admin/crm_service_cash.report_chart_month')}}</span>
         </p>
     </div>

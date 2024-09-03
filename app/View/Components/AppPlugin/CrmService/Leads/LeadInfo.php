@@ -18,6 +18,7 @@ class LeadInfo extends Component {
     public $ticketId;
     public $addDes;
     public $cashInfo;
+    public $cashBaskInfo;
 
 
 
@@ -30,6 +31,7 @@ class LeadInfo extends Component {
         $ticketId = null,
         $addDes = false,
         $cashInfo = [],
+        $cashBaskInfo = [],
 
     ) {
         $this->ticketId = $ticketId;
@@ -37,17 +39,17 @@ class LeadInfo extends Component {
 
         if($ticketId > 0 ){
             $this->row = CrmTickets::query()->where('id',$ticketId)->with('des')->first();
-            $this->cashInfo = CrmTicketsCash::query()->where('ticket_id',$ticketId)->get();
+            $this->cashInfo = CrmTicketsCash::query()->wherein('amount_type', ['1','2','3'])->where('ticket_id',$ticketId)->get();
+            $this->cashBaskInfo = CrmTicketsCash::query()->wherein('amount_type', ['4'])->where('ticket_id',$ticketId)->get();
         }else{
             $this->row = $row;
             $this->cashInfo = $cashInfo;
+            $this->cashBaskInfo = $cashBaskInfo;
         }
         $this->isactive = $isactive;
         $this->addTitle = $addTitle;
         $this->softView = $softView;
         $this->viewList = $viewList;
-
-
     }
 
 

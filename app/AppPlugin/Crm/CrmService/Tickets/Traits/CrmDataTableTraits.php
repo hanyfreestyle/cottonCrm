@@ -266,7 +266,7 @@ trait CrmDataTableTraits {
                 return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
             })
             ->editColumn('cost', function ($row) {
-                $amount = CrmTicketsCash::query()->where('ticket_id',$row->id)->sum('amount');
+                $amount = CrmTicketsCash::query()->wherein('amount_type', ['1','2','3'])->where('ticket_id',$row->id)->sum('amount');
                 if ($amount){
                     return  number_format($amount);
                 }else{

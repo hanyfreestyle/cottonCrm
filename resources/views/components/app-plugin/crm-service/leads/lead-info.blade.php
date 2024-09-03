@@ -32,8 +32,8 @@
 
 
 @if($row->state == 2)
-    @if(count($cashInfo) == 2 )
-        <div class="row">
+    <div class="row">
+        @if(count($cashInfo) == 2 )
             @php
                 $total = 0 ;
             @endphp
@@ -49,19 +49,26 @@
                     $total = $total + $cash->amount;
                 @endphp
             @endforeach
-                <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($total)" col="col-lg-4 col-12" :all-data="true"/>
-        </div>
-    @elseif(count($cashInfo) == 1)
-        @foreach($cashInfo as $cash)
-            @if($cash->amount)
-                @if($cash->amount_type == 1)
-                    <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
-                @elseif($cash->amount_type == 3)
-                    <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_3')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+            <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($total)" col="col-lg-4 col-12" :all-data="true"/>
+
+        @elseif(count($cashInfo) == 1)
+            @foreach($cashInfo as $cash)
+                @if($cash->amount)
+                    @if($cash->amount_type == 1)
+                        <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_1')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+                    @elseif($cash->amount_type == 3)
+                        <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_var.cash_type_3')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+                    @endif
                 @endif
-            @endif
-        @endforeach
-    @endif
+            @endforeach
+        @endif
+
+        @if(count($cashBaskInfo) > 0)
+            @foreach($cashBaskInfo as $cash)
+                <x-admin.hmtl.info-div i="fas fa-hand-holding-usd" :t="__('admin/crm_service_menu.ticket_cash_back')" :des="number_format($cash->amount)" col="col-lg-6 col-12" :all-data="true"/>
+            @endforeach
+        @endif
+    </div>
 @endif
 
 @if($addDes)

@@ -215,7 +215,6 @@ class UserFollowUpController extends AdminMainController {
                 $ticket->follow_state = $follow_state;
             }
         }
-//        dd($ticket);
         if ($saveThisData) {
             $ticket->save();
         }
@@ -253,19 +252,19 @@ class UserFollowUpController extends AdminMainController {
         $addCash->user_id = Auth::user()->id;
 
         if ($follow_state == 2) {
+            $addCash->amount_type = 1;
+            $addCash->pay_type = 1;
+
             if (intval($request->input('amount')) > 0) {
                 if ($request->ticket_follow_state == 3) {
-                    $addCash->amount_type = 1;
-                    $addCash->pay_type = 1;
                     $addCash->amount = $request->input('amount') - $request->cash_amount;
-                    if ($saveThisData) {
-                        $addCash->save();
-                    }
                 } else {
-
+                    $addCash->amount = $request->input('amount');
                 }
             }
-
+            if ($saveThisData) {
+                $addCash->save();
+            }
         } elseif ($follow_state == 3) {
             if (intval($request->input('amount')) > 0) {
                 $addCash->amount_type = 2;
@@ -286,9 +285,22 @@ class UserFollowUpController extends AdminMainController {
                     $addCash->save();
                 }
             }
-        }
 
+            if ($request->ticket_follow_state == 3){
+                $updateOldCash = $ticket->paymentCash->where('follow_state',3)->first();
+                if($updateOldCash){
+                    $updateOldCash->amount_type = 4;
+                    $updateOldCash->confirm_date = null;
+                    $updateOldCash->confirm_date = null;
+                    $updateOldCash->confirm_date_time = null;
+                    $updateOldCash->confirm_user_id = null;
+                    $updateOldCash->amount_paid = null;
+                    $updateOldCash->save();
+                }
+            }
+        }
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

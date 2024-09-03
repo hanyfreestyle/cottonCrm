@@ -54,8 +54,15 @@
                         <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
                             <span class="tipName"></span> <i class="fas fa-eye"></i> {{__('admin/crm_service_cash.label_notes')}}
                         </button>
-                        <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
-                                                    :l="__('admin/crm_service_cash.label_but_collection')" bg="s" icon="fas fa-vote-yea"/>
+                        @if($row->amount_type == '4')
+                            <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPayBack',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_back_but_{{$row->id}}"
+                                                        :l="__('admin/crm_service_cash.label_but_cash_back')" bg="d" icon="fas fa-vote-yea"/>
+
+                        @else
+                            <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.ConfirmPay',$row->id)}}" :tip="false" sweet-del-class="sweet_confirm_but_{{$row->id}}"
+                                                        :l="__('admin/crm_service_cash.label_but_collection')" bg="s" icon="fas fa-vote-yea"/>
+                        @endif
+
                     </div>
                 @endcan
             @endif
@@ -66,9 +73,10 @@
 
 <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
     <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-    <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row->ticket"/>
+    <x-app-plugin.crm-service.leads.lead-info :ticket-id="$row->ticket->id" :add-title="true"/>
 </x-admin.hmtl.popup-modal>
 
 @push('JsCode')
     <x-admin.table.sweet-confirm-js class-name="sweet_confirm_but_{{$row->id}}" icon-style="confirm_get_amount" s-text="{!! $mass !!}"/>
+    <x-admin.table.sweet-confirm-js class-name="sweet_confirm_back_but_{{$row->id}}" icon-style="confirm_get_amount" s-text="{!! $mass !!}"/>
 @endpush

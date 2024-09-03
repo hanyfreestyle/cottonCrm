@@ -1,9 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('StyleFile')
-    <x-admin.data-table.plugins-yajra :style="true"/>
-@endsection
-
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
     <x-admin.hmtl.section>
@@ -33,17 +29,26 @@
                                     <td data-th="{{__('admin/crm_service_cash.label_date_pay')}}">{{PrintDate($row->created_at)}}</td>
                                     <td data-th="{{__('admin/crm.label_customer_name')}}">{{$row->customer->name ?? ''}}</td>
                                     <td data-th="{{__('admin/crm_service.label_user_id')}}">{{$row->user->name ?? ''}}</td>
-                                    <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}</td>
+                                    @if($row->amount_type == 1)
+                                        @if(returnCashCount($row->ticket_id) == 1)
+                                            <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}</td>
+                                        @else
+                                            <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}  ({{__('admin/crm_service_var.cash_type_4')}})  </td>
+                                        @endif
+                                    @else
+                                        <td data-th="{{__('admin/crm_service_cash.label_amount_type')}}">{{ LoadConfigName($DefCat['CrmServiceCashType'],$row->amount_type)}}</td>
+                                    @endif
+
                                     <td data-th="{{__('admin/crm_service_cash.label_amount')}}">{{number_format($row->amount)}}</td>
                                     <td class="td_action">
                                         <button type='button' class='btn btn-sm btn-dark adminButMobile' data-toggle='modal' data-target='#modal_{{$row->id}}'>
                                             <i class="fas fa-eye"></i> <span class="tipName">{{__('admin/crm_service_cash.label_notes')}}</span>
                                         </button>
+                                        <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
+                                            <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
+                                            <x-app-plugin.crm-service.leads.lead-info :add-title="true" :ticket-id="$row->ticket->id"/>
+                                        </x-admin.hmtl.popup-modal>
                                     </td>
-                                    <x-admin.hmtl.popup-modal id="modal_{{$row->id}}" :title="__('admin/crm.model_title_info')">
-                                        <x-app-plugin.crm.customers.card-profile :row="$row->customer" :add-title="true" :soft-data="true" :config="$config"/>
-                                        <x-app-plugin.crm-service.leads.lead-info :add-title="true" :row="$row->ticket"/>
-                                    </x-admin.hmtl.popup-modal>
                                     <x-admin.table.action-but type="delete" :row="$row"/>
                                 </tr>
                             @endforeach
@@ -54,18 +59,14 @@
                                 <td class="hideForMobile" colspan="3">&nbsp;</td>
                                 <td><strong>{{__('admin/crm_service_cash.label_sum')}}</strong></td>
                                 <td><strong>{{number_format($datevalue->sum('amount'))}}</strong></td>
-                                <td class="hideForMobile" >&nbsp;</td>
-                                <td class="hideForMobile" >&nbsp;</td>
+                                <td class="hideForMobile">&nbsp;</td>
+                                <td class="hideForMobile">&nbsp;</td>
                             </tr>
                             </tfoot>
-
                         </table>
                     </div>
                 </x-admin.card.normal>
-
             @endforeach
-
-
 
         @else
             <x-admin.hmtl.alert-massage type="nodata"/>
@@ -75,6 +76,5 @@
 
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
-    <x-admin.java.select-all-table/>
 @endpush
 

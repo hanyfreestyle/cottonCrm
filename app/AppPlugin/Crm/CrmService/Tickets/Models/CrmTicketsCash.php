@@ -21,6 +21,7 @@ class CrmTicketsCash extends Model {
         return $query->where('amount_paid', null)
             ->where('confirm_date', null)
             ->where('pay_type', 1)
+            ->wherein('amount_type', ['1','2','3'])
             ->with('ticket')
             ->with('customer')
             ->with('user');

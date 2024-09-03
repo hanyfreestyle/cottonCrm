@@ -51,11 +51,21 @@
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_reason_for_cancellation')"/>
                 </div>
             @elseif($followState == 6)
-                <x-admin.hmtl.alert-massage bg="dark" margin="mt-3 " align="right" :mass="__('admin/crm_service_mass.state_6')"/>
-
-                <div class="row mt-2">
-                    <x-admin.form.input :type="getNumberType($agent)" name="amount" col="3" :value="old('amount')" :label="__('admin/crm_service.label_update_cost_service')"/>
-                </div>
+                @if($ticket->follow_state == 3)
+                    <x-admin.hmtl.alert-massage bg="dark" margin="mt-3 " align="right" :mass="__('admin/crm_service_mass.state_6_3')"/>
+                    <div class="row mt-2">
+                        <div class="infoDiv col-lg-6">
+                            <div class="title"><i class="fas fa-hand-holding-usd"></i> {{__('admin/crm_service.label_update_deposit')}}</div>
+                            <div class="des">{!! returnDepositInfo($ticket) !!}</div>
+                        </div>
+                        <x-admin.form.input :type="getNumberType($agent)" name="amount" col="3" :value="old('amount')" :label="__('admin/crm_service.label_update_cost_service')"/>
+                    </div>
+                @else
+                    <x-admin.hmtl.alert-massage bg="dark" margin="mt-3 " align="right" :mass="__('admin/crm_service_mass.state_6')"/>
+                    <div class="row mt-2">
+                        <x-admin.form.input :type="getNumberType($agent)" name="amount" col="3" :value="old('amount')" :label="__('admin/crm_service.label_update_cost_service')"/>
+                    </div>
+                @endif
                 <div class="row">
                     <x-admin.form.textarea col="12" name="des" :value="old('des')" :label="__('admin/crm_service.label_reason_for_rejection')"/>
                 </div>

@@ -6,6 +6,7 @@ use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use function Ramsey\Collection\element;
 
 class GetCard extends Component {
 
@@ -62,16 +63,30 @@ class GetCard extends Component {
         }
         $this->isactive = $isactive;
 
+        if ($row->amount_type == 4) {
+            $Mass = __('admin/crm_service_cash.label_confirm_back_mass');
+            $rep = ['[username]', '[amount]'];
+            $rep_r = [
+                '<span class="get_cash_user_name">' . $row->customer->name . '</span>',
+                '<span class="get_cash_amount">' . number_format($row->amount) . '</span>',
 
-        $Mass = __('admin/crm_service_cash.label_confirm_mass');
-        $rep = ['[username]', '[amount]'];
-        $rep_r = [
-            '<span class="get_cash_user_name">' . $row->user->name . '</span>',
-            '<span class="get_cash_amount">' . number_format($row->amount) . '</span>',
+            ];
+            $sendMass = str_replace($rep, $rep_r, $Mass);
+            $this->mass = $sendMass;
 
-        ];
-        $sendMass = str_replace($rep, $rep_r, $Mass);
-        $this->mass = $sendMass;
+        } else {
+            $Mass = __('admin/crm_service_cash.label_confirm_mass');
+            $rep = ['[username]', '[amount]'];
+            $rep_r = [
+                '<span class="get_cash_user_name">' . $row->user->name . '</span>',
+                '<span class="get_cash_amount">' . number_format($row->amount) . '</span>',
+
+            ];
+            $sendMass = str_replace($rep, $rep_r, $Mass);
+            $this->mass = $sendMass;
+        }
+
+
 
     }
 

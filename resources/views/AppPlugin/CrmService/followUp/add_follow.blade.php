@@ -13,7 +13,7 @@
         </div>
 
         @if(count($ticket->des) >0 )
-{{--            <x-app-plugin.crm-service.leads.lead-info-des :row="$ticket->des"/>--}}
+            <x-app-plugin.crm-service.leads.lead-info-des :row="$ticket->des"/>
         @endif
 
         @if($viewActionBut)
