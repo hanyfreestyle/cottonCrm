@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use Yajra\DataTables\Facades\DataTables;
 
 
 class CrmTicketOpenController extends AdminMainController {
@@ -135,7 +134,7 @@ class CrmTicketOpenController extends AdminMainController {
         }
 
         if ($this->agent->isDesktop()) {
-            return back()->with('confirmDelete', "");
+            return back()->with('Edit.Done', "");
         } else {
             if ($saveData->follow_date == Carbon::today()) {
                 return redirect()->route($this->PrefixRoute . '.Today');
@@ -144,7 +143,7 @@ class CrmTicketOpenController extends AdminMainController {
             } elseif ($saveData->follow_date > Carbon::today()) {
                 return redirect()->route($this->PrefixRoute . '.Next');
             } else {
-                return back()->with('confirmDelete', "");
+                return back()->with('Edit.Done', "");
             }
         }
     }

@@ -228,7 +228,7 @@ trait CrmDataTableTraits {
             })
             ->editColumn('follow_date', function ($row) {
                 return [
-                    'display' => date("Y-m-d", strtotime($row->follow_date)) . '' . TicketDateFrom($row->follow_date) . '',
+                    'display' => date("Y-m-d", strtotime($row->follow_date)) . ' (' . getDateDifference($row->created_at, $row->follow_date) . ')',
                     'timestamp' => strtotime($row->follow_date)
                 ];
             })
@@ -251,9 +251,6 @@ trait CrmDataTableTraits {
                 return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
             })
 
-            ->editColumn('viewTicket', function ($row) {
-                return view('datatable.but')->with(['btype' => 'viewTicket', 'row' => $row])->render();
-            })
             ->editColumn('changeUser', function ($row) {
                 return view('datatable.but')->with(['btype' => 'changeUser', 'row' => $row])->render();
             })

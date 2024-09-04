@@ -41,12 +41,14 @@
             </table>
         </x-admin.card.def>
     </x-admin.hmtl.section>
+
 @endsection
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
     <x-admin.data-table.plugins-yajra :jscode="true"/>
-
+    <x-app-plugin.crm-service.ajax.change-user />
+    <x-app-plugin.crm-service.ajax.ticket-info />
     <script type="text/javascript">
         $(function () {
             $('#YajraDatatable').DataTable({

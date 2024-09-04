@@ -1,7 +1,7 @@
 @if($addTitle)
     <div class="row infoDiv">
         <div class="col-lg-12">
-            <h2 class="">{{__('admin/crm.model_h2_customer')}}</h2>
+            <h2 class="model_h2">{{__('admin/crm.model_h2_customer')}}</h2>
         </div>
     </div>
 @endif

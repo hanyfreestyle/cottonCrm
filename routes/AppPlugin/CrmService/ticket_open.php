@@ -15,6 +15,8 @@ Route::prefix('/ticket-open/')->name('TicketOpen.')->group(function () {
     Route::get('report/', [CrmTicketOpenController::class, 'report'])->name('Report');
     Route::post('report/', [CrmTicketOpenController::class, 'report'])->name('filterReport');
     Route::get('config/', [CrmTicketOpenController::class, 'config'])->name('config');
+
+
 });
 
 Route::prefix('/ticket-open/')->name('TicketOpen.')->group(function () {
