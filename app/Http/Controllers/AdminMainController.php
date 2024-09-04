@@ -61,6 +61,8 @@ class AdminMainController extends DefaultMainController {
             "crm_service_leads" => ['name' => __('admin/crm_service_menu.leads')],
             "crm_service_follow" => ['name' => __('admin/crm_service_menu.follow')],
             "crm_service_open_ticket" => ['name' => __('admin/crm_service_menu.ticket_open')],
+            "crm_service_close_ticket" => ['name' => __('admin/crm_service_menu.ticket_close')],
+            "crm_service_cash" => ['name' => __('admin/crm_service_menu.ticket_cash')],
 
 
         ];

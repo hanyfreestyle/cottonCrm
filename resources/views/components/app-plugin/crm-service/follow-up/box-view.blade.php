@@ -33,7 +33,7 @@
             <div class="row">
                 <x-admin.hmtl.info-div-list n="notes_err" :row="$row" col="col-lg-12 col-12"/>
                 <x-admin.hmtl.info-div-list n="notes" :row="$row" col="col-lg-12 col-12"/>
-                @canany(['crm_tech_follow_admin', 'crm_tech_follow_team_leader'])
+                @canany(['crm_service_follow_admin', 'crm_service_follow_team_leader'])
                     <x-admin.hmtl.info-div-list n="user_id" :row="$row" col="col-lg-12 col-12"/>
                 @endcan
             </div>
@@ -49,12 +49,13 @@
                 <x-admin.hmtl.info-div-list n="device_id" :row="$row" col="col-lg-6 col-6"/>
                 <x-admin.hmtl.info-div-list n="brand_id" :row="$row" col="col-lg-6 col-6"/>
             </div>
-
-            <div class="row text-center follow_action_but py-2">
-                <a href="tel:{{$row->customer->mobile}}" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm.but_call')}}</a>
-                <a href="{{TicketSendWhatsapp($row)}}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm.but_whatsapp')}}</a>
-                <a href="{{route($PrefixRoute.'.UpdateTicket',$row->uuid)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm.but_update')}}</a>
-            </div>
+            @can($PrefixRole.'_edit')
+                <div class="row text-center follow_action_but py-2">
+                    <a href="tel:{{$row->customer->mobile}}" class="btn btn-sm btn-dark"><i class="fas fa-phone-volume"></i> {{__('admin/crm.but_call')}}</a>
+                    <a href="{{TicketSendWhatsapp($row)}}" target="_blank" class="btn btn-sm btn-whatsapp"><i class="fab fa-whatsapp"></i> {{__('admin/crm.but_whatsapp')}}</a>
+                    <a href="{{route($PrefixRoute.'.UpdateTicket',$row->uuid)}}" class="btn btn-sm btn-danger"><i class="fas fa-random"></i> {{__('admin/crm.but_update')}}</a>
+                </div>
+            @endcan
         </div>
     </div>
 </div>

@@ -10,10 +10,9 @@
         <form class="mainForm UpdateTicketForm" action="{{route($PrefixRoute.'.UpdateTicketStatus',$ticket->id)}}" method="post">
             <input type="hidden" name="follow_state" value="{{$followState}}">
             <input type="hidden" name="open_type" value="{{$ticket->open_type}}">
-            <input type="text" name="ticket_follow_state" value="{{$ticket->follow_state}}">
-            <input type="text" name="cash_amount" value="{{$ticket->paymentCash->amount ?? 0}}">
+            <input type="hidden" name="ticket_follow_state" value="{{$ticket->follow_state}}">
+            <input type="hidden" name="cash_amount" value="{{$ticket->paymentCash->amount ?? 0}}">
             @csrf
-
 
             @if($followState == 2)
                 <x-admin.hmtl.alert-massage bg="s" margin="mt-3" align="right" :mass="__('admin/crm_service_mass.state_2')"/>

@@ -21,7 +21,7 @@ trait CrmServiceFileTraits {
     static function LoadPermission($data) {
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/leads.php'))) {
-            $sendArr = ['report' => 1, 'filter' => 1];
+            $sendArr = ['report' => 1];
             $newPer = getDefPermission('crm_service_leads', $sendArr);
             $data = array_merge($data, $newPer);
             $newPer = [
@@ -35,7 +35,6 @@ trait CrmServiceFileTraits {
             $newPer = [
                 ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
                 ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_edit', 'name_ar' => 'تعديل', 'name_en' => 'Edit'],
-                ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_filter', 'name_ar' => 'تصفية النتائج', 'name_en' => 'Filter'],
                 ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
                 ['cat_id' => 'crm_service_follow', 'name' => 'crm_service_follow_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],
@@ -44,10 +43,12 @@ trait CrmServiceFileTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_open.php'))) {
-            $sendArr = ['report' => 1, 'filter' => 1];
-            $newPer = getDefPermission('crm_service_open_ticket', $sendArr);
-            $data = array_merge($data, $newPer);
+
             $newPer = [
+                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_edit', 'name_ar' => 'تغير الفنى', 'name_en' => 'Change User'],
+                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
                 ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
                 ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],
             ];

@@ -32,23 +32,21 @@ trait CrmDataTableTraits {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function FilterUserPer_OpenTicket($PrefixRole) {
-        if (Auth::user()->hasPermissionTo($PrefixRole . '_admin')) {
+        if (Auth::user()->hasPermissionTo($PrefixRole . '_admin') ?? false) {
             $data = self::DataTableIndex('open');
         } else {
-            if (Auth::user()->hasPermissionTo($PrefixRole . '_team_leader')) {
+            if (Auth::user()->hasPermissionTo($PrefixRole . '_team_leader') ?? false) {
                 $thisUserId = [Auth::user()->id];
                 if (is_array(Auth::user()->crm_team)) {
                     $thisUserId = array_merge($thisUserId, Auth::user()->crm_team);
                 }
-                $data = CrmTickets::defOpen()->WhereIn('user_id', $thisUserId);
+                $data = self::DataTableIndex('open')->WhereIn('user_id', $thisUserId);
             } else {
-                $data = CrmTickets::defOpen()->where('user_id', Auth::user()->id);
+                $data = self::DataTableIndex('open')->where('user_id', Auth::user()->id);
             }
         }
         return $data;
     }
-
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

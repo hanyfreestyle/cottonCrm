@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/follow-up')->name('TechFollowUp.')->group(function () {
+
     Route::get('/new', [UserFollowUpController::class, 'index'])->name('New');
     Route::get('/today', [UserFollowUpController::class, 'index'])->name('Today');
     Route::get('/back', [UserFollowUpController::class, 'index'])->name('Back');
@@ -19,5 +20,6 @@ Route::prefix('/follow-up')->name('TechFollowUp.')->group(function () {
     Route::get('/update-postponed/{ticketId}', [UserFollowUpController::class, 'UpdateTicket'])->name('UpdatePostponed');
     Route::get('/update-cancellation/{ticketId}', [UserFollowUpController::class, 'UpdateTicket'])->name('UpdateCancellation');
     Route::get('/update-reject/{ticketId}', [UserFollowUpController::class, 'UpdateTicket'])->name('UpdateReject');
+
 });
 

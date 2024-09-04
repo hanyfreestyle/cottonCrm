@@ -57,7 +57,13 @@ class CrmTicketOpenController extends AdminMainController {
             'report' => ['report'],
         ];
         self::loadPagePermission($per);
-
+        $per = [
+            'view' => ['index'],
+            'edit' => ['changeUserUpdate'],
+            'delete' => ['destroy'],
+            'report' => ['report'],
+        ];
+        self::loadPagePermission($per);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -66,7 +72,6 @@ class CrmTicketOpenController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['BoxH1'] = __('admin/crm.label_list_leads');
-
 
         $session = self::getSessionData($request);
         $RouteName = Route::currentRouteName();
@@ -97,9 +102,6 @@ class CrmTicketOpenController extends AdminMainController {
             $RouteVal = "Next";
         }
 
-//        $xx = self::DataTableIndex('open');
-//        dd($xx->first());
-
         $rowData = self::TicketFilter(self::OpenTicketQuery($RouteVal, $this->PrefixRole), $session);
         $rowData = $rowData->get();
 
@@ -108,23 +110,6 @@ class CrmTicketOpenController extends AdminMainController {
             'pageData' => $pageData,
             'RouteVal' => $RouteVal,
             'rowData' => $rowData,
-        ]);
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function viewTicket(Request $request, $ticketId) {
-        $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        try {
-            $Query = self::ViewOpenTicketUserPer($this->PrefixRole);
-            $ticket = $Query->where('id', $ticketId)->firstOrFail();
-        } catch (\Exception $e) {
-            self::abortAdminError(403);
-        }
-        return view('AppPlugin.CrmService.ticketOpen.view')->with([
-            'pageData' => $pageData,
-            'ticket' => $ticket,
         ]);
     }
 
@@ -163,6 +148,7 @@ class CrmTicketOpenController extends AdminMainController {
             }
         }
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function report(Request $request) {
@@ -283,7 +269,6 @@ class CrmTicketOpenController extends AdminMainController {
         $subMenu->save();
 
     }
-
 
 
 }

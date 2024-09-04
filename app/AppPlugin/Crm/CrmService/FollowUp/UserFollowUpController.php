@@ -51,9 +51,8 @@ class UserFollowUpController extends AdminMainController {
         self::constructData($sendArr);
         $per = [
             'view' => ['index'],
-            'create' => [],
-            'edit' => [],
-            'report' => ['report'],
+            'edit' => ['UpdateTicket', 'UpdateTicketStatus', 'UpdateTicketTable', 'AddTicketsDes', 'AddPayCash'],
+            'report' => ['Report'],
         ];
         self::loadPagePermission($per);
     }
@@ -119,8 +118,6 @@ class UserFollowUpController extends AdminMainController {
         ]);
     }
 
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateTicket($ticketId) {
@@ -181,17 +178,17 @@ class UserFollowUpController extends AdminMainController {
         } catch (\Exception $e) {
             self::abortAdminError(403);
         }
-
-        $follow_state = $request->input('follow_state');
-        $saveThisData = true;
-        self::UpdateTicketTable($ticket, $follow_state, $request, $saveThisData);
-        self::AddTicketsDes($ticket->id, $follow_state, $request, $saveThisData);
-        self::AddPayCash($ticket, $follow_state, $request, $saveThisData);
-        if (in_array($follow_state, [2, 5, 6])) {
-            self::UpdateCustomersType($ticket, $saveThisData);
-        }
         try {
             DB::transaction(function () use ($request, $ticket) {
+
+                $follow_state = $request->input('follow_state');
+                $saveThisData = true;
+                self::UpdateTicketTable($ticket, $follow_state, $request, $saveThisData);
+                self::AddTicketsDes($ticket->id, $follow_state, $request, $saveThisData);
+                self::AddPayCash($ticket, $follow_state, $request, $saveThisData);
+                if (in_array($follow_state, [2, 5, 6])) {
+                    self::UpdateCustomersType($ticket, $saveThisData);
+                }
 
             });
         } catch (\Exception $exception) {
@@ -286,9 +283,9 @@ class UserFollowUpController extends AdminMainController {
                 }
             }
 
-            if ($request->ticket_follow_state == 3){
-                $updateOldCash = $ticket->paymentCash->where('follow_state',3)->first();
-                if($updateOldCash){
+            if ($request->ticket_follow_state == 3) {
+                $updateOldCash = $ticket->paymentCash->where('follow_state', 3)->first();
+                if ($updateOldCash) {
                     $updateOldCash->amount_type = 4;
                     $updateOldCash->confirm_date = null;
                     $updateOldCash->confirm_date = null;
@@ -300,7 +297,6 @@ class UserFollowUpController extends AdminMainController {
             }
         }
     }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -322,14 +318,9 @@ class UserFollowUpController extends AdminMainController {
         }
     }
 
-
-
-
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function report(Request $request) {
+    public function Report(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $chartData = array();
@@ -370,7 +361,6 @@ class UserFollowUpController extends AdminMainController {
         ]);
 
     }
-
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

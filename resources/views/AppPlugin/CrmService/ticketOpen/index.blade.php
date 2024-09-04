@@ -32,10 +32,9 @@
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_device')}}</th>
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm_service.label_notes_err')}}</th>
                     <th class="{{returnTableRes($agent)}}">{{__('admin/crm.label_notes')}}</th>
-                    <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" res="all" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
-                    <x-admin.table.action-but po="top" res="all" type="edit"/>
+                    <x-admin.table.action-but po="top" res="all" type="empty"/>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -70,11 +69,9 @@
                     {data: 'device_name', name: 'device_name', orderable: false, searchable: false},
                     {data: 'notes_err', name: 'notes_err', orderable: false, searchable: false},
                     {data: 'notes', name: 'notes', orderable: false, searchable: false},
-
-                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'viewTicket'])
                     @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'changeUser'])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
-                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'viewInfo'])
+                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_view','data'=>'viewInfo'])
                 ],
 
             });

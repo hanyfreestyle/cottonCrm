@@ -15,7 +15,7 @@
 .dir_en{direction:ltr!important;text-align:left;width:100%}
 .dir_left{direction: ltr!important;}
 .hidediv{display: none!important;}
-.btn-warning, .btn-warning:hover {color: #fff;background-color: #f77600;border-color: #f77600;}
+.btn-warning, .btn-warning:hover, .btn-warning:focus {color: #fff;background-color: #f77600;border-color: #f77600;}
 .alert-warning { color: #fff; background-color: #f77600; border-color: #f77600;}
 .bg-warning { color: #fff!important; background-color: #f77600!important;; border-color: #f77600!important;;}
 .test_bg {background-color: red;}

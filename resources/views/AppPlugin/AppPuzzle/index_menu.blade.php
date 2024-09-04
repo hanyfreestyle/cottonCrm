@@ -24,8 +24,8 @@
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.AppCore.IndexModel')}}" :tip="false" icon="fas fa-warehouse"
                                 size="m" print-lable="App Core" :bg="puzzleMenu('AppCore',$selRoute)"/>
 
-    <x-admin.form.action-button url="{{route('admin.AppPuzzle.Tools.IndexModel')}}" :tip="false" icon="fas fa-tools"
-                                size="m" print-lable="Tools" :bg="puzzleMenu('Tools',$selRoute)"/>
+{{--    <x-admin.form.action-button url="{{route('admin.AppPuzzle.Tools.IndexModel')}}" :tip="false" icon="fas fa-tools"--}}
+{{--                                size="m" print-lable="Tools" :bg="puzzleMenu('Tools',$selRoute)"/>--}}
 
     <x-admin.form.action-button url="{{route('admin.AppPuzzle.Client.IndexModel')}}" :tip="false" icon="fas fa-user-friends"
                                 size="m" print-lable="Client" :bg="puzzleMenu('Client',$selRoute)"/>

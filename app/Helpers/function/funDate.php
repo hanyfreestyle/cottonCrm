@@ -137,8 +137,10 @@ if (!function_exists('getDateDifference')) {
 
             if ($days) {
                 $months = floor( $days / 30 );
-                $label .= ' ' . $months . __('admin/def.label_date_diff_month');
-                $days -= 30 * $months;
+                if($months){
+                    $label .= ' ' . $months . __('admin/def.label_date_diff_month');
+                    $days -= 30 * $months;
+                }
             }
 
             if ($days) {
