@@ -16,6 +16,7 @@ return
 	'leads_distribution' => 'توزيع الاتصالات',
 	'report' => 'تقارير',
 	'ticket_cash' => 'ادارة التحصيلات',
+	'ticket_cash_back' => 'عربون مسترد',
 	'ticket_cash_cost' => 'الزيارات',
 	'ticket_cash_deposit' => 'العربون',
 	'ticket_cash_list' => 'كشف حساب',
@@ -26,5 +27,4 @@ return
 	'ticket_close_reject' => 'مغلقة رفض',
 	'ticket_open' => 'ادارة التذاكر المفتوحة',
 	'ticket_review' => 'مراجعة التذاكر المغلقة',
-	'ticket_cash_back' => 'عربون مسترد',
 ];

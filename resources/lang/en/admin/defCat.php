@@ -2,10 +2,10 @@
 
 return
 [
-	'filter_card_open_0' => '',
-	'filter_card_open_1' => '',
-	'filter_last_add_0' => '',
-	'filter_last_add_1' => '',
+	'filter_card_open_0' => 'Closed card display',
+	'filter_card_open_1' => 'Open card display',
+	'filter_last_add_0' => 'Hide new additions',
+	'filter_last_add_1' => 'View new additions',
 	'gender_1' => 'Male',
 	'gender_2' => 'Female',
 	'month_1' => 'January',

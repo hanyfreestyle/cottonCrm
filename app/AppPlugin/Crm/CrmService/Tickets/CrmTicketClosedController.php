@@ -110,23 +110,6 @@ class CrmTicketClosedController extends AdminMainController {
         }
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function viewTicket(Request $request, $ticketId) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "List";
-//        $session = self::getSessionData($request);
-//        $Query = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
-//        $ticket = $Query->where('id', $ticketId)->firstOrFail();
-//
-//
-//        return view('AppPlugin.CrmService.ticketOpen.view')->with([
-//            'pageData' => $pageData,
-//            'ticket' => $ticket,
-//        ]);
-//    }
-
-
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function report(Request $request) {
@@ -135,22 +118,20 @@ class CrmTicketClosedController extends AdminMainController {
         $chartData = array();
 
 
-        $this->formName = "CrmTicketOpenReportFilter";
+        $this->formName = "CrmTicketClosedReportFilter";
         View::share('formName', $this->formName);
 
         $session = self::getSessionData($request);
-        $rowData = self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session);
+        $rowData = self::TicketFilter(self::ClosedTicketQuery(null), $session);
         $getData = $rowData->get();
-
 
         $deviceId = $getData->groupBy('device_id')->toarray();
         $userId = $getData->groupBy('user_id')->toarray();
         $brandId = $getData->groupBy('brand_id')->toarray();
-        $area_id = $getData->groupBy('customer.address.0.area_id')->toarray();
+        $area_id = $getData->groupBy('area_id')->toarray();
         $follow_state = $getData->groupBy('follow_state')->toarray();
         $LeadSours = $getData->groupBy('sours_id')->toarray();
         $LeadCategory = $getData->groupBy('ads_id')->toarray();
-
 
         $AllData = $rowData->count();
         $chartData['LeadSours'] = self::ChartDataFromDataConfig($AllData, 'LeadSours', $LeadSours);
@@ -161,20 +142,16 @@ class CrmTicketClosedController extends AdminMainController {
         $chartData['Users'] = self::ChartDataFromUsers($AllData, $userId);
         $chartData['FollowState'] = self::ChartDataFromDefCategory($AllData, 'CrmServiceTicketState', $follow_state);
 
-        $card = [];
-        $card['all_count'] = $AllData;
-        $card['today_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Today');
-        $card['back_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Back');
-        $card['next_count'] = self::CountData(self::TicketFilter(self::FilterUserPer_OpenTicket($this->PrefixRole), $session), 'Next');
+        $queryClone = clone $getData;
+        $card['all_count'] = $queryClone->count();
+        $card['Finished_count'] = $queryClone->where('follow_state', 2)->count();
+        $card['Cancellation_count'] = $queryClone->where('follow_state', 5)->count();
+        $card['Reject_count'] = $queryClone->where('follow_state', 6)->count();
 
-        $weekChart = self::getChartWeek($rowData);
-        $monthChart = self::getChartMonth($rowData);
         View::share('chartData', $chartData);
         View::share('session', $session);
-        View::share('weekChart', $weekChart);
-        View::share('monthChart', $monthChart);
 
-        return view('AppPlugin.CrmService.ticketOpen.report')->with([
+        return view('AppPlugin.CrmService.ticketClosed.report')->with([
             'pageData' => $pageData,
             'AllData' => $AllData,
             'rowData' => $rowData,

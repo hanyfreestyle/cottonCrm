@@ -37,7 +37,8 @@ class UsersTableSeeder extends Seeder {
 
                 $role = Role::findByName('technician');
                 $permissions = Permission::where('cat_id', 'crm_service_follow')->pluck('id');
-                $permissions = ['23','24','25','26',];
+//                dd($permissions);
+                $permissions = ['22','23','24'];
                 $role->syncPermissions($permissions);
                 $user->assignRole([$role->id]);
             }

@@ -48,7 +48,7 @@ return
 	'search_type_1' => 'البحث بواسطة رقم الهاتف',
 	'search_type_2' => 'البحث بواسطة الاسم',
 	'search_type_3' => 'البحث بواسطة العنوان',
+	'var_customer_type_id' => 'حالة العميل',
 	'var_customer_type_id_1' => 'عميل',
 	'var_customer_type_id_2' => 'غير عميل',
-	'var_customer_type_id' => 'حالة العميل',
 ];

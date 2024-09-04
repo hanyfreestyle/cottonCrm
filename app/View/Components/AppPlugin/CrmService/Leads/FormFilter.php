@@ -23,6 +23,7 @@ class FormFilter extends Component {
     public $user;
     public $stateOpen;
     public $reportView;
+    public $stateClose;
 
 
     public function __construct(
@@ -38,8 +39,10 @@ class FormFilter extends Component {
         $user = false,
         $stateOpen = false,
         $reportView = false,
+        $stateClose = false,
 
     ) {
+        $this->stateClose = $stateClose;
         $this->defRoute = $defRoute;
         $this->row = $row;
         $this->formName = $formName;
@@ -47,8 +50,16 @@ class FormFilter extends Component {
         $this->config = $config;
         $this->viewDates = $viewDates;
         $this->dateAdd = $dateAdd;
-        $this->dateFollow = $dateFollow;
+        if($this->stateClose){
+            $this->dateFollow = false;
+        }else{
+            $this->dateFollow = $dateFollow;
+        }
+
         $this->user = $user;
+
+
+
         $this->stateOpen = $stateOpen;
         $this->reportView = $reportView;
 

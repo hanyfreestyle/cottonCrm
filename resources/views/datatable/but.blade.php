@@ -10,12 +10,6 @@
     <button type='button' class='btn btn-sm btn-warning adminButMobile'
             id="{{ $row->id }}" onclick="onClickChangeUserAJAX(this.id)"
             data-toggle='modal' data-target='#ticketChangeUser'><i class="fas fa-people-arrows"></i></button>
-
-
-{{--        <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#modal_user_{{$row->id}}'><i class="fas fa-people-arrows"></i></button>--}}
-{{--        <x-admin.hmtl.popup-modal id="modal_user_{{$row->id}}" :title="__('admin/crm_service.change_user_but')">--}}
-{{--            <x-app-plugin.crm-service.leads.user-change :row="$row"/>--}}
-{{--        </x-admin.hmtl.popup-modal>--}}
 @elseif($btype == 'viewInfo')
     <button type='button' class='btn btn-sm btn-dark adminButMobile'
             id="{{ $row->id }}" onclick="onClickTicketInfoAJAX(this.id)"

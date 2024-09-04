@@ -22,6 +22,15 @@
                             <x-admin.form.date name="follow_to" col="2" value="{{old('follow_to',issetArr($getSessionData,'follow_to'))}}"
                                                :label="__('admin/crm.filter_follow_to')" :reqspan="false"/>
                         @endif
+
+                        @if($stateClose)
+                            <x-admin.form.date name="close_from" col="2" value="{{old('close_from',issetArr($getSessionData,'close_from'))}}"
+                                               :label="__('admin/crm.filter_close_from')" :reqspan="false"/>
+
+                            <x-admin.form.date name="close_to" col="2" value="{{old('close_to',issetArr($getSessionData,'close_to'))}}"
+                                               :label="__('admin/crm.filter_close_to')" :reqspan="false"/>
+                        @endif
+
                     @endif
 
                     @if($user)
@@ -33,6 +42,12 @@
                         <x-admin.form.select-arr name="follow_state" sendvalue="{{old('follow_state',issetArr($getSessionData,'follow_state'))}}"
                                                  select-type="DefCat" :send-arr="$DefCat['CrmServiceTicketStateOpen']" col="2" :label="__('admin/crm.label_state')"
                                                  :filter-form="true" :req="false"/>
+                    @endif
+
+                    @if($stateClose)
+                            <x-admin.form.select-arr name="follow_state" sendvalue="{{old('follow_state',issetArr($getSessionData,'follow_state'))}}"
+                                                     select-type="DefCat" :send-arr="$DefCat['CrmServiceTicketStateClose']" col="2" :label="__('admin/crm.label_state')"
+                                                     :filter-form="true" :req="false"/>
                     @endif
 
                 </div>

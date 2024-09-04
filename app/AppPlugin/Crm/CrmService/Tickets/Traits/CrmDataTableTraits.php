@@ -162,10 +162,6 @@ trait CrmDataTableTraits {
             $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
         }
 
-        if (isset($session['from_date']) and $session['from_date'] != null) {
-            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
-        }
-
         if (isset($session['to_date']) and $session['to_date'] != null) {
             $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
         }
@@ -177,6 +173,7 @@ trait CrmDataTableTraits {
         if (isset($session['follow_to']) and $session['follow_to'] != null) {
             $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
         }
+
         if (isset($session['user_id']) and $session['user_id'] != null) {
             $query->where('user_id', $session['user_id']);
         }
@@ -250,7 +247,6 @@ trait CrmDataTableTraits {
             ->editColumn('follow_state', function ($row) {
                 return LoadConfigName($this->DefCat['CrmServiceTicketState'], $row->follow_state);
             })
-
             ->editColumn('changeUser', function ($row) {
                 return view('datatable.but')->with(['btype' => 'changeUser', 'row' => $row])->render();
             })
@@ -261,14 +257,13 @@ trait CrmDataTableTraits {
                 return view('datatable.but')->with(['btype' => 'viewInfo', 'row' => $row])->render();
             })
             ->editColumn('cost', function ($row) {
-                $amount = CrmTicketsCash::query()->wherein('amount_type', ['1','2','3'])->where('ticket_id',$row->id)->sum('amount');
-                if ($amount){
-                    return  number_format($amount);
-                }else{
+                $amount = CrmTicketsCash::query()->wherein('amount_type', ['1', '2', '3'])->where('ticket_id', $row->id)->sum('amount');
+                if ($amount) {
+                    return number_format($amount);
+                } else {
                     return null;
                 }
             })
-
             ->rawColumns(['viewTicket', "Delete", 'changeUser', 'viewInfo', 'follow_date']);
     }
 

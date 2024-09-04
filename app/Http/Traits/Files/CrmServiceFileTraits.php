@@ -56,14 +56,12 @@ trait CrmServiceFileTraits {
         }
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_close.php'))) {
-            $sendArr = ['report' => 1, 'filter' => 1];
-            $newPer = getDefPermission('crm_service_close_ticket', $sendArr);
+            $newPer = [
+                ['cat_id' => 'crm_service_close_ticket', 'name' => 'crm_service_close_ticket_view', 'name_ar' => 'عرض', 'name_en' => 'View'],
+                ['cat_id' => 'crm_service_close_ticket', 'name' => 'crm_service_close_ticket_delete', 'name_ar' => 'حذف', 'name_en' => 'Delete'],
+                ['cat_id' => 'crm_service_close_ticket', 'name' => 'crm_service_close_ticket_report', 'name_ar' => 'التقارير', 'name_en' => 'Report'],
+            ];
             $data = array_merge($data, $newPer);
-//            $newPer = [
-//                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_admin', 'name_ar' => 'مدير نظام ', 'name_en' => 'Admin'],
-//                ['cat_id' => 'crm_service_open_ticket', 'name' => 'crm_service_open_ticket_team_leader', 'name_ar' => 'مشرف عام', 'name_en' => 'Team Leader'],
-//            ];
-//            $data = array_merge($data, $newPer);
         }
 
         if (File::isFile(base_path('routes/AppPlugin/CrmService/ticket_cash.php'))) {

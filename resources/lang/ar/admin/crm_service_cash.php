@@ -21,5 +21,5 @@ return
 	'report_card_un_piad' => 'تحصيلات معلقة',
 	'report_card_week' => 'اجمالى تحصيل الاسبوع',
 	'report_chart_month' => 'اجمالى التحصيلات لاخر 30 يوم',
-	'report_chart_year' => 'اجمالى التحصيلات لاخر 12 شهر',
+	'report_chart_year' => 'اجمالى التحصيلات اخر 12 شهر',
 ];

@@ -36,15 +36,12 @@
                         <th>{{__('admin/crm_customer.profile_card_6')}}</th>
                     @endif
                     <x-admin.table.action-but po="top" type="delete"/>
-                    <x-admin.table.action-but po="top" res="all" type="edit"/>
+                    <x-admin.table.action-but po="top" res="all" type="empty"/>
                 </tr>
                 </thead>
                 <tbody></tbody>
-
             </table>
         </x-admin.card.def>
-
-
     </x-admin.hmtl.section>
 
 
@@ -52,8 +49,8 @@
 
 @push('JsCode')
     <x-admin.data-table.sweet-dalete/>
+    <x-app-plugin.crm-service.ajax.ticket-info />
     <x-admin.data-table.plugins-yajra :jscode="true"/>
-
     <script type="text/javascript">
         $(function () {
             $('#YajraDatatable').DataTable({
@@ -77,11 +74,9 @@
                     {data: 'device_name', name: 'device_name', orderable: false, searchable: false},
                     {data: 'notes_err', name: 'notes_err', orderable: false, searchable: false},
                     {data: 'notes', name: 'notes', orderable: false, searchable: false},
-
-
                     @include('datatable.index_action_but',['type'=> 'option','option'=> $AddCost ,'data'=>"cost"])
                     @include('datatable.index_action_but',['type'=> 'delete','view'=> true])
-                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_edit','data'=>'viewInfo'])
+                    @include('datatable.index_action_but',['type'=> 'can','can'=> $PrefixRole.'_view','data'=>'viewInfo'])
                 ],
 
             });

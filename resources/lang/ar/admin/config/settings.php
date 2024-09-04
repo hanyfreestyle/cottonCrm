@@ -7,6 +7,7 @@ return
 	'set_filter_filter_more_photo' => 'البوم الصور',
 	'set_filter_form' => 'تحديد الفلتر',
 	'set_filter_id' => 'فلتر الصورة',
+	'set_filter_option' => 'خصائص التقارير',
 	'set_iconfilter_id' => 'فلتر الايكون',
 	'set_label_view' => 'عرض عنوان الحقل',
 	'set_orderby' => 'ترتيب المحتوى',
@@ -19,5 +20,4 @@ return
 	'sort_name_asc' => 'التريب بالاسم تنازلى',
 	'sort_name_desc' => 'التريب بالاسم تصاعدى',
 	'sort_postion' => 'الترتيب',
-	'set_filter_option' => 'خصائص التقارير',
 ];

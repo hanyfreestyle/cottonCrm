@@ -19,8 +19,8 @@ return
 	'label_update_cost' => 'Works carried out',
 	'label_update_cost_service' => 'مصاريف الكشف',
 	'label_update_deposit' => 'Deposit',
+	'label_update_deposit_unpiad' => '(Amount not paid)',
 	'label_update_spare_parts' => 'Spare parts required',
 	'label_update_works_done' => 'Works carried out',
 	'label_user_id' => 'Technician name',
-	'label_update_deposit_unpiad' => '',
 ];

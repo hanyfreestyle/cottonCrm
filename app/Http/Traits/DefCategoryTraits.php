@@ -59,6 +59,12 @@ trait DefCategoryTraits {
             (object)['id' => 4, 'name' => __('admin/crm_service_var.ticket_state_4')],
         ];
 
+        $Cat['CrmServiceTicketStateClose'] = [
+            (object)['id' => 2, 'name' => __('admin/crm_service_var.ticket_state_2')],
+            (object)['id' => 5, 'name' => __('admin/crm_service_var.ticket_state_5')],
+            (object)['id' => 6, 'name' => __('admin/crm_service_var.ticket_state_6')],
+        ];
+
         $Cat['CrmServiceCashType'] = [
             (object)['id' => 1, 'name' => __('admin/crm_service_var.cash_type_1')],
             (object)['id' => 2, 'name' => __('admin/crm_service_var.cash_type_2')],

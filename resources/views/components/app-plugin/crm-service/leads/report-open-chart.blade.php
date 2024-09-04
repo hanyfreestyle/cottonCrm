@@ -13,22 +13,6 @@
                                       icon="fas fa-thumbs-down" bg="d" :url="route('admin.TechFollowUp.Back')"/>
     </div>
 
-{{--    @if($reportView)--}}
-{{--        @if(issetArr($session,'filter_last_add',true))--}}
-{{--            @if(IsArr($session,'from_date',null) == null and IsArr($session,'to_date',null) == null and IsArr($session,'follow_from',null) == null and IsArr($session,'follow_to',null) == null )--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-lg-6">--}}
-{{--                        <x-admin.report.chart-week :chart-data="$weekChart"/>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-6">--}}
-{{--                        <x-admin.report.chart-month :chart-data="$monthChart"/>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
-{{--        @endif--}}
-{{--    @endif--}}
-
-
     <div class="row">
 
         @canany(['crm_service_open_ticket_admin', 'crm_service_open_ticket_team_leader'])
