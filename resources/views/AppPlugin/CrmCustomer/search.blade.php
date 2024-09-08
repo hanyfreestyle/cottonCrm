@@ -8,6 +8,7 @@
                 <div class="col-md-12">
                     <form class="mainForm" action="{{route($PrefixRoute.'.searchFilter')}}" method="post">
                         @csrf
+                        <input type="hidden" id="postset" value="{{issetArr($_POST,'search_type',null)}}">
                         <div class="row CustomersSearchForm">
                             <x-admin.form.select-arr name="search_type" :sendvalue="old('search_type',issetArr($_POST,'search_type',1))" :send-arr="$CustomersSearchType"
                                                      :labelview="false" :label="__('admin/crm_customer.search_type')" col="3" :col-mobile="12"/>
@@ -56,8 +57,20 @@
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
     <script>
+        $(document).ready(function () {
+            var postset = $('#postset').val();
+            if (postset != '') {
+                if (postset == 1) {
+                    $('#name').attr('type', 'number');
+                } else {
+                    $('#name').attr('type', 'text');
+                }
+            }
+        });
+
         $('#search_type').change(function () {
             var typeis = $(this).val();
+            // alert(typeis);
             if (typeis == 1) {
                 $('#name').attr('type', 'number');
             } else {
@@ -65,6 +78,8 @@
             }
             $("#name").val('');
         });
+
+
     </script>
 @endpush
 

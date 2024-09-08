@@ -15,7 +15,7 @@
                 @if($pageData['ViewType'] == 'search')
                     <x-admin.table.action-but po="top" type="edit"/>
                     <x-admin.table.action-but po="top" type="delete"/>
-                    @can('crm_leads_add')
+                    @can('crm_service_leads_add')
                         <x-admin.table.action-but po="top" type="add"/>
                     @endcan
                 @endif
@@ -38,7 +38,7 @@
                     @if($pageData['ViewType'] == 'search')
                         <x-admin.table.action-but type="profile" :row="$row"/>
                         <x-admin.table.action-but type="delete" :row="$row"/>
-                        @can('crm_leads_add')
+                        @can('crm_service_leads_add')
                             <x-admin.table.action-but type="addTicket" :row="$row"/>
                         @endcan
 

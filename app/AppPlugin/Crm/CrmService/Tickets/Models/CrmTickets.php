@@ -68,6 +68,7 @@ class CrmTickets extends Model {
     public function user(): BelongsTo {
         return $this->belongsTo(User::class,'user_id','id');
     }
+
     public function device(): BelongsTo {
         return $this->belongsTo(ConfigData::class,'device_id','id')->with('translation')->select('name as hhhhhhhh');
     }
@@ -81,5 +82,14 @@ class CrmTickets extends Model {
         return $this->hasOne(CrmTicketsCash::class,'ticket_id','id')->where('follow_state',3);
     }
 
+
+    public function finishedCash(): HasOne {
+        return $this->hasOne(CrmTicketsCash::class,'ticket_id','id')->where('follow_state',2);
+    }
+
+
+    public function cashData(): HasMany {
+        return $this->hasMany(CrmTicketsCash::class,'ticket_id','id');
+    }
 
 }

@@ -21,6 +21,7 @@ return
 	'ticket_cash_deposit' => 'Deposit',
 	'ticket_cash_list' => 'Statement',
 	'ticket_cash_service' => 'Examination expenses',
+	'ticket_cash_user_list' => 'تقرير فنى',
 	'ticket_close' => 'Manage Closed Ticket',
 	'ticket_close_cancellation' => 'Closed Cancellation',
 	'ticket_close_finished' => 'Closed Finished',

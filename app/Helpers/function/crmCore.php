@@ -122,6 +122,28 @@ if (!function_exists('returnCashCount')) {
 }
 
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('returnClosedForUser')) {
+    function returnClosedForUser($key) {
+        $h1 = "";
+
+        if($key == 2){
+          $h1 =   '<div class="alert alert-success text-right">'.__('admin/crm_service_menu.ticket_close_finished').'</div>';
+        }elseif ($key == 5){
+            $h1 =   '<div class="alert alert-danger text-right">'.__('admin/crm_service_menu.ticket_close_cancellation').'</div>';
+        }elseif ($key == 6){
+            $h1 =   '<div class="alert alert-danger text-right">'.__('admin/crm_service_menu.ticket_close_reject').'</div>';
+        }
+
+        return $h1 ;
+    }
+}
+
+
+
+
+
 
 
 

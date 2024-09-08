@@ -21,6 +21,7 @@ return
 	'ticket_cash_deposit' => 'العربون',
 	'ticket_cash_list' => 'كشف حساب',
 	'ticket_cash_service' => 'مصاريف الكشف',
+	'ticket_cash_user_list' => 'كشف حساب فنى',
 	'ticket_close' => 'ادارة التذاكر المغلقة',
 	'ticket_close_cancellation' => 'مغلقة الغاء',
 	'ticket_close_finished' => 'مغلقة خالص',

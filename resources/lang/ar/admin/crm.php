@@ -39,4 +39,6 @@ return
 	'model_h2_ticket' => 'تفاصيل التذكرة',
 	'model_title_info' => 'تفاصيل المتابعة',
 	'report_card_all_count' => 'اجمالى عدد المتابعات',
+	'filter_date_only_from' => 'من تاريخ',
+	'filter_date_only_to' => 'الى تاريخ',
 ];

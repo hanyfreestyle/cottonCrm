@@ -13,14 +13,16 @@ Route::prefix('/ticket-cash/')->name('TicketCash.')->group(function () {
 
     Route::get('confirm-pay/{id}', [CrmTicketCashController::class, 'ConfirmPay'])->name('ConfirmPay');
     Route::get('confirm-pay-back/{id}', [CrmTicketCashController::class, 'ConfirmPayBack'])->name('ConfirmPayBack');
+
     Route::get('cash-list', [CrmTicketCashController::class, 'CashList'])->name('CashList');
     Route::post('cash-list', [CrmTicketCashController::class, 'CashList'])->name('filter');
+
+    Route::get('user-list', [CrmTicketCashController::class, 'UserList'])->name('UserList');
+    Route::post('user-list', [CrmTicketCashController::class, 'UserList'])->name('UserListFilter');
+
     Route::get('destroy/{id}', [CrmTicketCashController::class, 'DestroyPayment'])->name('destroy');
-
-
     Route::get('report/', [CrmTicketCashController::class, 'report'])->name('Report');
     Route::post('report/', [CrmTicketCashController::class, 'report'])->name('filterReport');
-
     Route::get('config/', [CrmTicketCashController::class, 'config'])->name('config');
 });
 

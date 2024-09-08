@@ -284,7 +284,8 @@ class UserFollowUpController extends AdminMainController {
             }
 
             if ($request->ticket_follow_state == 3) {
-                $updateOldCash = $ticket->paymentCash->where('follow_state', 3)->first();
+                $updateOldCash = $ticket->paymentCash->where('ticket_id',$ticket->id)->where('follow_state', 3)->first();
+
                 if ($updateOldCash) {
                     $updateOldCash->amount_type = 4;
                     $updateOldCash->confirm_date = null;

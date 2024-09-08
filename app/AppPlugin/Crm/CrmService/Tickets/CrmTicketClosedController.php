@@ -118,6 +118,7 @@ class CrmTicketClosedController extends AdminMainController {
         $chartData = array();
 
 
+
         $this->formName = "CrmTicketClosedReportFilter";
         View::share('formName', $this->formName);
 

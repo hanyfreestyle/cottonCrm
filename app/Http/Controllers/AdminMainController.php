@@ -264,6 +264,13 @@ class AdminMainController extends DefaultMainController {
                     'to_date' => 'required|date|after_or_equal:from_date',
                 ]);
             }
+            if(isset($request->crm_user_cash_filter)){
+                $request->validate([
+                    'user_id' => 'required',
+                ]);
+            }
+
+
             $session = Session::get($this->formName);
             if ($session) {
                 if ($request->input('country_id')) {

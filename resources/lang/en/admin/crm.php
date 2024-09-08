@@ -39,4 +39,6 @@ return
 	'model_h2_ticket' => 'Ticket details',
 	'model_title_info' => 'Follow-up details',
 	'report_card_all_count' => 'Total of follow-ups',
+	'filter_date_only_from' => '',
+	'filter_date_only_to' => '',
 ];

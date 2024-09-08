@@ -5,11 +5,12 @@ namespace App\AppPlugin\Crm\CrmService\Tickets;
 use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Crm\CrmCore\CrmMainTraits;
 use App\AppPlugin\Crm\CrmService\Leads\Traits\CrmLeadsConfigTraits;
+use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTickets;
 use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use App\AppPlugin\Crm\CrmService\Tickets\Traits\CrmDataTableTraits;
-use App\AppPlugin\Data\Area\Models\Area;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Traits\ReportFunTraits;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -198,8 +199,6 @@ class CrmTicketCashController extends AdminMainController {
             $today = Carbon::parse(now())->format("Y-m-d");
             $rowData = $Data->whereDate('confirm_date', $today)->get()->groupBy('confirm_date');
         }
-
-
         return view('AppPlugin.CrmService.ticketCash.cash_list')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -208,12 +207,79 @@ class CrmTicketCashController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UserList(Request $request) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "List";
+        $this->formName = 'CrmTicketUserCashFilter';
+        View::share('formName', $this->formName);
+        $closedTicket = [];
+        $session = self::getSessionData($request);
+
+        if ($session) {
+            $closedTicket = self::UserCashFilter(self::ClosedUsersTicket(), $session)->get()
+                ->sortBy('follow_state')->groupBy('follow_state');
+        }
+
+
+//        dd($closedTicket);
+
+        return view('AppPlugin.CrmService.ticketCash.user_list')->with([
+            'pageData' => $pageData,
+            'closedTicket' => $closedTicket,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClosedUsersTicket() {
+        $data = CrmTickets::query()
+            ->where('state', 2)
+            ->with('customer')
+            ->with('device_name')
+            ->with('cashData')
+            ->orderBy('close_date', 'desc')//            ->where('st')
+        ;
+
+        return $data;
+
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function UserCashFilter($query, $session, $order = null) {
+//dd($session);
+        if (isset($session['from_date']) and $session['from_date'] != null) {
+            $query->whereDate('close_date', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
+        }
+
+        if (isset($session['to_date']) and $session['to_date'] != null) {
+            $query->whereDate('close_date', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
+        }
+//
+//        if (isset($session['follow_from']) and $session['follow_from'] != null) {
+//            $query->whereDate('follow_date', '>=', Carbon::createFromFormat('Y-m-d', $session['follow_from']));
+//        }
+//
+//        if (isset($session['follow_to']) and $session['follow_to'] != null) {
+//            $query->whereDate('follow_date', '<=', Carbon::createFromFormat('Y-m-d', $session['follow_to']));
+//        }
+//
+
+        if (isset($session['user_id']) and $session['user_id'] != null) {
+            $query->where('user_id', $session['user_id']);
+        }
+
+
+        return $query;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function indexCashQuery() {
-        $data = CrmTicketsCash::query() ;
+        $data = CrmTicketsCash::query();
         $data->whereNotNull('amount_type')
             ->whereNotNull('confirm_date')
             ->whereNotNull('confirm_user_id')
-            ->wherein('amount_type',['1','2','3',])
+            ->wherein('amount_type', ['1', '2', '3',])
             ->with('ticket')
             ->with('customer')
             ->with('user');
@@ -362,6 +428,15 @@ class CrmTicketCashController extends AdminMainController {
         $mainMenu->icon = "fas fa-dollar-sign";
         $mainMenu->roleView = "crm_service_cash_view";
         $mainMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "TicketCash.UserList|TicketCash.UserListFilter";
+        $subMenu->url = "admin.TicketCash.UserList";
+        $subMenu->name = "admin/crm_service_menu.ticket_cash_user_list";
+        $subMenu->roleView = "crm_service_cash_view";
+        $subMenu->icon = "fas fa-user-clock";
+        $subMenu->save();
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
