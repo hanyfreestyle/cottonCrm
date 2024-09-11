@@ -35,14 +35,14 @@ if (!function_exists('TicketSendWhatsapp')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('CardOpenState')) {
-    function CardOpenState($agent,$state=null) {
-        if($state){
-            $open = $state ;
-        }else{
-            if($agent->isDesktop()){
-                $open = true ;
-            }else{
-                $open = false ;
+    function CardOpenState($agent, $state = null) {
+        if ($state) {
+            $open = $state;
+        } else {
+            if ($agent->isDesktop()) {
+                $open = true;
+            } else {
+                $open = false;
             }
         }
         return $open;
@@ -52,10 +52,10 @@ if (!function_exists('CardOpenState')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getNumberType')) {
     function getNumberType($agent) {
-        if($agent->isDesktop()){
-            $type = 'text' ;
-        }else{
-            $type = 'number' ;
+        if ($agent->isDesktop()) {
+            $type = 'text';
+        } else {
+            $type = 'number';
         }
         return $type;
     }
@@ -64,9 +64,9 @@ if (!function_exists('getNumberType')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('checkClosedDate')) {
     function checkClosedDate($row) {
-        if($row->close_date){
-            $printDate = $row->close_date ." (".getDateDifference($row->created_at, $row->close_date).")";
-        }else{
+        if ($row->close_date) {
+            $printDate = $row->close_date . " (" . getDateDifference($row->created_at, $row->close_date) . ")";
+        } else {
             $printDate = "";
         }
         return $printDate;
@@ -76,7 +76,7 @@ if (!function_exists('checkClosedDate')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('getDataFromDefCat')) {
-    function getDataFromDefCat($data,$thisId) {
+    function getDataFromDefCat($data, $thisId) {
         if (is_array($data)) {
             $data = collect($data);
         }
@@ -89,9 +89,9 @@ if (!function_exists('getDataFromDefCat')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnAmount')) {
     function returnAmount($amount) {
-        if($amount){
+        if ($amount) {
             return number_format($amount);
-        }else{
+        } else {
             return null;
         }
     }
@@ -101,14 +101,14 @@ if (!function_exists('returnAmount')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnDepositInfo')) {
     function returnDepositInfo($ticket) {
-        $label = " " ;
-        if($ticket->paymentCash->amount_paid){
-            $label .=  number_format($ticket->paymentCash->amount) ;
-        }else{
-            $label .=   number_format($ticket->paymentCash->amount) ;
-            $label .=   "  "  . __('admin/crm_service.label_update_deposit_unpiad') ;
+        $label = " ";
+        if ($ticket->paymentCash->amount_paid) {
+            $label .= number_format($ticket->paymentCash->amount);
+        } else {
+            $label .= number_format($ticket->paymentCash->amount);
+            $label .= "  " . __('admin/crm_service.label_update_deposit_unpiad');
         }
-        return $label ;
+        return $label;
     }
 }
 
@@ -116,8 +116,8 @@ if (!function_exists('returnDepositInfo')) {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('returnCashCount')) {
     function returnCashCount($ticketid) {
-        $count = CrmTicketsCash::query()->where('ticket_id',$ticketid)->count();
-        return $count ;
+        $count = CrmTicketsCash::query()->where('ticket_id', $ticketid)->count();
+        return $count;
     }
 }
 
@@ -128,26 +128,47 @@ if (!function_exists('returnClosedForUser')) {
     function returnClosedForUser($key) {
         $h1 = "";
 
-        if($key == 2){
-          $h1 =   '<div class="alert alert-success text-right">'.__('admin/crm_service_menu.ticket_close_finished').'</div>';
-        }elseif ($key == 5){
-            $h1 =   '<div class="alert alert-danger text-right">'.__('admin/crm_service_menu.ticket_close_cancellation').'</div>';
-        }elseif ($key == 6){
-            $h1 =   '<div class="alert alert-danger text-right">'.__('admin/crm_service_menu.ticket_close_reject').'</div>';
+        if ($key == 2) {
+            $h1 = '<div class="alert alert-success text-right">' . __('admin/crm_service_menu.ticket_close_finished') . '</div>';
+        } elseif ($key == 5) {
+            $h1 = '<div class="alert alert-danger text-right">' . __('admin/crm_service_menu.ticket_close_cancellation') . '</div>';
+        } elseif ($key == 6) {
+            $h1 = '<div class="alert alert-danger text-right">' . __('admin/crm_service_menu.ticket_close_reject') . '</div>';
         }
 
-        return $h1 ;
+        return $h1;
     }
 }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('returnUserCashInfo')) {
+    function returnUserCashInfo($ticket, $key) {
 
+        $tdLine = '';
+        $cashData = $ticket->cashData->where('follow_state', $key);
 
+        if ($key == 2 or $key == 6) {
 
+            $amount = number_format($cashData->first()->amount ?? 0);
+            $amountPay = number_format($cashData->where('confirm_date', '!=', null)->first()->amount ?? 0);
+            $amountNotPay = number_format($cashData->where('confirm_date', null)->first()->amount ?? 0);
 
+            $tdLine .= '<td>' . $amount . '</td>';
+            $tdLine .= '<td>' . $amountPay . '</td>';
+            $tdLine .= '<td>' . $amountNotPay . '</td>';
 
+        }
 
-
-
+        return [
+            'table' => $tdLine,
+            'amount' => $cashData->first()->amount ?? 0,
+            'amountPay' => $cashData->where('confirm_date', '!=', null)->first()->amount ?? 0,
+            'amountNotPay' => $cashData->where('confirm_date', null)->first()->amount ?? 0,
+            'id' => $cashData->first()->id ?? 0
+        ];
+    }
+}
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

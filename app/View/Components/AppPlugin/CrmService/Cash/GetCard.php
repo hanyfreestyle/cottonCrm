@@ -6,7 +6,6 @@ use App\AppPlugin\Crm\CrmService\Tickets\Models\CrmTicketsCash;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use function Ramsey\Collection\element;
 
 class GetCard extends Component {
 

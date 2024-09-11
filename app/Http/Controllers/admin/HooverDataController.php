@@ -130,7 +130,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function getCustomerData() {
-        dd('hi');
+        dd('getCustomerData');
         $saveData = 1;
         $oldData = DB::connection('mysql2')->table('customer')->get();
         foreach ($oldData as $data) {
@@ -184,7 +184,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function syncCity() {
-        dd("hi");
+        dd("syncCity");
         $allCity = City::query()->get();
         $allArea = Area::query()->get();
         $getoldDate = CrmCustomersAddress::query()
@@ -201,7 +201,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function UpdateNames() {
-         dd('UpdateNames');
+//        dd('UpdateNames');
 
         $rep = [
             '\\\\', '\\', 'الحج', 'الحجة', '.سلوى', 'محمدسلطان', 'السيدخلف', 'عبدالرسول', 'عبدالمنعم', 'عبدالحميد', 'عبدالغني', 'محمدرؤوف', 'رناطارق',
@@ -271,7 +271,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function getTicket() {
-         dd('getTicket');
+        dd('getTicket');
 
         $oldData = DB::connection('mysql2')->table('sales_ticket')
             ->orderBy('id')
@@ -323,7 +323,7 @@ class HooverDataController extends AdminMainController {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function syncTicketData() {
-        dd("syncTicketData");
+//        dd("syncTicketData");
         $allCustomers = CrmCustomers::query()->select('id', 'old_id')->get();
         $configData = ConfigData::query()->select('id', 'old_id')->get();
 
@@ -365,9 +365,15 @@ class HooverDataController extends AdminMainController {
                 $tickets->save();
             }
 
+            if ($tickets->id == 3418) {
+                $tickets->done_price = 1000;
+                $tickets->done_price_prepaid = 0;
+                $tickets->timestamps = false;
+                $tickets->save();
+            }
+
             if ($tickets->id == 1396 or $tickets->id == 1208 or $tickets->id == 788) {
                 $tickets->done_price = 0;
-                $tickets->done_price_prepaid = 0;
                 $tickets->done_price_prepaid = 0;
                 $tickets->follow_state = 6;
                 $tickets->timestamps = false;
@@ -399,7 +405,7 @@ class HooverDataController extends AdminMainController {
             ->whereNotNull('old_customer_id')
             ->where('state', 2)
             ->where('follow_state', 5)
-            ->take(250)
+            ->take(500)
             ->get();
 
         foreach ($tickets as $updateTicket) {
@@ -479,7 +485,7 @@ class HooverDataController extends AdminMainController {
             ->whereNotNull('old_customer_id')
             ->where('state', 2)
             ->where('follow_state', 2)
-            ->take(250)
+            ->take(500)
             ->get();
 
         foreach ($tickets as $updateTicket) {
@@ -494,53 +500,51 @@ class HooverDataController extends AdminMainController {
             }
 
 
-            if (intval($updateTicket->done_price) > 0) {
+            $addCash = new CrmTicketsCash();
+            $addCash->ticket_id = $updateTicket->id;
+            $addCash->customer_id = $updateTicket->customer_id;
+            $addCash->follow_state = 2;
+            $addCash->created_at = $updateTicket->close_date;
+            $addCash->created_at_time = null;
+            $addCash->user_id = $updateTicket->user_id;
+            $addCash->pay_type = 1;
+            $addCash->amount_type = 1;
+            $addCash->amount = $updateTicket->done_price;
+
+            if ($saveConfirm) {
+                $addCash->confirm_date = $updateTicket->close_date;
+                $addCash->confirm_date_time = null;
+                $addCash->confirm_user_id = 1;
+                $addCash->amount_paid = $updateTicket->done_price;
+            }
+
+            if ($saveData) {
+                $addCash->save();
+            }
+
+            if (intval($updateTicket->done_price_prepaid) > 0) {
                 $addCash = new CrmTicketsCash();
                 $addCash->ticket_id = $updateTicket->id;
                 $addCash->customer_id = $updateTicket->customer_id;
-                $addCash->follow_state = 2;
+                $addCash->follow_state = 3;
                 $addCash->created_at = $updateTicket->close_date;
                 $addCash->created_at_time = null;
                 $addCash->user_id = $updateTicket->user_id;
                 $addCash->pay_type = 1;
-                $addCash->amount_type = 1;
-                $addCash->amount = $updateTicket->done_price;
-
+                $addCash->amount_type = 2;
+                $addCash->amount = $updateTicket->done_price_prepaid;
                 if ($saveConfirm) {
                     $addCash->confirm_date = $updateTicket->close_date;
                     $addCash->confirm_date_time = null;
                     $addCash->confirm_user_id = 1;
-                    $addCash->amount_paid = $updateTicket->done_price;
+                    $addCash->amount_paid = $updateTicket->done_price_prepaid;
                 }
 
                 if ($saveData) {
                     $addCash->save();
                 }
-
-                if (intval($updateTicket->done_price_prepaid) > 0) {
-                    $addCash = new CrmTicketsCash();
-                    $addCash->ticket_id = $updateTicket->id;
-                    $addCash->customer_id = $updateTicket->customer_id;
-                    $addCash->follow_state = 3;
-                    $addCash->created_at = $updateTicket->close_date;
-                    $addCash->created_at_time = null;
-                    $addCash->user_id = $updateTicket->user_id;
-                    $addCash->pay_type = 1;
-                    $addCash->amount_type = 2;
-                    $addCash->amount = $updateTicket->done_price_prepaid;
-                    if ($saveConfirm) {
-                        $addCash->confirm_date = $updateTicket->close_date;
-                        $addCash->confirm_date_time = null;
-                        $addCash->confirm_user_id = 1;
-                        $addCash->amount_paid = $updateTicket->done_price_prepaid;
-                    }
-
-                    if ($saveData) {
-                        $addCash->save();
-                    }
-                }
-
             }
+
 
             $updateTicket->old_customer_id = null;
             $updateTicket->follow_date = null;
@@ -603,27 +607,27 @@ class HooverDataController extends AdminMainController {
         $openT = CrmTickets::query()->where('state', 1)->pluck('customer_id');
 //        dd($openT);
         $Customers = CrmCustomers::query()
-            ->whereNotIn('id',$openT)
+            ->whereNotIn('id', $openT)
             ->whereNull('type_id')
             ->take(500)
             ->get();
 
         foreach ($Customers as $updateCustomer) {
             $countDone = CrmTickets::query()
-                ->where('customer_id',$updateCustomer->id)
-                ->where('state',2)
-                ->where('follow_state','2')->count();
-            if($countDone >= 1){
-                $updateCustomer->type_id = 1 ;
-            }else{
-                $updateCustomer->type_id = 2 ;
+                ->where('customer_id', $updateCustomer->id)
+                ->where('state', 2)
+                ->where('follow_state', '2')->count();
+            if ($countDone >= 1) {
+                $updateCustomer->type_id = 1;
+            } else {
+                $updateCustomer->type_id = 2;
             }
 
             $updateCustomer->timestamps = false;
-            $updateCustomer->save() ;
+            $updateCustomer->save();
         }
 
-        echobr(CrmCustomers::query()->whereNull('type_id')->whereNotIn('id',$openT)->count());
+        echobr(CrmCustomers::query()->whereNull('type_id')->whereNotIn('id', $openT)->count());
     }
 
 
