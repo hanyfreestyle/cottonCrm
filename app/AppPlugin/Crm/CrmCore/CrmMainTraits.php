@@ -63,5 +63,4 @@ trait CrmMainTraits {
         }
         return $count;
     }
-
 }

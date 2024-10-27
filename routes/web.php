@@ -45,4 +45,3 @@ Route::group(['middleware' => ['UnderConstruction', 'MinifyHtml']], function () 
 
 
 Route::fallback(RouteNotFoundController::class);
-
