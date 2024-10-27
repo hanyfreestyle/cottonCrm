@@ -3,25 +3,20 @@
 
 namespace App\AppPlugin\Product\Traits;
 
-use App\Http\Traits\DefModelConfigTraits;
-
 trait ProductConfigTraits {
 
     public function LoadConfig() {
 
-        $defConfig = DefModelConfigTraits::defConfig();
-
         $Config = [
-            'DbCategory'=>'pro_categories',
-            'DbCategoryTrans'=>'pro_category_translations',
+            'DbCategory' => 'pro_categories',
+            'DbCategoryTrans' => 'pro_category_translations',
 
-            'DbPost'=>'pro_products',
-            'DbPostTrans'=>'pro_product_translations',
-            'DbPostCatId'=>'product_id',
-            'DbPhoto'=>'pro_product_photos',
-//            'DbPhotoTrans'=>'faq_photo_translations',
-            'DbTags'=>'pro_tags',
-            'DbTagsTrans'=>'pro_tags_translations',
+            'DbPost' => 'pro_products',
+            'DbPostTrans' => 'pro_product_translations',
+            'DbPostCatId' => 'product_id',
+            'DbPhoto' => 'pro_product_photos',
+            'DbTags' => 'pro_tags',
+            'DbTagsTrans' => 'pro_tags_translations',
 
 
             'TableCategory' => true,
@@ -47,7 +42,6 @@ trait ProductConfigTraits {
             'categoryFullRow' => false,
 
 
-
             'postPublishedDate' => false,
             'postPhotoAdd' => true,
             'postPhotoView' => true,
@@ -63,7 +57,39 @@ trait ProductConfigTraits {
             'LangPostDefDes' => __('admin/faq.faq_text_answer'),
 
         ];
-        $Config = array_merge($defConfig, $Config);
+        $config = [
+            'PrefixRole' => "Blog",
+
+            'DbCategory' => 'pro_categories',
+            'DbCategoryTrans' => 'pro_category_translations',
+            'DbCategoryPivot' => 'pro_category_product',
+            'DbCategoryForeign' => 'category_id',
+
+
+            'DbPost' => 'pro_products',
+            'DbPostTrans' => 'pro_product_translations',
+            'DbPostReview' => 'blog_post_review',
+            'DbPostForeignId' => 'product_id',
+
+            'DbPhoto' => 'pro_product_photos',
+            'DbPhotoTrans' => 'blog_photo_lang',
+
+            'DbTags' => 'pro_tags',
+            'DbTagsTrans' => 'pro_tags_translations',
+            'DbTagsPivot' => 'pro_tags_product',
+
+
+
+
+            'LangCategoryDefName' => __('admin/def.category_name'),
+            'LangCategoryDefDes' => __('admin/form.text_content'),
+            'LangPostDefName' => __('admin/blogPost.blog_text_name'),
+            'LangPostDefDes' => __('admin/form.text_content'),
+
+        ];
+
+        $defConfig = getConfigFromJson('model_product');
+        $Config = array_merge($config, $defConfig);
 
         foreach ($Config as $key => $value) {
             $this->$key = $value;

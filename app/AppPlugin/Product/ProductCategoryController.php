@@ -35,11 +35,11 @@ class ProductCategoryController extends AdminMainController {
         $this->UploadDirIs = 'category';
 
 
-        $this->Config = self::LoadConfig();
+        $this->config = self::LoadConfig();
         if($this->TableCategory){
-            self::SetCatTree($this->Config['categoryTree'],$this->Config['categoryDeep']);
+            self::SetCatTree($this->config['categoryTree'],$this->config['categoryDeep']);
         }
-        View::share('Config', $this->Config);
+        View::share('config', $this->config);
 
 
         $sendArr = [
@@ -52,7 +52,8 @@ class ProductCategoryController extends AdminMainController {
             'AddLang' => true,
         ];
 
-        self::loadConstructData($sendArr);
+        self::constructData($sendArr);
+        self::loadCategoryPermission(array());
 
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

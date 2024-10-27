@@ -35,11 +35,11 @@ class ProductBrandController extends AdminMainController {
         $this->translationdb = 'brand_id';
         $this->UploadDirIs = 'brand';
 
-        $this->Config = self::LoadConfig();
+        $this->config = self::LoadConfig();
         if($this->TableCategory){
-            self::SetCatTree($this->Config['categoryTree'],$this->Config['categoryDeep']);
+            self::SetCatTree($this->config['categoryTree'],$this->config['categoryDeep']);
         }
-        View::share('Config', $this->Config);
+        View::share('config', $this->config);
 
         $sendArr = [
             'TitlePage' => $this->PageTitle,
@@ -51,7 +51,9 @@ class ProductBrandController extends AdminMainController {
             'AddLang' => true,
         ];
 
-        self::loadConstructData($sendArr);
+        self::constructData($sendArr);
+        self::loadCategoryPermission(array());
+
         View::share('DefCategoryTextName', __('admin/proProduct.brand_text_name'));
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

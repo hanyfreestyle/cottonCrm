@@ -321,6 +321,7 @@ class ProductController extends AdminMainController {
         $selCat = [];
         $tags = ProductTags::where('id', '!=', 0)->take(100)->get();
 
+
         $selTags = [];
 
         return view('AppPlugin.Product.form')->with([
@@ -331,6 +332,7 @@ class ProductController extends AdminMainController {
             'selCat' => $selCat,
             'tags' => $tags,
             'selTags' => $selTags,
+            'viewEditor' => true,
         ]);
     }
 
