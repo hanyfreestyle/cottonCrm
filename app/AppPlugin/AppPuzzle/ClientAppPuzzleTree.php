@@ -13,7 +13,7 @@ class ClientAppPuzzleTree {
             'hoover' => self::treeClientData('hoover'),
             'bookcaffe' => self::treeClientData('bookcaffe'),
             'vonza' => self::treeClientData('vonza'),
-//            'cotton' => self::treeClientData('cotton'),
+            'onfire' => self::treeClientData('onfire'),
         ];
         return $modelTree;
     }
