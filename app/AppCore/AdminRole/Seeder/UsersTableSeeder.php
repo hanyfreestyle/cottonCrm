@@ -35,12 +35,12 @@ class UsersTableSeeder extends Seeder {
                 $user->roles_name = $old->roles_name;
                 $user->save();
 
-                $role = Role::findByName('technician');
-                $permissions = Permission::where('cat_id', 'crm_service_follow')->pluck('id');
-//                dd($permissions);
-                $permissions = ['22','23','24'];
-                $role->syncPermissions($permissions);
-                $user->assignRole([$role->id]);
+//                $role = Role::findByName('technician');
+//                $permissions = Permission::where('cat_id', 'crm_service_follow')->pluck('id');
+//
+//                $permissions = ['22','23','24'];
+//                $role->syncPermissions($permissions);
+//                $user->assignRole([$role->id]);
             }
 
         } else {
