@@ -212,7 +212,7 @@ if (!function_exists('AdminActiveMenu')) {
 if (!function_exists('setActiveRoute')) {
     function setActiveRoute($main, $arrs = array()) {
         $defArr = [
-            'index', 'edit', 'config', 'index_Main', 'SubCategory', 'CatSort',
+            'index', 'edit','create', 'config', 'index_Main', 'SubCategory', 'CatSort',
             'editEn', 'editAr', 'filter','SoftDelete','FilterCategory',
             'More_Photos', 'More_PhotosAdd', 'More_PhotosDestroyAll', 'More_PhotosEdit', 'More_PhotosEditAll',
         ];

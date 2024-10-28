@@ -13,7 +13,6 @@ use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
 use App\Http\Traits\Files\DataFileTraits;
 use App\Http\Traits\Files\PeriodicalsFileTraits;
-use App\Http\Traits\Files\ProductFileTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 

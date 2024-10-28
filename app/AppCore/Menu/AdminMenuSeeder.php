@@ -7,7 +7,6 @@ use App\AppCore\LangFile\LangFileController;
 
 
 use App\AppCore\WebSettings\Traits\WebSettingsConfigTraits;
-
 use App\AppPlugin\Config\Apps\AppSettingController;
 use App\AppPlugin\Config\WebLangFile\LangFileWebController;
 use App\AppPlugin\CustomersAdmin\CustomerAdminController;
@@ -22,6 +21,7 @@ use App\AppPlugin\Orders\OrderController;
 use App\AppPlugin\Models\Pages\PageCategoryController;
 use App\AppPlugin\Product\ProductController;
 
+use App\AppPlugin\Product\Traits\ProductConfigTraits;
 use App\Http\Traits\Files\AppSettingFileTraits;
 use App\Http\Traits\Files\CrmServiceFileTraits;
 use App\Http\Traits\Files\CustomersFileTraits;
@@ -49,7 +49,7 @@ class AdminMenuSeeder extends Seeder {
         MainModelFileTraits::LoadMenu();
 
         if (File::isFile(base_path('routes/AppPlugin/proProduct.php'))) {
-            ProductController::AdminMenu();
+            ProductConfigTraits::getAdminMenu();
         }
 
         if (File::isFile(base_path('routes/AppPlugin/customer_admin.php'))) {

@@ -25,7 +25,7 @@ class ProductCategoryController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "Category";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_category');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;

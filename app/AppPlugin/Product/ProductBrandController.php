@@ -14,18 +14,17 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
-
 class ProductBrandController extends AdminMainController {
 
     use CrudTraits;
     use CategoryTraits;
-    use ProductBrandConfigTraits ;
+    use ProductBrandConfigTraits;
 
     function __construct() {
         parent::__construct();
         $this->controllerName = "Brand";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_brand');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -36,8 +35,8 @@ class ProductBrandController extends AdminMainController {
         $this->UploadDirIs = 'brand';
 
         $this->config = self::LoadConfig();
-        if($this->TableCategory){
-            self::SetCatTree($this->config['categoryTree'],$this->config['categoryDeep']);
+        if ($this->TableCategory) {
+            self::SetCatTree($this->config['categoryTree'], $this->config['categoryDeep']);
         }
         View::share('config', $this->config);
 
@@ -46,9 +45,8 @@ class ProductBrandController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["editor" => 1],
-            'yajraTable' => false,
-            'AddLang' => true,
+            'settings' => getDefSettings($this->config),
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
 
         self::constructData($sendArr);
@@ -56,27 +54,28 @@ class ProductBrandController extends AdminMainController {
 
         View::share('DefCategoryTextName', __('admin/proProduct.brand_text_name'));
     }
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashBrandMenuList');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryStoreUpdate(DefCategoryRequest $request, $id = 0) {
         return self::TraitsCategoryStoreUpdate($request, $id);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroyException
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroyException($id) {
         $deleteRow = Brand::where('id', $id)
             ->withCount('del_category')
             ->withCount('del_product')
             ->firstOrFail();
 
-        if($deleteRow->del_category_count == 0 and $deleteRow->del_product_count == 0) {
+        if ($deleteRow->del_category_count == 0 and $deleteRow->del_product_count == 0) {
             try {
                 DB::transaction(function () use ($deleteRow, $id) {
                     $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
