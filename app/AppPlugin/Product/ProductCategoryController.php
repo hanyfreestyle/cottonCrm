@@ -19,7 +19,7 @@ class ProductCategoryController extends AdminMainController {
 
     use CrudTraits;
     use CategoryTraits;
-    use ProductConfigTraits ;
+    use ProductConfigTraits;
 
     function __construct() {
         parent::__construct();
@@ -36,8 +36,8 @@ class ProductCategoryController extends AdminMainController {
 
 
         $this->config = self::LoadConfig();
-        if($this->TableCategory){
-            self::SetCatTree($this->config['categoryTree'],$this->config['categoryDeep']);
+        if ($this->TableCategory) {
+            self::SetCatTree($this->config['categoryTree'], $this->config['categoryDeep']);
         }
         View::share('config', $this->config);
 
@@ -47,17 +47,18 @@ class ProductCategoryController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["editor" => 1],
-            'yajraTable' => false,
-            'AddLang' => true,
+            'settings' => getDefSettings($this->config),
+            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
         ];
 
         self::constructData($sendArr);
         self::loadCategoryPermission(array());
 
     }
+
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashCategoryMenuList');
         Cache::forget('CashCategoryFilterList');
@@ -65,20 +66,20 @@ class ProductCategoryController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     CategoryStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function CategoryStoreUpdate(DefCategoryRequest $request, $id = 0) {
         return self::TraitsCategoryStoreUpdate($request, $id);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     destroyException
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function destroyException($id) {
         $deleteRow = Category::where('id', $id)
             ->withCount('del_category')
             ->withCount('del_product')
             ->firstOrFail();
 
-        if($deleteRow->del_category_count == 0 and $deleteRow->del_product_count == 0) {
+        if ($deleteRow->del_category_count == 0 and $deleteRow->del_product_count == 0) {
             try {
                 DB::transaction(function () use ($deleteRow, $id) {
                     $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
@@ -95,6 +96,5 @@ class ProductCategoryController extends AdminMainController {
         self::ClearCash();
         return back()->with('confirmDelete', "");
     }
-
 
 }

@@ -16,14 +16,18 @@ trait GetCashList {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashConfigDataList($stopCash = 0) {
-        if ($stopCash) {
-            $CashConfigDataList = ConfigData::with('translation')->get();
-        } else {
-            $CashConfigDataList = Cache::remember('CashConfigDataList', cashDay(7), function () {
-                return ConfigData::with('translation')->get();
-            });
+        if (File::isFile(base_path('routes/AppPlugin/data/configData.php'))) {
+            if ($stopCash) {
+                $CashConfigDataList = ConfigData::with('translation')->get();
+            } else {
+                $CashConfigDataList = Cache::remember('CashConfigDataList', cashDay(7), function () {
+                    return ConfigData::with('translation')->get();
+                });
+            }
+            return $CashConfigDataList;
+        }else{
+            return [];
         }
-        return $CashConfigDataList;
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

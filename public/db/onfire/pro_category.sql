@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `pro_category`
 --
 
-INSERT INTO `pro_category` (`id`, `parent_id`, `photo`, `photo_thum_1`, `icon`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
+INSERT INTO `pro_category` (`id`, `parent_id`, `photo`, `photo_thum_1`, `icon`, `is_active`, `position`, `created_at`, `updated_at`) VALUES
 (1, NULL, 'images/category/1/burger-sandwiches-pYE4S1qO9G.webp', 'images/category/1/burger-sandwiches-FbqotctSFp.webp', NULL, 1, 0, '2023-10-08 07:39:59', '2024-10-27 10:47:13'),
 (2, NULL, 'images/category/2/chicken-sandwiches-aBR2lTybzv.webp', 'images/category/2/chicken-sandwiches-fkmT2kl68z.webp', NULL, 1, 0, '2023-10-08 07:40:10', '2024-10-27 10:48:34'),
 (3, NULL, 'images/category/3/1696769062_CG3Swekd9EA8JE1_.webp', 'images/category/3/1696769062_ATf46UjA6Jtm5fE_.webp', NULL, 1, 0, '2023-10-08 07:40:30', '2023-10-08 11:44:22'),

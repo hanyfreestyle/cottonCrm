@@ -13,25 +13,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductDashboardController::class, 'Dashboard'])->name('Dashboard');
 
-
-Route::get('/category/', [ProductCategoryController::class, 'CategoryIndex'])->name('Shop.Category.index');
-Route::get('/category/Main', [ProductCategoryController::class, 'CategoryIndex'])->name('Shop.Category.index_Main');
-Route::get('/category/SubCategory/{id}', [ProductCategoryController::class, 'CategoryIndex'])->name('Shop.Category.SubCategory');
-Route::get('/category/DataTable', [ProductCategoryController::class, 'DataTable'])->name('Shop.Category.DataTable');
-Route::get('/category/create', [ProductCategoryController::class, 'CategoryCreate'])->name('Shop.Category.create');
-Route::get('/category/create/ar', [ProductCategoryController::class, 'CategoryCreate'])->name('Shop.Category.create_ar');
-Route::get('/category/create/en', [ProductCategoryController::class, 'CategoryCreate'])->name('Shop.Category.create_en');
-Route::get('/category/edit/{id}', [ProductCategoryController::class, 'CategoryEdit'])->name('Shop.Category.edit');
-Route::get('/category/editAr/{id}', [ProductCategoryController::class, 'CategoryEdit'])->name('Shop.Category.editAr');
-Route::get('/category/editEn/{id}', [ProductCategoryController::class, 'CategoryEdit'])->name('Shop.Category.editEn');
-Route::get('/category/emptyPhoto/{id}', [ProductCategoryController::class, 'emptyPhoto'])->name('Shop.Category.emptyPhoto');
-Route::get('/category/DeleteLang/{id}', [ProductCategoryController::class, 'DeleteLang'])->name('Shop.Category.DeleteLang');
-Route::post('/category/update/{id}', [ProductCategoryController::class, 'CategoryStoreUpdate'])->name('Shop.Category.update');
-Route::get('/category/destroy/{id}', [ProductCategoryController::class, 'destroyException'])->name('Shop.Category.destroy');
-Route::get('/category/config', [ProductCategoryController::class, 'config'])->name('Shop.Category.config');
-Route::get('/category/emptyIcon/{id}', [ProductCategoryController::class, 'emptyIcon'])->name('Shop.Category.emptyIcon');
-Route::get('/category/CatSort/{id}', [ProductCategoryController::class, 'CategorySort'])->name('Shop.Category.CatSort');
-Route::post('/category/SaveSort', [ProductCategoryController::class, 'CategorySaveSort'])->name('Shop.Category.SaveSort');
+Route::CategoryRoute('product/category', 'Shop.Category.', ProductCategoryController::class);
+//Route::get('/category/emptyIcon/{id}', [ProductCategoryController::class, 'emptyIcon'])->name('Shop.Category.emptyIcon');
 
 
 Route::get('/brand/', [ProductBrandController::class, 'CategoryIndex'])->name('Shop.Brand.index');

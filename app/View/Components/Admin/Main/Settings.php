@@ -24,6 +24,7 @@ class Settings extends Component {
     public $icon;
     public $dataTableUserName;
     public $dataTableDate;
+    public $viewAsPost;
 
 
     public function __construct(
@@ -37,11 +38,11 @@ class Settings extends Component {
 
         $this->pageData = $pageData;
 
-        $this->orderby = IsArr($configArr, 'orderby',false);
+        $this->orderby = IsArr($configArr, 'orderby', false);
         $this->orderbyDef = $orderbyDef;
         $this->orderbyPostion = IsArr($configArr, 'orderbyPostion', false);
 
-        $this->addPhoto = IsArr($configArr, 'addPhoto',false);
+        $this->addPhoto = IsArr($configArr, 'addPhoto', false);
         $this->addIcon = IsArr($configArr, 'addIcon', false);
         $this->addMorePhoto = IsArr($configArr, 'addMorePhoto', false);
         $this->selectfilterid = IsArr($configArr, 'selectfilterid');
@@ -53,6 +54,7 @@ class Settings extends Component {
         $this->icon = IsArr($configArr, 'icon', false);
         $this->dataTableUserName = IsArr($configArr, 'dataTableUserName', false);
         $this->dataTableDate = IsArr($configArr, 'dataTableDate', false);
+        $this->viewAsPost = IsArr($configArr, 'viewAsPost', false);
 
 
         $OrderByArr = [
@@ -66,15 +68,15 @@ class Settings extends Component {
         ];
 
 
-        if($this->orderbyName == false) {
+        if ($this->orderbyName == false) {
             unset($OrderByArr[3]);
             unset($OrderByArr[4]);
         }
 
-        if($this->orderbyPostion == false) {
+        if ($this->orderbyPostion == false) {
             unset($OrderByArr[5]);
         }
-        if($this->orderbyDate == false) {
+        if ($this->orderbyDate == false) {
             unset($OrderByArr[6]);
             unset($OrderByArr[7]);
         }

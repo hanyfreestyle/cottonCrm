@@ -39,7 +39,7 @@
 
 
 
-        @if(IsConfig($config,'TableMorePhotos'))
+        @if(IsConfig($config,'TableMorePhotos') and $viewAsPost == true)
             <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_filter_more_photo')" name="{{$modelname}}_morephoto_filterid" col="2"
                                      sendvalue="{{old($modelname.'_morephoto_filterid',IsArr($modelSettings,$modelname.'_morephoto_filterid',0))}}"
                                      :send-arr="$filterTypes"/>
@@ -62,7 +62,7 @@
         @if($dataTableUserName)
             <x-admin.form.select-arr :label="__('admin/def.label_published_user')" name="{{$modelname}}_dataTableUserName" col="2" :req="false" type="selActive"
                                      sendvalue="{{old($modelname.'_dataTableUserName',IsArr($modelSettings,$modelname.'_dataTableUserName',0))}}"/>
-       @endif
+        @endif
 
         @if($dataTableDate)
             <x-admin.form.select-arr :label="__('admin/def.label_published_at')" name="{{$modelname}}_dataTableDate" col="2" :req="false" type="selActive"

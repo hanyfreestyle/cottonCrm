@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string("photo_thum_1")->nullable();
             $table->string("icon")->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->integer('product_count')->default(0);
             $table->timestamps();
         });
@@ -55,7 +55,7 @@ return new class extends Migration {
             $table->string("photo_thum_1")->nullable();
             $table->string("icon")->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->timestamps();
         });
 

@@ -12,7 +12,7 @@ class LandingPage extends Model implements TranslatableContract {
     use Translatable;
 
     public $translatedAttributes = ['name', 'des', 'other', 'slug', 'g_title', 'g_des', 'desup'];
-    protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active', 'postion', 'text_view', 'url_type'];
+    protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active', 'position', 'text_view', 'url_type'];
     protected $table = "pro_landing_page";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'page_id';

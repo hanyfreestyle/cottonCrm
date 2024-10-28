@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- Dumping data for table `pro_brand`
 --
 
-INSERT INTO `pro_brand` (`id`, `parent_id`, `old_id`, `deep`, `photo`, `photo_thum_1`, `icon`, `is_active`, `postion`, `created_at`, `updated_at`) VALUES
+INSERT INTO `pro_brand` (`id`, `parent_id`, `old_id`, `deep`, `photo`, `photo_thum_1`, `icon`, `is_active`, `position`, `created_at`, `updated_at`) VALUES
 (1, NULL, NULL, 0, NULL, NULL, NULL, 1, 0, '2024-10-28 06:04:44', '2024-10-28 06:04:44');
 COMMIT;
 

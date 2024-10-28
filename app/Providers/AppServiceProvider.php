@@ -61,6 +61,9 @@ class AppServiceProvider extends ServiceProvider {
                 Route::get('/emptyPhoto/{id}', [$controller, 'emptyPhoto'])->name('emptyPhoto');
                 Route::get('/DeleteLang/{id}', [$controller, 'DeleteLang'])->name('DeleteLang');
                 Route::get('/config/', [$controller, 'CategoryConfig'])->name('config');
+
+                Route::get('/CatSort/{id}', [$controller, 'CategorySort'])->name('CatSort');
+                Route::post('/SaveSort', [$controller, 'CategorySaveSort'])->name('SaveSort');
             });
         });
 
