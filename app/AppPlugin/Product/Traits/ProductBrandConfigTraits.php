@@ -9,36 +9,8 @@ trait ProductBrandConfigTraits {
 
     public function LoadConfig() {
 
-        $Config = [
-            'DbCategory'=>'pro_brands',
-            'DbCategoryTrans'=>'pro_brand_translations',
-            'DbCategoryForeign'=>'brand_id',
-
-            'TableCategory' => true,
-
-            'categoryTree' => false,
-            'categoryDeep' => 2,
-            'categoryPhotoAdd' => true,
-            'categoryPhotoView' => true,
-            'categoryIcon' => false,
-            'categoryDelete' => true,
-            'categorySort' => false,
-            'categoryEditor' => true,
-            'categoryDes' => true,
-            'categorySeo' => true,
-            'categorySlug' => true,
-            'categoryShowLang' => true,
-            'categoryFullRow' => false,
-
-            'LangCategoryDefName' => __('admin/proProduct.brand_text_name'),
-            'LangCategoryDefDes' => __('admin/form.text_content'),
-
-        ];
-
         $config = [
             'PrefixRole' => "Blog",
-
-
 
             'DbCategory'=>'pro_brands',
             'DbCategoryTrans'=>'pro_brand_translations',

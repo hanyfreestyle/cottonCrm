@@ -6,7 +6,7 @@ namespace App\AppPlugin\Product\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CategoryProduct extends Model {
+class CategoryPivot extends Model {
 
     protected $table = "pro_category_pivot";
     public $timestamps = false;

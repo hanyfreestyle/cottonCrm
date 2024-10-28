@@ -3,7 +3,7 @@
 namespace App\AppPlugin\Product\Seeder;
 
 use App\AppPlugin\Product\Models\Category;
-use App\AppPlugin\Product\Models\CategoryProduct;
+use App\AppPlugin\Product\Models\CategoryPivot;
 use App\AppPlugin\Product\Models\CategoryTranslation;
 use App\AppPlugin\Product\Models\Product;
 use App\AppPlugin\Product\Models\ProductTranslation;
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder {
         SeedDbFile(ProductTranslation::class, $config['DbPostTrans'] . ".sql");
 
 
-        SeedDbFile(CategoryProduct::class, $config['DbCategoryPivot'] . ".sql");
+        SeedDbFile(CategoryPivot::class, $config['DbCategoryPivot'] . ".sql");
 
 
 

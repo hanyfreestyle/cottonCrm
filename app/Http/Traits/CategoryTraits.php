@@ -109,6 +109,7 @@ trait CategoryTraits {
 
         $table = $config['DbCategory'];
         $table_trans = $config['DbCategoryTrans'];
+        $table_trans_foreign = $config['DbCategoryForeign'];
 
         $data = DB::table("$table");
 
@@ -120,7 +121,7 @@ trait CategoryTraits {
         }
 
         $data->leftJoin("$table as childCount", "$table.id", '=', 'childCount.parent_id')
-            ->join("$table_trans", "$table.id", '=', "$table_trans.category_id")
+            ->join("$table_trans", "$table.id", '=', "$table_trans.$table_trans_foreign")
             ->where("$table_trans.locale", '=', dataTableDefLang())
             ->select(
                 "$table.id as id",
