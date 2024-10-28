@@ -47,7 +47,7 @@ class ProductRequest extends FormRequest {
             'seo' => true,
         ];
 
-        $rules += AdminMainController::FormRequestSeo($id, $addLang, 'pro_product_translations', 'product_id',$rulesConfig);
+        $rules += AdminMainController::FormRequestSeo($id, $addLang, 'pro_product_lang', 'product_id',$rulesConfig);
 
         return $rules;
     }

@@ -163,10 +163,10 @@ class ProductController extends AdminMainController {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
             if ($session == null) {
-                $data = $this->model::select(['pro_products.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
+                $data = $this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
                     ->where('parent_id', null)->where('is_archived', 0)->with('tablename');
             } else {
-                $data = self::ProductFilterQ($this->model::select(['pro_products.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
+                $data = self::ProductFilterQ($this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
                     ->where('parent_id', null)->where('is_archived', 0)->with('tablename'), $session);
             }
             return self::DataTableProductColumns($data)->make(true);
@@ -179,10 +179,10 @@ class ProductController extends AdminMainController {
         if ($request->ajax()) {
             $session = self::getSessionData($request);
             if ($session == null) {
-                $data = $this->model::select(['pro_products.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
+                $data = $this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
                     ->where('parent_id', null)->where('is_archived', 1)->with('tablename');
             } else {
-                $data = self::ProductFilterQ($this->model::select(['pro_products.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
+                $data = self::ProductFilterQ($this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
                     ->where('parent_id', null)->where('is_archived', 1)->with('tablename'), $session);
             }
             return self::DataTableProductColumns($data)->make(true);
@@ -192,7 +192,7 @@ class ProductController extends AdminMainController {
 #|||||||||||||||||||||||||||||||||||||| #   DataTable
     public function DataTableSoftDelete(Request $request) {
         if ($request->ajax()) {
-            $data = $this->model::onlyTrashed()->select(['pro_products.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
+            $data = $this->model::onlyTrashed()->select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
                 ->where('parent_id', null)->with('tablename');
             return self::DataTableProductColumns($data)->make(true);
 

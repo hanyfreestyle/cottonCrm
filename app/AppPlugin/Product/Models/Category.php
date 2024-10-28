@@ -17,7 +17,7 @@ class Category extends Model implements TranslatableContract {
     use HasRecursiveRelationships;
 
 
-    protected $table = "pro_categories";
+    protected $table = "pro_category";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'category_id';
     public $translatedAttributes = ['name', 'slug', 'des', 'g_title', 'g_des'];

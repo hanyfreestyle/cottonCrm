@@ -22,7 +22,7 @@ class Product extends Model implements TranslatableContract {
 
     public $translatedAttributes = ['name', 'slug', 'des', 'g_title', 'g_des', 'short_des'];
     protected $fillable = ['category_id', 'photo', 'photo_thum_1', 'is_active'];
-    protected $table = "pro_products";
+    protected $table = "pro_product";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'product_id';
 
@@ -82,7 +82,7 @@ class Product extends Model implements TranslatableContract {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     
+#|||||||||||||||||||||||||||||||||||||| #
     public function scopeDefWep(Builder $query): Builder {
         return $query->where('is_active', true)
             ->where('parent_id', null)

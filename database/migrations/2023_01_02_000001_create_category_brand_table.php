@@ -8,7 +8,7 @@ return new class extends Migration {
 
     public function up(): void {
 
-        Schema::create('pro_categories', function (Blueprint $table) {
+        Schema::create('pro_category', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('old_id')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('pro_category_translations', function (Blueprint $table) {
+        Schema::create('pro_category_lang', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
             $table->string('locale')->index();
@@ -34,18 +34,15 @@ return new class extends Migration {
             $table->text('g_des')->nullable();
             $table->unique(['category_id', 'locale']);
             $table->unique(['locale', 'slug']);
-            $table->foreign('category_id')->references('id')->on('pro_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('pro_category')->onDelete('cascade');
         });
 
         Schema::create('pro_category_product', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBiginteger('category_id');
             $table->unsignedBiginteger('product_id');
-
-            $table->foreign('category_id')->references('id')->on('pro_categories')->onDelete('cascade');
-
-            $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
-
+            $table->foreign('category_id')->references('id')->on('pro_category')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pro_product')->onDelete('cascade');
         });
 
 
@@ -83,7 +80,7 @@ return new class extends Migration {
         Schema::dropIfExists('pro_brand_translations');
         Schema::dropIfExists('pro_brands');
         Schema::dropIfExists('pro_category_product');
-        Schema::dropIfExists('pro_category_translations');
-        Schema::dropIfExists('pro_categories');
+        Schema::dropIfExists('pro_category_lang');
+        Schema::dropIfExists('pro_category');
     }
 };

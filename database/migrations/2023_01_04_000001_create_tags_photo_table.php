@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->unsignedBiginteger('tag_id');
             $table->unsignedBiginteger('product_id');
             $table->foreign('tag_id')->references('id')->on('pro_tags')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pro_product')->onDelete('cascade');
         });
 
         Schema::create('pro_product_photos', function (Blueprint $table) {
@@ -47,7 +47,7 @@ return new class extends Migration {
             $table->integer("is_default")->default(0);
 
             $table->timestamps();
-            $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pro_product')->onDelete('cascade');
         });
 
     }

@@ -53,7 +53,7 @@ return new class extends Migration {
             $table->bigInteger('product_id')->unsigned();
             $table->bigInteger('attribute_id')->unsigned();
             $table->json('values')->nullable();
-            $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pro_product')->onDelete('cascade');
             $table->foreign('attribute_id')->references('id')->on('pro_attributes')->onDelete('cascade');
         });
 

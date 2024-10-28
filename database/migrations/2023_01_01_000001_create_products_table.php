@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
 
     public function up(): void {
-        Schema::create('pro_products', function (Blueprint $table) {
+        Schema::create('pro_product', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+
             $table->integer('pro_id')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('variants_slug_id')->nullable();
@@ -31,14 +33,20 @@ return new class extends Migration {
             $table->integer('featured')->default(0);
             $table->integer('sales_count')->default(1);
 
+            $table->string('qty_left')->nullable()->default(null);
+            $table->string('qty_max')->nullable()->default(null);
+            $table->string('unit')->nullable()->default(null);
+
+
             $table->timestamps();
             $table->softDeletes();
             $table->integer('attributes_count')->nullable();
             $table->integer('parents_count')->nullable();
-            $table->foreign('parent_id')->references('id')->on('pro_products')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('pro_product')->onDelete('cascade');
         });
 
-        Schema::create('pro_product_translations', function (Blueprint $table) {
+
+        Schema::create('pro_product_lang', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
             $table->string('locale')->index();
@@ -50,9 +58,8 @@ return new class extends Migration {
             $table->text('g_des')->nullable();
             $table->unique(['product_id', 'locale']);
             $table->unique(['locale', 'slug']);
-            $table->foreign('product_id')->references('id')->on('pro_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('pro_product')->onDelete('cascade');
         });
-
 
         Schema::create('pro_landing_page', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -64,7 +71,6 @@ return new class extends Migration {
             $table->string("photo_thum_1")->nullable();
             $table->timestamps();
         });
-
         Schema::create('pro_landing_page_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('page_id')->unsigned();
@@ -82,14 +88,13 @@ return new class extends Migration {
             $table->foreign('page_id')->references('id')->on('pro_landing_page')->onDelete('cascade');
         });
 
-
     }
 
 
     public function down(): void {
         Schema::dropIfExists('pro_landing_page_translations');
         Schema::dropIfExists('pro_landing_page');
-        Schema::dropIfExists('pro_product_translations');
-        Schema::dropIfExists('pro_products');
+        Schema::dropIfExists('pro_product_lang');
+        Schema::dropIfExists('pro_product');
     }
 };

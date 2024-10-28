@@ -5,6 +5,7 @@ namespace App\Http\Traits\Files;
 use App\AppPlugin\Crm\Customers\CrmCustomersController;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomers;
 use App\AppPlugin\Crm\Customers\Models\CrmCustomersAddress;
+use Database\Seeders\ModelSeeder;
 use Illuminate\Support\Facades\File;
 
 trait ProductFileTraits {
