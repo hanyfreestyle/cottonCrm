@@ -2,6 +2,8 @@
 
 namespace App\AppPlugin\Product\Seeder;
 
+use App\AppPlugin\Product\Models\Brand;
+use App\AppPlugin\Product\Models\BrandTranslation;
 use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\CategoryPivot;
 use App\AppPlugin\Product\Models\CategoryTranslation;
@@ -23,6 +25,7 @@ class ProductSeeder extends Seeder {
     public function run(): void {
 
         $config = ProductConfigTraits::DbConfig();
+
         SeedDbFile(Category::class, $config['DbCategory'] . ".sql");
         SeedDbFile(CategoryTranslation::class, $config['DbCategoryTrans'] . ".sql");
 
@@ -32,7 +35,8 @@ class ProductSeeder extends Seeder {
 
         SeedDbFile(CategoryPivot::class, $config['DbCategoryPivot'] . ".sql");
 
-
+        SeedDbFile(Brand::class, $config['DbBrand'] . ".sql");
+        SeedDbFile(BrandTranslation::class, $config['DbBrandTrans'] . ".sql");
 
 
 //        LandingPage::unguard();

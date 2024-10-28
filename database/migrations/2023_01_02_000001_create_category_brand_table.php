@@ -46,7 +46,7 @@ return new class extends Migration {
         });
 
 
-        Schema::create('pro_brands', function (Blueprint $table) {
+        Schema::create('pro_brand', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('old_id')->nullable();
@@ -59,7 +59,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('pro_brand_translations', function (Blueprint $table) {
+        Schema::create('pro_brand_lang', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('brand_id')->unsigned();
             $table->string('locale')->index();
@@ -70,15 +70,15 @@ return new class extends Migration {
             $table->text('g_des')->nullable();
             $table->unique(['brand_id', 'locale']);
             $table->unique(['locale', 'slug']);
-            $table->foreign('brand_id')->references('id')->on('pro_brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('pro_brand')->onDelete('cascade');
         });
 
     }
 
 
     public function down(): void {
-        Schema::dropIfExists('pro_brand_translations');
-        Schema::dropIfExists('pro_brands');
+        Schema::dropIfExists('pro_brand_lang');
+        Schema::dropIfExists('pro_brand');
         Schema::dropIfExists('pro_category_pivot');
         Schema::dropIfExists('pro_category_lang');
         Schema::dropIfExists('pro_category');

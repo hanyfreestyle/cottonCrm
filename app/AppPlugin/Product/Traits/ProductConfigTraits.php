@@ -14,6 +14,8 @@ trait ProductConfigTraits {
             'DbCategoryPivot' => 'pro_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
+            'DbBrand' => 'pro_brand',
+            'DbBrandTrans' => 'pro_brand_lang',
 
             'DbPost' => 'pro_product',
             'DbPostTrans' => 'pro_product_lang',

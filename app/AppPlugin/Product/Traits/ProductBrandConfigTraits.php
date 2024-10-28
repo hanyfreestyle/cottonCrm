@@ -12,8 +12,8 @@ trait ProductBrandConfigTraits {
         $config = [
             'PrefixRole' => "Blog",
 
-            'DbCategory'=>'pro_brands',
-            'DbCategoryTrans'=>'pro_brand_translations',
+            'DbCategory'=>'pro_brand',
+            'DbCategoryTrans'=>'pro_brand_lang',
             'DbCategoryForeign'=>'brand_id',
 
 //            'DbPost' => 'blog_post',

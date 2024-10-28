@@ -18,7 +18,7 @@ class Brand extends Model implements TranslatableContract {
     use HasRecursiveRelationships;
 
 
-    protected $table = "pro_brands";
+    protected $table = "pro_brand";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'brand_id';
     public $translatedAttributes = ['name', 'slug', 'des', 'g_title', 'g_des'];

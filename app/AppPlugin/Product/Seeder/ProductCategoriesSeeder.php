@@ -20,13 +20,7 @@ class ProductCategoriesSeeder extends Seeder {
     public function run(): void {
 
 
-//        Brand::unguard();
-//        $tablePath = public_path('db/pro_brands.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//        BrandTranslation::unguard();
-//        $tablePath = public_path('db/pro_brand_translations.sql');
-//        DB::unprepared(file_get_contents($tablePath));
+
 //
 //        Attribute::unguard();
 //        $tablePath = public_path('db/pro_attributes.sql');
