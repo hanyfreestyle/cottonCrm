@@ -9,6 +9,6 @@ class ProductTagsTranslation extends Model {
 
 
     public $timestamps = false;
-    protected $table = "pro_tags_translations";
+    protected $table = "pro_tags_lang";
     protected $fillable = ['name'];
 }

@@ -25,7 +25,7 @@ class ProductTags extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # products
     public function products(): BelongsToMany {
-        return $this->belongsToMany(Product::class,'pro_tags_product','tag_id', 'product_id');
+        return $this->belongsToMany(Product::class,'pro_tags_pivot','tag_id', 'product_id');
     }
 
 

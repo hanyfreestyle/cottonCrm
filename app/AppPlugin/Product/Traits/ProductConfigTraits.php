@@ -31,8 +31,8 @@ trait ProductConfigTraits {
             'DbPhotoTrans' => 'blog_photo_lang',
 
             'DbTags' => 'pro_tags',
-            'DbTagsTrans' => 'pro_tags_translations',
-            'DbTagsPivot' => 'pro_tags_product',
+            'DbTagsTrans' => 'pro_tags_lang',
+            'DbTagsPivot' => 'pro_tags_pivot',
 
 
             'LangCategoryDefName' => __('admin/def.category_name'),

@@ -51,7 +51,7 @@ class Product extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| # tags
     public function tags(): BelongsToMany {
-        return $this->belongsToMany(ProductTags::class, 'pro_tags_product', 'product_id', 'tag_id');
+        return $this->belongsToMany(ProductTags::class, 'pro_tags_pivot', 'product_id', 'tag_id');
     }
 
     public function brand(): BelongsTo {

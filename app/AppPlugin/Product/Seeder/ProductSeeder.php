@@ -2,12 +2,17 @@
 
 namespace App\AppPlugin\Product\Seeder;
 
+use App\AppPlugin\Product\Models\Attribute;
+use App\AppPlugin\Product\Models\AttributeTranslation;
+use App\AppPlugin\Product\Models\AttributeValue;
 use App\AppPlugin\Product\Models\Brand;
 use App\AppPlugin\Product\Models\BrandTranslation;
 use App\AppPlugin\Product\Models\Category;
 use App\AppPlugin\Product\Models\CategoryPivot;
 use App\AppPlugin\Product\Models\CategoryTranslation;
 use App\AppPlugin\Product\Models\Product;
+use App\AppPlugin\Product\Models\ProductTags;
+use App\AppPlugin\Product\Models\ProductTagsTranslation;
 use App\AppPlugin\Product\Models\ProductTranslation;
 
 use App\AppPlugin\Product\Models\LandingPage;
@@ -39,6 +44,11 @@ class ProductSeeder extends Seeder {
         SeedDbFile(BrandTranslation::class, $config['DbBrandTrans'] . ".sql");
 
 
+        SeedDbFile(ProductTags::class, $config['DbTags'] . ".sql");
+        SeedDbFile(ProductTagsTranslation::class, $config['DbTagsTrans'] . ".sql");
+        SeedDbFile(ProductTagsPivot::class, $config['DbTagsPivot'] . ".sql");
+
+
 //        LandingPage::unguard();
 //        $tablePath = public_path('db/pro_landing_page.sql');
 //        DB::unprepared(file_get_contents($tablePath));
@@ -57,9 +67,23 @@ class ProductSeeder extends Seeder {
 //        $tablePath = public_path('db/pro_product_attribute.sql');
 //        DB::unprepared(file_get_contents($tablePath));
 //
-//        ProductTagsPivot::unguard();
-//        $tablePath = public_path('db/pro_tags_product.sql');
+
+//        Attribute::unguard();
+//        $tablePath = public_path('db/pro_attributes.sql');
 //        DB::unprepared(file_get_contents($tablePath));
+//
+//        AttributeTranslation::unguard();
+//        $tablePath = public_path('db/pro_attribute_translations.sql');
+//        DB::unprepared(file_get_contents($tablePath));
+//
+//        AttributeValue::unguard();
+//        $tablePath = public_path('db/pro_attribute_values.sql');
+//        DB::unprepared(file_get_contents($tablePath));
+//
+//        AttributeValue::unguard();
+//        $tablePath = public_path('db/pro_attribute_value_translations.sql');
+//        DB::unprepared(file_get_contents($tablePath));
+
 
     }
 
