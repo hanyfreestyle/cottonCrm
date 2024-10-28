@@ -4,7 +4,7 @@
         :title="__('admin/proProduct.app_menu_product')"
         icon="fas fa-shopping-cart"
         bg="p"
-        :url="route('admin.Shop.Product.index')"
+        :url="route('admin.Product.Product.index')"
 
     />
     <x-admin.dashboard.color-card
@@ -12,7 +12,7 @@
         :title="__('admin/proProduct.app_menu_category')"
         icon="fas fa-sitemap"
         bg="s"
-        :url="route('admin.Shop.Category.index')"
+        :url="route('admin.Product.Category.index')"
 
     />
 
@@ -21,7 +21,7 @@
         :title="__('admin/proProduct.app_menu_brand')"
         icon="fas fa-copyright"
         bg="i"
-        :url="route('admin.Shop.Brand.index')"
+        :url="route('admin.Product.Brand.index')"
 
     />
 
@@ -30,7 +30,7 @@
         :title="__('admin/proProduct.app_menu_archived_products')"
         icon="fas fa-archive"
         bg="d"
-        :url="route('admin.Shop.ProductAchived.index')"
+        :url="route('admin.Product.ProductAchived.index')"
 
     />
 

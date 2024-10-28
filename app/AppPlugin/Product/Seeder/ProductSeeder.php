@@ -31,26 +31,27 @@ class ProductSeeder extends Seeder {
 
         $config = ProductConfigTraits::DbConfig();
 
-        SeedDbFile(Category::class, $config['DbCategory'] . ".sql");
-        SeedDbFile(CategoryTranslation::class, $config['DbCategoryTrans'] . ".sql");
-
         SeedDbFile(Product::class, $config['DbPost'] . ".sql");
         SeedDbFile(ProductTranslation::class, $config['DbPostTrans'] . ".sql");
-
-
-        SeedDbFile(CategoryPivot::class, $config['DbCategoryPivot'] . ".sql");
 
         SeedDbFile(Brand::class, $config['DbBrand'] . ".sql");
         SeedDbFile(BrandTranslation::class, $config['DbBrandTrans'] . ".sql");
 
+        SeedDbFile(Category::class, $config['DbCategory'] . ".sql");
+        SeedDbFile(CategoryTranslation::class, $config['DbCategoryTrans'] . ".sql");
+        SeedDbFile(CategoryPivot::class, $config['DbCategoryPivot'] . ".sql");
 
         SeedDbFile(ProductTags::class, $config['DbTags'] . ".sql");
         SeedDbFile(ProductTagsTranslation::class, $config['DbTagsTrans'] . ".sql");
         SeedDbFile(ProductTagsPivot::class, $config['DbTagsPivot'] . ".sql");
 
-
         SeedDbFile(LandingPage::class, $config['DbLandingPage'] . ".sql");
         SeedDbFile(LandingPageTranslation::class, $config['DbLandingPageTrans'] . ".sql");
+
+        SeedDbFile(Attribute::class, "pro_attribute.sql");
+        SeedDbFile(AttributeTranslation::class, "pro_attribute_lang.sql");
+        SeedDbFile(AttributeValue::class, "pro_attribute_value.sql");
+        SeedDbFile(AttributeValue::class, "pro_attribute_value_lang.sql");
 
 
 //        ProductPhoto::unguard();
@@ -62,10 +63,7 @@ class ProductSeeder extends Seeder {
 //        $tablePath = public_path('db/pro_product_attribute.sql');
 //        DB::unprepared(file_get_contents($tablePath));
 //
-        SeedDbFile(Attribute::class, "pro_attributes.sql");
-        SeedDbFile(AttributeTranslation::class, "pro_attribute_translations.sql");
-        SeedDbFile(AttributeValue::class, "pro_attribute_values.sql");
-        SeedDbFile(AttributeValue::class, "pro_attribute_value_translations.sql");
+
 
     }
 

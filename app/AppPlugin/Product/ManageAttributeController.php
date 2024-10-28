@@ -22,7 +22,7 @@ class ManageAttributeController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "Product";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_product');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;

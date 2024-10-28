@@ -11,7 +11,7 @@
 
         <x-admin.form.action-button url="{{route('admin.Product.ProAttribute.index')}}" :print-lable="__('admin/proProduct.att_but_attribute')"
                                     :tip="false" icon="fas fa-code-branch"/>
-        <x-admin.form.action-button url="{{route('admin.Shop.ProAttributeValue.index',$Attribute->id)}}"
+        <x-admin.form.action-button url="{{route('admin.Product.ProAttributeValue.index',$Attribute->id)}}"
                                     :print-lable="__('admin/proProduct.att_but_value')" :tip="false" icon="fas fa-list-ol" bg="dark"/>
       </div>
     </div>

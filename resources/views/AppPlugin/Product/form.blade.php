@@ -55,7 +55,7 @@
                                             <span>{{number_format($childproduct->price)}}</span></li>
                                     @endforeach
                                 </ul>
-                                <x-admin.form.action-button url="{{route('admin.Shop.Product.manage-attribute',$rowData->id)}}"
+                                <x-admin.form.action-button url="{{route('admin.Product.Product.manage-attribute',$rowData->id)}}"
                                                             :print-lable="__('admin/proProduct.pro_variant_manage')" :tip="false"/>
 
                             </x-admin.card.normal>

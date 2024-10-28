@@ -6,9 +6,9 @@
       </div>
       <div class="col-7 dir_button">
         @if(count($row->childproduct) == 0)
-          <x-admin.form.action-button url="{{route('admin.Shop.Product.manage-attribute',$row->id)}}" :print-lable="__('admin/proProduct.pro_variant_add')" :tip="false"/>
+          <x-admin.form.action-button url="{{route('admin.Product.Product.manage-attribute',$row->id)}}" :print-lable="__('admin/proProduct.pro_variant_add')" :tip="false"/>
         @else
-          <x-admin.form.action-button url="{{route('admin.Shop.Product.manage-attribute',$row->id)}}" :print-lable="__('admin/proProduct.pro_variant_manage')" :tip="false"/>
+          <x-admin.form.action-button url="{{route('admin.Product.Product.manage-attribute',$row->id)}}" :print-lable="__('admin/proProduct.pro_variant_manage')" :tip="false"/>
         @endif
         <x-admin.lang.add-new-button :row="$row" :tip="false"/>
         <x-admin.lang.delete-button :row="$row"/>

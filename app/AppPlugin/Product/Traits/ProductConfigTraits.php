@@ -101,7 +101,7 @@ trait ProductConfigTraits {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = setActiveRoute("Product");;
-        $subMenu->url = "admin.Shop.Product.index";
+        $subMenu->url = "admin.Product.Product.index";
         $subMenu->name = "admin/proProduct.app_menu_product";
         $subMenu->roleView = "Product_view";
         $subMenu->icon = "fas fa-shopping-cart";
@@ -110,7 +110,7 @@ trait ProductConfigTraits {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "Product.createNew";
-        $subMenu->url = "admin.Shop.Product.create";
+        $subMenu->url = "admin.Product.Product.create";
         $subMenu->name = "admin/proProduct.app_menu_add_pro";
         $subMenu->roleView = "Product_add";
         $subMenu->icon = "fas fa-plus-circle";
@@ -154,7 +154,7 @@ trait ProductConfigTraits {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "ProductAchived.index";
-        $subMenu->url = "admin.Shop.ProductAchived.index";
+        $subMenu->url = "admin.Product.ProductAchived.index";
         $subMenu->name = "admin/proProduct.app_menu_archived_products";
         $subMenu->roleView = "Product_view";
         $subMenu->icon = "fas fa-archive";
@@ -163,7 +163,7 @@ trait ProductConfigTraits {
 //        $subMenu = new AdminMenu();
 //        $subMenu->parent_id = $mainMenu->id;
 //        $subMenu->sel_routs = "UpdatePrices.index";
-//        $subMenu->url = "admin.Shop.UpdatePrices.index";
+//        $subMenu->url = "admin.Product.UpdatePrices.index";
 //        $subMenu->name = "admin/proProduct.app_menu_update_price";
 //        $subMenu->roleView = "Product_edit";
 //        $subMenu->icon = "fas fa-hand-holding-usd";

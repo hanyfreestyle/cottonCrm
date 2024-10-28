@@ -1,6 +1,6 @@
 @if(count($attributes) > 0)
   <x-admin.card.normal>
-    <form class="mainForm" action="{{route('admin.Shop.Product.manage-attributeUpdate',$product->id)}}" method="post">
+    <form class="mainForm" action="{{route('admin.Product.Product.manage-attributeUpdate',$product->id)}}" method="post">
       @csrf
       <x-admin.form.select-multiple name="attributes" :categories="$attributes" :col="12"/>
       <x-admin.form.submit text="Add"/>
@@ -18,7 +18,7 @@
     @endif
 
 
-    <form class="mainForm" action="{{route('admin.Shop.Product.value-update')}}" method="post">
+    <form class="mainForm" action="{{route('admin.Product.Product.value-update')}}" method="post">
       @foreach($product->attributes as $attribute)
         <x-admin.card.normal :title="$attribute->name">
           @csrf
@@ -42,7 +42,7 @@
               @enderror
             </div>
             <div class="col-lg-1">
-              <a  class="btn btn-danger" href="{{route('admin.Shop.Product.remove-attribute',[$product->id,$attribute->id])}}">{{__('admin/form.button_delete')}}</a>
+              <a  class="btn btn-danger" href="{{route('admin.Product.Product.remove-attribute',[$product->id,$attribute->id])}}">{{__('admin/form.button_delete')}}</a>
             </div>
           </div>
         </x-admin.card.normal>

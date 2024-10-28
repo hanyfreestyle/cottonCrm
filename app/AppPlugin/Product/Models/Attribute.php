@@ -13,7 +13,7 @@ class Attribute extends Model implements TranslatableContract {
 
     use Translatable;
 
-    protected $table = "pro_attributes";
+    protected $table = "pro_attribute";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'attribute_id';
     public $translatedAttributes = ['name', 'slug'];

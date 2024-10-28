@@ -14,7 +14,7 @@
     @if(count($product->childproduct) > 0)
       <x-admin.hmtl.section>
         <div class="row col-lg-12">
-          <a href="#" id="{{route('admin.Shop.Product.RemoveVariants',$product->id)}}" class="btn btn-danger sweet_daleteBtn_noForm" > حذف الخصائص واعادة التخصيص</a>
+          <a href="#" id="{{route('admin.Product.Product.RemoveVariants',$product->id)}}" class="btn btn-danger sweet_daleteBtn_noForm" > حذف الخصائص واعادة التخصيص</a>
         </div>
       </x-admin.hmtl.section>
 

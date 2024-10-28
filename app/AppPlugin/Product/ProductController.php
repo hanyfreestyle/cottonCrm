@@ -33,7 +33,7 @@ class ProductController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "Product";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_product');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -128,11 +128,11 @@ class ProductController extends AdminMainController {
         $pageData['Trashed'] = Product::onlyTrashed()->count();
         $session = self::getSessionData($request);
 
-        if (Route::currentRouteName() == "admin.Shop.ProductAchived.index" or Route::currentRouteName() == "admin.Shop.Product.filter_archived") {
+        if (Route::currentRouteName() == "admin.Product.ProductAchived.index" or Route::currentRouteName() == "admin.Product.Product.filter_archived") {
             $is_archived = 1;
             $route = route($this->PrefixRoute . '.DataTableArchived');
             $filterRoute = ".filter_archived";
-        } elseif (Route::currentRouteName() == 'admin.Shop.Product.SoftDelete') {
+        } elseif (Route::currentRouteName() == 'admin.Product.Product.SoftDelete') {
             $is_archived = 0;
             $route = route($this->PrefixRoute . '.DataTableSoftDelete');
             $filterRoute = ".filter";

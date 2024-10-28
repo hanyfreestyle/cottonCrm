@@ -30,7 +30,7 @@
                                 <td>{{$row->price}}</td>
                                 <td>
                                     <x-admin.form.action-button
-                                        url="{{route('admin.Shop.Product.manage-attribute',$row->id)}}"
+                                        url="{{route('admin.Product.Product.manage-attribute',$row->id)}}"
                                         :print-lable="__('admin/proProduct.pro_variant_manage')" :tip="false"/>
                                 </td>
                                 <x-admin.table.action-but type="edit" :row="$row"/>
@@ -65,7 +65,7 @@
                                 <td>{{$row->price}}</td>
                                 <td>
                                     <x-admin.form.action-button
-                                        url="{{route('admin.Shop.Product.manage-attribute',$row->id)}}"
+                                        url="{{route('admin.Product.Product.manage-attribute',$row->id)}}"
                                         :print-lable="__('admin/proProduct.pro_variant_manage')" :tip="false"/>
                                 </td>
                                 <x-admin.table.action-but type="edit" :row="$row"/>

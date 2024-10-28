@@ -31,11 +31,11 @@ class AttributeRequest extends FormRequest {
         $rules = [];
         foreach (config('app.web_lang') as $key => $lang) {
             if($id == '0') {
-                $rules[$key . ".name"] = "required|unique:pro_attribute_translations,name";
-                $rules[$key . ".slug"] = "required|unique:pro_attribute_translations,slug";
+                $rules[$key . ".name"] = "required|unique:pro_attribute_lang,name";
+                $rules[$key . ".slug"] = "required|unique:pro_attribute_lang,slug";
             } else {
-                $rules[$key . ".name"] = "required|unique:pro_attribute_translations,name,$id,attribute_id,locale,$key";
-                $rules[$key . ".slug"] = "required|unique:pro_attribute_translations,slug,$id,attribute_id,locale,$key";
+                $rules[$key . ".name"] = "required|unique:pro_attribute_lang,name,$id,attribute_id,locale,$key";
+                $rules[$key . ".slug"] = "required|unique:pro_attribute_lang,slug,$id,attribute_id,locale,$key";
             }
         }
 

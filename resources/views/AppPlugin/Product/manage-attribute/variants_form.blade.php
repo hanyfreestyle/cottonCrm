@@ -7,7 +7,7 @@
 
   <div class="row">
     <div class="col-lg-12">
-      <form action="{{route('admin.Shop.Product.UpdateVariants', $product->id)}}" method="post">
+      <form action="{{route('admin.Product.Product.UpdateVariants', $product->id)}}" method="post">
         <div class="d-flex">
 
           @csrf

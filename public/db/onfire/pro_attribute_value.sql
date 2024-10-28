@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `pro_attribute_values`
+-- Dumping data for table `pro_attribute_value`
 --
 
-INSERT INTO `pro_attribute_values` (`id`, `attribute_id`, `old_id`, `is_active`, `postion`) VALUES
+INSERT INTO `pro_attribute_value` (`id`, `attribute_id`, `old_id`, `is_active`, `postion`) VALUES
 (1, 1, NULL, 1, 0),
 (2, 1, NULL, 1, 0),
 (3, 1, NULL, 1, 0),

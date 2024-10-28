@@ -11,7 +11,7 @@ class AttributeValue extends Model implements TranslatableContract {
 
     use Translatable;
 
-    protected $table = "pro_attribute_values";
+    protected $table = "pro_attribute_value";
     protected $primaryKey = 'id';
     protected $translationForeignKey = 'value_id';
     public $translatedAttributes = ['name', 'slug'];

@@ -22,7 +22,7 @@ class AttributeValueController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "ProAttributeValue";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_attribute');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;

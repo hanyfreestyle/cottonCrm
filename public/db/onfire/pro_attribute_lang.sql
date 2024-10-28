@@ -22,10 +22,10 @@ SET time_zone = "+00:00";
 --
 
 --
--- Dumping data for table `pro_attribute_translations`
+-- Dumping data for table `pro_attribute_lang`
 --
 
-INSERT INTO `pro_attribute_translations` (`id`, `attribute_id`, `locale`, `slug`, `name`, `des`) VALUES
+INSERT INTO `pro_attribute_lang` (`id`, `attribute_id`, `locale`, `slug`, `name`, `des`) VALUES
 (1, 1, 'ar', 'الطول', 'الطول', NULL),
 (2, 1, 'en', 'height', 'Height', NULL),
 (3, 2, 'ar', 'العرض', 'العرض', NULL),
