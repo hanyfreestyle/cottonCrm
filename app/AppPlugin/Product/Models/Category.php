@@ -45,7 +45,7 @@ class Category extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #
     public function recursive_product_shop() {
-        return $this->belongsToManyOfDescendantsAndSelf(Product::class, 'pro_category_product')
+        return $this->belongsToManyOfDescendantsAndSelf(Product::class, 'pro_category_pivot')
             ->with('translation')
             ->with('categories')
             ->where('is_active', true)
@@ -57,7 +57,7 @@ class Category extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  products
     public function products() {
-        return $this->belongsToMany(Product::class, 'pro_category_product', 'category_id', 'product_id')
+        return $this->belongsToMany(Product::class, 'pro_category_pivot', 'category_id', 'product_id')
             ->where('is_active', true)
 //            ->where('is_archived', false)
             ->with('translation');
@@ -66,7 +66,7 @@ class Category extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  productsHome
     public function products_home() {
-        return $this->belongsToMany(Product::class, 'pro_category_product', 'category_id', 'product_id')
+        return $this->belongsToMany(Product::class, 'pro_category_pivot', 'category_id', 'product_id')
             ->where('is_active', true)
 //            ->where('is_archived', false)
             ->where('parent_id', null)
@@ -76,7 +76,7 @@ class Category extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  products
     public function products_count() {
-        return $this->belongsToMany(Product::class, 'pro_category_product', 'category_id', 'product_id')
+        return $this->belongsToMany(Product::class, 'pro_category_pivot', 'category_id', 'product_id')
             ->where('is_active', true)
 //            ->where('is_archived', false)
             ->with('translation');
@@ -85,7 +85,7 @@ class Category extends Model implements TranslatableContract {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #  products
     public function products_count_filter() {
-        return $this->belongsToMany(Product::class, 'pro_category_product', 'category_id', 'product_id')
+        return $this->belongsToMany(Product::class, 'pro_category_pivot', 'category_id', 'product_id')
             ->where('is_active', true)
 //            ->where('is_archived', false)
             ->with('translation');
@@ -103,7 +103,7 @@ class Category extends Model implements TranslatableContract {
     }
 
     public function del_product() {
-        return $this->belongsToMany(Product::class, 'pro_category_product', 'category_id', 'product_id')->withTrashed();
+        return $this->belongsToMany(Product::class, 'pro_category_pivot', 'category_id', 'product_id')->withTrashed();
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

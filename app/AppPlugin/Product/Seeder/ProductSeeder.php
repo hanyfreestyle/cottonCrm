@@ -2,17 +2,17 @@
 
 namespace App\AppPlugin\Product\Seeder;
 
-use App\AppPlugin\Models\BlogPost\Traits\BlogConfigTraits;
 use App\AppPlugin\Product\Models\Category;
+use App\AppPlugin\Product\Models\CategoryProduct;
 use App\AppPlugin\Product\Models\CategoryTranslation;
+use App\AppPlugin\Product\Models\Product;
+use App\AppPlugin\Product\Models\ProductTranslation;
 
 use App\AppPlugin\Product\Models\LandingPage;
 use App\AppPlugin\Product\Models\LandingPageTranslation;
-use App\AppPlugin\Product\Models\Product;
 use App\AppPlugin\Product\Models\ProductAttribute;
 use App\AppPlugin\Product\Models\ProductPhoto;
 use App\AppPlugin\Product\Models\ProductTagsPivot;
-use App\AppPlugin\Product\Models\ProductTranslation;
 use App\AppPlugin\Product\Traits\ProductConfigTraits;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +30,11 @@ class ProductSeeder extends Seeder {
         SeedDbFile(ProductTranslation::class, $config['DbPostTrans'] . ".sql");
 
 
+        SeedDbFile(CategoryProduct::class, $config['DbCategoryPivot'] . ".sql");
+
+
+
+
 //        LandingPage::unguard();
 //        $tablePath = public_path('db/pro_landing_page.sql');
 //        DB::unprepared(file_get_contents($tablePath));
@@ -43,10 +48,7 @@ class ProductSeeder extends Seeder {
 //        $tablePath = public_path('db/pro_product_photos.sql');
 //        DB::unprepared(file_get_contents($tablePath));
 //
-//        CategoryProduct::unguard();
-//        $tablePath = public_path('db/pro_category_product.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
+
 //        ProductAttribute::unguard();
 //        $tablePath = public_path('db/pro_product_attribute.sql');
 //        DB::unprepared(file_get_contents($tablePath));

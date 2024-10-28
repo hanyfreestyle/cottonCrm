@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CategoryProduct extends Model {
 
-    protected $table = "pro_category_product";
+    protected $table = "pro_category_pivot";
     public $timestamps = false;
     protected $fillable = ['category_id', 'product_id'];
 

@@ -37,7 +37,7 @@ return new class extends Migration {
             $table->foreign('category_id')->references('id')->on('pro_category')->onDelete('cascade');
         });
 
-        Schema::create('pro_category_product', function (Blueprint $table) {
+        Schema::create('pro_category_pivot', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBiginteger('category_id');
             $table->unsignedBiginteger('product_id');
@@ -79,7 +79,7 @@ return new class extends Migration {
     public function down(): void {
         Schema::dropIfExists('pro_brand_translations');
         Schema::dropIfExists('pro_brands');
-        Schema::dropIfExists('pro_category_product');
+        Schema::dropIfExists('pro_category_pivot');
         Schema::dropIfExists('pro_category_lang');
         Schema::dropIfExists('pro_category');
     }

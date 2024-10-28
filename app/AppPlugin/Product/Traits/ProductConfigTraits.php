@@ -11,7 +11,7 @@ trait ProductConfigTraits {
 
             'DbCategory' => 'pro_category',
             'DbCategoryTrans' => 'pro_category_lang',
-            'DbCategoryPivot' => 'pro_category_product',
+            'DbCategoryPivot' => 'pro_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
 
