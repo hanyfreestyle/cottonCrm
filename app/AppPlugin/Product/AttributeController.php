@@ -20,7 +20,7 @@ class AttributeController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "ProAttribute";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_attribute');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -42,19 +42,22 @@ class AttributeController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashAttributeValueList');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index() {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
         $rowData = self::getSelectQuery(Attribute::def());
-        return view('AppPlugin.Product.attribute_index', compact('pageData', 'rowData'));
+        return view('AppPlugin.Product.attribute_index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+        ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -130,7 +133,7 @@ class AttributeController extends AdminMainController {
         dd('working');
         $deleteRow = Attribute::where('id', $id)->withcount('values')->firstOrFail();
 
-        if($deleteRow->values_count == 0) {
+        if ($deleteRow->values_count == 0) {
             try {
                 DB::transaction(function () use ($deleteRow, $id) {
                     $deleteRow->forceDelete();

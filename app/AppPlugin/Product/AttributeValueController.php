@@ -45,21 +45,32 @@ class AttributeValueController extends AdminMainController {
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| # ClearCash
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ClearCash() {
         Cache::forget('CashAttributeValueList');
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     index
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function index($AttributeId) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
-        $Attribute = Attribute::with('translation')->where('id', $AttributeId)->firstOrFail();
+
+        $Attribute = Attribute::query()
+            ->with('translation')
+            ->where('id', $AttributeId)
+            ->firstOrFail();
+
         $rowData = self::getSelectQuery(AttributeValue::def()->where('attribute_id', $AttributeId));
-        return view('AppPlugin.Product.attribute_value_index', compact('pageData', 'rowData', 'Attribute'));
+
+        return view('AppPlugin.Product.attribute_value_index')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'Attribute' => $Attribute,
+        ]);
     }
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     create
@@ -73,48 +84,48 @@ class AttributeValueController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #|||||||||||||||||||||||||||||||||||||| #     createData
-    public function createData(){
-        $save = 0 ;
+    public function createData() {
+        $save = 0;
 
         $startFrom = 500;
-        $plus = 250 ;
+        $plus = 250;
         $attribute_id = 5;
-        $lable = "جرام" ;
-        $lable_en = "Gram" ;
+        $lable = "جرام";
+        $lable_en = "Gram";
 
-        for ($i = 1; $i <=7 ; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
 
             $saveData = new AttributeValue();
             $saveData->is_active = true;
             $saveData->attribute_id = $attribute_id;
-            if($save){
+            if ($save) {
                 $saveData->save();
             }
 
-            $name = $startFrom." ".$lable;
-            $name_en = $startFrom." ".$lable_en;
+            $name = $startFrom . " " . $lable;
+            $name_en = $startFrom . " " . $lable_en;
 
             $saveTranslation = AttributeValueTranslation::where('value_id', $saveData->id)->where('locale', 'ar')->firstOrNew();
             $saveTranslation->locale = 'ar';
             $saveTranslation->value_id = $saveData->id;
-            $saveTranslation->name = $name ;
-            $saveTranslation->slug = AdminHelper::Url_Slug($name." ".$attribute_id);
-            if($save){
+            $saveTranslation->name = $name;
+            $saveTranslation->slug = AdminHelper::Url_Slug($name . " " . $attribute_id);
+            if ($save) {
                 $saveTranslation->save();
             }
 
             $saveTranslation = AttributeValueTranslation::where('value_id', $saveData->id)->where('locale', 'en')->firstOrNew();
             $saveTranslation->locale = 'en';
             $saveTranslation->value_id = $saveData->id;
-            $saveTranslation->name = $name_en ;
-            $saveTranslation->slug = AdminHelper::Url_Slug($name_en." ".$attribute_id);
-            if($save){
+            $saveTranslation->name = $name_en;
+            $saveTranslation->slug = AdminHelper::Url_Slug($name_en . " " . $attribute_id);
+            if ($save) {
                 $saveTranslation->save();
             }
 
             echobr($name);
             echobr($name_en);
-            $startFrom = $startFrom+$plus;
+            $startFrom = $startFrom + $plus;
         }
 
     }
@@ -183,7 +194,7 @@ class AttributeValueController extends AdminMainController {
     public function ForceDeleteException($id) {
         dd('working');
         $deleteRow = Product::onlyTrashed()->where('id', $id)->with('more_photos')->firstOrFail();
-        if(count($deleteRow->more_photos) > 0) {
+        if (count($deleteRow->more_photos) > 0) {
             foreach ($deleteRow->more_photos as $del_photo) {
                 AdminHelper::DeleteAllPhotos($del_photo);
             }

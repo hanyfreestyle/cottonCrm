@@ -8,7 +8,8 @@
         <h1 class="def_h1_new">{!! print_h1($Attribute) !!}</h1>
       </div>
       <div class="col-7 dir_button">
-        <x-admin.form.action-button url="{{route('admin.Shop.ProAttribute.index')}}" :print-lable="__('admin/proProduct.att_but_attribute')"
+
+        <x-admin.form.action-button url="{{route('admin.Product.ProAttribute.index')}}" :print-lable="__('admin/proProduct.att_but_attribute')"
                                     :tip="false" icon="fas fa-code-branch"/>
         <x-admin.form.action-button url="{{route('admin.Shop.ProAttributeValue.index',$Attribute->id)}}"
                                     :print-lable="__('admin/proProduct.att_but_value')" :tip="false" icon="fas fa-list-ol" bg="dark"/>

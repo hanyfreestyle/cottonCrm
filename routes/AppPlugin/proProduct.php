@@ -12,24 +12,13 @@ use App\AppPlugin\Product\ProductTagsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductDashboardController::class, 'Dashboard'])->name('Dashboard');
+Route::get('/product/update-prices', [ProductController::class, 'UpdatePrices'])->name('Shop.UpdatePrices.index');
+
 
 Route::CategoryRoute('product/category', 'Product.Category.', ProductCategoryController::class);
 Route::CategoryRoute('product/brand/', 'Product.Brand.', ProductBrandController::class);
 Route::TagsRoutes('product/tags/', 'Product.ProductTags.', 'ProductTags.', ProductTagsController::class);
 
-
-//Route::get('/product/tags', [ProductTagsController::class, 'TagsIndex'])->name('Shop.ProductTags.index');
-//Route::get('/product/tags/DataTable', [ProductTagsController::class, 'TagsDataTable'])->name('Shop.ProductTags.DataTable');
-//Route::get('/product/tags/create', [ProductTagsController::class, 'TagsCreate'])->name('Shop.ProductTags.create');
-//Route::get('/product/tags/edit/{id}', [ProductTagsController::class, 'TagsEdit'])->name('Shop.ProductTags.edit');
-//Route::post('/product/tags/update/{id}', [ProductTagsController::class, 'TagsStoreUpdate'])->name('Shop.ProductTags.update');
-//Route::get('/product/tags/destroy/{id}', [ProductTagsController::class, 'TagsDelete'])->name('Shop.ProductTags.destroy');
-//Route::get('/product/tags/config', [ProductTagsController::class, 'TagsConfig'])->name('Shop.ProductTags.config');
-//Route::get('/product/tags/TagsSearch', [ProductTagsController::class, 'TagsSearch'])->name('Product.TagsSearch');
-//Route::get('/product/tags/TagsOnFly', [ProductTagsController::class, 'TagsOnFly'])->name('Product.TagsOnFly');
-
-
-Route::get('/product/update-prices', [ProductController::class, 'UpdatePrices'])->name('Shop.UpdatePrices.index');
 
 Route::get('/product/', [ProductController::class, 'ProductIndex'])->name('Shop.Product.index');
 Route::post('/product/', [ProductController::class, 'ProductIndex'])->name('Shop.Product.filter');
@@ -63,15 +52,17 @@ Route::get('/product/PhotoDel/{id}', [ProductController::class, 'More_PhotosDest
 Route::get('/product/config', [ProductController::class, 'config'])->name('Shop.Product.config');
 
 
-Route::get('/product/attribute', [AttributeController::class, 'index'])->name('Shop.ProAttribute.index');
-Route::get('/product/attribute/create', [AttributeController::class, 'create'])->name('Shop.ProAttribute.create');
-Route::get('/product/attribute/edit/{id}', [AttributeController::class, 'edit'])->name('Shop.ProAttribute.edit');
-Route::post('/product/attribute/update/{id}', [AttributeController::class, 'storeUpdate'])->name('Shop.ProAttribute.update');
-Route::get('/product/attribute/destroy/{id}', [AttributeController::class, 'ForceDeleteException'])->name('Shop.ProAttribute.destroy');
-Route::get('/product/attribute/Sort', [AttributeController::class, 'Sort'])->name('Shop.ProAttribute.Sort');
-Route::post('/product/attribute/SaveSort', [AttributeController::class, 'SaveSort'])->name('Shop.ProAttribute.SaveSort');
-Route::get('/product/attribute/config', [AttributeController::class, 'config'])->name('Shop.ProAttribute.config');
-
+Route::prefix('product/attribute')->name('Product.ProAttribute.')
+    ->controller(AttributeController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'storeUpdate')->name('update');
+        Route::get('/destroy/{id}', 'ForceDeleteException')->name('destroy');
+        Route::get('/sort', 'Sort')->name('Sort');
+        Route::post('/save-sort', 'SaveSort')->name('SaveSort');
+        Route::get('/config', 'config')->name('config');
+    });
 
 Route::get('/attribute/value/{AttributeId}', [AttributeValueController::class, 'index'])->name('Shop.ProAttributeValue.index');
 Route::get('/attribute/value/create/{AttributeId}', [AttributeValueController::class, 'create'])->name('Shop.ProAttributeValue.create');

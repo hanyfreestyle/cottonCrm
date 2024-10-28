@@ -22,6 +22,11 @@ trait ProductConfigTraits {
             'DbBrand' => 'pro_brand',
             'DbBrandTrans' => 'pro_brand_lang',
 
+            "TableAttribute" => true,
+            'DbAttribute' => 'pro_brand',
+            'DbAttributeTrans' => 'pro_brand_lang',
+
+
             "TableLandingPage" => true,
             'DbLandingPage' => 'pro_landing_page',
             'DbLandingPageTrans' => 'pro_landing_page_lang',
@@ -134,25 +139,27 @@ trait ProductConfigTraits {
         }
 
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = setActiveRoute("ProAttribute") . "|" . setActiveRoute("ProAttributeValue");
-//        $subMenu->url = "admin.Shop.ProAttribute.index";
-//        $subMenu->name = "admin/proProduct.app_menu_attribute";
-//        $subMenu->roleView = "Product_view";
-//        $subMenu->icon = "fas fa-code-branch";
-//        $subMenu->save();
-//
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "ProductAchived.index";
-//        $subMenu->url = "admin.Shop.ProductAchived.index";
-//        $subMenu->name = "admin/proProduct.app_menu_archived_products";
-//        $subMenu->roleView = "Product_view";
-//        $subMenu->icon = "fas fa-archive";
-//        $subMenu->save();
-//
+        if (IsConfig($config, 'TableAttribute')) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = setActiveRoute("ProAttribute") . "|" . setActiveRoute("ProAttributeValue");
+            $subMenu->url = "admin.Product.ProAttribute.index";
+            $subMenu->name = "admin/proProduct.app_menu_attribute";
+            $subMenu->roleView = "Product_view";
+            $subMenu->icon = "fas fa-code-branch";
+            $subMenu->save();
+        }
+
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "ProductAchived.index";
+        $subMenu->url = "admin.Shop.ProductAchived.index";
+        $subMenu->name = "admin/proProduct.app_menu_archived_products";
+        $subMenu->roleView = "Product_view";
+        $subMenu->icon = "fas fa-archive";
+        $subMenu->save();
+
 //        $subMenu = new AdminMenu();
 //        $subMenu->parent_id = $mainMenu->id;
 //        $subMenu->sel_routs = "UpdatePrices.index";

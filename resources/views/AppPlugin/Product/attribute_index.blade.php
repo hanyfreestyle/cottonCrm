@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-  <x-admin.data-table.plugins :style="true" :is-active="$viewDataTable"/>
+  <x-admin.data-table.plugins :style="true" :is-active="false"/>
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
     <x-admin.card.def :page-data="$pageData">
       @if(count($rowData)>0)
         <div class="card-body table-responsive p-0">
-          <table {!! Table_Style($viewDataTable,$yajraTable)  !!} >
+          <table {!! Table_Style(false,false)  !!} >
             <thead>
             <tr>
               <th class="TD_20">#</th>
@@ -30,7 +30,7 @@
               @endcan
 
               @foreach(config('app.web_lang') as $key => $lang)
-                <th class="TD_200">{{__('admin/form.text_name')}}  {{printLableKey($key)}}</th>
+                <th class="TD_200">{{__('admin/form.text_name')}}  {{($key)}}</th>
               @endforeach
               <th class="TD_50"></th>
               <th class="TD_20"></th>
@@ -78,6 +78,6 @@
 
 @push('JsCode')
   <x-admin.table.sweet-delete-js/>
-  <x-admin.data-table.plugins :jscode="true" :is-active="$viewDataTable"/>
+  <x-admin.data-table.plugins :jscode="true" :is-active="false"/>
 @endpush
 

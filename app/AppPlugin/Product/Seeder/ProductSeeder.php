@@ -62,23 +62,10 @@ class ProductSeeder extends Seeder {
 //        $tablePath = public_path('db/pro_product_attribute.sql');
 //        DB::unprepared(file_get_contents($tablePath));
 //
-
-//        Attribute::unguard();
-//        $tablePath = public_path('db/pro_attributes.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//        AttributeTranslation::unguard();
-//        $tablePath = public_path('db/pro_attribute_translations.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//        AttributeValue::unguard();
-//        $tablePath = public_path('db/pro_attribute_values.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//        AttributeValue::unguard();
-//        $tablePath = public_path('db/pro_attribute_value_translations.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-
+        SeedDbFile(Attribute::class, "pro_attributes.sql");
+        SeedDbFile(AttributeTranslation::class, "pro_attribute_translations.sql");
+        SeedDbFile(AttributeValue::class, "pro_attribute_values.sql");
+        SeedDbFile(AttributeValue::class, "pro_attribute_value_translations.sql");
 
     }
 
