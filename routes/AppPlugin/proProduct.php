@@ -15,26 +15,19 @@ Route::get('/', [ProductDashboardController::class, 'Dashboard'])->name('Dashboa
 
 Route::CategoryRoute('product/category', 'Product.Category.', ProductCategoryController::class);
 Route::CategoryRoute('product/brand/', 'Product.Brand.', ProductBrandController::class);
+Route::TagsRoutes('product/tags/', 'Product.ProductTags.', 'ProductTags.', ProductTagsController::class);
 
 
-//Route::get('/brand/', [ProductBrandController::class, 'CategoryIndex'])->name('Shop.Brand.index');
-//Route::get('/brand/Main', [ProductBrandController::class, 'CategoryIndex'])->name('Shop.Brand.index_Main');
-//Route::get('/brand/SubCategory/{id}', [ProductBrandController::class, 'CategoryIndex'])->name('Shop.Brand.SubCategory');
-//Route::get('/brand/DataTable', [ProductBrandController::class, 'DataTable'])->name('Shop.Brand.DataTable');
-//Route::get('/brand/create', [ProductBrandController::class, 'CategoryCreate'])->name('Shop.Brand.create');
-//Route::get('/brand/create/ar', [ProductBrandController::class, 'CategoryCreate'])->name('Shop.Brand.create_ar');
-//Route::get('/brand/create/en', [ProductBrandController::class, 'CategoryCreate'])->name('Shop.Brand.create_en');
-//Route::get('/brand/edit/{id}', [ProductBrandController::class, 'CategoryEdit'])->name('Shop.Brand.edit');
-//Route::get('/brand/editAr/{id}', [ProductBrandController::class, 'CategoryEdit'])->name('Shop.Brand.editAr');
-//Route::get('/brand/editEn/{id}', [ProductBrandController::class, 'CategoryEdit'])->name('Shop.Brand.editEn');
-//Route::get('/brand/emptyPhoto/{id}', [ProductBrandController::class, 'emptyPhoto'])->name('Shop.Brand.emptyPhoto');
-//Route::get('/brand/DeleteLang/{id}', [ProductBrandController::class, 'DeleteLang'])->name('Shop.Brand.DeleteLang');
-//Route::post('/brand/update/{id}', [ProductBrandController::class, 'CategoryStoreUpdate'])->name('Shop.Brand.update');
-//Route::get('/brand/destroy/{id}', [ProductBrandController::class, 'destroyException'])->name('Shop.Brand.destroy');
-//Route::get('/brand/config', [ProductBrandController::class, 'config'])->name('Shop.Brand.config');
-//Route::get('/brand/emptyIcon/{id}', [ProductBrandController::class, 'emptyIcon'])->name('Shop.Brand.emptyIcon');
-//Route::get('/brand/CatSort/{id}', [ProductBrandController::class, 'CategorySort'])->name('Shop.Brand.CatSort');
-//Route::post('/brand/SaveSort', [ProductBrandController::class, 'CategorySaveSort'])->name('Shop.Brand.SaveSort');
+//Route::get('/product/tags', [ProductTagsController::class, 'TagsIndex'])->name('Shop.ProductTags.index');
+//Route::get('/product/tags/DataTable', [ProductTagsController::class, 'TagsDataTable'])->name('Shop.ProductTags.DataTable');
+//Route::get('/product/tags/create', [ProductTagsController::class, 'TagsCreate'])->name('Shop.ProductTags.create');
+//Route::get('/product/tags/edit/{id}', [ProductTagsController::class, 'TagsEdit'])->name('Shop.ProductTags.edit');
+//Route::post('/product/tags/update/{id}', [ProductTagsController::class, 'TagsStoreUpdate'])->name('Shop.ProductTags.update');
+//Route::get('/product/tags/destroy/{id}', [ProductTagsController::class, 'TagsDelete'])->name('Shop.ProductTags.destroy');
+//Route::get('/product/tags/config', [ProductTagsController::class, 'TagsConfig'])->name('Shop.ProductTags.config');
+//Route::get('/product/tags/TagsSearch', [ProductTagsController::class, 'TagsSearch'])->name('Product.TagsSearch');
+//Route::get('/product/tags/TagsOnFly', [ProductTagsController::class, 'TagsOnFly'])->name('Product.TagsOnFly');
+
 
 Route::get('/product/update-prices', [ProductController::class, 'UpdatePrices'])->name('Shop.UpdatePrices.index');
 
@@ -70,15 +63,7 @@ Route::get('/product/PhotoDel/{id}', [ProductController::class, 'More_PhotosDest
 Route::get('/product/config', [ProductController::class, 'config'])->name('Shop.Product.config');
 
 
-Route::get('/product/tags', [ProductTagsController::class, 'TagsIndex'])->name('Shop.ProductTags.index');
-Route::get('/product/tags/DataTable', [ProductTagsController::class, 'TagsDataTable'])->name('Shop.ProductTags.DataTable');
-Route::get('/product/tags/create', [ProductTagsController::class, 'TagsCreate'])->name('Shop.ProductTags.create');
-Route::get('/product/tags/edit/{id}', [ProductTagsController::class, 'TagsEdit'])->name('Shop.ProductTags.edit');
-Route::post('/product/tags/update/{id}', [ProductTagsController::class, 'TagsStoreUpdate'])->name('Shop.ProductTags.update');
-Route::get('/product/tags/destroy/{id}', [ProductTagsController::class, 'TagsDelete'])->name('Shop.ProductTags.destroy');
-Route::get('/product/tags/config', [ProductTagsController::class, 'TagsConfig'])->name('Shop.ProductTags.config');
-Route::get('/product/tags/TagsSearch', [ProductTagsController::class, 'TagsSearch'])->name('Product.TagsSearch');
-Route::get('/product/tags/TagsOnFly', [ProductTagsController::class, 'TagsOnFly'])->name('Product.TagsOnFly');
+
 
 
 Route::get('/product/attribute', [AttributeController::class, 'index'])->name('Shop.ProAttribute.index');

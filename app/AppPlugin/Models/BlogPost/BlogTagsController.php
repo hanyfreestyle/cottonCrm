@@ -4,11 +4,9 @@ namespace App\AppPlugin\Models\BlogPost;
 
 use App\AppPlugin\Models\BlogPost\Models\BlogTags;
 use App\AppPlugin\Models\BlogPost\Models\BlogTagsTranslation;
-
 use App\AppPlugin\Models\BlogPost\Traits\BlogConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefTagsRequest;
-
 use App\Http\Traits\TagsTraits;
 use Illuminate\Support\Facades\View;
 
@@ -17,7 +15,6 @@ class BlogTagsController extends AdminMainController {
 
     use TagsTraits;
     use BlogConfigTraits;
-
 
     function __construct() {
         parent::__construct();

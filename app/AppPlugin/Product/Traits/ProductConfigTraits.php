@@ -18,7 +18,7 @@ trait ProductConfigTraits {
             'DbCategoryPivot' => 'pro_category_pivot',
             'DbCategoryForeign' => 'category_id',
 
-            "TableBrand"=> true,
+            "TableBrand" => true,
             'DbBrand' => 'pro_brand',
             'DbBrandTrans' => 'pro_brand_lang',
 
@@ -67,7 +67,6 @@ trait ProductConfigTraits {
         $config = self::DbConfig();
 
 
-
         $mainMenu = new AdminMenu();
         $mainMenu->type = "Many";
         $mainMenu->sel_routs = "admin.Product";
@@ -89,24 +88,24 @@ trait ProductConfigTraits {
         }
 
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = setActiveRoute("Product");;
-//        $subMenu->url = "admin.Shop.Product.index";
-//        $subMenu->name = "admin/proProduct.app_menu_product";
-//        $subMenu->roleView = "Product_view";
-//        $subMenu->icon = "fas fa-shopping-cart";
-//        $subMenu->save();
-//
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "Product.createNew";
-//        $subMenu->url = "admin.Shop.Product.create";
-//        $subMenu->name = "admin/proProduct.app_menu_add_pro";
-//        $subMenu->roleView = "Product_add";
-//        $subMenu->icon = "fas fa-plus-circle";
-//        $subMenu->save();
-//
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = setActiveRoute("Product");;
+        $subMenu->url = "admin.Shop.Product.index";
+        $subMenu->name = "admin/proProduct.app_menu_product";
+        $subMenu->roleView = "Product_view";
+        $subMenu->icon = "fas fa-shopping-cart";
+        $subMenu->save();
+
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "Product.createNew";
+        $subMenu->url = "admin.Shop.Product.create";
+        $subMenu->name = "admin/proProduct.app_menu_add_pro";
+        $subMenu->roleView = "Product_add";
+        $subMenu->icon = "fas fa-plus-circle";
+        $subMenu->save();
+
         if (IsConfig($config, 'TableBrand')) {
             $subMenu = new AdminMenu();
             $subMenu->parent_id = $mainMenu->id;
@@ -118,16 +117,18 @@ trait ProductConfigTraits {
             $subMenu->save();
         }
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = setActiveRoute("ProductTags");
-//        $subMenu->url = "admin.Shop.ProductTags.index";
-//        $subMenu->name = "admin/proProduct.app_menu_tags";
-//        $subMenu->roleView = "Product_view";
-//        $subMenu->icon = "fas fa-hashtag";
-//        $subMenu->save();
-//
-//
+        if (IsConfig($config, 'TableTags')) {
+            $subMenu = new AdminMenu();
+            $subMenu->parent_id = $mainMenu->id;
+            $subMenu->sel_routs = setActiveRoute("ProductTags");
+            $subMenu->url = "admin.Product.ProductTags.index";
+            $subMenu->name = "admin/proProduct.app_menu_tags";
+            $subMenu->roleView = "Product_view";
+            $subMenu->icon = "fas fa-hashtag";
+            $subMenu->save();
+        }
+
+
 //        $subMenu = new AdminMenu();
 //        $subMenu->parent_id = $mainMenu->id;
 //        $subMenu->sel_routs = setActiveRoute("ProAttribute") . "|" . setActiveRoute("ProAttributeValue");

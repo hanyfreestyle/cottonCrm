@@ -4,7 +4,6 @@ namespace App\AppPlugin\Product;
 
 use App\AppPlugin\Product\Models\ProductTags;
 use App\AppPlugin\Product\Models\ProductTagsTranslation;
-use App\AppPlugin\Product\Request\ProductTagsRequest;
 use App\AppPlugin\Product\Traits\ProductConfigTraits;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Requests\def\DefTagsRequest;
@@ -21,7 +20,7 @@ class ProductTagsController extends AdminMainController {
         parent::__construct();
         $this->controllerName = "ProductTags";
         $this->PrefixRole = 'Product';
-        $this->selMenu = "admin.Shop.";
+        $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
         $this->PageTitle = __('admin/proProduct.app_menu_tags');
         $this->PrefixRoute = $this->selMenu . $this->controllerName;
@@ -36,16 +35,29 @@ class ProductTagsController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
-            'configArr' => ["filterid" => 0],
-            'yajraTable' => false,
+            'AddConfig' => false,
         ];
-        self::loadConstructData($sendArr);
+
+        $this->config = self::LoadConfig();
+        View::share('config', $this->config);
+
+        self::ConstructData($sendArr);
+        self::loadPostPermission(array());
+
+        if (!$this->TableTags) {
+            abort(403);
+        }
+
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function ClearCash() {
+
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#|||||||||||||||||||||||||||||||||||||| #     TagsStoreUpdate
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function TagsStoreUpdate(DefTagsRequest $request, $id = 0) {
         return self::TraitsTagsStoreUpdate($request, $id);
     }
