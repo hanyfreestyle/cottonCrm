@@ -14,10 +14,10 @@
                 <tr>
                     <th class="TD_20">#</th>
                     <x-admin.table.action-but po="top" type="photo" res="all" :view-but="IsConfig($config, 'categoryPhotoAdd')"/>
-                    <th>{{DefCategoryTextName(IsConfig($config, 'LangCategoryDefName',null))}}</th>
+                    <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
                     <x-admin.table.action-but po="top" type="isActive"/>
                     <x-admin.table.action-but po="top" type="edit"/>
-                    <x-admin.table.action-but po="top" type="delete" :view-but="IsConfig($config, 'categoryDelete')"/>
+                    <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,9 +29,8 @@
 @endsection
 
 @push('JsCode')
-    <x-admin.table.sweet-delete-js/>
+    <x-admin.data-table.sweet-dalete/>
     <x-admin.data-table.plugins-yajra :jscode="true"/>
-
     <script type="text/javascript">
         $(function () {
             $('#YajraDatatable').DataTable({
@@ -49,7 +48,7 @@
                     },
                     @include('datatable.index_action_but',['type'=> 'isActive'])
                     @include('datatable.index_action_but',['type'=> 'edit'])
-                    @include('datatable.index_action_but',['type'=> 'delete','view'=> IsConfig($config, 'categoryDelete')])
+                    @include('datatable.index_action_but',['type'=> 'delete','view'=>true  ])
                 ],
             });
         });

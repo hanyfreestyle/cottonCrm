@@ -19,15 +19,15 @@
                     <div class="row">
                         <x-admin.card.normal col="col-lg-12">
                             <div class="row">
-                                <x-admin.form.select-multiple name="product_id" label="المنتجات" :categories="$Products" :sel-cat="old('product_id',$selPro)" col="12"/>
+                                <x-admin.form.select-multiple name="product_id" :label="__('admin/proProduct.landing_lab_pro')" :categories="$Products" :sel-cat="old('product_id',$selPro)" col="12"/>
                             </div>
                             <div class="row">
                                 @foreach ( $LangAdd as $key=>$lang )
-                                    <x-admin.form.trans-input name="name" col="6" :key="$key" :row="$rowData" label="اسم العرض" :tdir="$key"/>
+                                    <x-admin.form.trans-input name="name" col="6" :key="$key" :row="$rowData" :label="__('admin/proProduct.landing_lab_name')" :tdir="$key"/>
                                     <x-admin.form.trans-input name="slug" col="6" :key="$key" :row="$rowData" :label="__('admin/form.text_g_slug')" :tdir="$key"/>
                                     @if($rowData->is_des or $rowData->des != null)
-                                        <x-admin.form.trans-text-area name="des_up" :key="$key" :row="$rowData" label="وصف الصفحة يظهر اعلى المنتجات" :tdir="$key" add-class="bigTextArea" :req="false"/>
-                                        <x-admin.form.trans-text-area name="des" :key="$key" :row="$rowData" label="وصف الصفحة يظهر اسفل المنتجات" :tdir="$key" add-class="bigTextArea" :req="false"/>
+                                        <x-admin.form.trans-text-area name="des_up" :key="$key" :row="$rowData" :label="__('admin/proProduct.landing_lab_des_up')" :tdir="$key" add-class="bigTextArea" :req="false"/>
+                                        <x-admin.form.trans-text-area name="des" :key="$key" :row="$rowData" :label="__('admin/proProduct.landing_lab_des_up')" :tdir="$key" add-class="bigTextArea" :req="false"/>
                                     @endif
                                 @endforeach
                             </div>
@@ -35,7 +35,7 @@
 
                     </div>
                     <div class="row mb-5">
-                        <div class="col-lg-12 float-left text-left">
+                        <div class="col-lg-12">
                             <x-admin.form.submit-role-back :page-data="$pageData"/>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                                              :l="__('admin/proProduct.app_menu_brand')"/>
                                 @endif
 
-                                <x-admin.form.select-arr name="is_des" :sendvalue="old('is_des',$rowData->is_des)" l="يحتوى على وصف" col="12" :req="false" type="selActive"/>
+                                <x-admin.form.select-arr name="is_des" :sendvalue="old('is_des',$rowData->is_des)" :l="__('admin/proProduct.landing_lab_is_des')" col="12" :req="false" type="selActive"/>
                                 @if($rowData->is_des)
                                     <x-admin.form.select-arr name="is_soft" :sendvalue="old('is_soft',$rowData->is_soft)" l="Soft View" col="12" :req="false" type="selActive"/>
                                 @endif
@@ -72,7 +72,7 @@
                     @include('admin.mainView.category.inc_seo_side')
 
                     <div class="row mb-5">
-                        <div class="col-lg-12 float-left text-left">
+                        <div class="col-lg-12">
                             <x-admin.form.submit-role-back :page-data="$pageData"/>
                         </div>
                     </div>

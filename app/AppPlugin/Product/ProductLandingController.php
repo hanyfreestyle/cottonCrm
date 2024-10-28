@@ -38,29 +38,13 @@ class ProductLandingController extends AdminMainController {
         $this->Products = Product::query()->where('parent_id', null)->with('translations')->get();
         View::share('Products', $this->Products);
 
-//        $sendArr = [
-//            'TitlePage' => $this->PageTitle,
-//            'PrefixRoute' => $this->PrefixRoute,
-//            'PrefixRole' => $this->PrefixRole,
-//            'AddConfig' => true,
-//            'configArr' => ['datatable' => 0],
-//            'yajraTable' => false,
-//            'AddLang' => false,
-//            'AddMorePhoto' => false,
-//            'restore' => 0,
-//        ];
-//
-//
-//
-//        self::loadConstructData($sendArr);
-
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
             'settings' => getDefSettings($this->config),
-            'AddLang' => IsConfig($this->config, 'categoryAddOnlyLang', false),
+            'AddLang' => false,
         ];
 
 
@@ -95,57 +79,6 @@ class ProductLandingController extends AdminMainController {
         }
     }
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function LandingQuery($config, $route = 'all', $id = null) {
-
-        $table = $config['DbLandingPage'];
-        $table_trans = $config['DbLandingPageTrans'];
-        $table_trans_foreign = $config['DbLandingPageForeign'];
-
-        $data = DB::table("$table");
-
-
-        $data->join("$table_trans", "$table.id", '=', "$table_trans.$table_trans_foreign")
-            ->where("$table_trans.locale", '=', dataTableDefLang())
-            ->select(
-                "$table.id as id",
-                "$table.is_active as is_active",
-                "$table.photo_thum_1 as photo",
-                "$table_trans.name as name"
-            )
-            ->groupBy(
-                "$table.id",
-                "$table.is_active",
-                "$table.photo_thum_1",
-                "$table_trans.name"
-            );
-
-        return $data;
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function LandingColumns($data, $arr = array()) {
-        return DataTables::query($data)
-            ->addIndexColumn()
-            ->editColumn('id', function ($row) {
-                return returnTableId($this->agent, $row);
-            })
-            ->editColumn('photo', function ($row) {
-                return TablePhoto($row, 'photo');
-            })
-            ->editColumn('isActive', function ($row) {
-                return is_active($row->is_active);
-            })
-            ->editColumn('Edit', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-            })
-            ->editColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
-    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -203,8 +136,16 @@ class ProductLandingController extends AdminMainController {
                     $saveTranslation = LandingPageTranslation::where($CatId, $saveData->id)->where('locale', $key)->firstOrNew();
                     $saveTranslation->page_id = $saveData->id;
                     $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-                    $saveTranslation->des_up = $request->input($key . '.des_up');
-                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+                    $saveTranslation->name = $request->input($key . '.name');
+
+                    if ($request->input($key . '.des')) {
+                        $saveTranslation->des_up = $request->input($key . '.des_up');
+                    }
+                    if ($request->input($key . '.des_up')) {
+                        $saveTranslation->des_up = $request->input($key . '.des_up');
+                    }
+                    $saveTranslation->g_title = $request->input($key . '.g_title');
+                    $saveTranslation->g_des = $request->input($key . '.g_des');
                     $saveTranslation->save();
                 }
             });
@@ -227,23 +168,74 @@ class ProductLandingController extends AdminMainController {
         }
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     emptyPhoto
-//    public function emptyPhoto($id) {
-//        $rowData = LandingPage::where('id', $id)->firstOrFail();
-//        $rowData = AdminHelper::DeleteAllPhotos($rowData, true);
-//        $rowData->save();
-//        return back();
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
-//    public function destroy($id) {
-//        $deleteRow = LandingPage::where('id', $id)->firstOrFail();
-//        $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
-//        $deleteRow->forceDelete();
-//        return back()->with('confirmDelete', "");
-//    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function emptyPhoto($id) {
+        $rowData = LandingPage::where('id', $id)->firstOrFail();
+        $rowData = AdminHelper::DeleteAllPhotos($rowData, true);
+        $rowData->save();
+        return back();
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function destroy($id) {
+        $deleteRow = LandingPage::where('id', $id)->firstOrFail();
+        $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
+        $deleteRow->forceDelete();
+        return back()->with('confirmDelete', "");
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function LandingQuery($config, $route = 'all', $id = null) {
+
+        $table = $config['DbLandingPage'];
+        $table_trans = $config['DbLandingPageTrans'];
+        $table_trans_foreign = $config['DbLandingPageForeign'];
+
+        $data = DB::table("$table");
+
+
+        $data->join("$table_trans", "$table.id", '=', "$table_trans.$table_trans_foreign")
+            ->where("$table_trans.locale", '=', dataTableDefLang())
+            ->select(
+                "$table.id as id",
+                "$table.is_active as is_active",
+                "$table.photo_thum_1 as photo",
+                "$table_trans.name as name"
+            )
+            ->groupBy(
+                "$table.id",
+                "$table.is_active",
+                "$table.photo_thum_1",
+                "$table_trans.name"
+            );
+
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function LandingColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('photo', function ($row) {
+                return TablePhoto($row, 'photo');
+            })
+            ->editColumn('isActive', function ($row) {
+                return is_active($row->is_active);
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+    }
 
 }
