@@ -94,6 +94,7 @@ Route::get('/product/remove-variants/{proId}', [ManageAttributeController::class
 Route::prefix('product/lp/')->name('LandingPage.')
     ->controller(ProductLandingController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/DataTable', 'DataTable')->name('DataTable');
         Route::get('/create', 'PageCreate')->name('create');
         Route::get('/add-new', 'PageCreate')->name('AddNew');
         Route::get('/edit/{id}', 'PageEdit')->name('edit');
@@ -102,7 +103,6 @@ Route::prefix('product/lp/')->name('LandingPage.')
         Route::get('/emptyPhoto/{id}', 'emptyPhoto')->name('emptyPhoto');
         Route::get('/config', 'config')->name('config');
     });
-
 
 
 

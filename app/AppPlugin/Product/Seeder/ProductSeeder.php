@@ -49,19 +49,14 @@ class ProductSeeder extends Seeder {
         SeedDbFile(ProductTagsPivot::class, $config['DbTagsPivot'] . ".sql");
 
 
-//        LandingPage::unguard();
-//        $tablePath = public_path('db/pro_landing_page.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//        LandingPageTranslation::unguard();
-//        $tablePath = public_path('db/pro_landing_page_translations.sql');
-//        DB::unprepared(file_get_contents($tablePath));
-//
-//
+        SeedDbFile(LandingPage::class, $config['DbLandingPage'] . ".sql");
+        SeedDbFile(LandingPageTranslation::class, $config['DbLandingPageTrans'] . ".sql");
+
+
 //        ProductPhoto::unguard();
 //        $tablePath = public_path('db/pro_product_photos.sql');
 //        DB::unprepared(file_get_contents($tablePath));
-//
+
 
 //        ProductAttribute::unguard();
 //        $tablePath = public_path('db/pro_product_attribute.sql');

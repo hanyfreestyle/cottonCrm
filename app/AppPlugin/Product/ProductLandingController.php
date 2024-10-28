@@ -9,8 +9,10 @@ use App\AppPlugin\Product\Request\LandingPageRequest;
 use App\AppPlugin\Product\Traits\ProductConfigTraits;
 use App\Helpers\AdminHelper;
 use App\Http\Controllers\AdminMainController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductLandingController extends AdminMainController {
 
@@ -70,22 +72,80 @@ class ProductLandingController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function index() {
+    public function index(Request $request) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $pageData['SubView'] = false;
-        $rowData = self::getSelectQuery(LandingPage::def());
 
-//        dd($pageData);
+//        $rowData = self::LandingQuery($this->config)->get();
+//        dd($rowData);
 
         return view('AppPlugin.Product.landing.index')->with([
             'pageData' => $pageData,
-            'rowData' => $rowData,
         ]);
 
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function DataTable(Request $request) {
+        if ($request->ajax()) {
+            $rowData = self::LandingQuery($this->config);
+            return self::LandingColumns($rowData)->make(true);
+        }
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function LandingQuery($config, $route = 'all', $id = null) {
+
+        $table = $config['DbLandingPage'];
+        $table_trans = $config['DbLandingPageTrans'];
+        $table_trans_foreign = $config['DbLandingPageForeign'];
+
+        $data = DB::table("$table");
+
+
+        $data->join("$table_trans", "$table.id", '=', "$table_trans.$table_trans_foreign")
+            ->where("$table_trans.locale", '=', dataTableDefLang())
+            ->select(
+                "$table.id as id",
+                "$table.is_active as is_active",
+                "$table.photo_thum_1 as photo",
+                "$table_trans.name as name"
+            )
+            ->groupBy(
+                "$table.id",
+                "$table.is_active",
+                "$table.photo_thum_1",
+                "$table_trans.name"
+            );
+
+        return $data;
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function LandingColumns($data, $arr = array()) {
+        return DataTables::query($data)
+            ->addIndexColumn()
+            ->editColumn('id', function ($row) {
+                return returnTableId($this->agent, $row);
+            })
+            ->editColumn('photo', function ($row) {
+                return TablePhoto($row, 'photo');
+            })
+            ->editColumn('isActive', function ($row) {
+                return is_active($row->is_active);
+            })
+            ->editColumn('Edit', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+            })
+            ->editColumn('Delete', function ($row) {
+                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+            })
+            ->rawColumns(['Edit', "Delete", 'photo', 'isActive', 'name']);
+    }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

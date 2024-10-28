@@ -25,6 +25,7 @@ trait ProductConfigTraits {
             "TableLandingPage" => true,
             'DbLandingPage' => 'pro_landing_page',
             'DbLandingPageTrans' => 'pro_landing_page_lang',
+            'DbLandingPageForeign' => 'page_id',
 
             'DbPost' => 'pro_product',
             'DbPostTrans' => 'pro_product_lang',
