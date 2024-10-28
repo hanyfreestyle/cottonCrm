@@ -63,9 +63,6 @@ Route::get('/product/PhotoDel/{id}', [ProductController::class, 'More_PhotosDest
 Route::get('/product/config', [ProductController::class, 'config'])->name('Shop.Product.config');
 
 
-
-
-
 Route::get('/product/attribute', [AttributeController::class, 'index'])->name('Shop.ProAttribute.index');
 Route::get('/product/attribute/create', [AttributeController::class, 'create'])->name('Shop.ProAttribute.create');
 Route::get('/product/attribute/edit/{id}', [AttributeController::class, 'edit'])->name('Shop.ProAttribute.edit');
@@ -94,15 +91,17 @@ Route::post('/product/UpdateVariants/{proId}', [ManageAttributeController::class
 Route::get('/product/remove-variants/{proId}', [ManageAttributeController::class, 'RemoveVariants'])->name('Shop.Product.RemoveVariants');
 
 
-
-Route::get('/LandingPage/',[ProductLandingController::class,'index'])->name('LandingPage.index');
-Route::get('/LandingPage/create',[ProductLandingController::class,'PageCreate'])->name('LandingPage.create');
-Route::get('/LandingPage/AddNew',[ProductLandingController::class,'PageCreate'])->name('LandingPage.AddNew');
-Route::get('/LandingPage/edit/{id}',[ProductLandingController::class,'PageEdit'])->name('LandingPage.edit');
-Route::post('/LandingPage/update/{id}',[ProductLandingController::class,'PageStoreUpdate'])->name('LandingPage.update');
-Route::get('/LandingPage/destroy/{id}',[ProductLandingController::class,'destroy'])->name('LandingPage.destroy');
-Route::get('/LandingPage/emptyPhoto/{id}', [ProductLandingController::class,'emptyPhoto'])->name('LandingPage.emptyPhoto');
-Route::get('/LandingPage/config', [ProductLandingController::class,'config'])->name('LandingPage.config');
+Route::prefix('product/lp/')->name('LandingPage.')
+    ->controller(ProductLandingController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'PageCreate')->name('create');
+        Route::get('/add-new', 'PageCreate')->name('AddNew');
+        Route::get('/edit/{id}', 'PageEdit')->name('edit');
+        Route::post('/update/{id}', 'PageStoreUpdate')->name('update');
+        Route::get('/destroy/{id}', 'destroy')->name('destroy');
+        Route::get('/emptyPhoto/{id}', 'emptyPhoto')->name('emptyPhoto');
+        Route::get('/config', 'config')->name('config');
+    });
 
 
 

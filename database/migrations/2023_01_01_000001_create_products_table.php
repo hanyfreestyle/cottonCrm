@@ -65,13 +65,14 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->boolean("is_active")->nullable()->default(true);
             $table->boolean("is_soft")->nullable()->default(true);
+            $table->boolean("is_des")->nullable()->default(false);
             $table->integer('brand_id')->nullable();
             $table->json('product_id')->nullable();
             $table->string("photo")->nullable();
             $table->string("photo_thum_1")->nullable();
             $table->timestamps();
         });
-        Schema::create('pro_landing_page_translations', function (Blueprint $table) {
+        Schema::create('pro_landing_page_lang', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('page_id')->unsigned();
             $table->string('locale')->index();
@@ -79,7 +80,7 @@ return new class extends Migration {
 
             $table->string('name')->nullable();
             $table->longText('des')->nullable();
-            $table->longText('desup')->nullable();
+            $table->longText('des_up')->nullable();
             $table->string('g_title')->nullable();
             $table->text('g_des')->nullable();
 
@@ -92,7 +93,7 @@ return new class extends Migration {
 
 
     public function down(): void {
-        Schema::dropIfExists('pro_landing_page_translations');
+        Schema::dropIfExists('pro_landing_page_lang');
         Schema::dropIfExists('pro_landing_page');
         Schema::dropIfExists('pro_product_lang');
         Schema::dropIfExists('pro_product');

@@ -33,8 +33,9 @@ class LandingPageRequest extends FormRequest {
 
         $rules = [
             'image' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
-            'product_id'=> 'required|array|min:4',
-            'is_soft'=> 'required'
+            'product_id' => 'required|array|min:4',
+            'is_soft' => 'nullable',
+            'filter_id' => 'required'
         ];
 
 
@@ -44,8 +45,7 @@ class LandingPageRequest extends FormRequest {
             'seo' => false,
         ];
 
-        $rules += AdminMainController::FormRequestSeo($id, $addLang, "pro_landing_page_translations", 'page_id',
-            $rulesConfig);
+        $rules += AdminMainController::FormRequestSeo($id, $addLang, "pro_landing_page_lang", 'page_id', $rulesConfig);
 
         return $rules;
     }

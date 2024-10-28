@@ -25,7 +25,7 @@ trait GetCashList {
                 });
             }
             return $CashConfigDataList;
-        }else{
+        } else {
             return [];
         }
     }
@@ -98,13 +98,6 @@ trait GetCashList {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function CashBrandList($stopCash = 0) {
-
-        if (File::isFile(base_path('routes/AppPlugin/data/area.php'))) {
-
-        } else {
-            return [];
-        }
-
         if ($stopCash) {
             $CashBrandList = Brand::CashBrandList();
         } else {

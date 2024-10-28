@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LandingPageTranslation extends Model {
 
     public $timestamps = false;
-    protected $table = "pro_landing_page_translations";
+    protected $table = "pro_landing_page_lang";
     protected $fillable = ['name'];
 
 }
