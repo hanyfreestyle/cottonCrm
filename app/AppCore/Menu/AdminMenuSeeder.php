@@ -64,9 +64,9 @@ class AdminMenuSeeder extends Seeder {
             ContactUsFormController::AdminMenu();
         }
 
-        $updateMenuPostion = AdminMenu::query()->where('parent_id','!=',null)->get();
+        $updateMenuPosition = AdminMenu::query()->where('parent_id','!=',null)->get();
 
-        foreach ($updateMenuPostion as $menu){
+        foreach ($updateMenuPosition as $menu){
             $menu->position = $menu->id;
             $menu->save();
         }
@@ -74,8 +74,8 @@ class AdminMenuSeeder extends Seeder {
         $moveMenu = false;
         $menuView = "crm_service_cash_view";
         if($moveMenu){
-            $updateMenuPostion = AdminMenu::query()->where('type', 'Many')->get();
-            foreach ($updateMenuPostion as $menu){
+            $updateMenuPosition = AdminMenu::query()->where('type', 'Many')->get();
+            foreach ($updateMenuPosition as $menu){
                 if( $menu->roleView == $menuView){
                     $menu->position = 1;
                 }else{

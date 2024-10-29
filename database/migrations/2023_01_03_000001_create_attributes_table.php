@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->integer('type')->default(1);
             $table->integer('old_id')->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
         });
 
         Schema::create('pro_attribute_lang', function (Blueprint $table) {
@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->bigInteger('attribute_id')->unsigned();
             $table->integer('old_id')->nullable();
             $table->boolean("is_active")->default(true);
-            $table->integer('postion')->default(0);
+            $table->integer('position')->default(0);
             $table->foreign('attribute_id')->references('id')->on('pro_attribute')->onDelete('cascade');
         });
 

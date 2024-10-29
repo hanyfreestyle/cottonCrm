@@ -17,7 +17,7 @@ class Settings extends Component {
     public $addIcon;
     public $addMorePhoto;
     public $orderbyDef;
-    public $orderbyPostion;
+    public $orderbyPosition;
     public $orderbyDate;
     public $orderbyName;
 
@@ -40,7 +40,7 @@ class Settings extends Component {
 
         $this->orderby = IsArr($configArr, 'orderby', false);
         $this->orderbyDef = $orderbyDef;
-        $this->orderbyPostion = IsArr($configArr, 'orderbyPostion', false);
+        $this->orderbyPosition = IsArr($configArr, 'orderbyPosition', false);
 
         $this->addPhoto = IsArr($configArr, 'addPhoto', false);
         $this->addIcon = IsArr($configArr, 'addIcon', false);
@@ -62,7 +62,7 @@ class Settings extends Component {
             "2" => ['id' => '2', 'name' => __('admin/config/settings.sort_id_asc')],
             "3" => ['id' => '3', 'name' => __('admin/config/settings.sort_name_desc')],
             "4" => ['id' => '4', 'name' => __('admin/config/settings.sort_name_asc')],
-            "5" => ['id' => '5', 'name' => __('admin/config/settings.sort_postion')],
+            "5" => ['id' => '5', 'name' => __('admin/config/settings.sort_position')],
             "6" => ['id' => '6', 'name' => __('admin/config/settings.sort_date_asc')],
             "7" => ['id' => '7', 'name' => __('admin/config/settings.sort_date_desc')],
         ];
@@ -73,7 +73,7 @@ class Settings extends Component {
             unset($OrderByArr[4]);
         }
 
-        if ($this->orderbyPostion == false) {
+        if ($this->orderbyPosition == false) {
             unset($OrderByArr[5]);
         }
         if ($this->orderbyDate == false) {

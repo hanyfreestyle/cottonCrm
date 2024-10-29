@@ -33,7 +33,7 @@ class AttributeValueController extends AdminMainController {
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
             'AddConfig' => true,
-            'configArr' => ["filterid" => 0, "orderbyPostion" => 1],
+            'configArr' => ["filterid" => 0, "orderbyPosition" => 1],
             'yajraTable' => false,
             'AddLang' => false,
             'restore' => 0,
@@ -170,7 +170,7 @@ class AttributeValueController extends AdminMainController {
         $Attribute = Attribute::with('translation')->where('id', $AttributeId)->firstOrFail();
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
-        $rowData = AttributeValue::where('attribute_id', $Attribute->id)->orderBy('postion')->get();
+        $rowData = AttributeValue::where('attribute_id', $Attribute->id)->orderBy('position')->get();
         return view('AppPlugin.Product.attribute_value_sort', compact('pageData', 'rowData', 'Attribute'));
     }
 
@@ -182,7 +182,7 @@ class AttributeValueController extends AdminMainController {
             $id = $position[0];
             $newPosition = $position[1];
             $saveData = AttributeValue::findOrFail($id);
-            $saveData->postion = $newPosition;
+            $saveData->position = $newPosition;
             $saveData->save();
         }
         self::ClearCash();

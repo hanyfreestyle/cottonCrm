@@ -19,5 +19,5 @@ return
 	'sort_id_desc' => 'الترتيب من الاحدث الى الاقدم',
 	'sort_name_asc' => 'التريب بالاسم تنازلى',
 	'sort_name_desc' => 'التريب بالاسم تصاعدى',
-	'sort_postion' => 'الترتيب',
+	'sort_position' => 'الترتيب',
 ];

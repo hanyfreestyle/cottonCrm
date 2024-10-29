@@ -19,5 +19,5 @@ return
 	'sort_id_desc' => 'Sort from newest to oldest',
 	'sort_name_asc' => 'order By name is descending',
 	'sort_name_desc' => 'order By name is ascending',
-	'sort_postion' => 'Postions',
+	'sort_position' => 'Position',
 ];

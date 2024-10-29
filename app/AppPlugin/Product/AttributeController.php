@@ -134,7 +134,7 @@ class AttributeController extends AdminMainController {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "List";
         $thisRow = null;
-        $rowData = Attribute::orderBy('postion')->get();
+        $rowData = Attribute::orderBy('position')->get();
         return view('AppPlugin.Product.attribute.sort')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
@@ -150,7 +150,7 @@ class AttributeController extends AdminMainController {
             $id = $position[0];
             $newPosition = $position[1];
             $saveData = Attribute::findOrFail($id);
-            $saveData->postion = $newPosition;
+            $saveData->position = $newPosition;
             $saveData->save();
         }
         self::ClearCash();
