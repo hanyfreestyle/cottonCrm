@@ -281,6 +281,20 @@ if (!function_exists('Table_Style_Yajra')) {
         return $tableHeader;
     }
 }
+if (!function_exists('Table_Btn')) {
+    function Table_Btn($url,$i,$c,$n) {
+        $c = getBgColor($c);
+        $btn = $link = '<a href="'.$url.'" class="adminButMobile btn btn-sm btn-'.$c.'">';
+        if($i){
+            $btn .='<i class="'.$i.'"></i> ';
+        }
+        if($n){
+            $btn .=' <span class="tipName">'.$n.'</span>';
+        }
+        $btn .='</a>';
+        return $btn;
+    }
+}
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

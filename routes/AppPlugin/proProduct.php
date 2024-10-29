@@ -55,6 +55,7 @@ Route::get('/product/config', [ProductController::class, 'config'])->name('Produ
 Route::prefix('product/attribute')->name('Product.ProAttribute.')
     ->controller(AttributeController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/DataTable', 'DataTable')->name('DataTable');
         Route::get('/create', 'create')->name('create');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update/{id}', 'storeUpdate')->name('update');

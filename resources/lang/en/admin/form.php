@@ -38,4 +38,5 @@ return
 	'text_title' => 'Title',
 	'text_youtube' => 'Youtube Code',
 	'text_youtube_title' => 'Title',
+	'button_list' => 'List',
 ];

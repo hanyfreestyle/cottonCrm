@@ -38,4 +38,5 @@ return
 	'text_title' => 'العنوان',
 	'text_youtube' => 'كود يوتيوب',
 	'text_youtube_title' => 'العنوان',
+	'button_list' => 'عرض',
 ];

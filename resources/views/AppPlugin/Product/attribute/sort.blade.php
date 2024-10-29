@@ -5,9 +5,7 @@
   <x-admin.hmtl.section>
     <div class="row mb-3">
       <div class="col-lg-9">
-        @if($thisRow != null)
-          <h1 class="def_h1_new">{!! print_h1($thisRow) !!}</h1>
-        @endif
+
       </div>
       <div class="col-lg-3 text-left">
         <x-admin.form.action-button url="{{route($PrefixRoute.'.index')}}" type="back" :tip="false"/>
@@ -23,11 +21,6 @@
             <div class="col-lg-12" data-index="{{$row->id}}" data-position="{{$row->postion}}">
               <div class="ListItem-12">
                 {{$row->name}}
-{{--                @if(count($row->children) > 0 )--}}
-{{--                  <div class="subsort">--}}
-{{--                    <x-admin.form.action-button url="{{route($PrefixRoute.'.CatSort',$row->id)}}" type="sort"/>--}}
-{{--                  </div>--}}
-{{--                @endif--}}
               </div>
             </div>
           @endforeach
@@ -39,7 +32,6 @@
       @endif
     </div>
   </x-admin.hmtl.section>
-
 @endsection
 
 
