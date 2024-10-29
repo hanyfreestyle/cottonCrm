@@ -39,7 +39,7 @@ class AttributeController extends AdminMainController {
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
             'PrefixRole' => $this->PrefixRole,
-            'AddConfig' => true,
+            'AddConfig' => false,
             'settings' => getDefSettings($this->config),
             'AddLang' => false,
         ];

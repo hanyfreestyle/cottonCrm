@@ -457,6 +457,23 @@ class AdminMainController extends DefaultMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function redirectWhereNew($request, $id, $route) {
+        if ($id == '0') {
+            if ($request->input('AddNewSet') !== null) {
+                return redirect()->back();
+            } else {
+                return redirect($route)->with('Add.Done', "");
+            }
+        } else {
+            if ($request->input('GoBack') !== null) {
+                return redirect()->back()->with('Edit.Done', "");
+            } else {
+                return redirect($route)->with('Edit.Done', "");
+            }
+        }
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function FormRequestSeo($id, $addLang, $table, $filedName, $rulesConfig) {
 
         foreach ($addLang as $key => $lang) {

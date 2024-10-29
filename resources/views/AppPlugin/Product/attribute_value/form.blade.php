@@ -2,11 +2,22 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+    <x-admin.hmtl.section>
+        <div class="row mb-3">
+            <div class="col-5">
+                <h1 class="def_h1_new">{!! print_h1($Attribute) !!}</h1>
+            </div>
+            <div class="col-7 dir_button">
+                <x-admin.form.action-button :url="route($PrefixRouteSub.'.index')" :l="__('admin/proProduct.att_but_attribute')" :tip="false" icon="fas fa-code-branch"/>
+                <x-admin.form.action-button :url="route($PrefixRoute.'.index',$Attribute->id)" :l="__('admin/proProduct.att_but_value')" :tip="false" icon="fas fa-list-ol" bg="dark"/>
+            </div>
+        </div>
+    </x-admin.hmtl.section>
 
     <x-admin.hmtl.section>
-        <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
+        <form class="mainForm" action="{{route($PrefixRoute.'.update',intval($rowData->id))}}" method="post">
+            <input type="hidden" name="attribute_id" value="{{$Attribute->id}}">
             @csrf
-            <input type="hidden" name="form_type" value="{{$pageData['ViewType']}}">
             <div class="row">
                 <div class="col-lg-12">
                     <x-admin.form.print-error-div/>
@@ -43,6 +54,7 @@
             </div>
         </form>
     </x-admin.hmtl.section>
+
 @endsection
 
 

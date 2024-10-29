@@ -28,7 +28,7 @@ class AttributeValueRequest extends FormRequest {
         $id = $this->route('id');
         $rules = [];
         foreach (config('app.web_lang') as $key => $lang) {
-            if($id == '0') {
+            if ($id == '0') {
                 $rules[$key . ".name"] = "required|unique:pro_attribute_value_lang,name";
                 $rules[$key . ".slug"] = "required|unique:pro_attribute_value_lang,slug";
             } else {

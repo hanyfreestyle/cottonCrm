@@ -62,29 +62,20 @@ Route::prefix('product/attribute')->name('Product.ProAttribute.')
         Route::get('/destroy/{id}', 'ForceDeleteException')->name('destroy');
         Route::get('/sort', 'Sort')->name('Sort');
         Route::post('/save-sort', 'SaveSort')->name('SaveSort');
-        Route::get('/config', 'config')->name('config');
     });
 
 Route::prefix('product/att/value')->name('Product.ProAttributeValue.')
     ->controller(AttributeValueController::class)->group(function () {
         Route::get('/{AttributeId}', 'index')->name('index');
+        Route::get('/{AttributeId}/DataTable', 'DataTable')->name('DataTable');
         Route::get('/create/{AttributeId}', 'create')->name('create');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update/{id}', 'storeUpdate')->name('update');
         Route::get('/destroy/{id}', 'ForceDeleteException')->name('destroy');
         Route::get('/sort/{AttributeId}', 'Sort')->name('Sort');
         Route::post('/save-sort', 'SaveSort')->name('SaveSort');
-        Route::get('/config/{AttributeId}', 'config')->name('config');
     });
 
-//Route::get('/attribute/value/{AttributeId}', [AttributeValueController::class, 'index'])->name('Shop.ProAttributeValue.index');
-//Route::get('/attribute/value/create/{AttributeId}', [AttributeValueController::class, 'create'])->name('Shop.ProAttributeValue.create');
-//Route::get('/attribute/value/edit/{id}', [AttributeValueController::class, 'edit'])->name('Shop.ProAttributeValue.edit');
-//Route::post('/attribute/value/update/{id}', [AttributeValueController::class, 'storeUpdate'])->name('Shop.ProAttributeValue.update');
-//Route::get('/attribute/value/destroy/{id}', [AttributeValueController::class, 'ForceDeleteException'])->name('Shop.ProAttributeValue.destroy');
-//Route::get('/attribute/value/Sort/{AttributeId}', [AttributeValueController::class, 'Sort'])->name('Shop.ProAttributeValue.Sort');
-//Route::post('/attribute/value/SaveSort', [AttributeValueController::class, 'SaveSort'])->name('Shop.ProAttributeValue.SaveSort');
-//Route::get('/attribute/value/config/{AttributeId}', [AttributeValueController::class, 'config'])->name('Shop.ProAttributeValue.config');
 
 Route::get('/product/manage-attribute/{id}', [ManageAttributeController::class, 'ManageAttribute'])->name('Product.Product.manage-attribute');
 Route::post('/product/manage-attribute-update/{id}', [ManageAttributeController::class, 'ManageAttributeUpdate'])->name('Product.Product.manage-attributeUpdate');

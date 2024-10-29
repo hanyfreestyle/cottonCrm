@@ -213,7 +213,7 @@ if (!function_exists('setActiveRoute')) {
     function setActiveRoute($main, $arrs = array()) {
         $defArr = [
             'index', 'edit','create', 'config', 'index_Main', 'SubCategory', 'CatSort',
-            'editEn', 'editAr', 'filter','SoftDelete','FilterCategory',
+            'editEn', 'editAr', 'filter','SoftDelete','FilterCategory','Sort',
             'More_Photos', 'More_PhotosAdd', 'More_PhotosDestroyAll', 'More_PhotosEdit', 'More_PhotosEditAll',
         ];
 
