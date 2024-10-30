@@ -49,7 +49,7 @@
     @elseif( thisCurrentLocale() == 'en')
         {!! $MinifyTools->setAdmin()->MinifyCss('css/custom_en.css',$minType,$reBuild) !!}
     @endif
-
+    {!! $MinifyTools->setAdmin()->MinifyCss('css/updateCss.css',$minType,$reBuild) !!}
 </head>
 
 <body class="hold-transition {{ mainBodyStyle() }} {{sidebarCollapse()}} ">

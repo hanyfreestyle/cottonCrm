@@ -1,5 +1,6 @@
 <?php
 
+use App\AppCore\Menu\AdminMenu;
 use App\AppPlugin\Product\AttributeController;
 use App\AppPlugin\Product\AttributeValueController;
 use App\AppPlugin\Product\ManageAttributeController;
@@ -20,37 +21,82 @@ Route::CategoryRoute('product/brand/', 'Product.Brand.', ProductBrandController:
 Route::TagsRoutes('product/tags/', 'Product.ProductTags.', 'ProductTags.', ProductTagsController::class);
 
 
-Route::get('/product/', [ProductController::class, 'ProductIndex'])->name('Product.Product.index');
-Route::post('/product/', [ProductController::class, 'ProductIndex'])->name('Product.Product.filter');
-Route::get('/product/DataTable', [ProductController::class, 'ProductDataTable'])->name('Product.Product.DataTable');
+//Route::get('/product/', [ProductController::class, 'ProductIndex'])->name('Product.Product.index');
+//Route::post('/product/', [ProductController::class, 'ProductIndex'])->name('Product.Product.filter');
+//Route::get('/product/DataTable', [ProductController::class, 'ProductDataTable'])->name('Product.Product.DataTable');
+//
+//Route::get('/product/achived', [ProductController::class, 'ProductIndex'])->name('Product.ProductAchived.index');
+//Route::post('/product/achived', [ProductController::class, 'ProductIndex'])->name('Product.Product.filter_archived');
+//Route::get('/product/DataTableArchived', [ProductController::class, 'DataTableArchived'])->name('Product.Product.DataTableArchived');
+//
+//Route::get('/product/SoftDelete/', [ProductController::class, 'ProductIndex'])->name('Product.Product.SoftDelete');
+//Route::get('/product/DataTableSoftDelete/', [ProductController::class, 'DataTableSoftDelete'])->name('Product.Product.DataTableSoftDelete');
+//
+//Route::get('/product/create', [ProductController::class, 'create'])->name('Product.Product.create');
+//Route::get('/product/create/ar', [ProductController::class, 'create'])->name('Product.Product.create_ar');
+//Route::get('/product/create/en', [ProductController::class, 'create'])->name('Product.Product.create_en');
+//Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('Product.Product.edit');
+//Route::get('/product/editAr/{id}', [ProductController::class, 'edit'])->name('Product.Product.editAr');
+//Route::get('/product/editEn/{id}', [ProductController::class, 'edit'])->name('Product.Product.editEn');
+//Route::post('/product/update/{id}', [ProductController::class, 'storeUpdate'])->name('Product.Product.update');
+//
+//Route::get('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('Product.Product.destroy');
+//Route::get('/product/restore/{id}', [ProductController::class, 'Restore'])->name('Product.Product.restore');
+//Route::get('/product/force/{id}', [ProductController::class, 'ForceDeleteException'])->name('Product.Product.force');
+//Route::get('/product/DeleteLang/{id}', [ProductController::class, 'DeleteLang'])->name('Product.Product.DeleteLang');
+//Route::get('/product/emptyPhoto/{id}', [ProductController::class, 'emptyPhoto'])->name('Product.Product.emptyPhoto');
+//
+//Route::get('/product/photos/{id}', [ProductController::class, 'ListMorePhoto'])->name('Product.Product.More_Photos');
+//Route::post('/product/AddMore', [ProductController::class, 'AddMorePhotos'])->name('Product.Product.More_PhotosAdd');
+//Route::post('/product/saveSort', [ProductController::class, 'sortPhotoSave'])->name('Product.Product.sortPhotoSave');
+//Route::get('/product/PhotoDel/{id}', [ProductController::class, 'More_PhotosDestroy'])->name('Product.Product.More_PhotosDestroy');
+//Route::get('/product/config', [ProductController::class, 'config'])->name('Product.Product.config');
 
-Route::get('/product/achived', [ProductController::class, 'ProductIndex'])->name('Product.ProductAchived.index');
-Route::post('/product/achived', [ProductController::class, 'ProductIndex'])->name('Product.Product.filter_archived');
-Route::get('/product/DataTableArchived', [ProductController::class, 'DataTableArchived'])->name('Product.Product.DataTableArchived');
 
-Route::get('/product/SoftDelete/', [ProductController::class, 'ProductIndex'])->name('Product.Product.SoftDelete');
-Route::get('/product/DataTableSoftDelete/', [ProductController::class, 'DataTableSoftDelete'])->name('Product.Product.DataTableSoftDelete');
+Route::prefix('product')->name('Product.Product.')
+    ->controller(ProductController::class)->group(function () {
+        // المسارات العامة
+        Route::get('/', 'ProductIndex')->name('index');
+        Route::post('/', 'ProductIndex')->name('filter');
+        Route::get('/DataTable', 'ProductDataTable')->name('DataTable');
+        Route::get('/filter-category/{categoryId}', 'ProductIndex')->name('FilterCategory');
 
-Route::get('/product/create', [ProductController::class, 'create'])->name('Product.Product.create');
-Route::get('/product/create/ar', [ProductController::class, 'create'])->name('Product.Product.create_ar');
-Route::get('/product/create/en', [ProductController::class, 'create'])->name('Product.Product.create_en');
-Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('Product.Product.edit');
-Route::get('/product/editAr/{id}', [ProductController::class, 'edit'])->name('Product.Product.editAr');
-Route::get('/product/editEn/{id}', [ProductController::class, 'edit'])->name('Product.Product.editEn');
-Route::post('/product/update/{id}', [ProductController::class, 'storeUpdate'])->name('Product.Product.update');
+        // المسارات المتعلقة بالمنتجات المؤرشفة
+        Route::get('/achived', 'ProductIndex')->name('Achived.index');
+        Route::post('/achived', 'ProductIndex')->name('filter_archived');
+        Route::get('/DataTableArchived', 'DataTableArchived')->name('DataTableArchived');
 
-Route::get('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('Product.Product.destroy');
-Route::get('/product/restore/{id}', [ProductController::class, 'Restore'])->name('Product.Product.restore');
-Route::get('/product/force/{id}', [ProductController::class, 'ForceDeleteException'])->name('Product.Product.force');
-Route::get('/product/DeleteLang/{id}', [ProductController::class, 'DeleteLang'])->name('Product.Product.DeleteLang');
-Route::get('/product/emptyPhoto/{id}', [ProductController::class, 'emptyPhoto'])->name('Product.Product.emptyPhoto');
+        // المسارات المتعلقة بالمنتجات المحذوفة
+        Route::get('/SoftDelete', 'ProductIndex')->name('SoftDelete');
+        Route::get('/DataTableSoftDelete', 'ProductDataTable')->name('DataTableSoftDelete');
 
-Route::get('/product/photos/{id}', [ProductController::class, 'ListMorePhoto'])->name('Product.Product.More_Photos');
-Route::post('/product/AddMore', [ProductController::class, 'AddMorePhotos'])->name('Product.Product.More_PhotosAdd');
-Route::post('/product/saveSort', [ProductController::class, 'sortPhotoSave'])->name('Product.Product.sortPhotoSave');
-Route::get('/product/PhotoDel/{id}', [ProductController::class, 'More_PhotosDestroy'])->name('Product.Product.More_PhotosDestroy');
-Route::get('/product/config', [ProductController::class, 'config'])->name('Product.Product.config');
 
+
+        // إنشاء وتعديل المنتجات
+        Route::get('/create', 'create')->name('create');
+        Route::get('/create/ar', 'create')->name('create_ar');
+        Route::get('/create/en', 'create')->name('create_en');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::get('/editAr/{id}', 'edit')->name('editAr');
+        Route::get('/editEn/{id}', 'edit')->name('editEn');
+        Route::post('/update/{id}', 'storeUpdate')->name('update');
+
+        // حذف واستعادة المنتجات
+        Route::get('/destroy/{id}', 'destroy')->name('destroy');
+        Route::get('/restore/{id}', 'Restore')->name('restore');
+        Route::get('/force/{id}', 'ForceDeleteException')->name('force');
+        Route::get('/DeleteLang/{id}', 'DeleteLang')->name('DeleteLang');
+        Route::get('/emptyPhoto/{id}', 'emptyPhoto')->name('emptyPhoto');
+
+        // إدارة الصور الإضافية
+        Route::get('/photos/{id}', 'ListMorePhoto')->name('More_Photos');
+        Route::post('/AddMore', 'AddMorePhotos')->name('More_PhotosAdd');
+        Route::post('/saveSort', 'sortPhotoSave')->name('sortPhotoSave');
+        Route::get('/PhotoDel/{id}', 'More_PhotosDestroy')->name('More_PhotosDestroy');
+
+        // إعدادات المنتج
+        Route::get('/config', 'config')->name('config');
+    });
 
 Route::prefix('product/attribute')->name('Product.ProAttribute.')
     ->controller(AttributeController::class)->group(function () {

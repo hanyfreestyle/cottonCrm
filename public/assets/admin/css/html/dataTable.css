@@ -100,13 +100,34 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 
 #YajraDatatable .tableImg{
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 70px;
+    max-height: 70px;
 }
 #YajraDatatable .flag_icon{
     max-width: 25px;
     max-height: 25px;
 }
+
+
+#YajraDatatable th, #YajraDatatable td {
+    padding: .50rem;
+
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+/*.table tbody th, .table tbody td {*/
+/*    padding-bottom: 0!important;*/
+/*}*/
+
+/*.table__photo{*/
+/*    display:block;*/
+/*    width: 200px!important;*/
+/*    height: 200px!important;*/
+/*    background-color: red;*/
+
+
+/*}*/
 
 
 

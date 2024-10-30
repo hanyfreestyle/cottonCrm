@@ -159,7 +159,7 @@ if (!function_exists('sideBarNavUlStyle')) {
 if (!function_exists('TablePhoto')) {
     function TablePhoto($row, $fildeName = 'photo_thum_1') {
         if ($row->$fildeName ?? false) {
-            $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defImagesDir($row->$fildeName) . '">';
+            $sendImg = '<img  class="tableImg img-rounded elevation-1 table__photo" src="' . defImagesDir($row->$fildeName) . '">';
         } else {
             $sendImg = '<img  class="tableImg img-rounded elevation-1" src="' . defAdminAssets('img/default-150x150.png') . '">';
         }

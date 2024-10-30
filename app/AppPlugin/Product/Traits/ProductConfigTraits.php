@@ -154,7 +154,7 @@ trait ProductConfigTraits {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "ProductAchived.index";
-        $subMenu->url = "admin.Product.ProductAchived.index";
+        $subMenu->url = "admin.Product.Product.Achived.index";
         $subMenu->name = "admin/proProduct.app_menu_archived_products";
         $subMenu->roleView = "Product_view";
         $subMenu->icon = "fas fa-archive";
