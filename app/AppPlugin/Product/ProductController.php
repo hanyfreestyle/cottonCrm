@@ -33,7 +33,7 @@ class ProductController extends AdminMainController {
 
     function __construct() {
         parent::__construct();
-        $this->controllerName = "Product";
+        $this->controllerName = "ProductList";
         $this->PrefixRole = 'Product';
         $this->selMenu = "admin.Product.";
         $this->PrefixCatRoute = "";
@@ -140,28 +140,27 @@ class ProductController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ProductIndex(Request $request) {
         $pageData = $this->pageData;
-        $pageData['ViewType'] = "List";
-        $pageData['SubView'] = false;
+        $pageData['ViewType'] = 'index';
+        $pageData['IconPage'] = "fas fa-shopping-cart";
         $pageData['Trashed'] = Product::onlyTrashed()->count();
         $session = self::getSessionData($request);
-
         $currentRoute = Route::currentRouteName();
 
-        if ($currentRoute == "admin.Product.ProductAchived.index" or $currentRoute == "admin.Product.Product.filter_archived") {
-            $is_archived = 1;
-            $route = route($this->PrefixRoute . '.DataTableArchived');
-            $filterRoute = ".filter_archived";
-        } elseif (Route::currentRouteName() == 'admin.Product.Product.SoftDelete') {
-            $is_archived = 0;
-            $route = route($this->PrefixRoute . '.DataTableSoftDelete');
-            $filterRoute = ".filter";
-            $pageData['ViewType'] = "deleteList";
-        } else {
-            $is_archived = 0;
-            $route = route($this->PrefixRoute . '.DataTable');
-            $filterRoute = ".filter";
 
+        if ($currentRoute == $this->PrefixRoute . '.Archived') {
+//            $filterRoute = ".filter_archived";
+            $PageView = 'Archived';
+        } elseif ($currentRoute == $this->PrefixRoute . '.SoftDelete') {
+
+//            $filterRoute = ".filter";
+
+            $PageView = 'SoftDelete';
+        } else {
+
+//            $filterRoute = ".filter";
+            $PageView = 'index';
         }
+
 //        $rowData = self::ProductQuery($this->config);
 //        dd($this->config);
 
@@ -172,15 +171,21 @@ class ProductController extends AdminMainController {
 //        }
 
 
-//        $rowData = self::ProductQuery($this->config);
-//        dd($rowData->first());
+        $dataSend = [
+            'PageView' => $PageView,
+        ];
 
+
+//        $rowData = self::ProductQuery($this->config,$dataSend);
+//        dd($rowData->get());
+//        dd($rowData->first());
 
         return view('AppPlugin.Product.index')->with([
             'pageData' => $pageData,
 //            'rowData' => $rowData,
-            'route' => $route,
-            'filterRoute' => $filterRoute,
+//            'route' => $route,
+//            'filterRoute' => $filterRoute,
+            'dataSend' => $dataSend,
         ]);
     }
 
@@ -188,19 +193,15 @@ class ProductController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ProductDataTable(Request $request) {
         if ($request->ajax()) {
-            $sendData = [
-                'route' => Route::currentRouteName(),
-                'config' => $this->config,
-                'hany' =>"Hany Darwish",
-            ];
-            $rowData = self::ProductQuery($this->config);
-            return self::ProductColumns($rowData,$sendData)->make(true);
+            $dataSend = $request->query('dataSend');
+            $rowData = self::ProductQuery($this->config, $dataSend);
+            return self::ProductColumns($rowData, $dataSend)->make(true);
         }
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductQuery($config) {
+    public function ProductQuery($config, $dataSend) {
 
         $table = $config['DbPost'];
         $table_trans = $config['DbPostTrans'];
@@ -214,7 +215,15 @@ class ProductController extends AdminMainController {
         $table_brand_trans = $config['DbBrandTrans'];
         $table_brand_trans_foreign = 'brand_id';
 
-        $data = DB::table($table)->whereNull("$table.deleted_at");
+
+        if ($dataSend['PageView'] == 'SoftDelete') {
+            $data = DB::table($table)->whereNotNull("$table.deleted_at");
+        }elseif ($dataSend['PageView'] == 'Archived'){
+            $data = DB::table($table)->whereNull("$table.deleted_at")->where("$table.is_archived",true);
+        } else {
+            $data = DB::table($table)->whereNull("$table.deleted_at")->where("$table.is_archived",false);
+        }
+
         $data->whereNull("$table.parent_id");
 
 
@@ -239,6 +248,7 @@ class ProductController extends AdminMainController {
         $data->select(
             "$table.id as id",
             DB::raw("MAX($table.is_active) as is_active"),
+            DB::raw("MAX($table.deleted_at) as deleted_at"),
             DB::raw("MAX($table.price) as price"),
             DB::raw("MAX($table.regular_price) as regular_price"),
             DB::raw("MAX($table.is_active) as isActive"),
@@ -265,9 +275,9 @@ class ProductController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductColumns($data, $arr = array()) {
+    public function ProductColumns($data, $dataSend) {
 
-        return DataTables::query($data,$arr)
+        return DataTables::query($data, $dataSend)
             ->addIndexColumn()
             ->addColumn('photo', function ($row) {
                 return TablePhoto($row, 'photo');
@@ -281,31 +291,47 @@ class ProductController extends AdminMainController {
             ->editColumn('price', function ($row) {
                 return number_format($row->price);
             })
-            ->addColumn('isActive', function ($row) {
-                return is_active($row->is_active);
-            })
-            ->addColumn('Edit', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-            })
-            ->addColumn('Delete', function ($row) {
-                return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-            })
-            ->addColumn('hany', function ($row) use ($arr) {
-                return $arr['route'];
+
+
+            ->addColumn('isActive', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] != 'SoftDelete') {
+                    return is_active($row->is_active);
+                }
             })
 
-//            ->editColumn('deleted_at', function ($row) {
-//                return [
-//                    'display' => date("Y-m-d", $row->deleted_at),
-//                    'timestamp' => strtotime($row->deleted_at)
-//                ];
-//            })
-//            ->addColumn('Restore', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'Restore', 'row' => $row])->render();
-//            })
-//            ->addColumn('ForceDelete', function ($row) {
-//                return view('datatable.but')->with(['btype' => 'ForceDelete', 'row' => $row])->render();
-//            })
+            ->addColumn('Edit', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] != 'SoftDelete') {
+                    return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
+                }
+            })
+
+            ->editColumn('Delete', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] != 'SoftDelete') {
+                    return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
+                }
+            })
+
+            ->editColumn('deleted_at', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] == 'SoftDelete') {
+                    return [
+                        'display' => Carbon::parse($row->deleted_at)->format('Y-m-d'),
+                        'timestamp' => Carbon::parse($row->deleted_at)->timestamp
+                    ];
+                }
+            })
+            ->addColumn('Restore', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] == 'SoftDelete') {
+                    return view('datatable.but')->with(['btype' => 'Restore', 'row' => $row])->render();
+                }
+            })
+            ->addColumn('ForceDelete', function ($row) use ($dataSend) {
+                if ($dataSend['PageView'] == 'SoftDelete') {
+                    return view('datatable.but')->with(['btype' => 'ForceDelete', 'row' => $row])->render();
+                }
+            })
+            ->addColumn('hany', function ($row) use ($dataSend) {
+                return $dataSend['PageView'];
+            })
             ->rawColumns(["photo", 'CategoryName', 'Edit', "Delete", 'AddLang', "Restore", "ForceDelete", "isActive"]);
     }
 

@@ -53,23 +53,18 @@ Route::TagsRoutes('product/tags/', 'Product.ProductTags.', 'ProductTags.', Produ
 //Route::get('/product/config', [ProductController::class, 'config'])->name('Product.Product.config');
 
 
-Route::prefix('product')->name('Product.Product.')
+Route::prefix('product')->name('Product.ProductList.')
     ->controller(ProductController::class)->group(function () {
         // المسارات العامة
-        Route::get('/', 'ProductIndex')->name('index');
-        Route::post('/', 'ProductIndex')->name('filter');
-        Route::get('/DataTable', 'ProductDataTable')->name('DataTable');
-        Route::get('/filter-category/{categoryId}', 'ProductIndex')->name('FilterCategory');
+        Route::get('/index', 'ProductIndex')->name('index');
+        Route::get('/archived', 'ProductIndex')->name('Archived');
+        Route::get('/soft-delete', 'ProductIndex')->name('SoftDelete');
+        Route::get('/data-table/', 'ProductDataTable')->name('DataTable');
 
-        // المسارات المتعلقة بالمنتجات المؤرشفة
-        Route::get('/achived', 'ProductIndex')->name('Achived.index');
-        Route::post('/achived', 'ProductIndex')->name('filter_archived');
-        Route::get('/DataTableArchived', 'DataTableArchived')->name('DataTableArchived');
-
-        // المسارات المتعلقة بالمنتجات المحذوفة
-        Route::get('/SoftDelete', 'ProductIndex')->name('SoftDelete');
-        Route::get('/DataTableSoftDelete', 'ProductDataTable')->name('DataTableSoftDelete');
-
+//        Route::post('/', 'ProductIndex')->name('filter');
+//        Route::get('/filter-category/{categoryId}', 'ProductIndex')->name('FilterCategory');
+//        Route::post('/achived', 'ProductIndex')->name('filter_archived');
+//        Route::get('/DataTableArchived', 'DataTableArchived')->name('DataTableArchived');
 
 
         // إنشاء وتعديل المنتجات

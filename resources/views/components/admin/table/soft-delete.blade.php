@@ -1,7 +1,7 @@
 @if($type == 't')
-    <th class="TD_200">{{ __('admin/def.delete_date') }}</th>
-    <th class="TD_150"></th>
-    <th class="TD_150"></th>
+    <th class="">{{ __('admin/def.delete_date') }}</th>
+    <th class="td_action"></th>
+    <th class="td_action"></th>
 
 @elseif($type == 'b')
     <td>{{$row->deleted_at}}</td>

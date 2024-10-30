@@ -5,43 +5,14 @@
 @endsection
 
 @section('content')
-    <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
+    @include('AppPlugin.Product.index_breadcrumb')
+
 
     {{--    <x-admin.hmtl.section>--}}
     {{--        <x-admin.product.filter :row="$rowData" form-name="{{$formName}}" :def-route="$filterRoute" :only-data-table="true"/>--}}
     {{--    </x-admin.hmtl.section>--}}
 
-    {{--    <x-admin.hmtl.section>--}}
-    {{--        <x-admin.card.def :page-data="$pageData">--}}
-    {{--            <table {!! Table_Style(true,true)  !!} >--}}
-    {{--                <thead>--}}
-    {{--                <tr>--}}
-    {{--                    <th class="TD_20">#</th>--}}
-    {{--                    <th class="TD_20"></th>--}}
-    {{--                    <th class="TD_200">{{__('admin/proProduct.pro_text_name')}}</th>--}}
-    {{--                    <th class="TD_100">{{__('admin/proProduct.cat_text_name')}}</th>--}}
-    {{--                    <th class="TD_100">{{__('admin/proProduct.app_menu_brand')}}</th>--}}
-    {{--                    <th class="TD_100">{{__('admin/proProduct.pro_text_regular_price')}}</th>--}}
-    {{--                    <th class="TD_80">{{__('admin/proProduct.pro_text_price')}}</th>--}}
-    {{--                    @if($Config['TableAddLang'] and count(config('app.web_lang')) > 1)--}}
-    {{--                        <x-admin.table.action-but po="top" type="addLang"/>--}}
-    {{--                    @endif--}}
-    {{--                    @if($pageData['ViewType'] == 'deleteList')--}}
-    {{--                        <x-admin.table.soft-delete/>--}}
-    {{--                    @else--}}
-    {{--                        <th class="td_action"></th>--}}
-    {{--                        <x-admin.table.action-but po="top" type="edit"/>--}}
-    {{--                        <x-admin.table.action-but po="top" type="delete"/>--}}
-    {{--                    @endif--}}
-    {{--                </tr>--}}
-    {{--                </thead>--}}
-    {{--                <tbody></tbody>--}}
-    {{--            </table>--}}
-    {{--        </x-admin.card.def>--}}
-    {{--    </x-admin.hmtl.section>--}}
-
     <x-admin.hmtl.section>
-        {{--        <x-admin.card.def :page-data="$pageData">--}}
         <div class="row">
             <div class="col-lg-12">
                 <table {!! Table_Style_Yajra() !!} >
@@ -49,14 +20,18 @@
                     <tr>
                         <th class="TD_20">#</th>
                         <x-admin.table.action-but po="top" type="photo" res="all" :view-but="true"/>
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
-                        <x-admin.table.action-but po="top" type="isActive"/>
-                        <x-admin.table.action-but po="top" type="edit"/>
-                        <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
+                        <th>{{ __('admin/proProduct.pro_text_name') }}</th>
+                        <th>{{__('admin/proProduct.cat_text_name')}}</th>
+                        <th>{{__('admin/proProduct.app_menu_brand')}}</th>
+                        <th>{{__('admin/proProduct.pro_text_regular_price')}}</th>
+                        <th>{{__('admin/proProduct.pro_text_price')}}</th>
+                        @if($dataSend['PageView'] == "SoftDelete")
+                            <x-admin.table.soft-delete/>
+                        @else
+                            <x-admin.table.action-but po="top" type="isActive"/>
+                            <x-admin.table.action-but po="top" type="edit"/>
+                            <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
+                        @endif
                         <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
                     </tr>
                     </thead>
@@ -65,8 +40,6 @@
                 </table>
             </div>
         </div>
-
-        {{--        </x-admin.card.def>--}}
     </x-admin.hmtl.section>
 
 @endsection
@@ -82,7 +55,7 @@
                 responsive: true,
                 pageLength: {{$yajraPerPage}},
                 @include('datatable.lang')
-                ajax: "{{ $route }}",
+                ajax: "{{ route($PrefixRoute.'.DataTable',['dataSend' => $dataSend]) }}",
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
                         @include('datatable.index_action_but',['type'=> 'photo','view'=> true])
@@ -93,10 +66,20 @@
                     {data: 'brand_name', name: '{{$config['DbBrandTrans']}}.name', orderable: true, searchable: true, className: "text-center"},
                     {data: 'regular_price', name: 'regular_price', orderable: true, searchable: true, className: "text-center"},
                     {data: 'price', name: 'price', orderable: true, searchable: true, className: "text-center"},
-                    @include('datatable.index_action_but',['type'=> 'isActive'])
-                    @include('datatable.index_action_but',['type'=> 'edit'])
-                    @include('datatable.index_action_but',['type'=> 'delete','view'=>true  ])
-                    {data: 'hany', name: 'hany', orderable: true, searchable: true, className: "text-center"},
+
+                        @if($dataSend['PageView'] == "SoftDelete")
+                        @include('datatable.index_action_but',['type'=> 'deleted_at','view'=>true  ])
+                        @include('datatable.index_action_but',['type'=> 'Restore','view'=>true  ])
+                        @include('datatable.index_action_but',['type'=> 'ForceDelete','view'=>true  ])
+                        @else
+                        @include('datatable.index_action_but',['type'=> 'isActive'])
+                        @include('datatable.index_action_but',['type'=> 'edit'])
+                        @include('datatable.index_action_but',['type'=> 'delete','view'=>true  ])
+                        @endif
+
+                    {
+                        data: 'hany', name: 'hany', orderable: true, searchable: true, className: "text-center"
+                    },
                 ],
             });
         });

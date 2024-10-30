@@ -292,11 +292,12 @@ if (!function_exists('getDataTableCategoryName')) {
             $getId = explode(':', $name);
             $printName = $getId['1'] ?? null;
             $printId = $getId['0'] ?? 0;
-            if (intval($printId) > 0) {
-                $names .= '<a href="' . route($PrefixRoute . '.FilterCategory', $printId) . '"><span class="cat_table_name">' . $printName . '</span></a> ';
-            } else {
-                $names .= '<span class="cat_table_name">' . $printName . '</span> ';
-            }
+//            if (intval($printId) > 0) {
+//                $names .= '<a href="' . route($PrefixRoute . '.FilterCategory', $printId) . '"><span class="cat_table_name">' . $printName . '</span></a> ';
+//            } else {
+//                $names .= '<span class="cat_table_name">' . $printName . '</span> ';
+//            }
+            $names .= '<span class="cat_table_name">' . $printName . '</span> ';
         };
         return $names;
     }

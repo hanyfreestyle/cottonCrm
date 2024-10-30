@@ -6,22 +6,23 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Breadcrumb extends Component
-{
+class Breadcrumb extends Component {
 
     public $pageData = array();
-    public $butView ;
+    public $butView;
+    public $newView;
+
     public function __construct(
         $pageData = array(),
-        $butView = true ,
-    )
-    {
+        $butView = true,
+        $newView = false,
+    ) {
         $this->pageData = $pageData;
-        $this->butView = $butView ;
+        $this->butView = $butView;
+        $this->newView = $newView;
     }
 
-    public function render(): View|Closure|string
-    {
+    public function render(): View|Closure|string {
         return view('components.admin.hmtl.breadcrumb');
     }
 }

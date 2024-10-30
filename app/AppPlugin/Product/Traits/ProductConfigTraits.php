@@ -100,8 +100,8 @@ trait ProductConfigTraits {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = setActiveRoute("Product");;
-        $subMenu->url = "admin.Product.Product.index";
+        $subMenu->sel_routs = setActiveRoute("ProductList");;
+        $subMenu->url = "admin.Product.ProductList.index";
         $subMenu->name = "admin/proProduct.app_menu_product";
         $subMenu->roleView = "Product_view";
         $subMenu->icon = "fas fa-shopping-cart";
@@ -110,7 +110,7 @@ trait ProductConfigTraits {
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = "Product.createNew";
-        $subMenu->url = "admin.Product.Product.create";
+        $subMenu->url = "admin.Product.ProductList.create";
         $subMenu->name = "admin/proProduct.app_menu_add_pro";
         $subMenu->roleView = "Product_add";
         $subMenu->icon = "fas fa-plus-circle";
@@ -153,8 +153,8 @@ trait ProductConfigTraits {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "ProductAchived.index";
-        $subMenu->url = "admin.Product.Product.Achived.index";
+        $subMenu->sel_routs = "Archived";
+        $subMenu->url = "admin.Product.ProductList.Archived";
         $subMenu->name = "admin/proProduct.app_menu_archived_products";
         $subMenu->roleView = "Product_view";
         $subMenu->icon = "fas fa-archive";
