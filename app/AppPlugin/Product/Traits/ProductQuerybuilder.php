@@ -95,7 +95,7 @@ trait ProductQuerybuilder {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ProductQueryFilter($data, $session, $table, $table_trans, $table_category) {
-//        dd("dddd");
+
         if (isset($session['from_date']) and $session['from_date'] != null) {
             $data->whereDate("$table.created_at", '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
         }
@@ -146,7 +146,7 @@ trait ProductQuerybuilder {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductColumns($data, $dataSend,$formName) {
+    public function ProductColumns($data, $dataSend) {
 
         return DataTables::query($data, $dataSend)
             ->addIndexColumn()
@@ -195,9 +195,9 @@ trait ProductQuerybuilder {
                     return view('datatable.but')->with(['btype' => 'ForceDelete', 'row' => $row])->render();
                 }
             })
-            ->addColumn('hany', function ($row) use ($formName) {
-                return $formName;
-            })
+//            ->addColumn('hany', function ($row) use ($formName) {
+//                return $formName;
+//            })
             ->rawColumns(["photo", 'CategoryName', 'Edit', "Delete", 'AddLang', "Restore", "ForceDelete", "isActive"]);
     }
 

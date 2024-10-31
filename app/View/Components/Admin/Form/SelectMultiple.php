@@ -22,6 +22,7 @@ class SelectMultiple extends Component {
     public $categories;
     public $selCat;
     public $hasTrans;
+    public $placeholder;
 
     public function __construct(
         $name = "",
@@ -38,6 +39,7 @@ class SelectMultiple extends Component {
         $categories =array(),
         $selCat = array(),
         $hasTrans = true,
+        $placeholder = null,
     ) {
         $this->hasTrans = $hasTrans;
         $this->name = $name;
@@ -61,6 +63,7 @@ class SelectMultiple extends Component {
         $this->type = $type;
         $this->categories = $categories;
         $this->selCat = $selCat;
+        $this->placeholder = $placeholder;
     }
 
 

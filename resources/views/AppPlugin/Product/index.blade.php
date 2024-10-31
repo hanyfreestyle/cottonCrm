@@ -7,7 +7,6 @@
     @include('AppPlugin.Product.index_breadcrumb')
 
     @if($filterRoute)
-        {{$formName}}
         <x-admin.hmtl.section>
             <x-admin.product.filter :row="$rowData" form-name="{{$formName}}" :def-route="$filterRoute"/>
         </x-admin.hmtl.section>
@@ -33,7 +32,6 @@
                             <x-admin.table.action-but po="top" type="edit"/>
                             <x-admin.table.action-but po="top" type="delete" :view-but="true"/>
                         @endif
-                        <th>{{ __('admin/proProduct.landing_lab_name') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,19 +66,15 @@
                     {data: 'regular_price', name: 'regular_price', orderable: true, searchable: true, className: "text-center"},
                     {data: 'price', name: 'price', orderable: true, searchable: true, className: "text-center"},
 
-                        @if($dataSend['PageView'] == "SoftDelete")
-                        @include('datatable.index_action_but',['type'=> 'deleted_at','view'=>true  ])
-                        @include('datatable.index_action_but',['type'=> 'Restore','view'=>true  ])
-                        @include('datatable.index_action_but',['type'=> 'ForceDelete','view'=>true  ])
-                        @else
-                        @include('datatable.index_action_but',['type'=> 'isActive'])
-                        @include('datatable.index_action_but',['type'=> 'edit'])
-                        @include('datatable.index_action_but',['type'=> 'delete','view'=>true  ])
-                        @endif
-
-                    {
-                        data: 'hany', name: 'hany', orderable: true, searchable: true, className: "text-center"
-                    },
+                    @if($dataSend['PageView'] == "SoftDelete")
+                    @include('datatable.index_action_but',['type'=> 'deleted_at','view'=>true  ])
+                    @include('datatable.index_action_but',['type'=> 'Restore','view'=>true  ])
+                    @include('datatable.index_action_but',['type'=> 'ForceDelete','view'=>true  ])
+                    @else
+                    @include('datatable.index_action_but',['type'=> 'isActive'])
+                    @include('datatable.index_action_but',['type'=> 'edit'])
+                    @include('datatable.index_action_but',['type'=> 'delete','view'=>true  ])
+                    @endif
                 ],
             });
         });

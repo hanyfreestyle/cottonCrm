@@ -6,7 +6,7 @@
                 @if($req)<span class="required_Span">*</span>@endif
             </label>
         @endif
-        <select id="{{$id}}" class="select2 is-invalid" multiple="multiple" name="{{$name}}[]" data-placeholder="" style="width: 100%;">
+        <select id="{{$id}}" class="select2 is-invalid" multiple="multiple" name="{{$name}}[]" data-placeholder="{{$placeholder}}" style="width: 100%;">
             @if($type == 'Main')
                 @foreach($categories as $category )
                     <option value="{{$category->id}}"

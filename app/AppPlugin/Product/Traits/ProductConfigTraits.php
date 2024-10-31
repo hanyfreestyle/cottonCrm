@@ -4,6 +4,9 @@
 namespace App\AppPlugin\Product\Traits;
 
 use App\AppCore\Menu\AdminMenu;
+use App\AppPlugin\Product\Models\AttributeValue;
+use App\AppPlugin\Product\Models\Category;
+use Illuminate\Support\Facades\Cache;
 
 trait ProductConfigTraits {
 
@@ -70,7 +73,31 @@ trait ProductConfigTraits {
         return $Config->LoadConfig();
     }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashCategoriesList($stopCash = 0) {
+        if ($stopCash) {
+            $CashCategoriesList = Category::CashCategoriesList();
+        } else {
+            $CashCategoriesList = Cache::remember('CashCategoriesList', cashDay(7), function () {
+                return Category::CashCategoriesList();
+            });
+        }
+        return $CashCategoriesList;
+    }
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function CashAttributeValueList($stopCash = 0) {
+        if ($stopCash) {
+            $CashAttributeValueList = AttributeValue::all();
+        } else {
+            $CashAttributeValueList = Cache::remember('CashAttributeValueList', cashDay(7), function () {
+                return AttributeValue::all();
+            });
+        }
+        return $CashAttributeValueList;
+    }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static function getAdminMenu() {

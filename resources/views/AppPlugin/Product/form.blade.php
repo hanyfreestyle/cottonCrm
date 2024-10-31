@@ -2,7 +2,7 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
-    <x-admin.product.form-top-icon :page-data="$pageData" :row="$rowData" web-slug="ProductView"/>
+    <x-admin.product.form-top-icon :page-data="$pageData" :row="$rowData" web-slug="#"/>
 
     <div class="productForm">
 
@@ -21,7 +21,7 @@
                         <x-admin.card.normal>
                             <div class="row">
                                 <x-admin.form.select-multiple name="categories" :categories="$Categories" :sel-cat="$selCat" :col="9"/>
-                                @if($Config['ProductBrand'])
+                                @if($config['TableBrand'])
                                     <x-admin.form.select-arr name="brand_id" sendvalue="{{old('brand_id',$rowData->brand_id)}}" :required-span="false"
                                                              :send-arr="$CashBrandList" label="{{__('admin/proProduct.app_menu_brand')}}" col="3"/>
                                 @endif
@@ -91,11 +91,11 @@
         <x-admin.ajax.tag-serach length="1"/>
     @endif
 
-    @if($viewEditor)
-        <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
-        @foreach ( config('app.web_lang') as $key=>$lang )
-            <x-admin.java.ckeditor4 name="{{$key}}[des]" id="{{$key}}_des" :dir="$key"/>
-            <x-admin.java.ckeditor4 name="{{$key}}[short_des]" id="{{$key}}_short_des" :dir="$key" :upload-photo="false" :filebrowser="false"/>
-        @endforeach
-    @endif
+
+    <script src="{{defAdminAssets('ckeditor/ckeditor.js')}}"></script>
+    @foreach ( config('app.web_lang') as $key=>$lang )
+        <x-admin.java.ckeditor4 name="{{$key}}[des]" id="{{$key}}_des" :dir="$key"/>
+        <x-admin.java.ckeditor4 name="{{$key}}[short_des]" id="{{$key}}_short_des" :dir="$key" :upload-photo="false" :filebrowser="false"/>
+    @endforeach
+
 @endpush

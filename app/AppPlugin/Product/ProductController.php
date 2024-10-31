@@ -86,38 +86,6 @@ class ProductController extends AdminMainController {
         $this->CashCategoriesList = self::CashCategoriesList($this->StopeCash);
         View::share('CashCategoriesList', $this->CashCategoriesList);
 
-//        $sendArr = [
-//            'TitlePage' => $this->PageTitle,
-//            'PrefixRoute' => $this->PrefixRoute,
-//            'PrefixRole' => $this->PrefixRole,
-//            'AddConfig' => true,
-//            'configArr' => [
-//                "datatable" => false,
-//                "orderby" => false,
-//                "editor" => 1,
-//                'morePhotoFilterid' => 1
-//            ],
-//            'yajraTable' => true,
-//            'AddLang' => true,
-//            'restore' => 1,
-//            'formName' => "ProductFilters",
-//        ];
-//
-//        $Config = [
-//            'TableCategory' => true,
-//            'TableAddLang' => true,
-//            'ProductBrand' => true,
-//        ];
-//        View::share('Config', $Config);
-//
-//
-//        self::loadConstructData($sendArr);
-//
-//        $this->middleware('permission:' . $this->PrefixRole . '_view', ['only' => ['index', 'CategoryIndex']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_add', ['only' => ['create', 'CategoryCreate']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_edit', ['only' => ['UpdatePrices']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_delete', ['only' => ['destroy', 'destroyException']]);
-//        $this->middleware('permission:' . $this->PrefixRole . '_restore', ['only' => ['SoftDeletes', 'Restore', 'ForceDelete']]);
 
         $this->config = self::LoadConfig();
         View::share('config', $this->config);
@@ -162,6 +130,7 @@ class ProductController extends AdminMainController {
         } elseif ($currentRoute == $this->PrefixRoute . '.SoftDelete') {
             $PageView = 'SoftDelete';
             $filterRoute = null;
+            $this->formName = "SoftDeleteFilter";
         } else {
             $PageView = 'index';
             $filterRoute = ".index.filter";
@@ -175,7 +144,7 @@ class ProductController extends AdminMainController {
             'session' => $session,
         ];
 
-        $rowData = self::ProductQuery($this->config, $dataSend,$session)->get();
+        $rowData = self::ProductQuery($this->config, $dataSend, $session)->get();
 
         return view('AppPlugin.Product.index')->with([
             'pageData' => $pageData,
@@ -188,59 +157,153 @@ class ProductController extends AdminMainController {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductDataTable(Request $request,$formName) {
+    public function ProductDataTable(Request $request, $formName) {
         if ($request->ajax()) {
             $dataSend = $request->query('dataSend');
             $session = self::getSessionDataAjax($formName);
             $rowData = self::ProductQuery($this->config, $dataSend, $session);
-            return self::ProductColumns($rowData, $dataSend,$formName)->make(true);
+            return self::ProductColumns($rowData, $dataSend, $formName)->make(true);
         }
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #   DataTable
-//    public function ProductDataTable(Request $request) {
-//        if ($request->ajax()) {
-//            $session = self::getSessionData($request);
-//            if ($session == null) {
-//                $data = $this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
-//                    ->where('parent_id', null)->where('is_archived', 0)->with('tablename');
-//            } else {
-//                $data = self::ProductFilterQ($this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
-//                    ->where('parent_id', null)->where('is_archived', 0)->with('tablename'), $session);
-//            }
-//            return self::DataTableProductColumns($data)->make(true);
-//        }
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #   DataTable
-//    public function DataTableArchived(Request $request) {
-//        if ($request->ajax()) {
-//            $session = self::getSessionData($request);
-//            if ($session == null) {
-//                $data = $this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
-//                    ->where('parent_id', null)->where('is_archived', 1)->with('tablename');
-//            } else {
-//                $data = self::ProductFilterQ($this->model::select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
-//                    ->where('parent_id', null)->where('is_archived', 1)->with('tablename'), $session);
-//            }
-//            return self::DataTableProductColumns($data)->make(true);
-//        }
-//    }
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #   DataTable
-//    public function DataTableSoftDelete(Request $request) {
-//        if ($request->ajax()) {
-//            $data = $this->model::onlyTrashed()->select(['pro_product.id', 'photo_thum_1', 'is_active', 'price', 'regular_price', 'brand_id'])
-//                ->where('parent_id', null)->with('tablename');
-//            return self::DataTableProductColumns($data)->make(true);
-//
-//        }
-//    }
-//
-//
-//
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function create() {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Add";
+        $Categories = Category::all();
+        $rowData = Product::findOrNew(0);
+        $LangAdd = self::getAddLangForAdd();
+        $selCat = [];
+        $tags = ProductTags::where('id', '!=', 0)->take(100)->get();
+        $selTags = [];
+        return view('AppPlugin.Product.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'Categories' => $Categories,
+            'LangAdd' => $LangAdd,
+            'selCat' => $selCat,
+            'tags' => $tags,
+            'selTags' => $selTags,
+            'viewEditor' => true,
+        ]);
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function edit($id) {
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "Edit";
+        $Categories = Category::all();
+        $rowData = Product::where('id', $id)->with('categories')->with('attributes')->with('childproduct')->firstOrFail();
+        $selCat = $rowData->categories()->pluck('category_id')->toArray();
+        $LangAdd = self::getAddLangForEdit($rowData);
+        $selTags = $rowData->tags()->pluck('tag_id')->toArray();
+        $tags = ProductTags::whereIn('id', $selTags)->take(50)->get();
+
+        return view('AppPlugin.Product.form')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'Categories' => $Categories,
+            'LangAdd' => $LangAdd,
+            'selCat' => $selCat,
+            'tags' => $tags,
+            'selTags' => $selTags,
+        ]);
+    }
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function storeUpdate(ProductRequest $request, $id = 0) {
+        $saveData = Product::findOrNew($id);
+        try {
+            DB::transaction(function () use ($request, $saveData) {
+                $categories = $request->input('categories');
+                $tags = $request->input('tag_id');
+
+                $saveData->is_active = $request->input('is_active');
+                $saveData->is_archived = $request->input('is_archived');
+                $saveData->on_stock = $request->input('on_stock');
+                $saveData->featured = $request->input('featured');
+                $saveData->brand_id = $request->input('brand_id');
+
+                $saveData->price = $request->input('price');
+                $saveData->regular_price = $request->input('regular_price');
+                $saveData->sales_count = $request->input('sales_count');
+                $saveData->save();
+
+                $saveData->categories()->sync($categories);
+                $saveData->tags()->sync($tags);
+                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
+
+                $saveData->pro_id = $saveData->id;
+
+                if ($saveData->sku == null) {
+                    $saveData->sku = $saveData->id . "-" . RandomNumber();
+                }
+                $saveData->save();
+
+                $addLang = json_decode($request->add_lang);
+                foreach ($addLang as $key => $lang) {
+                    $dbName = $this->translationdb;
+                    $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
+                    $saveTranslation->$dbName = $saveData->id;
+                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
+                    $saveTranslation->short_des = $request->input($key . '.short_des');
+                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
+                    $saveTranslation->save();
+                }
+            });
+
+        } catch (\Exception $exception) {
+            return back()->with('data_not_save', "");
+        }
+        self::ClearCash();
+        self::UpdateDefCat();
+        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
+
+    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdateDefCat() {
+        $products = Product::query()->where('parent_id', null)
+            ->where('def_cat', null)
+            ->with('categories')
+            ->get();
+
+        foreach ($products as $product) {
+            $defCat = null;
+            if (count($product->categories) > 1) {
+                $defCat = $product->categories->where('parent_id', null)->first()->id ?? null;
+                if ($defCat == null) {
+                    $defCat = $product->categories->first()->id ?? null;
+                }
+            } elseif (count($product->categories) == 1) {
+                $defCat = $product->categories->first()->id ?? null;
+            }
+            if ($defCat) {
+                $product->def_cat = $defCat;
+                $product->timestamps = false;
+                $product->save();
+            }
+        }
+    }
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static function getChildProductName($childproduct) {
+        $slug = explode('-', $childproduct->variants_slug_id);
+        $values = self::CashAttributeValueList();
+        $name = "";
+        foreach ($slug as $id) {
+            if (intval($id) != 0) {
+                $name .= $values->where('id', $id)->first()->name . " / ";
+            }
+        }
+        $name = rtrim($name, " / ");
+        return $name;
+    }
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #
@@ -300,140 +363,9 @@ class ProductController extends AdminMainController {
 //        ]);
 //
 //    }
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     create
-//    public function create() {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Add";
-//        $Categories = Category::all();
-//        $rowData = Product::findOrNew(0);
-//        $LangAdd = self::getAddLangForAdd();
-//        $selCat = [];
-//        $tags = ProductTags::where('id', '!=', 0)->take(100)->get();
-//
-//
-//        $selTags = [];
-//
-//        return view('AppPlugin.Product.form')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'Categories' => $Categories,
-//            'LangAdd' => $LangAdd,
-//            'selCat' => $selCat,
-//            'tags' => $tags,
-//            'selTags' => $selTags,
-//            'viewEditor' => true,
-//        ]);
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #     edit
-//    public function edit($id) {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "Edit";
-//        $Categories = Category::all();
-//        $rowData = Product::where('id', $id)->with('categories')->with('attributes')->with('childproduct')->firstOrFail();
-//        $selCat = $rowData->categories()->pluck('category_id')->toArray();
-//        $LangAdd = self::getAddLangForEdit($rowData);
-//        $selTags = $rowData->tags()->pluck('tag_id')->toArray();
-//        $tags = ProductTags::whereIn('id', $selTags)->take(50)->get();
-//
-//        return view('AppPlugin.Product.form')->with(
-//            [
-//                'pageData' => $pageData,
-//                'rowData' => $rowData,
-//                'Categories' => $Categories,
-//                'LangAdd' => $LangAdd,
-//                'selCat' => $selCat,
-//                'tags' => $tags,
-//                'selTags' => $selTags,
-//            ]
-//        );
-//    }
-//
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//    public function storeUpdate(ProductRequest $request, $id = 0) {
-//        $saveData = Product::findOrNew($id);
-//
-//        try {
-//            DB::transaction(function () use ($request, $saveData) {
-//                $categories = $request->input('categories');
-//                $tags = $request->input('tag_id');
-//
-//                $saveData->is_active = $request->input('is_active');
-//                $saveData->is_archived = $request->input('is_archived');
-//                $saveData->on_stock = $request->input('on_stock');
-//                $saveData->featured = $request->input('featured');
-//                $saveData->brand_id = $request->input('brand_id');
-//
-//                $saveData->price = $request->input('price');
-//                $saveData->regular_price = $request->input('regular_price');
-//                $saveData->sales_count = $request->input('sales_count');
-//                $saveData->save();
-//
-//                $saveData->categories()->sync($categories);
-//                $saveData->tags()->sync($tags);
-//                self::SaveAndUpdateDefPhoto($saveData, $request, $this->UploadDirIs, 'en.name');
-//
-//                $saveData->pro_id = $saveData->id;
-//
-//                if ($saveData->sku == null) {
-//                    $saveData->sku = $saveData->id . "-" . RandomNumber();
-//                }
-//                $saveData->save();
-//
-//                $addLang = json_decode($request->add_lang);
-//                foreach ($addLang as $key => $lang) {
-//                    $dbName = $this->translationdb;
-//                    $saveTranslation = $this->translation->where($dbName, $saveData->id)->where('locale', $key)->firstOrNew();
-//                    $saveTranslation->$dbName = $saveData->id;
-//                    $saveTranslation->slug = AdminHelper::Url_Slug($request->input($key . '.slug'));
-//                    $saveTranslation->short_des = $request->input($key . '.short_des');
-//                    $saveTranslation = self::saveTranslationMain($saveTranslation, $key, $request);
-//                    $saveTranslation->save();
-//                }
-//            });
-//
-//        } catch (\Exception $exception) {
-//            return back()->with('data_not_save', "");
-//        }
-//        self::ClearCash();
-//        self::UpdateDefCat();
-//        return self::redirectWhere($request, $id, $this->PrefixRoute . '.index');
-//
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//
-//    public function UpdateDefCat() {
-//
-//        $products = Product::query()->where('parent_id', null)
-//            ->where('def_cat', null)
-//            ->with('categories')
-//            ->get();
-//
-//        foreach ($products as $product) {
-//            $defCat = null;
-//            if (count($product->categories) > 1) {
-//                $defCat = $product->categories->where('parent_id', null)->first()->id ?? null;
-//                if ($defCat == null) {
-//                    $defCat = $product->categories->first()->id ?? null;
-//                }
-//            } elseif (count($product->categories) == 1) {
-//                $defCat = $product->categories->first()->id ?? null;
-//            }
-//            if ($defCat) {
-//                $product->def_cat = $defCat;
-//                $product->timestamps = false;
-//                $product->save();
-//            }
-//        }
-//
-//    }
-//
+
+
+
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #     ForceDeletes
 //    public function ForceDeleteException($id) {
@@ -467,97 +399,11 @@ class ProductController extends AdminMainController {
 //
 //
 //
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #   ProductFilterQ
-//    static function ProductFilterQ($query, $session, $order = null) {
-//
-//        $query->where('id', '!=', 0);
-//
-//        if (isset($session['from_date']) and $session['from_date'] != null) {
-//            $query->whereDate('created_at', '>=', Carbon::createFromFormat('Y-m-d', $session['from_date']));
-//        }
-//
-//        if (isset($session['to_date']) and $session['to_date'] != null) {
-//            $query->whereDate('created_at', '<=', Carbon::createFromFormat('Y-m-d', $session['to_date']));
-//        }
-//
-//        if (isset($session['is_active']) and $session['is_active'] != null) {
-//            $query->where('is_active', $session['is_active']);
-//        }
-//
-//        if (isset($session['type']) and $session['type'] != null) {
-//            if ($session['type'] == 1) {
-//                $query->withcount('childproduct')->having('childproduct_count', 0);
-//            } else {
-//                $query->withcount('childproduct')->having('childproduct_count', ">", 0);
-//            }
-//        }
-//
-//        if (isset($session['price_from']) and $session['price_from'] != null and intval($session['price_from']) > 0) {
-//            $query->where('price', ">=", $session['price_from']);
-//        }
-//
-//        if (isset($session['price_to']) and $session['price_to'] != null and intval($session['price_to']) > 0) {
-//            $query->where('price', "<=", $session['price_to']);
-//        }
-//
-//
-//        if (isset($session['brand_id']) and $session['brand_id'] != null) {
-//            $query->where('brand_id', $session['brand_id']);
-//        }
-//
-//        if (isset($session['cat_id']) and $session['cat_id'] != null) {
-//            $id = $session['cat_id'];
-//            $query->whereHas('categories', function ($query) use ($id) {
-//                $query->where('category_id', $id);
-//            });
-//        }
-//
-//        if (isset($session['on_stock']) and $session['on_stock'] != null) {
-//            $query->where('on_stock', $session['on_stock']);
-//        }
-//
-//        if (isset($session['name']) and $session['name'] != null) {
-//            $query->whereTranslationLike('name', '%' . $session['name'] . '%');
-//        }
-//
-//
-//        if ($order != null) {
-//            $orderBy = explode("|", $order);
-//            $query->orderBy($orderBy[0], $orderBy[1]);
-//        }
-//
-//        return $query;
-//    }
-//
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #
-//    static function getChildProductName($childproduct) {
-//        $slug = explode('-', $childproduct->variants_slug_id);
-//        $values = WebMainController::CashAttributeValueList();
-//        $name = "";
-//        foreach ($slug as $id) {
-//            if (intval($id) != 0) {
-//                $name .= $values->where('id', $id)->first()->name . " / ";
-//            }
-//        }
-//        $name = rtrim($name, " / ");
-//        return $name;
-//    }
-//
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    static function CashCategoriesList($stopCash = 0) {
-        if ($stopCash) {
-            $CashCategoriesList = Category::CashCategoriesList();
-        } else {
-            $CashCategoriesList = Cache::remember('CashCategoriesList', cashDay(7), function () {
-                return Category::CashCategoriesList();
-            });
-        }
-        return $CashCategoriesList;
-    }
+
+
+
+
 
 
 }
