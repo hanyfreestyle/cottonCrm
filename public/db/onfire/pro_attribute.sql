@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2024 at 06:02 PM
+-- Generation Time: Oct 31, 2024 at 06:40 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cottton_shop_web`
+-- Database: `app_crm_hoover`
 --
 
 --
@@ -26,13 +26,7 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `pro_attribute` (`id`, `type`, `old_id`, `is_active`, `position`) VALUES
-(1, 0, NULL, 1, 0),
-(2, 0, NULL, 1, 0),
-(3, 0, NULL, 1, 0),
-(4, 0, NULL, 1, 0),
-(5, 0, NULL, 1, 0),
-(6, 0, NULL, 1, 0),
-(7, 0, NULL, 1, 0);
+(1, 0, NULL, 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
