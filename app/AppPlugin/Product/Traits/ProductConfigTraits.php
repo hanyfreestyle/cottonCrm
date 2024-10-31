@@ -100,7 +100,7 @@ trait ProductConfigTraits {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = setActiveRoute("ProductList");;
+        $subMenu->sel_routs = setActiveRoute("ProductList")."|index.filter";
         $subMenu->url = "admin.Product.ProductList.index";
         $subMenu->name = "admin/proProduct.app_menu_product";
         $subMenu->roleView = "Product_view";

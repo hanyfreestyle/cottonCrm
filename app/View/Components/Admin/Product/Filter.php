@@ -41,6 +41,7 @@ class Filter extends Component {
         $this->option_6 = $option_6;
         $this->option_7 = $option_7;
 
+
         $this->getSessionData = Session::get($this->formName);
 
     }

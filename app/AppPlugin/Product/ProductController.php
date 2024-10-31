@@ -12,7 +12,9 @@ use App\AppPlugin\Product\Models\ProductTranslation;
 use App\AppPlugin\Product\Request\ProductRequest;
 use App\AppPlugin\Product\Traits\ProductBrandConfigTraits;
 use App\AppPlugin\Product\Traits\ProductConfigTraits;
+use App\AppPlugin\Product\Traits\ProductQuerybuilder;
 use App\Helpers\AdminHelper;
+use App\Helpers\QueryBuilder;
 use App\Http\Controllers\AdminMainController;
 use App\Http\Controllers\WebMainController;
 use App\Http\Traits\CrudTraits;
@@ -22,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -30,6 +33,7 @@ class ProductController extends AdminMainController {
 
     use CrudTraits;
     use ProductConfigTraits;
+    use ProductQuerybuilder;
 
     function __construct() {
         parent::__construct();
@@ -62,6 +66,12 @@ class ProductController extends AdminMainController {
             "2" => ['id' => '1', 'name' => __('admin/proProduct.pro_status_stock_1')],
         ];
         View::share('OnStock_Arr', $OnStock_Arr);
+
+        $IsActive_Arr = [
+            "1" => ['id' => '0', 'name' => __('admin/proProduct.pro_status_is_active_0')],
+            "2" => ['id' => '1', 'name' => __('admin/proProduct.pro_status_is_active_1')],
+        ];
+        View::share('IsActive_Arr', $IsActive_Arr);
 
         $IsArchived_Arr = [
             "1" => ['id' => '0', 'name' => __('admin/proProduct.pro_is_archived_0')],
@@ -143,202 +153,49 @@ class ProductController extends AdminMainController {
         $pageData['ViewType'] = 'index';
         $pageData['IconPage'] = "fas fa-shopping-cart";
         $pageData['Trashed'] = Product::onlyTrashed()->count();
-        $session = self::getSessionData($request);
         $currentRoute = Route::currentRouteName();
 
-
-        if ($currentRoute == $this->PrefixRoute . '.Archived') {
-//            $filterRoute = ".filter_archived";
+        if ($currentRoute == $this->PrefixRoute . '.Archived' or $currentRoute == $this->PrefixRoute . '.archived.filter') {
             $PageView = 'Archived';
+            $filterRoute = ".archived.filter";
+            $this->formName = "ProductArchivedFilter";
         } elseif ($currentRoute == $this->PrefixRoute . '.SoftDelete') {
-
-//            $filterRoute = ".filter";
-
             $PageView = 'SoftDelete';
+            $filterRoute = null;
         } else {
-
-//            $filterRoute = ".filter";
             $PageView = 'index';
+            $filterRoute = ".index.filter";
+            $this->formName = "ProductIndexFilter";
         }
 
-//        $rowData = self::ProductQuery($this->config);
-//        dd($this->config);
-
-//        if ($session == null) {
-//            $rowData = $this->model::def()->where('is_archived', $is_archived)->count();
-//        } else {
-//            $rowData = self::ProductFilterQ($this->model::def()->where('is_archived', $is_archived), $session)->count();
-//        }
-
-
+        View::share('formName', $this->formName);
+        $session = self::getSessionData($request);
         $dataSend = [
             'PageView' => $PageView,
+            'session' => $session,
         ];
 
-
-//        $rowData = self::ProductQuery($this->config,$dataSend);
-//        dd($rowData->get());
-//        dd($rowData->first());
+        $rowData = self::ProductQuery($this->config, $dataSend,$session)->get();
 
         return view('AppPlugin.Product.index')->with([
             'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'route' => $route,
-//            'filterRoute' => $filterRoute,
+            'rowData' => $rowData,
+            'filterRoute' => $filterRoute,
             'dataSend' => $dataSend,
+            'session' => $session,
         ]);
     }
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductDataTable(Request $request) {
+    public function ProductDataTable(Request $request,$formName) {
         if ($request->ajax()) {
             $dataSend = $request->query('dataSend');
-            $rowData = self::ProductQuery($this->config, $dataSend);
-            return self::ProductColumns($rowData, $dataSend)->make(true);
+            $session = self::getSessionDataAjax($formName);
+            $rowData = self::ProductQuery($this->config, $dataSend, $session);
+            return self::ProductColumns($rowData, $dataSend,$formName)->make(true);
         }
     }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductQuery($config, $dataSend) {
-
-        $table = $config['DbPost'];
-        $table_trans = $config['DbPostTrans'];
-        $table_trans_foreign = $config['DbPostForeignId'];
-        $locale = dataTableDefLang();
-        $table_category = $config['DbCategory'];
-        $table_category_trans = $config['DbCategoryTrans'];
-        $table_category_pivot = $config['DbCategoryPivot'];
-
-        $table_brand = $config['DbBrand'];
-        $table_brand_trans = $config['DbBrandTrans'];
-        $table_brand_trans_foreign = 'brand_id';
-
-
-        if ($dataSend['PageView'] == 'SoftDelete') {
-            $data = DB::table($table)->whereNotNull("$table.deleted_at");
-        }elseif ($dataSend['PageView'] == 'Archived'){
-            $data = DB::table($table)->whereNull("$table.deleted_at")->where("$table.is_archived",true);
-        } else {
-            $data = DB::table($table)->whereNull("$table.deleted_at")->where("$table.is_archived",false);
-        }
-
-        $data->whereNull("$table.parent_id");
-
-
-        $data->leftJoin($table_trans, function ($join) use ($table, $table_trans, $table_trans_foreign, $locale) {
-            $join->on("$table.id", '=', "$table_trans.$table_trans_foreign")
-                ->where("$table_trans.locale", '=', $locale);
-        });
-
-        $data->leftJoin($table_category_pivot, "$table.id", '=', "$table_category_pivot.$table_trans_foreign")
-            ->leftJoin($table_category, "$table_category_pivot.category_id", '=', "$table_category.id")
-            ->leftJoin($table_category_trans, function ($join) use ($table_category, $table_category_trans, $locale) {
-                $join->on("$table_category.id", '=', "$table_category_trans.category_id")
-                    ->where("$table_category_trans.locale", '=', $locale);
-            });
-
-        $data->leftJoin($table_brand, "$table.brand_id", '=', "$table_brand.id")
-            ->leftJoin($table_brand_trans, function ($join) use ($table_brand, $table_brand_trans, $table_brand_trans_foreign, $locale) {
-                $join->on("$table_brand.id", '=', "$table_brand_trans.$table_brand_trans_foreign")
-                    ->where("$table_brand_trans.locale", '=', $locale);
-            });
-
-        $data->select(
-            "$table.id as id",
-            DB::raw("MAX($table.is_active) as is_active"),
-            DB::raw("MAX($table.deleted_at) as deleted_at"),
-            DB::raw("MAX($table.price) as price"),
-            DB::raw("MAX($table.regular_price) as regular_price"),
-            DB::raw("MAX($table.is_active) as isActive"),
-            DB::raw("MAX($table.photo_thum_1) as photo"),
-            DB::raw("MAX($table_trans.name) as name"),
-            DB::raw("MAX($table_trans.slug) as slug"),
-        );
-
-        $data->addSelect(
-            DB::raw("GROUP_CONCAT(CONCAT($table_category.id, ':', $table_category_trans.name)) as category_names")
-        );
-
-        $data->addSelect(
-            DB::raw("MAX($table_brand_trans.name) as brand_name") // إضافة اسم العلامة التجارية
-        );
-
-
-        $data->groupBy("$table.id");
-
-
-        return $data;
-
-    }
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ProductColumns($data, $dataSend) {
-
-        return DataTables::query($data, $dataSend)
-            ->addIndexColumn()
-            ->addColumn('photo', function ($row) {
-                return TablePhoto($row, 'photo');
-            })
-            ->editColumn('CategoryName', function ($row) {
-                return view('datatable.but')->with(['btype' => 'CategoryName', 'row' => $row])->render();
-            })
-            ->editColumn('regular_price', function ($row) {
-                return number_format($row->regular_price);
-            })
-            ->editColumn('price', function ($row) {
-                return number_format($row->price);
-            })
-
-
-            ->addColumn('isActive', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] != 'SoftDelete') {
-                    return is_active($row->is_active);
-                }
-            })
-
-            ->addColumn('Edit', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] != 'SoftDelete') {
-                    return view('datatable.but')->with(['btype' => 'Edit', 'row' => $row])->render();
-                }
-            })
-
-            ->editColumn('Delete', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] != 'SoftDelete') {
-                    return view('datatable.but')->with(['btype' => 'Delete', 'row' => $row])->render();
-                }
-            })
-
-            ->editColumn('deleted_at', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] == 'SoftDelete') {
-                    return [
-                        'display' => Carbon::parse($row->deleted_at)->format('Y-m-d'),
-                        'timestamp' => Carbon::parse($row->deleted_at)->timestamp
-                    ];
-                }
-            })
-            ->addColumn('Restore', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] == 'SoftDelete') {
-                    return view('datatable.but')->with(['btype' => 'Restore', 'row' => $row])->render();
-                }
-            })
-            ->addColumn('ForceDelete', function ($row) use ($dataSend) {
-                if ($dataSend['PageView'] == 'SoftDelete') {
-                    return view('datatable.but')->with(['btype' => 'ForceDelete', 'row' => $row])->render();
-                }
-            })
-            ->addColumn('hany', function ($row) use ($dataSend) {
-                return $dataSend['PageView'];
-            })
-            ->rawColumns(["photo", 'CategoryName', 'Edit', "Delete", 'AddLang', "Restore", "ForceDelete", "isActive"]);
-    }
-
-
-
-
-
 
 //#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //#|||||||||||||||||||||||||||||||||||||| #   DataTable

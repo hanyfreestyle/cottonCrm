@@ -1,5 +1,4 @@
 @extends('admin.layouts.app')
-
 @section('StyleFile')
     <x-admin.data-table.plugins-yajra :style="true"/>
 @endsection
@@ -7,14 +6,16 @@
 @section('content')
     @include('AppPlugin.Product.index_breadcrumb')
 
-
-    {{--    <x-admin.hmtl.section>--}}
-    {{--        <x-admin.product.filter :row="$rowData" form-name="{{$formName}}" :def-route="$filterRoute" :only-data-table="true"/>--}}
-    {{--    </x-admin.hmtl.section>--}}
+    @if($filterRoute)
+        {{$formName}}
+        <x-admin.hmtl.section>
+            <x-admin.product.filter :row="$rowData" form-name="{{$formName}}" :def-route="$filterRoute"/>
+        </x-admin.hmtl.section>
+    @endif
 
     <x-admin.hmtl.section>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-5">
                 <table {!! Table_Style_Yajra() !!} >
                     <thead>
                     <tr>
@@ -55,7 +56,7 @@
                 responsive: true,
                 pageLength: {{$yajraPerPage}},
                 @include('datatable.lang')
-                ajax: "{{ route($PrefixRoute.'.DataTable',['dataSend' => $dataSend]) }}",
+                ajax: "{{ route($PrefixRoute.'.DataTable',['dataSend' => $dataSend ,'formName'=>$formName]) }}",
                 columns: [
                     {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
                         @include('datatable.index_action_but',['type'=> 'photo','view'=> true])
@@ -85,84 +86,4 @@
         });
     </script>
 @endpush
-
-{{--@push('JsCode')--}}
-{{--    <x-admin.data-table.sweet-dalete/>--}}
-{{--    <x-admin.data-table.plugins :jscode="true" :is-active="true"/>--}}
-{{--    <script type="text/javascript">--}}
-
-{{--        $(function () {--}}
-{{--            var table = $('.DataTableView').DataTable({--}}
-{{--                processing: true,--}}
-{{--                serverSide: true,--}}
-{{--                pageLength: 10,--}}
-{{--                order: [0, 'desc'],--}}
-
-{{--                @include('datatable.lang')--}}
-{{--                ajax: "{{ $route }}",--}}
-
-
-{{--                columns: [--}}
-{{--                    {data: 'id', name: 'id'},--}}
-{{--                    {data: 'photo', name: 'photo', orderable: false, searchable: false, className: "text-center"},--}}
-{{--                    {data: 'tablename.0.name', name: 'tablename.name'},--}}
-{{--                    {--}}
-{{--                        data: 'CatNameNoSlug', name: 'CatNameNoSlug', orderable: false, searchable: false--}}
-{{--                    },--}}
-{{--                    {--}}
-{{--                        data: 'Brand', name: 'Brand', orderable: false, searchable: false--}}
-{{--                    },--}}
-
-{{--                    {--}}
-{{--                        data: 'regular_price', name: 'regular_price', orderable: true, searchable: true,--}}
-{{--                    },--}}
-
-{{--                    {--}}
-{{--                        data: 'price', name: 'price', orderable: true, searchable: true,--}}
-{{--                    },--}}
-
-{{--                        @if($pageData['ViewType'] == 'deleteList')--}}
-{{--                    {--}}
-{{--                        'name': 'deleted_at',--}}
-{{--                        'data': {--}}
-{{--                            '_': 'deleted_at.display',--}}
-{{--                            'sort': 'deleted_at.timestamp'--}}
-{{--                        }--}}
-{{--                    },--}}
-{{--                    {--}}
-{{--                        data: 'Restore', name: 'Restore', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-{{--                    {--}}
-{{--                        data: 'ForceDelete', name: 'ForceDelete', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-{{--                        @else--}}
-
-{{--                    {--}}
-{{--                        data: 'is_active', name: 'is_active', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-
-{{--                        @can($PrefixRole.'_edit')--}}
-{{--                        @if($Config['TableAddLang'] and count(config('app.web_lang')) > 1)--}}
-{{--                    {--}}
-{{--                        data: 'AddLang', name: 'AddLang', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-{{--                        @endif--}}
-{{--                    {--}}
-{{--                        data: 'Edit', name: 'Edit', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-{{--                        @endcan--}}
-{{--                        @can($PrefixRole.'_delete')--}}
-{{--                    {--}}
-{{--                        data: 'Delete', name: 'Delete', orderable: false, searchable: false, className: "text-center"--}}
-{{--                    },--}}
-{{--                    @endcan--}}
-{{--                    @endif--}}
-
-
-{{--                ],--}}
-
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endpush--}}
 

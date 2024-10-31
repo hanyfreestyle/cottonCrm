@@ -59,13 +59,10 @@ Route::prefix('product')->name('Product.ProductList.')
         Route::get('/index', 'ProductIndex')->name('index');
         Route::get('/archived', 'ProductIndex')->name('Archived');
         Route::get('/soft-delete', 'ProductIndex')->name('SoftDelete');
-        Route::get('/data-table/', 'ProductDataTable')->name('DataTable');
+        Route::get('/data-table/{formName}', 'ProductDataTable')->name('DataTable');
 
-//        Route::post('/', 'ProductIndex')->name('filter');
-//        Route::get('/filter-category/{categoryId}', 'ProductIndex')->name('FilterCategory');
-//        Route::post('/achived', 'ProductIndex')->name('filter_archived');
-//        Route::get('/DataTableArchived', 'DataTableArchived')->name('DataTableArchived');
-
+        Route::post('/index/', 'ProductIndex')->name('index.filter');
+        Route::post('/archived/', 'ProductIndex')->name('archived.filter');
 
         // إنشاء وتعديل المنتجات
         Route::get('/create', 'create')->name('create');

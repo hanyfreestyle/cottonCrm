@@ -81,4 +81,6 @@ return
 	'web_shipping_tab' => 'Show shipping methods',
 	'web_social_share' => 'Show sharing icon',
 	'web_warranty_tab' => 'View Return Policy',
+	'pro_status_is_active_0' => 'Active',
+	'pro_status_is_active_1' => 'Un Active',
 ];

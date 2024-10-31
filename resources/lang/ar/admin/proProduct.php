@@ -81,4 +81,6 @@ return
 	'web_shipping_tab' => 'عرض طرق الشحن',
 	'web_social_share' => 'عرض أيقونة المشاركة',
 	'web_warranty_tab' => 'عرض سياسة الاسترجاع',
+	'pro_status_is_active_0' => 'المنتج غير نشط',
+	'pro_status_is_active_1' => 'المنتج نشط',
 ];
