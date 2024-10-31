@@ -22,6 +22,8 @@ class ProductRequest extends FormRequest {
     public function rules(Request $request): array {
 
         $addLang = json_decode($request->add_lang);
+        $config = json_decode($request->config);
+
         foreach ($addLang as $key => $lang) {
             $request->merge([$key . '.slug' => AdminHelper::Url_Slug($request[$key]['slug'])]);
         }
@@ -33,13 +35,17 @@ class ProductRequest extends FormRequest {
             'is_archived' => "required",
             'featured' => "required",
             'on_stock' => "required",
-
-            'categories' => 'required|array|min:1',
             'price' => "required|numeric|gt:0",
             'regular_price' => "nullable|numeric|gt:price",
             'sales_count' => "nullable|numeric",
             'image' => 'nullable|mimes:jpeg,jpg,png,gif,webp|max:10000',
         ];
+
+        if ($config->TableCategory) {
+            $rules += [
+                'categories' => 'required|array|min:1',
+            ];
+        }
 
         $rulesConfig = [
             'slug' => true,
@@ -47,7 +53,7 @@ class ProductRequest extends FormRequest {
             'seo' => true,
         ];
 
-        $rules += AdminMainController::FormRequestSeo($id, $addLang, 'pro_product_lang', 'product_id',$rulesConfig);
+        $rules += AdminMainController::FormRequestSeo($id, $addLang, 'pro_product_lang', 'product_id', $rulesConfig);
 
         return $rules;
     }

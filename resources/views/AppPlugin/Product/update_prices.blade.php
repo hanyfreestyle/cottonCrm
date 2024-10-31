@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('StyleFile')
-    <x-admin.data-table.plugins :style="true" :is-active="$viewDataTable"/>
+{{--    <x-admin.data-table.plugins :style="true" :is-active="$viewDataTable"/>--}}
 @endsection
 
 @section('content')
@@ -85,6 +85,6 @@
 @endsection
 
 @push('JsCode')
-    <x-admin.data-table.plugins :jscode="true" :is-active="$viewDataTable"/>
+{{--    <x-admin.data-table.plugins :jscode="true" :is-active="$viewDataTable"/>--}}
 @endpush
 

@@ -31,13 +31,15 @@
         </div>
 
         <div class="row">
-          <x-admin.form.trans-text-area name="short_des" :label="__('admin/proProduct.pro_text_des_short')" :key="$key" :row="$row" :tdir="$key"/>
+          <x-admin.form.trans-text-area name="short_des" :label="__('admin/proProduct.pro_text_des_short')" :key="$key" :row="$row" :req="false" :tdir="$key"/>
         </div>
 
-        <div class="row">
-          <x-admin.form.trans-input name="g_title" :key="$key" :row="$row" :label="__('admin/form.text_g_title')" :tdir="$key"/>
-          <x-admin.form.trans-text-area name="g_des" :key="$key" :row="$row" :label="__('admin/form.text_g_des')" :tdir="$key"/>
-        </div>
+          @if($config['postSeo'])
+              <div class="row">
+                  <x-admin.form.trans-input name="g_title" :key="$key" :row="$row" :req="false" :label="__('admin/form.text_g_title')" :tdir="$key"/>
+                  <x-admin.form.trans-text-area name="g_des" :key="$key" :row="$row" :req="false" :label="__('admin/form.text_g_des')" :tdir="$key"/>
+              </div>
+          @endif
 
       </div>
     @endforeach

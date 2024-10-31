@@ -124,7 +124,6 @@ trait ProductConfigTraits {
             $subMenu->save();
         }
 
-
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
         $subMenu->sel_routs = setActiveRoute("ProductList")."|index.filter";
@@ -187,14 +186,14 @@ trait ProductConfigTraits {
         $subMenu->icon = "fas fa-archive";
         $subMenu->save();
 
-//        $subMenu = new AdminMenu();
-//        $subMenu->parent_id = $mainMenu->id;
-//        $subMenu->sel_routs = "UpdatePrices.index";
-//        $subMenu->url = "admin.Product.UpdatePrices.index";
-//        $subMenu->name = "admin/proProduct.app_menu_update_price";
-//        $subMenu->roleView = "Product_edit";
-//        $subMenu->icon = "fas fa-hand-holding-usd";
-//        $subMenu->save();
+        $subMenu = new AdminMenu();
+        $subMenu->parent_id = $mainMenu->id;
+        $subMenu->sel_routs = "UpdatePrices.index";
+        $subMenu->url = "admin.Product.UpdatePrices.index";
+        $subMenu->name = "admin/proProduct.app_menu_update_price";
+        $subMenu->roleView = "Product_edit";
+        $subMenu->icon = "fas fa-hand-holding-usd";
+        $subMenu->save();
 
 
         if (IsConfig($config, 'TableLandingPage')) {

@@ -10,23 +10,16 @@ use App\AppPlugin\Product\Models\ProductTags;
 use App\AppPlugin\Product\Models\ProductTagsTranslation;
 use App\AppPlugin\Product\Models\ProductTranslation;
 use App\AppPlugin\Product\Request\ProductRequest;
-use App\AppPlugin\Product\Traits\ProductBrandConfigTraits;
 use App\AppPlugin\Product\Traits\ProductConfigTraits;
 use App\AppPlugin\Product\Traits\ProductQuerybuilder;
 use App\Helpers\AdminHelper;
-use App\Helpers\QueryBuilder;
 use App\Http\Controllers\AdminMainController;
-use App\Http\Controllers\WebMainController;
 use App\Http\Traits\CrudTraits;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-use Yajra\DataTables\Facades\DataTables;
 
 
 class ProductController extends AdminMainController {
@@ -52,7 +45,7 @@ class ProductController extends AdminMainController {
 
         $this->UploadDirIs = 'product';
         $this->translationdb = 'product_id';
-        $this->PrefixTags = "admin.Product";
+        $this->PrefixTags = "admin.ProductTags";
         View::share('PrefixTags', $this->PrefixTags);
 
         $ProductType_Arr = [
@@ -305,64 +298,65 @@ class ProductController extends AdminMainController {
         return $name;
     }
 
-//#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//#|||||||||||||||||||||||||||||||||||||| #
-//    public function UpdatePrices() {
-//        $pageData = $this->pageData;
-//        $pageData['ViewType'] = "list";
-//        $pageData['SubView'] = false;
-//
-//        $proId = ProductAttribute::get()->pluck('product_id')->toarray();
-//
-//        $proId = array_unique($proId);
-//        $rowData = Product::wherein('id', $proId)
-//            ->where('is_archived', false)
-//            ->where('is_active', true)
-//            ->withcount('childproduct')
-//            ->having('childproduct_count', 0)
-//            ->get();
-//
-//        $mainProduct = Product::where('parent_id', null)
-//            ->where('is_archived', false)
-//            ->where('is_active', true)
-//            ->withcount('childproduct')
-//            ->get();
-//
-//        foreach ($mainProduct as $product) {
-//            $product->parents_count = $product->childproduct_count;
-//            $product->save();
-//        }
-//
-//
-//        $products = Product::where('parents_count', '>', 0)
-//            ->where('is_archived', false)
-//            ->where('is_active', true)
-//            ->with('attributes')
-//            ->get();
-//
-//        foreach ($products as $product) {
-//            $new_parent_count = 1;
-//            foreach ($product->attributes as $attribute) {
-//                $new_parent_count = $new_parent_count * count(json_decode($attribute->pivot->values));
-//            }
-//            $product->attributes_count = $new_parent_count;
-//            $product->save();
-//        }
-//
-//
-//        $needUpdate = Product::where('parents_count', ">", 0)
-//            ->whereColumn('attributes_count', '!=', "parents_count")
-//            ->where('is_archived', false)
-//            ->where('is_active', true)
-//            ->get();
-//
-//        return view('AppPlugin.Product.update_prices')->with([
-//            'pageData' => $pageData,
-//            'rowData' => $rowData,
-//            'needUpdate' => $needUpdate,
-//        ]);
-//
-//    }
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public function UpdatePrices() {
+        dd("check");
+        $pageData = $this->pageData;
+        $pageData['ViewType'] = "list";
+        $pageData['SubView'] = false;
+
+        $proId = ProductAttribute::get()->pluck('product_id')->toarray();
+
+        $proId = array_unique($proId);
+        $rowData = Product::wherein('id', $proId)
+            ->where('is_archived', false)
+            ->where('is_active', true)
+            ->withcount('childproduct')
+            ->having('childproduct_count', 0)
+            ->get();
+
+        $mainProduct = Product::where('parent_id', null)
+            ->where('is_archived', false)
+            ->where('is_active', true)
+            ->withcount('childproduct')
+            ->get();
+
+        foreach ($mainProduct as $product) {
+            $product->parents_count = $product->childproduct_count;
+            $product->save();
+        }
+
+
+        $products = Product::where('parents_count', '>', 0)
+            ->where('is_archived', false)
+            ->where('is_active', true)
+            ->with('attributes')
+            ->get();
+
+        foreach ($products as $product) {
+            $new_parent_count = 1;
+            foreach ($product->attributes as $attribute) {
+                $new_parent_count = $new_parent_count * count(json_decode($attribute->pivot->values));
+            }
+            $product->attributes_count = $new_parent_count;
+            $product->save();
+        }
+
+
+        $needUpdate = Product::where('parents_count', ">", 0)
+            ->whereColumn('attributes_count', '!=', "parents_count")
+            ->where('is_archived', false)
+            ->where('is_active', true)
+            ->get();
+
+        return view('AppPlugin.Product.update_prices')->with([
+            'pageData' => $pageData,
+            'rowData' => $rowData,
+            'needUpdate' => $needUpdate,
+        ]);
+
+    }
 
 
 
@@ -399,11 +393,6 @@ class ProductController extends AdminMainController {
 //
 //
 //
-
-
-
-
-
 
 
 }

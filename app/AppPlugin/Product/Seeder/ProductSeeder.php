@@ -48,10 +48,10 @@ class ProductSeeder extends Seeder {
         SeedDbFile(LandingPage::class, $config['DbLandingPage'] . ".sql");
         SeedDbFile(LandingPageTranslation::class, $config['DbLandingPageTrans'] . ".sql");
 
-        SeedDbFile(Attribute::class, "pro_attribute.sql");
-        SeedDbFile(AttributeTranslation::class, "pro_attribute_lang.sql");
-        SeedDbFile(AttributeValue::class, "pro_attribute_value.sql");
-        SeedDbFile(AttributeValue::class, "pro_attribute_value_lang.sql");
+//        SeedDbFile(Attribute::class, "pro_attribute.sql");
+//        SeedDbFile(AttributeTranslation::class, "pro_attribute_lang.sql");
+//        SeedDbFile(AttributeValue::class, "pro_attribute_value.sql");
+//        SeedDbFile(AttributeValue::class, "pro_attribute_value_lang.sql");
 
 
 //        ProductPhoto::unguard();
