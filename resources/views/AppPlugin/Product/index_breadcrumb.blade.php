@@ -3,7 +3,7 @@
         <div class="row mb-3">
             <div class="col-12 dir_button">
                 @can($PrefixRole.'_add')
-                    <a href="{{route($PrefixRoute.'.create') }}" class="btn btn-sm btn-primary">
+                    <a href="{{route($PrefixRoute.'.createNew') }}" class="btn btn-sm btn-primary">
                         <i class="fas fa-plus-circle"></i> {{ __('admin/proProduct.app_menu_add_pro') }}
                     </a>
                 @endcan

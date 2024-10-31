@@ -31,7 +31,7 @@ Route::prefix('product')->name('Product.ProductList.')
         Route::post('/archived/', 'ProductIndex')->name('archived.filter');
 
         // إنشاء وتعديل المنتجات
-        Route::get('/create', 'create')->name('create');
+        Route::get('/create', 'create')->name('createNew');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update/{id}', 'storeUpdate')->name('update');
 

@@ -14,7 +14,7 @@ trait ProductConfigTraits {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function LoadConfig() {
         $config = [
-            'PrefixRole' => "Blog",
+            'PrefixRole' => "Product",
 
             'DbCategory' => 'pro_category',
             'DbCategoryTrans' => 'pro_category_lang',
@@ -135,8 +135,8 @@ trait ProductConfigTraits {
 
         $subMenu = new AdminMenu();
         $subMenu->parent_id = $mainMenu->id;
-        $subMenu->sel_routs = "Product.createNew";
-        $subMenu->url = "admin.Product.ProductList.create";
+        $subMenu->sel_routs = "ProductList.createNew";
+        $subMenu->url = "admin.Product.ProductList.createNew";
         $subMenu->name = "admin/proProduct.app_menu_add_pro";
         $subMenu->roleView = "Product_add";
         $subMenu->icon = "fas fa-plus-circle";

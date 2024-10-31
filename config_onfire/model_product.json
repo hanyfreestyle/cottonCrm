@@ -1,6 +1,6 @@
 {
     "TableCategory": true,
-    "TableTags": true,
+    "TableTags": false,
     "TableTagsOnFly": false,
     "TableReview": false,
     "TableMorePhotos": true,

@@ -25,6 +25,7 @@ class Settings extends Component {
     public $dataTableUserName;
     public $dataTableDate;
     public $viewAsPost;
+    public $model;
 
 
     public function __construct(
@@ -55,6 +56,7 @@ class Settings extends Component {
         $this->dataTableUserName = IsArr($configArr, 'dataTableUserName', false);
         $this->dataTableDate = IsArr($configArr, 'dataTableDate', false);
         $this->viewAsPost = IsArr($configArr, 'viewAsPost', false);
+        $this->model = IsArr($configArr, 'model', null);
 
 
         $OrderByArr = [

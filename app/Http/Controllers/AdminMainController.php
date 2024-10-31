@@ -236,7 +236,8 @@ class AdminMainController extends DefaultMainController {
         $this->settings = AdminHelper::arrIsset($sendArr, 'settings', array());
 
         View::share('settings', $this->settings);
-//        dd($this->settings);
+
+
         $pageData = AdminHelper::returnPageDate($sendArr);
         $this->pageData = $pageData;
     }

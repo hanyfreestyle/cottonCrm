@@ -44,8 +44,7 @@
     @endif
 @elseif($type == 'deleted_at')
     @if($view)
-                {'name': 'deleted_at','data': {'_': 'deleted_at.display','sort': 'deleted_at.timestamp'}},
-{{--        {data: 'DeletedAt', name: 'DeletedAt', orderable: false, searchable: false, className: "text-center"},--}}
+        {'name': 'deleted_at','data': {'_': 'deleted_at.display','sort': 'deleted_at.timestamp'}},
     @endif
 @elseif($type == 'CategoryName')
     {data: 'CategoryName', name: 'category_names', orderable: false, searchable: false},

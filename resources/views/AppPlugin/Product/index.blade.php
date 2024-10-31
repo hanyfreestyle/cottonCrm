@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+
     @include('AppPlugin.Product.index_breadcrumb')
 
     @if($filterRoute)
@@ -21,10 +22,10 @@
                         <th class="TD_20">#</th>
                         <x-admin.table.action-but po="top" type="photo" res="all" :view-but="true"/>
                         <th>{{ __('admin/proProduct.pro_text_name') }}</th>
-                        <th>{{__('admin/proProduct.cat_text_name')}}</th>
-                        <th>{{__('admin/proProduct.app_menu_brand')}}</th>
-                        <th>{{__('admin/proProduct.pro_text_regular_price')}}</th>
-                        <th>{{__('admin/proProduct.pro_text_price')}}</th>
+                        <x-admin.data-table.row-th-table set-name="category_view" db-table="TableCategory" :l="__('admin/proProduct.cat_text_name')"/>
+                        <x-admin.data-table.row-th-table set-name="brand_view" db-table="TableBrand" :l="__('admin/proProduct.app_menu_brand')"/>
+                        <x-admin.data-table.row-th-table set-name="price_view" :l="__('admin/proProduct.pro_text_regular_price')"/>
+                        <x-admin.data-table.row-th-table set-name="price_view" :l="__('admin/proProduct.pro_text_price')"/>
                         @if($dataSend['PageView'] == "SoftDelete")
                             <x-admin.table.soft-delete/>
                         @else
@@ -61,11 +62,10 @@
                     {
                         data: 'name', name: '{{$config['DbPostTrans']}}.name', orderable: true, searchable: true
                     },
-                    {data: 'CategoryName', name: '{{$config['DbCategoryTrans']}}.name', orderable: false, searchable: false},
-                    {data: 'brand_name', name: '{{$config['DbBrandTrans']}}.name', orderable: true, searchable: true, className: "text-center"},
-                    {data: 'regular_price', name: 'regular_price', orderable: true, searchable: true, className: "text-center"},
-                    {data: 'price', name: 'price', orderable: true, searchable: true, className: "text-center"},
-
+                    @include('datatable.index_option_but',['d'=> 'CategoryName','dn'=>$config['DbCategoryTrans'].'name','arr'=>['db'=>'TableCategory','config'=>'category_view']])
+                    @include('datatable.index_option_but',['d'=> 'brand_name','dn'=>$config['DbBrandTrans'].'name','arr'=>['db'=>'TableBrand','config'=>'brand_view']])
+                    @include('datatable.index_option_but',['d'=> 'regular_price','dn'=>'regular_price','arr'=>['c'=>'text-center','config'=>'price_view']])
+                    @include('datatable.index_option_but',['d'=> 'price','dn'=>'price','arr'=>['c'=>'text-center','config'=>'price_view']])
                     @if($dataSend['PageView'] == "SoftDelete")
                     @include('datatable.index_action_but',['type'=> 'deleted_at','view'=>true  ])
                     @include('datatable.index_action_but',['type'=> 'Restore','view'=>true  ])

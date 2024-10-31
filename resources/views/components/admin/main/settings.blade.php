@@ -77,14 +77,18 @@
         @endif
 
 
-        {{--    @if($orderby)--}}
-        {{--      <x-admin.form.select-arr label="{{__('admin/config/settings.set_orderby')}}" name="{{$modelname}}_orderby" col="3"--}}
-        {{--                               :send-arr="$OrderByArr"--}}
-        {{--                               sendvalue="{{old($modelname.'_orderby',IsArr($modelSettings,$modelname.'_orderby',0))}}"--}}
-        {{--                               select-type="normal"/>--}}
-        {{--    @else--}}
-        {{--      <input type="hidden" value="{{$orderbyDef}}" name="{{$modelname}}_orderby">--}}
-        {{--    @endif--}}
+        @if($controllerName == 'ProductList')
+
+            <x-admin.form.select-arr :l="__('admin/proProduct.cat_text_name')" name="{{$modelname}}_category_view" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_category_view',IsArr($modelSettings,$modelname.'_category_view',1))}}"/>
+
+            <x-admin.form.select-arr :l="__('admin/proProduct.app_menu_brand')" name="{{$modelname}}_brand_view" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_brand_view',IsArr($modelSettings,$modelname.'_brand_view',1))}}"/>
+
+            <x-admin.form.select-arr :l="__('admin/proProduct.pro_text_price')" name="{{$modelname}}_price_view" col="2" :req="false" type="selActive"
+                                     sendvalue="{{old($modelname.'_price_view',IsArr($modelSettings,$modelname.'_price_view',1))}}"/>
+        @endif
+
         {{$slot}}
     </div>
     @if(isset($pageData['ModelId']))

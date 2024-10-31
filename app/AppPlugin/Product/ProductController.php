@@ -83,6 +83,8 @@ class ProductController extends AdminMainController {
         $this->config = self::LoadConfig();
         View::share('config', $this->config);
 
+
+
         $sendArr = [
             'TitlePage' => $this->PageTitle,
             'PrefixRoute' => $this->PrefixRoute,
@@ -90,11 +92,13 @@ class ProductController extends AdminMainController {
             'AddConfig' => true,
             'settings' => getDefSettings($this->config),
             'AddLang' => false,
+            'modelSettings' => "Product",
         ];
 
         self::constructData($sendArr);
         self::loadCategoryPermission(array());
 
+//        dd( $this->modelSettings);
     }
 
 
@@ -111,6 +115,7 @@ class ProductController extends AdminMainController {
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public function ProductIndex(Request $request) {
         $pageData = $this->pageData;
+
         $pageData['ViewType'] = 'index';
         $pageData['IconPage'] = "fas fa-shopping-cart";
         $pageData['Trashed'] = Product::onlyTrashed()->count();
