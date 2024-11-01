@@ -18,9 +18,9 @@ class BlogPhoto extends Model implements TranslatableContract  {
     public $timestamps = false;
     protected $translationForeignKey = 'photo_id';
 
-//    public function modelName(): BelongsTo {
-//        return $this->belongsTo(Blog::class, 'blog_id', 'id');
-//    }
+    public function modelName(): BelongsTo {
+        return $this->belongsTo(Blog::class, 'blog_id', 'id');
+    }
 
 
 }

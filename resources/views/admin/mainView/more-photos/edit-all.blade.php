@@ -9,7 +9,7 @@
                 <h1 class="def_h1">{{ print_h1($thisModel)}}</h1>
             </div>
             <div class="col-lg-5 dir_button">
-                <x-admin.form.action-button url="{{route($PrefixRoute.'.More_Photos', $thisModel->id )}}" type="sort" :tip="false"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.more_photos_list', $thisModel->id )}}" type="sort" :tip="false"/>
                 <x-admin.form.action-button url="{{route($PrefixRoute.'.edit', $thisModel->id)}}" type="back"/>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <x-admin.hmtl.confirm-massage/>
 
             @if(count($rowData)>0)
-                <form class="mainForm" action="{{route($PrefixRoute.'.More_PhotosUpdateAll',intval($thisModel->id))}}" method="post">
+                <form class="mainForm" action="{{route($PrefixRoute.'.morePhotos_updateAll',intval($thisModel->id))}}" method="post">
                     <div class="row">
                         @csrf
 
@@ -35,11 +35,11 @@
                                                                  :send-arr="$PrintPhotoPosition" :labelview="false"/>
                                         <p class="PhotoImageCard mt-3"><img src="{{ defImagesDir($photo['photo']) }}"></p>
                                         @can($PrefixRole.'_edit')
-                                            <x-admin.form.action-button url="{{route($PrefixRoute.'.More_PhotosEdit',$photo->id)}}" type="edit" :tip="false"/>
+                                            <x-admin.form.action-button url="{{route($PrefixRoute.'.morePhotos_edit',$photo->id)}}" type="edit" :tip="false"/>
                                         @endcan
                                         @can($PrefixRole.'_delete')
 
-                                            <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.More_PhotosDestroy',$photo->id)}}" :tip="false" type="deleteSweet"/>
+                                            <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.morePhotos_delete',$photo->id)}}" :tip="false" type="deleteSweet"/>
 
                                         @endcan
 

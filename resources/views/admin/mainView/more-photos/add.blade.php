@@ -11,13 +11,13 @@
                 <h1 class="def_h1_new">{!! print_h1($Model) !!}</h1>
             </div>
             <div class="col-lg-6 dir_button">
-                @if( IsConfig($config,'MorePhotosEdit'))
-                    @can($PrefixRole.'_edit')
-                        <td class="tc">
-                            <x-admin.form.action-button url="{{route($PrefixRoute.'.More_PhotosEditAll',$Model->id)}}" type="edit" :tip="false"/>
-                        </td>
-                    @endcan
-                @endif
+                {{--                @if( IsConfig($config,'MorePhotosEdit'))--}}
+                {{--                    @can($PrefixRole.'_edit')--}}
+                {{--                        <td class="tc">--}}
+                {{--                            <x-admin.form.action-button url="{{route($PrefixRoute.'.More_PhotosEditAll',$Model->id)}}" type="edit" :tip="false"/>--}}
+                {{--                        </td>--}}
+                {{--                    @endcan--}}
+                {{--                @endif--}}
                 <x-admin.form.action-button url="{{route($PrefixRoute.'.edit', $Model->id)}}" type="back"/>
             </div>
         </div>
@@ -31,7 +31,7 @@
                         @if(count($ListPhotos)>0)
                             <div class="row col-lg-12 mb-3 text-left float-left">
                                 @can($PrefixRole.'_delete')
-                                    <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.More_PhotosDestroyAll',$Model->id)}}" :tip="false" type="deleteSweetAll"/>
+                                    <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.morePhotos_deleteAll',$Model->id)}}" :tip="false" type="deleteSweetAll"/>
                                 @endcan
                             </div>
 
@@ -42,13 +42,13 @@
                                         <div class="buttons mb-3">
                                             @can($PrefixRole.'_delete')
                                                 <td class="tc">
-                                                    <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.More_PhotosDestroy',$Photo->id)}}" type="deleteSweet"/>
+                                                    <x-admin.form.action-button url="#" id="{{route($PrefixRoute.'.morePhotos_delete',$Photo->id)}}" type="deleteSweet"/>
                                                 </td>
                                             @endcan
                                             @if(IsConfig($config,'MorePhotosEdit'))
                                                 @can($PrefixRole.'_edit')
                                                     <td class="tc">
-                                                        <x-admin.form.action-button url="{{route($PrefixRoute.'.More_PhotosEdit',$Photo->id)}}" type="edit"/>
+                                                        <x-admin.form.action-button url="{{route($PrefixRoute.'.morePhotos_edit',$Photo->id)}}" type="edit"/>
                                                     </td>
                                                 @endcan
                                             @endif
@@ -68,7 +68,7 @@
                 <x-admin.card.normal>
 
                     <div class="row">
-                        <form class="mainForm" action="{{route($PrefixRoute.'.More_PhotosAdd')}}" method="post" enctype="multipart/form-data">
+                        <form class="mainForm" action="{{route($PrefixRoute.'.morePhotos_add')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             @if($errors->has([]) )
                                 <div class="liError">
@@ -99,5 +99,5 @@
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
     <script src="{{defAdminAssets('plugins/bootstrap/js/jquery-ui.min.js')}}"></script>
-    <x-admin.ajax.sort-code url="{{ route($PrefixRoute.'.sortPhotoSave') }}"/>
+    <x-admin.ajax.sort-code url="{{ route($PrefixRoute.'.more_photos.save-sort') }}"/>
 @endpush

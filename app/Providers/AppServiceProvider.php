@@ -95,15 +95,16 @@ class AppServiceProvider extends ServiceProvider {
                 Route::get('/DeleteLang/{id}', [$controller, 'DeleteLang'])->name('DeleteLang');
                 Route::get('/emptyPhoto/{id}', [$controller, 'emptyPhoto'])->name('emptyPhoto');
 
-                Route::get('/photos/{id}', [$controller, 'ListMorePhoto'])->name('More_Photos');
-                Route::post('/add-more', [$controller, 'AddMorePhotos'])->name('More_PhotosAdd');
-                Route::post('/saveSort', [$controller, 'sortPhotoSave'])->name('sortPhotoSave');
-                Route::get('/photo/delete/{id}', [$controller, 'MorePhotosDestroy'])->name('More_PhotosDestroy');
-                Route::get('/photo/delete-all/{postid}', [$controller, 'MorePhotosDestroyAll'])->name('More_PhotosDestroyAll');
-                Route::get('/photo-edit/{id}', [$controller, 'MorePhotosEdit'])->name('More_PhotosEdit');
-                Route::post('/photo-update/{id}', [$controller, 'MorePhotosUpdate'])->name('More_PhotosUpdate');
-                Route::get('/photos-edit/{id}', [$controller, 'MorePhotosEditAll'])->name('More_PhotosEditAll');
-                Route::post('/photo-update-all/{id}', [$controller, 'MorePhotosUpdateAll'])->name('More_PhotosUpdateAll');
+                Route::get('/more-photos/{id}', [$controller, 'morePhotos_list'])->name('more_photos_list');
+                Route::post('/more-photos/add', [$controller, 'morePhotos_add'])->name('morePhotos_add');
+                Route::get('/more-photos/edit/{id}', [$controller, 'morePhotos_edit'])->name('morePhotos_edit');
+                Route::post('more-photos/save-sort/', [$controller, 'morePhotos_saveSort'])->name('more_photos.save-sort');
+                Route::get('/more-photos/delete/{id}', [$controller, 'morePhotos_delete'])->name('morePhotos_delete');
+                Route::get('/more-photos/delete-all/{postId}', [$controller, 'morePhotos_deleteAll'])->name('morePhotos_deleteAll');
+
+                Route::post('/more-photos/update/{postId}', [$controller, 'morePhotos_update'])->name('morePhotos_update');
+                Route::get('/more-photos/edit-all/{postId}', [$controller, 'morePhotos_editAll'])->name('morePhotos_editAll');
+                Route::post('/more-photos/update-all/{id}', [$controller, 'morePhotos_updateAll'])->name('morePhotos_updateAll');
 
                 Route::get('/config', [$controller, 'config'])->name('config');
             });

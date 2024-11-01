@@ -20,7 +20,7 @@
             @endif
 
             @if(IsConfig($config,'TableMorePhotos',false))
-                <x-admin.form.action-button url="{{route($PrefixRoute.'.More_Photos',$rowData->id)}}" type="morePhoto" :tip="false"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.more_photos_list',$rowData->id)}}" type="morePhoto" :tip="false"/>
             @endif
         </div>
     </div>

@@ -2,22 +2,20 @@
 
 @section('content')
     <x-admin.hmtl.breadcrumb :pageData="$pageData"/>
-
-
-      <x-admin.hmtl.section>
+    <x-admin.hmtl.section>
         <div class="row mb-3">
-          <div class="col-lg-7">
-            <h1 class="def_h1">{{ print_h1($rowData->modelName)}}</h1>
-          </div>
-          <div class="col-lg-5 dir_button">
-            <x-admin.form.action-button url="{{route($PrefixRoute.'.More_Photos', $rowData->modelName->id )}}" type="sort" :tip="false"/>
-            <x-admin.form.action-button  url="{{route($PrefixRoute.'.More_PhotosEditAll', $rowData->modelName->id )}}" :print-lable="__('admin/form.more_photo_edit')" :tip="false" />
-            <x-admin.form.action-button url="{{route($PrefixRoute.'.edit', $rowData->modelName->id)}}" type="back"/>
-          </div>
+            <div class="col-lg-7">
+                <h1 class="def_h1">{{ print_h1($rowData->modelName)}}</h1>
+            </div>
+            <div class="col-lg-5 dir_button">
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.more_photos_list', $rowData->modelName->id )}}" type="sort" :tip="false"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.morePhotos_editAll', $rowData->modelName->id )}}" :print-lable="__('admin/form.more_photo_edit')" :tip="false"/>
+                <x-admin.form.action-button url="{{route($PrefixRoute.'.edit', $rowData->modelName->id)}}" type="back"/>
+            </div>
         </div>
-      </x-admin.hmtl.section>
+    </x-admin.hmtl.section>
 
-    <form action="{{route($PrefixRoute.'.More_PhotosUpdate',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
+    <form action="{{route($PrefixRoute.'.morePhotos_update',intval($rowData->id))}}" method="post" enctype="multipart/form-data">
         @csrf
 
         <x-admin.hmtl.section>

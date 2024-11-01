@@ -118,7 +118,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function ListMorePhoto(Request $request) {
+    public function morePhotos_list(Request $request) {
         if (!IsConfig($this->config, 'TableMorePhotos')) {
             abort(403);
         }
@@ -127,7 +127,7 @@ trait CrudTraits {
         $id = $request->route()->parameter('id');
         $Model = $this->model->where('id', $id)->firstOrFail();
         $ListPhotos = $this->modelPhoto->where($this->modelPhotoColumn, $id)->orderBy('position')->get();
-        return view('admin.mainView.MorePhoto_add')->with([
+        return view('admin.mainView.more-photos.add')->with([
             'pageData' => $pageData,
             'ListPhotos' => $ListPhotos,
             'Model' => $Model,
@@ -136,7 +136,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function sortPhotoSave(Request $request) {
+    public function morePhotos_saveSort(Request $request) {
         $positions = $request->positions;
         foreach ($positions as $position) {
             $id = $position[0];
@@ -150,7 +150,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function AddMorePhotos(MorePhotosRequest $request) {
+    public function morePhotos_add(MorePhotosRequest $request) {
         $saveImgData = new PuzzleUploadProcess();
         $saveImgData->setCountOfUpload('2');
         $saveImgData->setUploadDirIs($this->UploadDirIs . '/' . $request->input('model_id'));
@@ -175,7 +175,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosDestroy($id) {
+    public function morePhotos_delete($id) {
         $deleteRow = $this->modelPhoto->findOrFail($id);
         $deleteRow = AdminHelper::DeleteAllPhotos($deleteRow);
         $deleteRow->delete();
@@ -184,7 +184,7 @@ trait CrudTraits {
     }
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosDestroyAll($postid) {
+    public function morePhotos_deleteAll($postid) {
         $model = $this->model->findOrFail($postid);
         $ForeignId = $this->config['DbPostForeignId'];
         $allPhotos = $this->modelPhoto->where($ForeignId, $postid)->get();
@@ -199,11 +199,11 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosEdit($id) {
+    public function morePhotos_edit($id) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
         $rowData = $this->modelPhoto::where('id', $id)->with('modelName')->firstOrFail();
-        return view('admin.mainView.MorePhoto_edit')->with([
+        return view('admin.mainView.more-photos.edit')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
         ]);
@@ -211,7 +211,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosUpdate(MorePhotosEditRequest $request, $id) {
+    public function morePhotos_update(MorePhotosEditRequest $request, $id) {
         $saveData = $this->modelPhoto::findOrNew($id);
         $saveImgData = new PuzzleUploadProcess();
         $saveImgData->setCountOfUpload('2');
@@ -235,12 +235,12 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosEditAll($id) {
+    public function morePhotos_editAll($postId) {
         $pageData = $this->pageData;
         $pageData['ViewType'] = "Edit";
-        $thisModel = $this->model::findOrFail($id);
-        $rowData = $this->modelPhoto::where($this->modelPhotoColumn, '=', $id)->with('translations')->orderBy('position')->get();
-        return view('admin.mainView.MorePhoto_editAll')->with([
+        $thisModel = $this->model::findOrFail($postId);
+        $rowData = $this->modelPhoto::where($this->modelPhotoColumn, '=', $postId)->with('translations')->orderBy('position')->get();
+        return view('admin.mainView.more-photos.edit-all')->with([
             'pageData' => $pageData,
             'rowData' => $rowData,
             'thisModel' => $thisModel,
@@ -249,7 +249,7 @@ trait CrudTraits {
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    public function MorePhotosUpdateAll(Request $request, $id) {
+    public function morePhotos_updateAll(Request $request, $id) {
         foreach ($request->input('id') as $id) {
             $UpdatePhoto = $this->modelPhoto::findOrFail($id);
             $UpdatePhoto->print_photo = $request->input('print_photo_' . $id) ?? 2;
