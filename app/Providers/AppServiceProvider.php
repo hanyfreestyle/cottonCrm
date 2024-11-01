@@ -95,10 +95,10 @@ class AppServiceProvider extends ServiceProvider {
                 Route::get('/DeleteLang/{id}', [$controller, 'DeleteLang'])->name('DeleteLang');
                 Route::get('/emptyPhoto/{id}', [$controller, 'emptyPhoto'])->name('emptyPhoto');
 
-                Route::get('/more-photos/{id}', [$controller, 'morePhotos_list'])->name('more_photos_list');
+                Route::get('/more-photos/{id}', [$controller, 'morePhotos_list'])->name('morePhotos_list');
                 Route::post('/more-photos/add', [$controller, 'morePhotos_add'])->name('morePhotos_add');
                 Route::get('/more-photos/edit/{id}', [$controller, 'morePhotos_edit'])->name('morePhotos_edit');
-                Route::post('more-photos/save-sort/', [$controller, 'morePhotos_saveSort'])->name('more_photos.save-sort');
+                Route::post('more-photos/save-sort/', [$controller, 'morePhotos_saveSort'])->name('morePhotos.saveSort');
                 Route::get('/more-photos/delete/{id}', [$controller, 'morePhotos_delete'])->name('morePhotos_delete');
                 Route::get('/more-photos/delete-all/{postId}', [$controller, 'morePhotos_deleteAll'])->name('morePhotos_deleteAll');
 

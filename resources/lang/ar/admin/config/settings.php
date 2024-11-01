@@ -4,7 +4,7 @@ return
 [
 	'set_datatable' => 'جدول البيانات',
 	'set_editor' => 'محرر النصوص',
-	'set_filter_filter_more_photo' => 'البوم الصور',
+	'set_filter_filter_more_photo' => 'فلتر البوم الصور',
 	'set_filter_form' => 'تحديد الفلتر',
 	'set_filter_id' => 'فلتر الصورة',
 	'set_filter_option' => 'خصائص التقارير',

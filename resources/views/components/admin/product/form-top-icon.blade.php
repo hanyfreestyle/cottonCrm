@@ -12,7 +12,7 @@
                 @endif
 
                 @if($config['TableMorePhotos'])
-                    <x-admin.form.action-button url="{{route($PrefixRoute.'.More_Photos',$row->id)}}" :tip="false" type="morePhoto"/>
+                    <x-admin.form.action-button url="{{route($PrefixRoute.'.more_photos_list',$row->id)}}" :tip="false" type="morePhoto"/>
                 @endif
                 @if($webSlug != '#' and $row->slug)
                     <x-admin.form.action-button url="{{route($webSlug,$row->slug)}}" type="webView" :tip="false"/>

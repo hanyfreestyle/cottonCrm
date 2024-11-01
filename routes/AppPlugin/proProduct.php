@@ -42,12 +42,16 @@ Route::prefix('product')->name('Product.ProductList.')
         Route::get('/emptyPhoto/{id}', 'emptyPhoto')->name('emptyPhoto');
 
         // إدارة الصور الإضافية
-        Route::get('/photos/{id}', 'ListMorePhoto')->name('More_Photos');
-        Route::post('/AddMore', 'AddMorePhotos')->name('More_PhotosAdd');
-        Route::post('/saveSort', 'sortPhotoSave')->name('sortPhotoSave');
-        Route::get('/PhotoDel/{id}', 'MorePhotosDestroy')->name('More_PhotosDestroy');
-        Route::get('/photo/delete-all/{postid}', 'MorePhotosDestroyAll')->name('More_PhotosDestroyAll');
+        Route::get('/more-photos/{id}', 'morePhotos_list')->name('morePhotos_list');
+        Route::post('/more-photos/add', 'morePhotos_add')->name('morePhotos_add');
+        Route::get('/more-photos/edit/{id}', 'morePhotos_edit')->name('morePhotos_edit');
+        Route::post('more-photos/save-sort/', 'morePhotos_saveSort')->name('morePhotos.saveSort');
+        Route::get('/more-photos/delete/{id}', 'morePhotos_delete')->name('morePhotos_delete');
+        Route::get('/more-photos/delete-all/{postId}', 'morePhotos_deleteAll')->name('morePhotos_deleteAll');
 
+        Route::post('/more-photos/update/{postId}', 'morePhotos_update')->name('morePhotos_update');
+        Route::get('/more-photos/edit-all/{postId}', 'morePhotos_editAll')->name('morePhotos_editAll');
+        Route::post('/more-photos/update-all/{id}', 'morePhotos_updateAll')->name('morePhotos_updateAll');
 
         // إعدادات المنتج
         Route::get('/config', 'config')->name('config');

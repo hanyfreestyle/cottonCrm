@@ -212,7 +212,7 @@ if (!function_exists('getDefSettings')) {
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 if (!function_exists('loadConfigFromJson')) {
-    function loadConfigFromJson($fileName,$defConfig) {
+    function loadConfigFromJson($fileName, $defConfig) {
         $folder = config('adminConfig.app_folder');
         $destinationFolder = base_path('config_' . $folder);
         $filePath = base_path('config_' . $folder . '/' . $fileName . '.json');
@@ -300,6 +300,15 @@ if (!function_exists('getDataTableCategoryName')) {
             $names .= '<span class="cat_table_name">' . $printName . '</span> ';
         };
         return $names;
+    }
+}
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+if (!function_exists('getSettingValue')) {
+    function getSettingValue($modelname, $modelSettings, $field, $default = 0) {
+        return old($modelname . '_' . $field, IsArr($modelSettings, $modelname . '_' . $field, $default));
     }
 }
 

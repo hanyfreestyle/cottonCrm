@@ -9,91 +9,63 @@
                             dir="ar" colrow="col-lg-2 col-6"
                             value="{{old($modelname.'_perpage',IsArr($modelSettings,$modelname.'_perpage',10))}}"/>
 
-        @if($addPhoto)
-            <x-admin.form.select-arr label="{{ __('admin/config/settings.set_filter_id') }}" name="{{$modelname}}_filterid" col="2"
-                                     sendvalue="{{old($modelname.'_filterid', IsArr($modelSettings,$modelname.'_filterid',0))}}"
-                                     :send-arr="$filterTypes"/>
-
-            <x-admin.form.select-arr label="{{ __('admin/config/settings.set_view_photo') }}" name="{{$modelname}}_view_photo" col="2"
-                                     sendvalue="{{old($modelname.'_view_photo', IsArr($modelSettings,$modelname.'_view_photo',0))}}" :req="false"
-                                     type="selActive"/>
-
-
-
-
-
-            @if($selectfilterid)
-                <x-admin.form.select-arr :label="__('admin/config/settings.set_filter_form')" name="{{$modelname}}_select_filter_form" col="2" :req="false"
-                                         sendvalue="{{old($modelname.'_select_filter_form',IsArr($modelSettings,$modelname.'_select_filter_form',0))}}"
-                                         type="selActive"/>
-            @endif
-
-        @endif
-
-
-        @if($addIcon)
-            <x-admin.form.select-arr :l="__('admin/config/settings.set_iconfilter_id')" name="{{$modelname}}_iconfilterid" col="2"
-                                     sendvalue="{{old($modelname.'_iconfilterid',IsArr($modelSettings,$modelname.'_iconfilterid',0))}}"
-                                     :send-arr="$filterTypes"/>
-        @endif
-
-
-
-        @if(IsConfig($config,'TableMorePhotos') and $viewAsPost == true)
-            <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_filter_more_photo')" name="{{$modelname}}_morephoto_filterid" col="2"
-                                     sendvalue="{{old($modelname.'_morephoto_filterid',IsArr($modelSettings,$modelname.'_morephoto_filterid',0))}}"
-                                     :send-arr="$filterTypes"/>
-
-            <x-admin.form.select-arr :label="__('admin/def.label_more_photo')" name="{{$modelname}}_morePhoto" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_morePhoto',IsArr($modelSettings,$modelname.'_morePhoto',0))}}"/>
-        @else
-            <input type="hidden" name="_morePhoto" value="0">
-            <input type="hidden" name="_morephoto_filterid" value="0">
-        @endif
-
-
-        @if(IsConfig($config,'TableMorePhotos'))
-
-
-
-        @endif
-
-
-        @if($dataTableUserName)
-            <x-admin.form.select-arr :label="__('admin/def.label_published_user')" name="{{$modelname}}_dataTableUserName" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_dataTableUserName',IsArr($modelSettings,$modelname.'_dataTableUserName',0))}}"/>
-        @endif
-
-        @if($dataTableDate)
-            <x-admin.form.select-arr :label="__('admin/def.label_published_at')" name="{{$modelname}}_dataTableDate" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_dataTableDate',IsArr($modelSettings,$modelname.'_dataTableDate',0))}}"/>
-        @endif
-
 
         @if(IsConfig($settings,'report'))
-            <x-admin.form.select-arr label="{{ __('admin/config/settings.set_filter_option') }}" name="{{$modelname}}_report_filter_option" col="2"
-                                     sendvalue="{{old($modelname.'_report_filter_option', IsArr($modelSettings,$modelname.'_report_filter_option',0))}}" :req="false"
-                                     type="selActive"/>
+            <x-admin.form.select-arr label="{{ __('admin/config/settings.set_filter_option') }}" name="{{$modelname}}_report_filter_option" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'report_filter_option')"/>
+
         @endif
-
-
-        @if($controllerName == 'ProductList')
-
-            <x-admin.form.select-arr :l="__('admin/proProduct.cat_text_name')" name="{{$modelname}}_category_view" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_category_view',IsArr($modelSettings,$modelname.'_category_view',1))}}"/>
-
-            <x-admin.form.select-arr :l="__('admin/proProduct.app_menu_brand')" name="{{$modelname}}_brand_view" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_brand_view',IsArr($modelSettings,$modelname.'_brand_view',1))}}"/>
-
-            <x-admin.form.select-arr :l="__('admin/proProduct.pro_text_price')" name="{{$modelname}}_price_view" col="2" :req="false" type="selActive"
-                                     sendvalue="{{old($modelname.'_price_view',IsArr($modelSettings,$modelname.'_price_view',1))}}"/>
-        @endif
-
-        {{$slot}}
     </div>
+
+
+    <div class="row">
+        @if(IsConfig($config,'postPhotoAdd',0) )
+            <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_id')" name="{{$modelname}}_filterid" col="2" :send-arr="$filterTypes"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'filterid')"/>
+
+            <x-admin.form.select-arr :l="__('admin/config/settings.set_view_photo')" name="{{$modelname}}_view_photo" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'view_photo')"/>
+
+            <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_form')" name="{{$modelname}}_select_filter_form" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'select_filter_form')"/>
+        @endif
+        @if(IsConfig($config,'TableMorePhotos',0))
+            <x-admin.form.select-arr :l="__('admin/config/settings.set_filter_filter_more_photo')" name="{{$modelname}}_morephoto_filterid" col="2" :send-arr="$filterTypes"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'morephoto_filterid')"/>
+
+        @endif
+
+        @if(IsConfig($config,'categoryIcon',0))
+            <x-admin.form.select-arr :l="__('admin/config/settings.set_iconfilter_id')" name="{{$modelname}}_iconfilterid" col="2" :send-arr="$filterTypes"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, '_iconfilterid')"/>
+        @endif
+
+    </div>
+
+
+    <div class="row">
+        @if($controllerName == 'ProductList')
+            <x-admin.form.select-arr :l="__('admin/proProduct.cat_text_name')" name="{{$modelname}}_category_view" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'category_view')"/>
+
+            <x-admin.form.select-arr :l="__('admin/proProduct.app_menu_brand')" name="{{$modelname}}_brand_view" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'brand_view')"/>
+
+            <x-admin.form.select-arr :l="__('admin/proProduct.pro_text_price')" name="{{$modelname}}_price_view" col="2" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'price_view')"/>
+
+        @endif
+        @if($controllerName == 'BlogPost')
+            <x-admin.form.select-arr :label="__('admin/def.label_published_user')" name="{{$modelname}}_dataTableUserName" col="2" :req="false" type="selActive"
+                                     :sendvalue="getSettingValue($modelname, $modelSettings, 'dataTableUserName')"/>
+        @endif
+    </div>
+
+    {{$slot}}
+
     @if(isset($pageData['ModelId']))
         <input type="hidden" name="ModelId" value="{{$pageData['ModelId']}}">
     @endif
-
     <x-admin.form.submit-role-back :page-data="$pageData"/>
 </form>
+

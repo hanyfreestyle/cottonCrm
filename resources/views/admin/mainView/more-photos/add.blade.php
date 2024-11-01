@@ -99,5 +99,5 @@
 @push('JsCode')
     <x-admin.table.sweet-delete-js/>
     <script src="{{defAdminAssets('plugins/bootstrap/js/jquery-ui.min.js')}}"></script>
-    <x-admin.ajax.sort-code url="{{ route($PrefixRoute.'.more_photos.save-sort') }}"/>
+    <x-admin.ajax.sort-code url="{{ route($PrefixRoute.'.morePhotos.saveSort') }}"/>
 @endpush
