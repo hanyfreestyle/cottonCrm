@@ -57,7 +57,7 @@
                 @include('datatable.lang')
                 ajax: "{{ route($PrefixRoute.'.DataTable',['dataSend' => $dataSend ,'formName'=>$formName]) }}",
                 columns: [
-                    {data: 'id', name: 'id', orderable: false, searchable: false, className: "remove_id"},
+                    {data: 'id', name: 'id', orderable: true, searchable: false, className: "remove_id"},
                         @include('datatable.index_action_but',['type'=> 'photo','view'=> true])
                     {
                         data: 'name', name: '{{$config['DbPostTrans']}}.name', orderable: true, searchable: true

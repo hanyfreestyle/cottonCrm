@@ -45,7 +45,9 @@ Route::prefix('product')->name('Product.ProductList.')
         Route::get('/photos/{id}', 'ListMorePhoto')->name('More_Photos');
         Route::post('/AddMore', 'AddMorePhotos')->name('More_PhotosAdd');
         Route::post('/saveSort', 'sortPhotoSave')->name('sortPhotoSave');
-        Route::get('/PhotoDel/{id}', 'More_PhotosDestroy')->name('More_PhotosDestroy');
+        Route::get('/PhotoDel/{id}', 'MorePhotosDestroy')->name('More_PhotosDestroy');
+        Route::get('/photo/delete-all/{postid}', 'MorePhotosDestroyAll')->name('More_PhotosDestroyAll');
+
 
         // إعدادات المنتج
         Route::get('/config', 'config')->name('config');
